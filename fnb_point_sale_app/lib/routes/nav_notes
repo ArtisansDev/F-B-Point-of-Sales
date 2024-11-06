@@ -1,0 +1,36 @@
+One screen to new screen navigation
+Navigator.pushNamed(context, RouteConstants.ROUTE_WAIT_FOR_SEEKER,
+                    arguments: sourceDetails);
+Get.toNamed(RouteConstants.rSecondScreen,
+            arguments: sourceDetails)
+
+Remove current screen with new screen
+Navigator.pushReplacementNamed(context, RouteConstants.ROUTE_LOGIN);
+Get.offNamed(RouteConstants.rSecondScreen,
+             arguments: sourceDetails);
+
+Remove all screens with new screen
+Navigator.pushNamedAndRemoveUntil(
+                context, RouteConstants.ROUTE_HOME_SCREEN, (route) => false);
+
+Get.offAllNamed(RouteConstants.ROUTE_LOGIN));
+Get.offAndToNamed(RouteConstants.ROUTE_LOGIN));
+
+
+Close current screen
+ Navigator.pop();
+ Get.back();
+
+Close current screen and pass value to previous screen
+ Navigator.pop(context, _searchCarColorList[index]);
+
+Getting the value from last screen to current screen
+     carColor = await Navigator.pushNamed(
+                      context,
+                      RouteConstants.ROUTE_CAR_COLOR_LIST) as ColorList;
+
+Close current screen and pass value to previous screen
+Get.back(result: "Hello");
+
+Getting the value from last screen to current screen
+var  carColor  = async {final data = await Get.toNamed(RouteConstants.ROUTE_CAR_COLOR_LIST);

@@ -5,62 +5,84 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38947a7c-9f2f-41ac-986f-38186cf8d673" name="Changes" comment="base set up">
-      <change afterPath="$PROJECT_DIR$/lib/alert/alert_action.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/alert/app_alert.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common/button_constants.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common/create_card_view.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common/custom_image.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common/custom_switch.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common/dropdown_button_view/custom_dropdown_button2.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common/dropdown_button_view/dropdown_button2.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common/dropdown_button_view/dropdown_button2_utils.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common/generate_tags.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common/text_input_widget.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common/view_document/view_document_model.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common/view_document/view_doument.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/constants/app_constants.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/constants/color_constants.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/constants/image_assets_constants.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/constants/json_assets.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/constants/message_constants.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/constants/pattern_constants.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/constants/text_styles_constants.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/constants/web_constants.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/data/local/database/counter/CounterLocalApi.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/data/local/database/counter/CounterLocalApiImpl.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/data/local/shared_prefs/pref_constants.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/data/local/shared_prefs/shared_prefs.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/data/mode/login/login_failed_response.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/data/mode/login/login_request.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/data/mode/login/login_response.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/data/remote/api_call/api_adapter.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/data/remote/api_call/api_dio_provider.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/data/remote/api_call/api_impl.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/data/remote/api_call/api_provider.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/data/remote/api_call/file_download.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/data/remote/web_http_overrides.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/data/remote/web_response.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/data/remote/web_response_failed.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/lang/en_US.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/lang/id_ID.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/lang/translation_notes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/lang/translation_service.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/lang/translation_service_key.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/utils/app_utils.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/utils/date_time_utils.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/utils/network_utils.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/utils/num_utils.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Flutter/Debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/Debug.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Flutter/Release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/Release.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Flutter/Flutter-Debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/Flutter-Debug.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Flutter/Flutter-Release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/Flutter-Release.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/common_view/appbars_common.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/common_view/logout_expired.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/dashboard_screen/alerts_andReports.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/dashboard_screen/controller/dashboard_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/dashboard_screen/dashboard_view_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/dashboard_screen/device_logs.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/dashboard_screen/device_on_board_bar_chart.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/dashboard_screen/push_message_logs.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/dashboard_screen/total_device.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/device_details/controller/device_details_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/device_details/view/device_details.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/leftNavigationBar/controller/navigation_screen_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/leftNavigationBar/view/navigation_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/locator.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/AudiLog/view/audit_log.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/PushMessage/add_pushmessage/controller/add_pushmessage_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/PushMessage/add_pushmessage/view/add_pushmessage_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/PushMessage/controller/pushmessage_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/PushMessage/view/push_message_list_rows.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/PushMessage/view/pushmessage_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/Setting/view/settings_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/app_theme/my_app_theme.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/app_theme/theme/my_theme.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/application/add_application/add_application_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/application/add_application/add_application_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/application/add_sent_message/controller/add_sent_message_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/application/add_sent_message/view/add_sent_message_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/application/controller/application_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/application/view/application.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/application/view/application_list_row.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/configurations/add_configuration/controller/add_configuration_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/configurations/add_configuration/view/add_configuration_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/configurations/add_configuration/view/generate_tags.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/configurations/add_configuration/view/get_custom_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/configurations/add_configuration/view/tab_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/configurations/controller/configuration_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/configurations/views/configuration_list_row.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/configurations/views/configurations.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/controls/controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/controls/toggleSwitches.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/controls/view/controlsScreen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/controls/view/get_device_controls.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/data_usage/data_usage_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/data_usage/views/data_usage.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/data_usage/views/data_usage_row_list.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/dateTimeSettings/view/datetimeScreen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/deviceId_screen/controller/deviceIdController.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/deviceId_screen/view/deviceId_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/device_group/add_device_group/add_device_group_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/device_group/add_device_group/controller/add_device_group_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/device_group/controller/device_group_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/device_group/view/device_group.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/device_group/view/device_group_list_row.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/deviceinfo/view/deviceI_info_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/devices/add_devices/add_devices_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/devices/add_devices/controller/add_device_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/devices/controller/devices_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/devices/view/device_list_row.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/devices/view/device_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/installedApps/controller/installedappsController.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/installedApps/views/installedAppsScreen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/installedApps/views/installedApps_list_rows.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/locationLogs/location_logs_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/locationLogs/views/location_logs.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/locationLogs/views/location_logs_row_list.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/loginScreen/controller/loginController.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/loginScreen/view/loginScreen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/logs/controller/logs_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/logs/views/logs_list_row.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/logs/views/logs_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/routes/generated_routes.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/test/widget_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/test/widget_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/fnb_point_sale_base_android.iml" beforeDir="false" afterPath="$PROJECT_DIR$/android/fnb_point_sale_base_android.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +116,7 @@
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
     "last_opened_file_path": "/Users/parthapaul/all_project/macbookpro/android_studio/dev_project/F-B-Point-of-Sales/fnb_point_sale_base/lib",
-    "settings.editor.selected.configurable": "preferences.fileTypes",
+    "settings.editor.selected.configurable": "dart.settings",
     "show.migrate.to.gradle.popup": "false"
   }
 }]]></component>
@@ -125,7 +147,28 @@
       <option name="project" value="LOCAL" />
       <updated>1730631664689</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="base set up">
+      <created>1730879707725</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1730879707725</updated>
+    </task>
+    <task id="LOCAL-00003" summary="base set up">
+      <created>1730879715681</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1730879715681</updated>
+    </task>
+    <task id="LOCAL-00004" summary="base set up">
+      <created>1730879749561</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1730879749561</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
