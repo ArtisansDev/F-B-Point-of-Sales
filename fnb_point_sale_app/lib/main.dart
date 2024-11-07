@@ -10,8 +10,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/data/local/shared_prefs/shared_prefs.dart';
 import 'package:fnb_point_sale_base/data/remote/web_http_overrides.dart';
-
-import 'locator.dart';
+import 'package:fnb_point_sale_base/locator.dart';
 import 'model/app_theme/my_app_theme.dart';
 import 'package:window_manager/window_manager.dart';
 

@@ -2,18 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../alert/app_alert.dart';
 import '../../../constants/app_constants.dart';
 import '../../../constants/web_constants.dart';
-import '../../mode/login/login_failed_response.dart';
-import '../../mode/login/login_response.dart';
 import '../web_response.dart';
 import '../web_response_failed.dart';
-import 'api_adapter.dart';
 import 'api_provider.dart';
 
-class AllApiImpl implements IApiRepository {
+class AllApiImpl {
   WebProvider mWebProvider = WebProvider();
   late WebResponseSuccess mWebResponseSuccess;
   late WebResponseFailed mWebResponseFailed;
@@ -79,49 +74,5 @@ class AllApiImpl implements IApiRepository {
         return responseBody;
     }
   }
-
-  ///post Login
-  @override
-  Future<WebResponseSuccess> postLogin(dynamic exhibitorsListRequest) async {
-    AppAlert.showProgressDialog(Get.context!);
-    WebConstants.auth = false;
-    final cases = await mWebProvider.postWithRequest(
-        WebConstants.actionLogin, exhibitorsListRequest);
-    debugPrint(
-        "plainJsonRequest statusCode ==  ${jsonEncode(cases.statusCode)}");
-    debugPrint("plainJsonRequest ==  ${jsonEncode(cases.body)}");
-    AppAlert.hideLoadingDialog(Get.context!);
-    if (cases.statusCode == WebConstants.statusCode200) {
-      LoginResponse mLoginResponse =
-      LoginResponse.fromJson(processResponseToJson(cases));
-      mWebResponseSuccess = WebResponseSuccess(
-        statusCode: cases.statusCode,
-        data: mLoginResponse,
-        statusMessage: "User login successfully",
-        error: false,
-      );
-    } else if (cases.statusCode == WebConstants.statusCode400) {
-      LoginFailedResponse mLoginFailedResponse =
-      LoginFailedResponse.fromJson(json.decode(jsonEncode(cases.body)));
-      mWebResponseSuccess = WebResponseSuccess(
-        statusCode: cases.statusCode,
-        data: mLoginFailedResponse,
-        statusMessage: mLoginFailedResponse.msg ?? '',
-        error: false,
-      );
-    } else {
-      mWebResponseFailed =
-          WebResponseFailed.fromJson(processResponseToJson(cases));
-      mWebResponseSuccess = WebResponseSuccess(
-        statusCode: cases.statusCode,
-        // data: mWebResponseFailed,
-        statusMessage: mWebResponseFailed.statusMessage,
-        error: true,
-      );
-    }
-
-    return mWebResponseSuccess;
-  }
-
 
 }

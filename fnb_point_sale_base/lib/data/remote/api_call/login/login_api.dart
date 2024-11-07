@@ -1,6 +1,7 @@
 
-import '../web_response.dart';
 
-abstract class IApiRepository {
+import '../../web_response.dart';
+
+mixin LoginApi {
   Future<WebResponseSuccess> postLogin(dynamic exhibitorsListRequest);
 }

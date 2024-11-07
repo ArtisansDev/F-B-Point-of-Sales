@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fnb_point_sale_base/data/remote/api_call/login/login_api.dart';
+import 'package:fnb_point_sale_base/locator.dart';
 import 'package:get/get.dart';
 
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
@@ -23,8 +25,8 @@ class LoginScreenController extends GetxController {
 
   LoginScreenController() {
     getPackageInfo();
-    //userNameController.value.text = 'balajikanna456@gmail.com';
-    //passwordController.value.text = 'Password123';
+    // userNameController.value.text = 'balajikanna456@gmail.com';
+    // passwordController.value.text = 'Password123';
     //getToken();
   }
 
@@ -44,18 +46,19 @@ class LoginScreenController extends GetxController {
       Get.offNamed(
         RouteConstants.rDashboardScreen,
       );
-      //loginApiCall();
+      // loginApiCall();
     }
   }
 
   void loginApiCall() {
     NetworkUtils().checkInternetConnection().then((isInternetAvailable) async {
       if (isInternetAvailable) {
+        final localApi = locator.get<LoginApi>();
         LoginRequest mLoginRequest = LoginRequest(
             email: userNameController.value.text.trim(),
             password: passwordController.value.text.trim());
         WebResponseSuccess mWebResponseSuccess =
-            await AllApiImpl().postLogin(mLoginRequest);
+            await localApi.postLogin(mLoginRequest);
         if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
           LoginResponse mLoginResponse = mWebResponseSuccess.data;
           await SharedPrefs().setUserToken(mLoginResponse.accessToken);
