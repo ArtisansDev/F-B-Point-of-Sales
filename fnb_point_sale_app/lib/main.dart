@@ -1,3 +1,6 @@
+// ignore_for_file: depend_on_referenced_packages
+
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -10,10 +13,28 @@ import 'package:fnb_point_sale_base/data/remote/web_http_overrides.dart';
 
 import 'locator.dart';
 import 'model/app_theme/my_app_theme.dart';
+import 'package:window_manager/window_manager.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = WebHttpOverrides();
+  if (Platform.isAndroid) {
+    // Android-specific code
+  } else if (Platform.isIOS) {
+    // iOS-specific code
+  } else {
+    await windowManager.ensureInitialized();
+    // Use it only after calling `hiddenWindowAtLaunch`
+    unawaited(windowManager.waitUntilReadyToShow().then((_) async {
+      // Hide window title bar
+      await windowManager.setTitleBarStyle(TitleBarStyle.normal);
+      await windowManager.setFullScreen(true);
+      await windowManager.show();
+      await windowManager.setSkipTaskbar(false);
+      await windowManager.setClosable(true);
+    }));
+  }
   setupLocator();
   await SharedPrefs().sharedPreferencesInstance();
   await dotenv.load(fileName: ".env");

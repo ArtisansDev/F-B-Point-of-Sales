@@ -50,129 +50,124 @@ class AppAlert {
     Get.back();
   }
 
-  static Future<void> showCustomDialogYesNoLogout(BuildContext context,
-      String title,
-      String message,
-      Function onCall, {
-        bool? barrierDismissible,
-        String? leftText,
-        String? rightText,
-      }) async {
+  static Future<void> showCustomDialogYesNoLogout(
+    BuildContext context,
+    String title,
+    String message,
+    Function onCall, {
+    bool? barrierDismissible,
+    String? leftText,
+    String? rightText,
+  }) async {
     await showDialog(
         context: context,
         barrierDismissible: barrierDismissible ?? false,
         builder: (BuildContext context) {
-          return
-            Stack(
-                alignment: Alignment.center,
-                children: [
-                  BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
-                    child: Container(
-                      color:
-                      Colors.white.withOpacity(0), // Optional transparent color
+          return Stack(alignment: Alignment.center, children: [
+            BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
+              child: Container(
+                color:
+                    Colors.white.withOpacity(0), // Optional transparent color
+              ),
+            ),
+            SizedBox(
+                height: 38.h,
+                width: 35.w,
+                child: Dialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6.0),
+                  ),
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  child: Container(
+                    padding: EdgeInsets.all(12.sp),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12.sp),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(13.sp),
+                          child: Text(
+                            title,
+                            style: getText600(
+                              colors: ColorConstants.cAppColors,
+                              size: 14.5.sp,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 13.sp, right: 13.sp, bottom: 15.sp),
+                          child: Text(message,
+                              style: getTextRegular(
+                                colors: ColorConstants.black,
+                                size: 13.5.sp,
+                              )),
+                        ),
+                        Padding(
+                            padding: EdgeInsets.all(13.sp),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    child: Container(
+                                        height: 19.5.sp,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(3.sp),
+                                        ),
+                                        child: rectangleCornerButton(
+                                            leftText ?? 'Cancel', () {
+                                          Get.back();
+                                        },
+                                            bgColor: ColorConstants.cAppColors,
+                                            textSize: 12.5.sp,
+                                            textColor: Colors.white))),
+                                SizedBox(
+                                  width: 15.sp,
+                                ),
+                                Expanded(
+                                    child: Container(
+                                        height: 19.5.sp,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(3.sp),
+                                        ),
+                                        child: rectangleCornerButton(
+                                            rightText ?? 'Log Out', () {
+                                          Get.back();
+                                          onCall();
+                                        },
+                                            bgColor: Colors.red,
+                                            textSize: 12.5.sp,
+                                            textColor: Colors.white))),
+                              ],
+                            ))
+                      ],
                     ),
                   ),
-                  SizedBox(
-                      height: 38.h,
-                      width: 35.w,
-                      child:
-                      Dialog(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6.0),
-                        ),
-                        elevation: 0,
-                        backgroundColor: Colors.transparent,
-                        child: Container(
-                          padding: EdgeInsets.all(12.sp),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12.sp),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.all(13.sp),
-                                child: Text(
-                                  title,
-                                  style: getText600(
-                                    colors: ColorConstants.cAppColors,
-                                    size: 14.5.sp,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    left: 13.sp, right: 13.sp, bottom: 15.sp),
-                                child: Text(message,
-                                    style: getTextRegular(
-                                      colors: ColorConstants.black,
-                                      size: 13.5.sp,
-                                    )),
-                              ),
-                              Padding(
-                                  padding: EdgeInsets.all(13.sp),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                          child: Container(
-                                              height: 19.5.sp,
-                                              alignment: Alignment.center,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                BorderRadius.circular(3.sp),
-                                              ),
-                                              child: rectangleRoundedCornerButtonMedium(
-                                                  leftText ?? 'Cancel', () {
-                                                Get.back();
-                                              },
-                                                  bgColor: ColorConstants
-                                                      .cAppColors,
-                                                  size: 12.5.sp,
-                                                  textColor: Colors.white))),
-                                      SizedBox(
-                                        width: 15.sp,
-                                      ),
-                                      Expanded(
-                                          child: Container(
-                                              height: 19.5.sp,
-                                              alignment: Alignment.center,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                BorderRadius.circular(3.sp),
-                                              ),
-                                              child: rectangleRoundedCornerButtonMedium(
-                                                  rightText ?? 'Log Out', () {
-                                                Get.back();
-                                                onCall();
-                                              },
-                                                  bgColor: Colors.red,
-                                                  size: 12.5.sp,
-                                                  textColor: Colors.white))),
-                                    ],
-                                  ))
-                            ],
-                          ),
-                        ),
-                      ))
-                ]
-            );
+                ))
+          ]);
         });
   }
 
-  static Future<void> showChangePassword(BuildContext context,
-      Function onCall) async {
+  static Future<void> showChangePassword(
+      BuildContext context, Function onCall) async {
     ///change password
     final TextEditingController mCurrentPasswordController =
-    TextEditingController();
+        TextEditingController();
     final TextEditingController mNewPasswordController =
-    TextEditingController();
+        TextEditingController();
     final TextEditingController mConfirmPasswordController =
-    TextEditingController();
+        TextEditingController();
 
     await showDialog(
         context: context,
@@ -267,8 +262,7 @@ class AppAlert {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12.sp),
                                 ),
-                                child: rectangleRoundedCornerButtonMedium(
-                                    sUpdate.tr, () {
+                                child: rectangleCornerButton(sUpdate.tr, () {
                                   String message = '';
                                   if (mCurrentPasswordController
                                       .value.text.isEmpty) {
@@ -277,21 +271,21 @@ class AppAlert {
                                       .value.text.isEmpty) {
                                     message = sNewPasswordHint.tr;
                                   } else if (mNewPasswordController
-                                      .value.text.length <
+                                          .value.text.length <
                                       6) {
                                     message = sPasswordErrorValid.tr;
                                   } else if (mConfirmPasswordController
                                       .value.text.isEmpty) {
                                     message = sConfirmPasswordHint.tr;
                                   } else if (mConfirmPasswordController
-                                      .value.text.length <
+                                          .value.text.length <
                                       6) {
                                     message = sPasswordErrorValid.tr;
                                   } else if (mNewPasswordController
-                                      .value.text !=
+                                          .value.text !=
                                       mConfirmPasswordController.value.text) {
                                     message =
-                                    'New password doesn\'t match with confirm password';
+                                        'New password doesn\'t match with confirm password';
                                   }
                                   if (message.isEmpty) {
                                     onCall(mCurrentPasswordController.text,
@@ -312,8 +306,7 @@ class AppAlert {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12.sp),
                                 ),
-                                child: rectangleRoundedCornerButtonMedium(
-                                    'Cancel', () {
+                                child: rectangleCornerButton('Cancel', () {
                                   Get.back();
                                 },
                                     bgColor: ColorConstants.cAppColors,
@@ -330,8 +323,8 @@ class AppAlert {
         });
   }
 
-  static Future<void> showsForgottenPassword(BuildContext context,
-      Function onCall) async {
+  static Future<void> showsForgottenPassword(
+      BuildContext context, Function onCall) async {
     ///change password
     final TextEditingController mEmailIdController = TextEditingController();
 
@@ -411,12 +404,11 @@ class AppAlert {
                                         //   borderRadius: BorderRadius.circular(5.sp),
                                         // ),
                                         child: rectangleCornerButton('Cancel',
-                                                () {
-                                              Get.back();
-                                            },
-                                            size: 13.sp,
-                                            bgColor:
-                                            ColorConstants.cAppColors,
+                                            () {
+                                          Get.back();
+                                        },
+                                            textSize: 13.sp,
+                                            bgColor: ColorConstants.cAppColors,
                                             textColor: Colors.white))),
                                 SizedBox(
                                   width: 15.sp,
@@ -429,23 +421,20 @@ class AppAlert {
                                         //   borderRadius: BorderRadius.circular(5.sp),
                                         // ),
                                         child: rectangleCornerButton(sSubmit.tr,
-                                                () {
-                                              if (mEmailIdController
-                                                  .text.isNotEmpty) {
-                                                Get.back();
-                                                onCall(
-                                                  mEmailIdController.text,
-                                                );
-                                              } else {
-                                                AppAlert.showSnackBar(
-                                                    Get.context!,
-                                                    sForgottenPasswordDetails
-                                                        .tr);
-                                              }
-                                            },
-                                            size: 13.sp,
-                                            bgColor:
-                                            ColorConstants.cAppColors,
+                                            () {
+                                          if (mEmailIdController
+                                              .text.isNotEmpty) {
+                                            Get.back();
+                                            onCall(
+                                              mEmailIdController.text,
+                                            );
+                                          } else {
+                                            AppAlert.showSnackBar(Get.context!,
+                                                sForgottenPasswordDetails.tr);
+                                          }
+                                        },
+                                            textSize: 13.sp,
+                                            bgColor: ColorConstants.cAppColors,
                                             textColor: Colors.white))),
                               ],
                             ),

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/fnb_point_sale_app.iml" filepath="$PROJECT_DIR$/fnb_point_sale_app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/fnb_point_sale_app_android.iml" filepath="$PROJECT_DIR$/android/fnb_point_sale_app_android.iml" />
     </modules>
   </component>
 </project>

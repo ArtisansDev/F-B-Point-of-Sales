@@ -72,8 +72,8 @@ const String sVersion = "version";
 const String sEmailId = "Email Id";
 const String sEmailIdHint = "Enter your Email ID";
 ///user name
-const String sUsername = "Email id";
-const String sUsernameHint = "Please enter your email id";
+const String sUsername = "Username";
+const String sUsernameHint = "Please enter your username";
 const String sUsernameError = "Please enter your email id";
 const String sUsernameErrorValid = "Please enter your valid email id";
 

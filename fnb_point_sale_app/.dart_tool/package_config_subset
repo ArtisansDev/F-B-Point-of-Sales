@@ -346,6 +346,10 @@ rxdart
 2.12
 file:///Users/parthapaul/.pub-cache/hosted/pub.dev/rxdart-0.28.0/
 file:///Users/parthapaul/.pub-cache/hosted/pub.dev/rxdart-0.28.0/lib/
+screen_retriever
+2.18
+file:///Users/parthapaul/.pub-cache/hosted/pub.dev/screen_retriever-0.1.9/
+file:///Users/parthapaul/.pub-cache/hosted/pub.dev/screen_retriever-0.1.9/lib/
 shared_preferences
 3.4
 file:///Users/parthapaul/.pub-cache/hosted/pub.dev/shared_preferences-2.3.2/
@@ -482,6 +486,10 @@ win32
 3.5
 file:///Users/parthapaul/.pub-cache/hosted/pub.dev/win32-5.8.0/
 file:///Users/parthapaul/.pub-cache/hosted/pub.dev/win32-5.8.0/lib/
+window_manager
+3.0
+file:///Users/parthapaul/.pub-cache/hosted/pub.dev/window_manager-0.3.9/
+file:///Users/parthapaul/.pub-cache/hosted/pub.dev/window_manager-0.3.9/lib/
 xdg_directories
 3.3
 file:///Users/parthapaul/.pub-cache/hosted/pub.dev/xdg_directories-1.1.0/

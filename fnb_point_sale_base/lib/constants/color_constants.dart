@@ -1,31 +1,33 @@
 import 'package:flutter/material.dart';
 
 class ColorConstants {
-  static const Color primaryBackgroundColor = Color(0xFFFFFFFF);
+  static const Color primaryBackgroundColor = Color(0xFFF5F5F5);
   static const Color appEditText = Color(0xFFCACACA);
-  static const Color appEditTextHint = Color(0xFF424242);
+  static const Color appEditTextHint = Color(0xFFD2D2D2);
   static const Color black = Colors.black;
+  static const Color white = Colors.white;
+  static const Color cAppButtonColour = Color(0xFF5591B2);
 
 
 
   ///app Colour
-  static const Color cAppColors = Color(0xFF27BAE3);
+  static const Color cAppColors = Color(0xFF000331);
 
-  static const int _cAppColorsBlueValue = 0xFF27BAE3;
+  static const int _cAppColorsBlueValue = 0xFF000331;
 
   static const MaterialColor cAppColorsMaterial = MaterialColor(
     _cAppColorsBlueValue,
     <int, Color>{
-      50: Color(0xFF6FE9FF),
-      100: Color(0xFF5FE7FF),
-      200: Color(0xFF50E3FD),
-      300: Color(0xFF43D8F3),
-      400: Color(0xFF38CDE8),
+      50: Color(0xFF11176B),
+      100: Color(0xFF0D1260),
+      200: Color(0xFF090D52),
+      300: Color(0xFF060A49),
+      400: Color(0xFF02063D),
       500: Color(_cAppColorsBlueValue),
-      600: Color(0xFF27C0DC),
-      700: Color(0xFF20BCD9),
-      800: Color(0xFF1AB8D5),
-      900: Color(0xFF14B3D0),
+      600: Color(0xFF000225),
+      700: Color(0xFF00021A),
+      800: Color(0xFF00021A),
+      900: Color(0xFF00021A),
     },
   );
 

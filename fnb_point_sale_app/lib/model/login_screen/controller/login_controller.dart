@@ -13,16 +13,26 @@ import 'package:fnb_point_sale_base/data/remote/api_call/api_impl.dart';
 import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/utils/network_utils.dart';
 
-class LoginController extends GetxController {
+import '../../../routes/route_constants.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
+class LoginScreenController extends GetxController {
   Rx<TextEditingController> userNameController = TextEditingController().obs;
   Rx<TextEditingController> passwordController = TextEditingController().obs;
   RxBool isLogin = true.obs;
 
-  LoginController() {
-    userNameController.value.text = 'balajikanna456@gmail.com';
-    passwordController.value.text = 'Password123';
+  LoginScreenController() {
+    getPackageInfo();
+    //userNameController.value.text = 'balajikanna456@gmail.com';
+    //passwordController.value.text = 'Password123';
     //getToken();
+  }
+
+  RxString version = ''.obs;
+
+  getPackageInfo() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    version.value = packageInfo.version;
   }
 
   isLoginCheck() {
@@ -31,7 +41,10 @@ class LoginController extends GetxController {
     } else if (passwordController.value.text.trim().isEmpty) {
       AppAlert.showSnackBar(Get.context!, 'Please enter the password');
     } else {
-      loginApiCall();
+      Get.offNamed(
+        RouteConstants.rDashboardScreen,
+      );
+      //loginApiCall();
     }
   }
 
@@ -47,7 +60,6 @@ class LoginController extends GetxController {
           LoginResponse mLoginResponse = mWebResponseSuccess.data;
           await SharedPrefs().setUserToken(mLoginResponse.accessToken);
           await SharedPrefs().setUserDetails(jsonEncode(mLoginResponse.user));
-
         } else {
           AppAlert.showSnackBar(
               Get.context!, mWebResponseSuccess.statusMessage ?? '');
@@ -58,6 +70,4 @@ class LoginController extends GetxController {
       }
     });
   }
-
-
 }

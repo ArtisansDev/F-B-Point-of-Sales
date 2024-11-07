@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 ///   TEXT STYLES
 TextStyle getText100(
     {Color colors = Colors.white, size = 14.0, heights = 1.2}) {
-  return GoogleFonts.inter(
+  return GoogleFonts.rajdhani(
       color: colors,
       fontSize: size,
       fontWeight: FontWeight.w100,
@@ -14,7 +14,7 @@ TextStyle getText100(
 
 TextStyle getText200(
     {Color colors = Colors.white, size = 14.0, heights = 1.2}) {
-  return GoogleFonts.inter(
+  return GoogleFonts.rajdhani(
       color: colors,
       fontSize: size,
       fontWeight: FontWeight.w200,
@@ -24,7 +24,7 @@ TextStyle getText200(
 
 TextStyle getText300(
     {Color colors = Colors.white, size = 14.0, heights = 1.2}) {
-  return GoogleFonts.inter(
+  return GoogleFonts.rajdhani(
       color: colors,
       fontSize: size,
       fontWeight: FontWeight.w200,
@@ -35,7 +35,7 @@ TextStyle getText300(
 
 TextStyle getTextRegular(
     {Color colors = Colors.white, size = 14.0, heights = 1.2}) {
-  return GoogleFonts.inter(
+  return GoogleFonts.rajdhani(
     color: colors,
     fontSize: size,
     fontWeight: FontWeight.w400,
@@ -46,7 +46,7 @@ TextStyle getTextRegular(
 
 TextStyle getTextRegularUnderline(
     {Color colors = Colors.white, size = 14.0, heights = 1.2}) {
-  return GoogleFonts.inter(
+  return GoogleFonts.rajdhani(
     decoration: TextDecoration.underline,
     decorationColor: colors,
     decorationThickness: 1,
@@ -59,12 +59,22 @@ TextStyle getTextRegularUnderline(
 }
 
 
-TextStyle getText500(
-    {Color colors = Colors.white,
-    size = 14.0,
-    heights = 1.2,
-    letterSpacing = -0.2}) {
-  return GoogleFonts.inter(
+TextStyle getText500({Color colors = Colors.white,
+  size = 14.0,
+  letterSpacing = -0.2}) {
+  return GoogleFonts.rajdhani(
+    color: colors,
+    fontSize: size,
+    fontWeight: FontWeight.w500,
+    letterSpacing: -0.2,
+  );
+}
+
+TextStyle getTextHeights500({Color colors = Colors.white,
+  size = 14.0,
+  heights = 1.2,
+  letterSpacing = -0.2}) {
+  return GoogleFonts.rajdhani(
     color: colors,
     fontSize: size,
     fontWeight: FontWeight.w500,
@@ -75,7 +85,7 @@ TextStyle getText500(
 
 TextStyle getText500UnderLine(
     {Color colors = Colors.white, size = 14.0, heights = 1.2}) {
-  return GoogleFonts.inter(
+  return GoogleFonts.rajdhani(
     decoration: TextDecoration.underline,
     color: colors,
     fontSize: size,
@@ -85,9 +95,19 @@ TextStyle getText500UnderLine(
   );
 }
 
-TextStyle getText600(
+TextStyle getText600({Color colors = Colors.white, size = 14.0,}) {
+  return GoogleFonts.rajdhani(
+    color: colors,
+    fontSize: size,
+    fontWeight: FontWeight.w600,
+    wordSpacing: -0.5,
+    letterSpacing: -0.2,
+  );
+}
+
+TextStyle getTextHeights600(
     {Color colors = Colors.white, size = 14.0, heights = 1.2}) {
-  return GoogleFonts.inter(
+  return GoogleFonts.rajdhani(
     color: colors,
     fontSize: size,
     fontWeight: FontWeight.w600,
@@ -99,7 +119,7 @@ TextStyle getText600(
 
 TextStyle getTextBold(
     {Color colors = Colors.white, size = 26.0, heights = 1.2}) {
-  return GoogleFonts.inter(
+  return GoogleFonts.rajdhani(
     color: colors,
     fontSize: size,
     fontWeight: FontWeight.w700,
@@ -111,7 +131,7 @@ TextStyle getTextBold(
 
 TextStyle getText800(
     {Color colors = Colors.white, size = 14.0, heights = 1.2}) {
-  return GoogleFonts.inter(
+  return GoogleFonts.rajdhani(
     color: colors,
     fontSize: size,
     fontWeight: FontWeight.w800,
@@ -123,7 +143,7 @@ TextStyle getText800(
 
 TextStyle getText900(
     {Color colors = Colors.white, size = 14.0, heights = 1.2}) {
-  return GoogleFonts.inter(
+  return GoogleFonts.rajdhani(
     color: colors,
     fontSize: size,
     fontWeight: FontWeight.w900,
@@ -137,10 +157,11 @@ extension StringCasingExtension on String {
   String toCapitalized() =>
       length > 0 ? '${this[0].toUpperCase()}${substring(1)}' : '';
 
-  String toTitleCase() => replaceAll(RegExp(' +'), ' ')
-      .split(' ')
-      .map((str) => str.toCapitalized())
-      .join(' ');
+  String toTitleCase() =>
+      replaceAll(RegExp(' +'), ' ')
+          .split(' ')
+          .map((str) => str.toCapitalized())
+          .join(' ');
 }
 
 getTextSpan({String word = "", size = 14.0, bool bStare = true}) {

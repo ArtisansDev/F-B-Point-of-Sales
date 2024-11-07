@@ -5,7 +5,10 @@ import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:fnb_point_sale_base/lang/translation_service.dart';
 import '../../routes/generated_routes.dart';
-import '../loginScreen/view/loginScreen.dart';
+import '../../routes/route_constants.dart';
+import '../dashboard_screen/view/dashboard_screen.dart';
+import '../login_screen/view/login_screen.dart';
+import '../splash_screen/view/splash_screen.dart';
 import 'theme/my_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -27,9 +30,17 @@ class MyAppTheme extends StatelessWidget {
           builder: (context, child) {
             return protectFromSettingsFontSize(context, child!);
           },
-          home: const LoginPage(),
+          home: const SplashScreen(),
           locale: TranslationService.locale,
           fallbackLocale: TranslationService.fallbackLocale,
+          getPages: [
+            GetPage(
+                name: RouteConstants.rLoginScreen,
+                page: () => const LoginScreen()),
+            GetPage(
+                name: RouteConstants.rDashboardScreen,
+                page: () => const DashboardScreen()),
+          ],
           translations: TranslationService(),
           localizationsDelegates: const [
             GlobalWidgetsLocalizations.delegate,

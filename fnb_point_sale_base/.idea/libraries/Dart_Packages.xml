@@ -576,6 +576,13 @@
             </list>
           </value>
         </entry>
+        <entry key="screen_retriever">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/screen_retriever-0.1.9/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="shared_preferences">
           <value>
             <list>
@@ -821,6 +828,13 @@
             </list>
           </value>
         </entry>
+        <entry key="window_manager">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/window_manager-0.3.9/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="xdg_directories">
           <value>
             <list>
@@ -916,6 +930,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/provider-6.1.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/responsive_sizer-3.3.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/rxdart-0.28.0/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/screen_retriever-0.1.9/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/shared_preferences-2.3.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/shared_preferences_android-2.3.3/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/shared_preferences_foundation-2.5.3/lib" />
@@ -950,6 +965,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/vm_service-14.2.5/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/web-1.1.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/win32-5.8.0/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/window_manager-0.3.9/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/xdg_directories-1.1.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/xml-6.5.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../flutter_sdk/flutter_3_24_3/bin/cache/pkg/sky_engine/lib" />
