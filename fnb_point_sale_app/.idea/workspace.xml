@@ -9,72 +9,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f183d832-d61e-4cff-a26c-5db2e295bf43" name="Changes" comment="login page done">
-      <change afterPath="$PROJECT_DIR$/assets/side_menu/home_menu.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/side_menu/menu.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/side_menu/settings_menu.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/side_menu/shift_menu.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/side_menu/table_menu.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/view/side_menu/controller/side_menu_controller.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/view/side_menu/view/side_menu_row.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/view/side_menu/view/side_menu_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/view/top_bar/controller/top_bar_controller.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/view/top_bar/model/tob_bar_model.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/view/top_bar/view/top_bar_profile_view.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/view/top_bar/view/top_bar_row.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/view/top_bar/view/top_bar_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_home/controller/home_controller.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_home/view/home_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_item/controller/menu_item_controller.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_item/view/menu_item_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_settings/controller/settings_controller.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_settings/view/settings_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_shift_details/controller/shift_details_controller.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_shift_details/view/shift_details_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_table/controller/table_controller.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_table/view/table_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/dartpad/web_plugin_registrant.dart" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/dartpad/web_plugin_registrant.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config_subset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
+    <list default="true" id="f183d832-d61e-4cff-a26c-5db2e295bf43" name="Changes" comment="home page top bar , side manu , drop down">
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/common_view/appbars_common.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/common_view/appbars_common.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/common_view/logout_expired.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/common_view/logout_expired.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/app_theme/my_app_theme.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/app_theme/my_app_theme.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/dashboard_screen/controller/dashboard_screen_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/controller/dashboard_screen_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/dashboard_screen/view/dashboard_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/view/dashboard_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/login_screen/controller/login_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/login_screen/controller/login_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/splash_screen/controller/splash_screen_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/splash_screen/controller/splash_screen_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux/flutter/ephemeral/.plugin_symlinks/package_info_plus" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Podfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/ephemeral/.plugin_symlinks/package_info_plus" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/.dart_tool/dartpad/web_plugin_registrant.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/.dart_tool/dartpad/web_plugin_registrant.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/.dart_tool/package_config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/.dart_tool/package_config_subset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/.flutter-plugins" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/ios/Runner/GeneratedPluginRegistrant.m" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/ios/Runner/GeneratedPluginRegistrant.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/alert/app_alert.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/alert/app_alert.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/button_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/button_constants.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/image_assets_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/image_assets_constants.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/linux/flutter/ephemeral/.plugin_symlinks/package_info_plus" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/windows/flutter/ephemeral/.plugin_symlinks/package_info_plus" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/web_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/web_constants.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,7 +131,14 @@
       <option name="project" value="LOCAL" />
       <updated>1730957149795</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="home page top bar , side manu , drop down">
+      <created>1731051171895</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1731051171895</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -209,6 +155,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="base set up" />
     <MESSAGE value="login page done" />
-    <option name="LAST_COMMIT_MESSAGE" value="login page done" />
+    <MESSAGE value="home page top bar , side manu , drop down" />
+    <option name="LAST_COMMIT_MESSAGE" value="home page top bar , side manu , drop down" />
   </component>
 </project>

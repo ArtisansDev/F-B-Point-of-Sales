@@ -67,23 +67,4 @@ class WebConstants {
   static String actionInstalledAppsId =  "rest/v1/installed_apps?select=*&device_id=eq.";//get
   static String actionDeviceInfoId =  "rest/v1/device_info?select=*&device_id=eq.";//get
   static String actionDashboard =  "rest/v1/rpc/get_dashboard_data";//post
-
-
-
-
-  // static String actionVerifyOtp =  "verify-otp";  //post
-  // static String actionProfile =  "profile";  //post
-  // static String actionAssessmentList =  "assessment-list";//post
-  // static String actionAssessmentResult =  "assessment-result";  //post
-  // static String actionCourseList =  "course-list";  //post
-  // static String actionCourseDetail =  "course-detail";  //post
-  // static String actionManageTwoFactorAuthentication =  "manage-two-factor-authentication";  //post
-  // static String actionChangePassword =  "change-password";  //post
-  // static String actionForgotPassword =  "forgot-password";  //post
-  // static String actionForgotPasswordUpdate =  "forgot-password-update";  //post
-  // static String actionSubscriberDashboard =  "subscriber-dashboard";  //get
-  // static String actionProfileUpdate =  "profile-update";  //post
-  // static String actionProfilePictureUpdate =  "profile-picture-update";  //post
-  // static String actionMasterList =  "master-list";  //get
-
 }
