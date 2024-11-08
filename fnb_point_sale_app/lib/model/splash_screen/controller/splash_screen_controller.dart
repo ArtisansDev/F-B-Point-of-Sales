@@ -1,17 +1,15 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fnb_point_sale_base/utils/network_utils.dart';
 import 'package:get/get.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-
 import '../../../routes/route_constants.dart';
 
 class SplashScreenController extends GetxController {
   RxString version = ''.obs;
 
   getPackageInfo() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    version.value = packageInfo.version;
+    version.value = dotenv.env['APP_VERSION'] ?? '';
     nextPage();
   }
 

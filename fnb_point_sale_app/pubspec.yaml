@@ -93,4 +93,5 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/
+    - assets/side_menu/
     - .env

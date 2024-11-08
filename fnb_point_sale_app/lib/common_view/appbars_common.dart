@@ -168,12 +168,12 @@ class AppBarsCommon {
               onTap: () {
                 onClick!("notification");
               },
-              child: Image.asset(
-                ImageAssetsConstants.notification,
-                fit: BoxFit.fitWidth,
-                height: 25.5.sp,
-                width: 25.5.sp,
-              ),
+              // child: Image.asset(
+              //   ImageAssetsConstants.notification,
+              //   fit: BoxFit.fitWidth,
+              //   height: 25.5.sp,
+              //   width: 25.5.sp,
+              // ),
             ),
             SizedBox(
               width: 13.sp,

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fnb_point_sale_base/data/remote/api_call/login/login_api.dart';
 import 'package:fnb_point_sale_base/locator.dart';
 import 'package:get/get.dart';
@@ -16,7 +17,7 @@ import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/utils/network_utils.dart';
 
 import '../../../routes/route_constants.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+
 
 class LoginScreenController extends GetxController {
   Rx<TextEditingController> userNameController = TextEditingController().obs;
@@ -33,8 +34,7 @@ class LoginScreenController extends GetxController {
   RxString version = ''.obs;
 
   getPackageInfo() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    version.value = packageInfo.version;
+    version.value = dotenv.env['APP_VERSION'] ?? '';
   }
 
   isLoginCheck() {

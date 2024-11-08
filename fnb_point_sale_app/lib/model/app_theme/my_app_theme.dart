@@ -30,6 +30,7 @@ class MyAppTheme extends StatelessWidget {
           builder: (context, child) {
             return protectFromSettingsFontSize(context, child!);
           },
+          // home: const DashboardScreen(),
           home: const SplashScreen(),
           locale: TranslationService.locale,
           fallbackLocale: TranslationService.fallbackLocale,

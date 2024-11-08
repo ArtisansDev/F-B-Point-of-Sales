@@ -12,6 +12,7 @@ rectangleCornerButton(String sTitle,
       double? borderRadius,
       double? height,
       Color bgColor = ColorConstants.cAppButtonColour,
+      Color? boderColor ,
       Color textColor = ColorConstants.white,
     }) {
   return GestureDetector(
@@ -22,6 +23,9 @@ rectangleCornerButton(String sTitle,
       alignment: Alignment.center,
       height: height??5.h,
       decoration: BoxDecoration(
+          border: Border.all(
+            color: boderColor??Colors.transparent,
+          ),
           borderRadius: BorderRadius.circular(borderRadius ?? 8.sp),
           color: bgColor),
       child: Text(
@@ -40,6 +44,7 @@ rectangleCornerButtonText600(String sTitle,
       double? borderRadius,
       double? height,
       Color bgColor = ColorConstants.cAppButtonColour,
+      Color? boderColor ,
       Color textColor = ColorConstants.white,
     }) {
   return GestureDetector(
@@ -50,6 +55,9 @@ rectangleCornerButtonText600(String sTitle,
       alignment: Alignment.center,
       height: height??5.8.h,
       decoration: BoxDecoration(
+          border: Border.all(
+            color: boderColor??Colors.transparent,
+          ),
           borderRadius: BorderRadius.circular(borderRadius ?? 8.sp),
           color: bgColor),
       child: Text(

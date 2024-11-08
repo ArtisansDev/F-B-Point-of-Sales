@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fnb_point_sale_app/model/dashboard_screen/view/side_menu/view/side_menu_screen.dart';
+import 'package:fnb_point_sale_app/model/dashboard_screen/view/top_bar/view/top_bar_screen.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/image_assets_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
@@ -15,45 +17,49 @@ class DashboardScreen extends GetView<DashboardScreenController> {
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => DashboardScreenController());
-
     return Scaffold(
-        backgroundColor: ColorConstants.cAppColorsMaterial,
-        body: Obx(
-          () {
-            return splashView();
-          },
-        ));
+        backgroundColor: ColorConstants.cAppColors,
+        body: FocusDetector(
+            onVisibilityGained: () {
+              controller.getPackageInfo();
+              Get.delete<LoginScreenController>();
+            },
+            onVisibilityLost: () {},
+            child: Obx(
+              () {
+                return Row(
+                  children: [
+                    SizedBox(
+                      width: 6.w,
+                      child: const SideMenuScreen(),
+                    ),
+                    Expanded(child: dashboardView())
+                  ],
+                );
+              },
+            )));
   }
 
-  splashView() {
-    return FocusDetector(
-        onVisibilityGained: () {
-          controller.getPackageInfo();
-          Get.delete<LoginScreenController>();
-        },
-        onVisibilityLost: () {},
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Hero(
-                tag: 'appLogo', // Hero tag for transition
-                child: Image.asset(
-                  ImageAssetsConstants.appLogo,
-                  fit: BoxFit.fitWidth,
-                  height: 50.w,
-                  width: 50.w,
-                )),
-            Container(
-              width: 100.w,
-              height: 100.h,
-              padding: EdgeInsets.all(30.sp),
-              alignment: Alignment.bottomCenter,
-              child: Text(
-                controller.version.value ?? '',
-                style: getText600(size: 14.sp),
-              ),
-            )
-          ],
-        ));
+  dashboardView() {
+    return Column(
+      children: [
+        SizedBox(
+          height: 6.w,
+          child: const TopBarScreen(),
+        ),
+        Expanded(child: showView()),
+      ],
+    );
+  }
+
+  showView() {
+    return Container(
+        decoration: BoxDecoration(
+          color: ColorConstants.appEditTextHint,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(8.sp),
+          ),
+        ),
+        child: controller.getView());
   }
 }

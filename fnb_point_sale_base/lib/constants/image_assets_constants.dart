@@ -1,44 +1,14 @@
 
 class ImageAssetsConstants {
-  // COMMON
+  /// COMMON
   static String appLogo = "assets/app_logo.png";
-  static String notification = "assets/notification.png";
-  ///introduction
-  static String introductionImage1 = "assets/introduction/introduction_1.png";
-  static String introductionImage2 = "assets/introduction/introduction_2.png";
 
-  ///button_menu
-  static String buttonMenuHome= "assets/button_menu/home.png";
-  static String buttonMenuMore= "assets/button_menu/more.png";
-  static String buttonMenuInsight= "assets/button_menu/insight.png";
-  static String buttonMenuHistory= "assets/button_menu/history.png";
-  static String buttonMenuProfile= "assets/button_menu/profile.png";
-
-  ///history
-  static String history= "assets/history/history_chart.png";
-  static String historyLeftArrow= "assets/history/left_arrow.png";
-
-  ///profile
-  static String deleteProfile = "assets/profile/delete_profile.png";
-  static String detailsProfile = "assets/profile/details_profile.png";
-
-  ///home
-  static String homeBackground= "assets/home/home_page_background.png";
-  static String homeBloodPressure= "assets/home/home_blood_pressure.png";
-
-  ///insight
-  static String insightPrint= "assets/insight/print.png";
-  static String insightBloodPressure= "assets/insight/blood_pressure.png";
-  static String insightPulseRate= "assets/insight/pulse_rate.png";
-  static String insightSpo= "assets/insight/sp_o.png";
-  static String insightButtonArrow= "assets/insight/button_arrow.png";
-
-  static String LoginImage="assets/login/loginimage.jpeg";
-
-  static String logo="assets/login/app_logo.png";
-  static String dashboard='assets/login/dashboardLogo.png';
-  static String userIcon="assets/login/user.png";
-  static String category="assets/login/category.png";
+  ///side_menu
+  static String sideMenuHome= "assets/side_menu/home_menu.png";
+  static String sideMenu= "assets/side_menu/menu.png";
+  static String sideMenuTable= "assets/side_menu/table_menu.png";
+  static String sideMenuSettings= "assets/side_menu/settings_menu.png";
+  static String sideMenuShift= "assets/side_menu/shift_menu.png";
 
 
 
