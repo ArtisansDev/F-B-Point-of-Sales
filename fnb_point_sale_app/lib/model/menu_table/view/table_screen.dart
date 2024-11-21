@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fnb_point_sale_base/constants/color_constants.dart';
-import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
+import 'package:fnb_point_sale_app/model/menu_table/view/table_view/table_view.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import '../../../common_view/button_view/button_view.dart';
 import '../controller/table_controller.dart';
 
 class TableScreen extends GetView<TableController> {
@@ -17,18 +16,11 @@ class TableScreen extends GetView<TableController> {
         onVisibilityGained: () {},
         onVisibilityLost: () {},
         child: Container(
-          margin:
-              EdgeInsets.only(top: 8.sp, left: 8.sp, right: 8.sp, bottom: 8.sp),
-          decoration: BoxDecoration(
-            color: ColorConstants.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(8.sp),
-            ),
-          ),
+          margin: EdgeInsets.only(
+              top: 11.sp, left: 11.sp, right: 11.sp, bottom: 8.sp),
           alignment: Alignment.center,
-          child: Text(
-            'Table In-processing',
-            style: getText600(size: 15.sp, colors: ColorConstants.cAppColors),
+          child: Column(
+            children: [Expanded(child: TableView()), const ButtonView()],
           ),
         ));
   }

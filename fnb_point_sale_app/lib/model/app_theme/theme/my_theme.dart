@@ -8,7 +8,7 @@ import 'package:fnb_point_sale_base/constants/color_constants.dart';
 ThemeData myLightTheme(BuildContext context) {
   return ThemeData(
     primarySwatch: ColorConstants.cAppColorsMaterial,
-    fontFamily: GoogleFonts.rajdhani().fontFamily,
+    fontFamily: GoogleFonts.poppins().fontFamily,
     scaffoldBackgroundColor: ColorConstants.primaryBackgroundColor,
     inputDecorationTheme: InputDecorationTheme(
         contentPadding: EdgeInsets.only(
@@ -57,7 +57,7 @@ ThemeData myLightTheme(BuildContext context) {
 ThemeData myDarkTheme(BuildContext context) {
   return ThemeData(
     primarySwatch: ColorConstants.cAppColorsMaterial,
-    fontFamily: GoogleFonts.rajdhani().fontFamily,
+    fontFamily: GoogleFonts.poppins().fontFamily,
     scaffoldBackgroundColor: ColorConstants.primaryBackgroundColor,
     inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(

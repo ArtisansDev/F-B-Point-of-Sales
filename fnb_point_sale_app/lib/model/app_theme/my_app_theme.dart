@@ -8,7 +8,9 @@ import '../../routes/generated_routes.dart';
 import '../../routes/route_constants.dart';
 import '../dashboard_screen/view/dashboard_screen.dart';
 import '../login_screen/view/login_screen.dart';
+import '../login_screen/view/login_screen_one.dart';
 import '../splash_screen/view/splash_screen.dart';
+import '../verification_screen/view/verification_screen.dart';
 import 'theme/my_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -35,9 +37,15 @@ class MyAppTheme extends StatelessWidget {
           locale: TranslationService.locale,
           fallbackLocale: TranslationService.fallbackLocale,
           getPages: [
+            // GetPage(
+            //     name: RouteConstants.rLoginScreen,
+            //     page: () => const LoginScreen()),
             GetPage(
                 name: RouteConstants.rLoginScreen,
-                page: () => const LoginScreen()),
+                page: () => const LoginScreenOne()),
+            GetPage(
+                name: RouteConstants.rVerificationScreen,
+                page: () => const VerificationScreen()),
             GetPage(
                 name: RouteConstants.rDashboardScreen,
                 page: () => const DashboardScreen()),

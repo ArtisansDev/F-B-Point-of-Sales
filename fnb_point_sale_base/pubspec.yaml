@@ -76,7 +76,6 @@ dependencies:
   ### BLE
   flutter_blue_plus: ^1.32.12
   provider: ^6.0.5
-
   flutter_dotenv: ^5.0.2
   collection: ^1.17.0
 

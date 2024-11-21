@@ -49,7 +49,7 @@ class TopBarRow extends StatelessWidget {
                   controller.mDashboardScreenController.mTobBarModel
                           .value[index].name ??
                       '',
-                  style: getText500(size: 11.5.sp),
+                  style: getText500(size: 11.sp),
                 )),
                 Container(
                   height: 17.5.sp,
@@ -67,7 +67,7 @@ class TopBarRow extends StatelessWidget {
                         .toString()
                         .padLeft(2, '0'),
                     style: getText600(
-                        size: 11.5.sp, colors: ColorConstants.cAppColors),
+                        size: 11.sp, colors: ColorConstants.cAppColors),
                   ),
                 )
               ],

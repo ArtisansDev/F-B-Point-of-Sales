@@ -87,7 +87,7 @@ class TopBarProfileView extends StatelessWidget {
             child: Text(
               'Profile details',
               style:
-                  getText500(size: 12.5.sp, colors: ColorConstants.cAppColors),
+                  getTextRegular(size: 12.5.sp, colors: ColorConstants.cAppColors),
             ),
           ),
           PopupMenuItem(
@@ -95,7 +95,7 @@ class TopBarProfileView extends StatelessWidget {
             child: Text(
               'Logout',
               style:
-                  getText500(size: 12.5.sp, colors: ColorConstants.cAppColors),
+              getTextRegular(size: 12.5.sp, colors: ColorConstants.cAppColors),
             ),
           ),
           PopupMenuItem(
@@ -103,7 +103,7 @@ class TopBarProfileView extends StatelessWidget {
             child: Text(
               'Exit',
               style:
-                  getText500(size: 12.5.sp, colors: ColorConstants.cAppColors),
+              getTextRegular(size: 12.5.sp, colors: ColorConstants.cAppColors),
             ),
           ),
         ],

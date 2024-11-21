@@ -44,7 +44,7 @@ class LoginScreenController extends GetxController {
       AppAlert.showSnackBar(Get.context!, 'Please enter the password');
     } else {
       Get.offNamed(
-        RouteConstants.rDashboardScreen,
+        RouteConstants.rVerificationScreen,
       );
       // loginApiCall();
     }

@@ -38,17 +38,16 @@ class SplashScreen extends GetView<SplashScreenController> {
             Image.asset(
               ImageAssetsConstants.appLogo,
               fit: BoxFit.fitWidth,
-              height: 50.w,
-              width: 50.w,
+              width: 40.w,
             ),
             Container(
               width: 100.w,
               height: 100.h,
-              padding: EdgeInsets.all(30.sp),
+              padding: EdgeInsets.all(25.sp),
               alignment: Alignment.bottomCenter,
               child: Text(
-                controller.version.value ?? '',
-                style: getText600(size: 14.sp),
+                'Version : ${controller.version.value ?? ''}',
+                style: getText600(size: 13.sp),
               ),
             )
           ],

@@ -163,329 +163,39 @@ class AppAlert {
         });
   }
 
-  /// Button -> rectangle rounded corner
-
-  static Future<void> showChangePassword(BuildContext context,
-      Function onCall) async {
-    ///change password
-    final TextEditingController mCurrentPasswordController =
-    TextEditingController();
-    final TextEditingController mNewPasswordController =
-    TextEditingController();
-    final TextEditingController mConfirmPasswordController =
-    TextEditingController();
-
+  static Future<void> showView(BuildContext context,
+      Widget showWidget, {
+        bool? barrierDismissible,
+      }) async {
     await showDialog(
         context: context,
-        barrierDismissible: false,
+        barrierDismissible: barrierDismissible ?? false,
         builder: (BuildContext context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(6.0),
-            ),
-            elevation: 0,
-            insetPadding: EdgeInsets.zero,
-            contentPadding: EdgeInsets.zero,
-            backgroundColor: Colors.transparent,
-            content: Builder(
-              builder: (context) {
-                return Container(
-                  margin: EdgeInsets.all(12.sp),
-                  padding: EdgeInsets.all(12.sp),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12.sp),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(16.sp),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              width: double.infinity,
-                            ),
-                            Text(
-                              sChangePassword.tr,
-                              style: getText500(
-                                  colors: Colors.black, size: 16.5.sp),
-                            ),
-                            SizedBox(
-                              height: 7.sp,
-                            ),
-                            Text(
-                              sChangeYourPasswordDetails.tr,
-                              maxLines: 4,
-                              style: getText500(
-                                  colors: ColorConstants.black, size: 14.5.sp),
-                            ),
-                            SizedBox(
-                              height: 14.sp,
-                            ),
-                            TextInputWidget(
-                              placeHolder: sCurrentPassword.tr,
-                              controller: mCurrentPasswordController,
-                              errorText: null,
-                              textInputType: TextInputType.emailAddress,
-                              hintText: sCurrentPasswordHint.tr,
-                              showFloatingLabel: true,
-                              // prefixIcon: Icons.email_rounded,
-                            ),
-                            SizedBox(
-                              height: 14.sp,
-                            ),
-                            TextInputWidget(
-                              placeHolder: sNewPassword.tr,
-                              controller: mNewPasswordController,
-                              errorText: null,
-                              textInputType: TextInputType.text,
-                              hintText: sNewPasswordHint.tr,
-                              showFloatingLabel: true,
-                            ),
-                            SizedBox(
-                              height: 14.sp,
-                            ),
-                            TextInputWidget(
-                              placeHolder: sConfirmPassword.tr,
-                              controller: mConfirmPasswordController,
-                              errorText: null,
-                              textInputType: TextInputType.text,
-                              hintText: sConfirmPasswordHint.tr,
-                              showFloatingLabel: true,
-                            ),
-                            SizedBox(
-                              height: 14.sp,
-                            ),
-                            Container(
-                                height: 26.5.sp,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12.sp),
-                                ),
-                                child: rectangleCornerButton(sUpdate.tr, () {
-                                  String message = '';
-                                  if (mCurrentPasswordController
-                                      .value.text.isEmpty) {
-                                    message = sCurrentPasswordHint.tr;
-                                  } else if (mNewPasswordController
-                                      .value.text.isEmpty) {
-                                    message = sNewPasswordHint.tr;
-                                  } else if (mNewPasswordController
-                                      .value.text.length <
-                                      6) {
-                                    message = sPasswordErrorValid.tr;
-                                  } else if (mConfirmPasswordController
-                                      .value.text.isEmpty) {
-                                    message = sConfirmPasswordHint.tr;
-                                  } else if (mConfirmPasswordController
-                                      .value.text.length <
-                                      6) {
-                                    message = sPasswordErrorValid.tr;
-                                  } else if (mNewPasswordController
-                                      .value.text !=
-                                      mConfirmPasswordController.value.text) {
-                                    message =
-                                    'New password doesn\'t match with confirm password';
-                                  }
-                                  if (message.isEmpty) {
-                                    onCall(mCurrentPasswordController.text,
-                                        mNewPasswordController.text);
-                                  } else {
-                                    AppAlert.showSnackBar(
-                                        Get.context!, message);
-                                  }
-                                },
-                                    bgColor: ColorConstants.cAppColors,
-                                    textColor: Colors.white)),
-                            SizedBox(
-                              height: 14.sp,
-                            ),
-                            Container(
-                                height: 26.5.sp,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12.sp),
-                                ),
-                                child: rectangleCornerButton('Cancel', () {
-                                  Get.back();
-                                },
-                                    bgColor: ColorConstants.cAppColors,
-                                    textColor: Colors.white))
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+          return Stack(
+            children: [
+              // Blur effect
+              BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
+                child: Container(
+                    color: Colors.black
+                        .withOpacity(0.2)), // Optional: Add overlay color
+              ),
+              // Dialog
+              Dialog(
+                insetPadding: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6.sp),
+                ),
+                elevation: 0,
+                backgroundColor: Colors.transparent,
+                child: showWidget,
+              )
+            ],
           );
         });
   }
 
-  static Future<void> showsForgottenPassword(BuildContext context,
-      Function onCall) async {
-    ///change password
-    final TextEditingController mEmailIdController = TextEditingController();
-
-    await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(6.0),
-            ),
-            elevation: 0,
-            insetPadding: EdgeInsets.zero,
-            contentPadding: EdgeInsets.zero,
-            backgroundColor: Colors.transparent,
-            content: Builder(
-              builder: (context) {
-                return Container(
-                  width: 35.w,
-                  margin: EdgeInsets.all(12.sp),
-                  padding: EdgeInsets.all(8.sp),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12.sp),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(16.sp),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              width: double.infinity,
-                            ),
-                            Text(
-                              sForgottenPassword.tr,
-                              style: getText500(
-                                  colors: Colors.black, size: 14.5.sp),
-                            ),
-                            SizedBox(
-                              height: 7.sp,
-                            ),
-                            Text(
-                              sForgottenPasswordDetails.tr,
-                              maxLines: 4,
-                              style: getText500(
-                                  colors: ColorConstants.black, size: 12.5.sp),
-                            ),
-                            SizedBox(
-                              height: 15.5.sp,
-                            ),
-                            TextInputWidget(
-                              placeHolder: sEnterUsername.tr,
-                              controller: mEmailIdController,
-                              errorText: null,
-                              textInputType: TextInputType.emailAddress,
-                              hintText: sEnterUsername.tr,
-                              showFloatingLabel: true,
-                              // prefixIcon: Icons.email_rounded,
-                            ),
-                            SizedBox(
-                              height: 16.5.sp,
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                    child: Container(
-                                        height: 21.5.sp,
-                                        alignment: Alignment.center,
-                                        // decoration: BoxDecoration(
-                                        //   borderRadius: BorderRadius.circular(5.sp),
-                                        // ),
-                                        child: rectangleCornerButton('Cancel',
-                                                () {
-                                              Get.back();
-                                            },
-                                            textSize: 13.sp,
-                                            bgColor: ColorConstants.cAppColors,
-                                            textColor: Colors.white))),
-                                SizedBox(
-                                  width: 15.sp,
-                                ),
-                                Expanded(
-                                    child: Container(
-                                        height: 21.5.sp,
-                                        alignment: Alignment.center,
-                                        // decoration: BoxDecoration(
-                                        //   borderRadius: BorderRadius.circular(5.sp),
-                                        // ),
-                                        child: rectangleCornerButton(sSubmit.tr,
-                                                () {
-                                              if (mEmailIdController
-                                                  .text.isNotEmpty) {
-                                                Get.back();
-                                                onCall(
-                                                  mEmailIdController.text,
-                                                );
-                                              } else {
-                                                AppAlert.showSnackBar(
-                                                    Get.context!,
-                                                    sForgottenPasswordDetails
-                                                        .tr);
-                                              }
-                                            },
-                                            textSize: 13.sp,
-                                            bgColor: ColorConstants.cAppColors,
-                                            textColor: Colors.white))),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          );
-        });
-  }
 }
-
-// rectangleRoundedCornerButton(String sTitle,
-//     Function onClick, {
-//       Color? bgColor,
-//       Color? textColor = Colors.white,
-//       double? size,
-//       double? height,
-//     }) {
-//   return GestureDetector(
-//     onTap: () {
-//       onClick();
-//     },
-//     child: Container(
-//       alignment: Alignment.center,
-//       height: height ?? 27.sp,
-//       decoration: BoxDecoration(
-//           border: Border.all(color: textColor ?? Colors.white, width: 2.sp),
-//           borderRadius: BorderRadius.circular(8.sp),
-//           color: bgColor),
-//       child: Text(
-//         sTitle,
-//         style: getTextNormal(
-//             size: size ?? 15.5.sp, colors: textColor ?? Colors.white),
-//         textAlign: TextAlign.center,
-//       ),
-//     ),
-//   );
-// }
 
 class AlertActionWithReturnString {
   final AlertAction alertAction;

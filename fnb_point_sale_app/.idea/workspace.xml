@@ -10,10 +10,85 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f183d832-d61e-4cff-a26c-5db2e295bf43" name="Changes" comment="home page top bar , side manu , drop down">
+      <change afterPath="$PROJECT_DIR$/assets/arrow.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/button_bar/add_button.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/button_bar/cancel_button.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/button_bar/hold_button.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/button_bar/reservation_button.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/button_bar/send_order_button.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/login_background.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/login_background_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/search.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/select_order/select_order.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/select_order/select_order_arror.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/common_view/button_view/button_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/common_view/button_view/controller/button_view_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/cancel_order/controller/cancel_order_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/cancel_order/view/cancel_order_list.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/cancel_order/view/cancel_order_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/create_order/controller/create_order_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/create_order/view/create_order_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/create_order/view/dine_in/dine_in_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/create_order/view/take_away/take_away_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/login_screen/view/login_screen_one.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/menu_home/view/search_order/controller/search_order_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/menu_home/view/search_order/view/menu_view/controller/menu_view_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/menu_home/view/search_order/view/menu_view/menu_row_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/menu_home/view/search_order/view/menu_view/menu_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/menu_home/view/search_order/view/search_order_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/menu_home/view/search_order/view/search_view/controller/search_view_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/menu_home/view/search_order/view/search_view/search_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/menu_home/view/search_order/view/select_menu_view/controller/select_menu_view_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/menu_home/view/search_order/view/select_menu_view/select_menu_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/menu_home/view/selected_order/controller/selected_order_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/menu_home/view/selected_order/view/selected_order_list.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/menu_home/view/selected_order/view/selected_order_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/menu_table/view/table_view/table_row_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/menu_table/view/table_view/table_summary/controller/table_summary_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/menu_table/view/table_view/table_summary/view/table_summary_order_list.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/menu_table/view/table_view/table_summary/view/table_summary_order_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/menu_table/view/table_view/table_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/payment_screen/controller/payment_screen_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/payment_screen/view/payment_order_list.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/payment_screen/view/payment_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/payment_screen/view/payment_type_list.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/verification_screen/controller/verification_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/verification_screen/view/verification_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/dynamic_height_grid_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/keyboard_widget.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/numeric_keyboard.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/data/mode/button_bar/button_bar_model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/utils/my_log_utils.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config_subset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/app_theme/my_app_theme.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/app_theme/my_app_theme.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/app_theme/theme/my_theme.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/app_theme/theme/my_theme.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/dashboard_screen/controller/dashboard_screen_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/controller/dashboard_screen_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/dashboard_screen/view/side_menu/view/side_menu_row.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/view/side_menu/view/side_menu_row.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/dashboard_screen/view/side_menu/view/side_menu_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/view/side_menu/view/side_menu_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/dashboard_screen/view/top_bar/view/top_bar_profile_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/view/top_bar/view/top_bar_profile_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/dashboard_screen/view/top_bar/view/top_bar_row.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/view/top_bar/view/top_bar_row.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/login_screen/controller/login_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/login_screen/controller/login_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/menu_home/view/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_home/view/home_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/menu_table/controller/table_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_table/controller/table_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/menu_table/view/table_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_table/view/table_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/splash_screen/view/splash_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/splash_screen/view/splash_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/routes/route_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routes/route_constants.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/web_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/web_constants.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/alert/app_alert.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/alert/app_alert.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/text_input_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/text_input_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/color_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/color_constants.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/image_assets_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/image_assets_constants.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/text_styles_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/text_styles_constants.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/lang/en_US.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/lang/en_US.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/lang/id_ID.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/lang/id_ID.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/lang/translation_service_key.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/lang/translation_service_key.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,18 +129,18 @@
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
     "io.flutter.reload.alreadyRun": "true",
-    "last_opened_file_path": "/Users/parthapaul/all_project/macbookpro/android_studio/dev_project/F-B-Point-of-Sales/fnb_point_sale_app/lib/model/dashboard_screen/view/top_bar/view",
+    "last_opened_file_path": "/Users/parthapaul/all_project/macbookpro/android_studio/dev_project/F-B-Point-of-Sales/fnb_point_sale_app/lib/model/create_order/view",
     "settings.editor.selected.configurable": "flutter.settings",
     "show.migrate.to.gradle.popup": "false"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/lib/model/dashboard_screen/view/top_bar/view" />
+      <recent name="$PROJECT_DIR$/lib/model/create_order/view" />
+      <recent name="$PROJECT_DIR$/lib/model/create_order/view/take_away" />
       <recent name="$PROJECT_DIR$/lib/model" />
-      <recent name="$PROJECT_DIR$/assets/side_menu" />
-      <recent name="$PROJECT_DIR$/lib/model/dashboard_screen/view/top_bar" />
-      <recent name="$PROJECT_DIR$/lib/model/dashboard_screen/view" />
+      <recent name="$PROJECT_DIR$/lib/model/menu_home/view/search_order/view/menu_view" />
+      <recent name="$PROJECT_DIR$/lib/model/menu_home/view/search_order/view" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib/model/dashboard_screen/view/top_bar/model" />

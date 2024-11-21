@@ -5,6 +5,8 @@ import 'dart:ui';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fnb_point_sale_app/model/menu_settings/view/settings_screen.dart';
 import 'package:fnb_point_sale_app/model/menu_table/view/table_screen.dart';
+import 'package:fnb_point_sale_base/constants/image_assets_constants.dart';
+import 'package:fnb_point_sale_base/data/mode/button_bar/button_bar_model.dart';
 import 'package:fnb_point_sale_base/utils/network_utils.dart';
 import 'package:get/get.dart';
 
@@ -58,4 +60,23 @@ class DashboardScreenController extends GetxController {
   }
 
   deleteController() {}
+
+  ///button bar
+  RxList<ButtonBarModel> mButtonBarModel = [
+    ButtonBarModel(
+        imageAssets: ImageAssetsConstants.newOrderButton,
+        buttonBarName: 'New Order'),
+    ButtonBarModel(
+        imageAssets: ImageAssetsConstants.holdOrderButton,
+        buttonBarName: 'Hold Order'),
+    ButtonBarModel(
+        imageAssets: ImageAssetsConstants.cancelOrderButton,
+        buttonBarName: 'Cancel Order'),
+    ButtonBarModel(
+        imageAssets: ImageAssetsConstants.sendOrderButton,
+        buttonBarName: 'Send Order'),
+    ButtonBarModel(
+        imageAssets: ImageAssetsConstants.reservationButton,
+        buttonBarName: 'Reservation'),
+  ].obs;
 }

@@ -59,17 +59,17 @@ class SideMenuScreen extends GetView<SideMenuController> {
 
             ///Version
             Container(
-              margin: EdgeInsets.all(13.sp),
+              margin: EdgeInsets.all(11.sp),
               child: Column(
                 children: [
                   Text(
                     'Version',
-                    style: getText600(size: 11.5.sp),
+                    style: getText500(size: 11.sp),
                   ),
                   Text(
                     '${controller.mDashboardScreenController.version}',
                     style: getText600(
-                        size: 12.sp, colors: ColorConstants.cAppButtonColour),
+                        size: 11.sp, colors: ColorConstants.cAppButtonColour),
                   )
                 ],
               ),

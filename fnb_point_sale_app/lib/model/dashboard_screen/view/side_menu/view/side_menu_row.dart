@@ -53,7 +53,7 @@ class SideMenuRow extends StatelessWidget {
               Text(
                 controller.sideMenu.value[index],
                 style: getTextRegular(
-                    size: 11.sp,
+                    size: 10.5.sp,
                     colors: controller
                                 .mDashboardScreenController.selectMenu.value ==
                             index
