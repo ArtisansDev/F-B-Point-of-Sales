@@ -26,6 +26,9 @@ class CashCalculateScreen extends StatelessWidget {
     return Obx(() => Container(
       margin: EdgeInsets.only(left: 13.sp, top: 12.sp, right: 13.sp),
       padding: EdgeInsets.only(bottom: 12.sp),
+      constraints:  BoxConstraints(
+        minHeight: 47.8.h, // Minimum height
+      ),
       width: double.infinity,
       decoration: BoxDecoration(
         color: ColorConstants.primaryBackgroundColor,

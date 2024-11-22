@@ -16,7 +16,9 @@ class OpenCashDrawerScreen extends GetView<OpenCashDrawerScreenController> {
   Widget build(BuildContext context) {
     Get.lazyPut(() => OpenCashDrawerScreenController());
     return FocusDetector(
-        onVisibilityGained: () {},
+        onVisibilityGained: () {
+          controller.addAmount();
+        },
         onVisibilityLost: () {},
         child: Container(
           margin: EdgeInsets.only(

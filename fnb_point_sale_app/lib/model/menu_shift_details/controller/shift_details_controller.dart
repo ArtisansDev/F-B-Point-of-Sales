@@ -13,8 +13,12 @@ class ShiftDetailsController extends GetxController {
 
   @override
   void onClose() {
-    Get.delete<OpenCashDrawerScreenController>();
-    Get.delete<DetailsScreenController>();
+    if (Get.isRegistered<OpenCashDrawerScreenController>()) {
+      Get.delete<OpenCashDrawerScreenController>();
+    }
+    if (Get.isRegistered<DetailsScreenController>()) {
+      Get.delete<DetailsScreenController>();
+    }
     super.onClose();
   }
 
