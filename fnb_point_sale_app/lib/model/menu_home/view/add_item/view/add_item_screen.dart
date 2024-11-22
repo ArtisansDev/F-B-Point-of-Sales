@@ -175,7 +175,6 @@ class AddItemScreen extends GetView<AddItemController> {
                       margin: EdgeInsets.only(
                           top: 9.sp, bottom: 9.sp, left: 15.sp, right: 15.sp),
                     ),
-
                     Container(
                         padding: EdgeInsets.only(
                             top: 11.sp,
@@ -197,14 +196,14 @@ class AddItemScreen extends GetView<AddItemController> {
                             ),
                             Row(
                               children: [
-                                selectCheckBox(isRound: false, isSelect: true),
+                                selectCheckBox(isRound: false, isSelect: false),
                                 SizedBox(width: 10.sp),
                                 Text(
                                   'Swiss Cheese',
                                   style: getTextRegular(
                                     size: 10.5.sp,
                                     colors:
-                                    ColorConstants.cAppCancelDilogColour,
+                                        ColorConstants.cAppCancelDilogColour,
                                   ),
                                 ),
                                 Text(
@@ -218,7 +217,7 @@ class AddItemScreen extends GetView<AddItemController> {
                                 Container(
                                   alignment: Alignment.centerRight,
                                   child: Text(
-                                    'RM 14.00',
+                                    'RM 1.50',
                                     style: getText500(
                                         colors: ColorConstants.black,
                                         size: 11.5.sp),
@@ -252,7 +251,7 @@ class AddItemScreen extends GetView<AddItemController> {
                                 Container(
                                   alignment: Alignment.centerRight,
                                   child: Text(
-                                    'RM 14.00',
+                                    'RM 2.00',
                                     style: getText500(
                                         colors: ColorConstants.black,
                                         size: 11.5.sp),
@@ -269,7 +268,6 @@ class AddItemScreen extends GetView<AddItemController> {
                       margin: EdgeInsets.only(
                           top: 9.sp, bottom: 9.sp, left: 15.sp, right: 15.sp),
                     ),
-
                     Container(
                       padding: EdgeInsets.only(
                           top: 11.sp, bottom: 11.sp, left: 15.sp, right: 15.sp),
@@ -322,7 +320,7 @@ class AddItemScreen extends GetView<AddItemController> {
                                   child: Container(
                                     alignment: Alignment.centerRight,
                                     child: Text(
-                                      'RM 14.00',
+                                      'RM 2.00',
                                       style: getText500(
                                           colors: ColorConstants.black,
                                           size: 11.5.sp),
@@ -355,7 +353,7 @@ class AddItemScreen extends GetView<AddItemController> {
                                         style: getTextRegular(
                                           size: 10.5.sp,
                                           colors:
-                                          ColorConstants.cAppButtonColour,
+                                              ColorConstants.cAppButtonColour,
                                         ),
                                       ),
                                     ],
@@ -369,7 +367,7 @@ class AddItemScreen extends GetView<AddItemController> {
                                   child: Container(
                                     alignment: Alignment.centerRight,
                                     child: Text(
-                                      'RM 14.00',
+                                      'RM 2.50',
                                       style: getText500(
                                           colors: ColorConstants.black,
                                           size: 11.5.sp),
@@ -412,13 +410,27 @@ class AddItemScreen extends GetView<AddItemController> {
                     ],
                   )),
 
+              ///TOTAL: RM 18.00
+              Align(
+                  alignment: Alignment.centerRight,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 11.sp, right: 15.sp),
+                    child: Text(
+                      'TOTAL: RM 18.00',
+                      style: getText600(
+                        size: 11.8.sp,
+                        colors: ColorConstants.cAppButtonColour,
+                      ),
+                    ),
+                  )),
+
               ///button
               Align(
                 alignment: Alignment.centerRight,
                 child: Container(
                     width: 13.w,
                     margin: EdgeInsets.only(
-                        left: 13.sp, right: 13.sp, top: 12.sp, bottom: 13.sp),
+                        left: 13.sp, right: 13.sp, top: 11.sp, bottom: 13.sp),
                     child: rectangleCornerButtonText600(
                       height: 19.5.sp,
                       textSize: 11.5.sp,
