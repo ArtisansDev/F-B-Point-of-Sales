@@ -9,31 +9,35 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f183d832-d61e-4cff-a26c-5db2e295bf43" name="Changes" comment="home page top bar , side manu , drop down">
-      <change afterPath="$PROJECT_DIR$/assets/open_drawer.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/print.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_shift_details/view/details/controller/details_screen_controller.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_shift_details/view/details/details_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_shift_details/view/details/view/payment_declaration_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_shift_details/view/details/view/transaction_info_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_shift_details/view/details/view/user_info_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_shift_details/view/open_cash_drawer/controller/cash_model/cash_model.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_shift_details/view/open_cash_drawer/controller/open_cash_drawer_screen_controller.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_shift_details/view/open_cash_drawer/open_cash_drawer_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_shift_details/view/open_cash_drawer/view/cash_calculate_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_shift_details/view/open_cash_drawer/view/cash_drawer_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_shift_details/view/open_cash_drawer/view/total_cash_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+    <list default="true" id="f183d832-d61e-4cff-a26c-5db2e295bf43" name="Changes" comment="add items">
+      <change afterPath="$PROJECT_DIR$/assets/calendar.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/controllers.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/models.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/utils.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/bricks/month_selector.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/bricks/month_wrap.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/bricks/tile.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/date_range_picker.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/dialogs.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/inputs/field.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/inputs/form_field.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/quick_selector.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/typedefs.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/menu_sales/view/sales_list/sales_list_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/menu_sales/view/top_search_view/calender_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/menu_sales/view/top_search_view/search_date_view.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/pay_now/controller/pay_now_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/pay_now/view/pay_now_order_list.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/pay_now/view/pay_now_order_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/dashboard_screen/controller/dashboard_screen_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/controller/dashboard_screen_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/dashboard_screen/view/side_menu/controller/side_menu_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/view/side_menu/controller/side_menu_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/menu_item/controller/menu_item_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_sales/controller/menu_sales_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/menu_item/view/menu_item_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_sales/view/menu_sales_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/menu_shift_details/controller/shift_details_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_shift_details/controller/shift_details_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/menu_shift_details/view/shift_details_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_shift_details/view/shift_details_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/dashboard_screen/view/dashboard_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/view/dashboard_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/menu_sales/controller/menu_sales_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_sales/controller/menu_sales_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/menu_sales/view/menu_sales_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_sales/view/menu_sales_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/menu_table/view/table_view/table_summary/controller/table_summary_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_table/view/table_view/table_summary/controller/table_summary_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/button_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/button_constants.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/text_input_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/text_input_widget.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/color_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/color_constants.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/image_assets_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/image_assets_constants.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/lang/translation_service_key.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/lang/translation_service_key.dart" afterDir="false" />
@@ -77,25 +81,25 @@
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
     "io.flutter.reload.alreadyRun": "true",
-    "last_opened_file_path": "/Users/parthapaul/all_project/macbookpro/android_studio/dev_project/F-B-Point-of-Sales/fnb_point_sale_app/lib/model/menu_shift_details/view/details/view",
+    "last_opened_file_path": "/Users/parthapaul/all_project/macbookpro/android_studio/dev_project/F-B-Point-of-Sales/fnb_point_sale_app/lib/model",
     "settings.editor.selected.configurable": "flutter.settings",
     "show.migrate.to.gradle.popup": "false"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/lib/model/menu_shift_details/view/details/view" />
+      <recent name="$PROJECT_DIR$/lib/model" />
+      <recent name="$PROJECT_DIR$/lib/model/menu_sales/view/sales_list" />
+      <recent name="$PROJECT_DIR$/lib/model/menu_sales/view" />
+      <recent name="$PROJECT_DIR$/lib/common_view" />
       <recent name="$PROJECT_DIR$/assets" />
-      <recent name="$PROJECT_DIR$/lib/model/menu_shift_details/view/open_cash_drawer/view" />
-      <recent name="$PROJECT_DIR$/lib/model/menu_shift_details/view/user_info" />
-      <recent name="$PROJECT_DIR$/lib/model/menu_shift_details/view/open_cash_drawer" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/model/menu_sales/view/top_search_view" />
+      <recent name="$PROJECT_DIR$/lib/model/menu_home/view" />
+      <recent name="$PROJECT_DIR$/lib/model/table_select/view" />
       <recent name="$PROJECT_DIR$/lib/model/menu_shift_details/view/details" />
       <recent name="$PROJECT_DIR$/lib/model/menu_shift_details/view/open_cash_drawer" />
-      <recent name="$PROJECT_DIR$/lib/model/dashboard_screen/view/top_bar/model" />
-      <recent name="$PROJECT_DIR$/lib/model/dashboard_screen/view/side_menu" />
-      <recent name="$PROJECT_DIR$/lib/model/dashboard_screen/view/side_menu/view" />
     </key>
   </component>
   <component name="RunManager">
@@ -169,7 +173,42 @@
       <option name="project" value="LOCAL" />
       <updated>1732176657296</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="shift details">
+      <created>1732239230173</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1732239230173</updated>
+    </task>
+    <task id="LOCAL-00010" summary="add items">
+      <created>1732254753083</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1732254753083</updated>
+    </task>
+    <task id="LOCAL-00011" summary="add items">
+      <created>1732255130793</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1732255130793</updated>
+    </task>
+    <task id="LOCAL-00012" summary="add items">
+      <created>1732255957838</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1732255957838</updated>
+    </task>
+    <task id="LOCAL-00013" summary="add items">
+      <created>1732256107863</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1732256107863</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -187,6 +226,8 @@
     <MESSAGE value="base set up" />
     <MESSAGE value="login page done" />
     <MESSAGE value="home page top bar , side manu , drop down" />
-    <option name="LAST_COMMIT_MESSAGE" value="home page top bar , side manu , drop down" />
+    <MESSAGE value="shift details" />
+    <MESSAGE value="add items" />
+    <option name="LAST_COMMIT_MESSAGE" value="add items" />
   </component>
 </project>

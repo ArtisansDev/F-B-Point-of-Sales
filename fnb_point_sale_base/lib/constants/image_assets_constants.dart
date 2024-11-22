@@ -4,6 +4,7 @@ class ImageAssetsConstants {
   static String appPrint = "assets/print.png";
   static String openDrawer = "assets/open_drawer.png";
   static String appSearch = "assets/search.png";
+  static String appCalendar = "assets/calendar.png";
   static String appArrow = "assets/arrow.png";
   static String loginBackground = "assets/login_background.png";
   static String loginBackground1 = "assets/login_background_1.png";

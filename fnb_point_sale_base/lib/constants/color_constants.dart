@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 class ColorConstants {
   static const Color primaryBackgroundColor = Color(0xFFF5F5F5);
   static const Color appEditText = Color(0xFFCACACA);
+  static const Color appTextSalesHader = Color(0xFF000331);
   static const Color appNumberText = Color(0xFF42353B);
   static const Color appEditTextHint = Color(0xFFD2D2D2);
+  static const Color appBackground = Color(0xFFDFDFDF);
   static const Color black = Colors.black;
   static const Color white = Colors.white;
   static const Color cAppButtonColour = Color(0xFF5591B2);

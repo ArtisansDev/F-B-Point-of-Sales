@@ -55,7 +55,7 @@ class DashboardScreen extends GetView<DashboardScreenController> {
   showView() {
     return Container(
         decoration: BoxDecoration(
-          color: ColorConstants.appEditTextHint,
+          color: ColorConstants.appBackground,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(8.sp),
           ),

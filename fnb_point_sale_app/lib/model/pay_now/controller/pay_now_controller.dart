@@ -2,16 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
 import 'package:get/get.dart';
-import '../../../../../dashboard_screen/controller/dashboard_screen_controller.dart';
-import '../../../../../payment_screen/controller/payment_screen_controller.dart';
-import '../../../../../payment_screen/view/payment_screen.dart';
-import '../../../../controller/table_controller.dart';
 
-class TableSummaryController extends GetxController {
+import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
+import '../../payment_screen/controller/payment_screen_controller.dart';
+import '../../payment_screen/view/payment_screen.dart';
+
+class PayNowController extends GetxController {
   Rxn<DashboardScreenController> mDashboardScreenController = Rxn<DashboardScreenController>();
   Rx<TextEditingController> remarkController = TextEditingController().obs;
 
-  TableSummaryController() {
+  PayNowController() {
     if (Get.isRegistered<DashboardScreenController>()) {
       mDashboardScreenController.value = Get.find<DashboardScreenController>();
     }

@@ -7,6 +7,8 @@ const String sTableNo = "Table No";
 const String sPhoneNumber = "Phone Number";
 const String sRemark = "Remark";
 const String sSearchItems = "Search Items";
+const String sSearchOrderNo = "Search Order No / Customer Name";
+const String sSelectDateRange = "Select Date Range";
 const String sReasonCancel = "Reason for Cancel";
 const String sAddRemarks = "Add Remarks";
 const String sNotes = "Notes";
@@ -19,6 +21,10 @@ const String sPassword = "password";
 const String sPasswordHint = "password hint";
 
 const String sLogin = "Login";
+const String sPAY = "PAY";
+const String sAll = "All";
+const String sDine_In = "Dine In";
+const String sTake_Away = "Take Away";
 const String sPrintOpeningBalance = "Print Opening Balance";
 const String sOpenCashDrawer = "Open Cash Drawer";
 const String sUserInfo = "User Info";
@@ -51,28 +57,9 @@ const String sTax = "Tax";
 const String sSubTotal = "Sub Total";
 const String sTakeAway = "Take Away";
 const String sDineIn = "Dine-In";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+const String sOrder = "Order#";
+const String sCustomerName = "Customer Name";
+const String sTime  = "Time";
+const String sType  = "Type";
+const String sTable  = "Table";
+const String sTotalBill  = "Total Bill";
