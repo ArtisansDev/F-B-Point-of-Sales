@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:fnb_point_sale_app/common_view/date_range_picker/models.dart';
-import 'package:fnb_point_sale_app/common_view/date_range_picker/widgets/dialogs.dart';
-import 'package:fnb_point_sale_app/common_view/date_range_picker/widgets/inputs/field.dart';
-import 'package:fnb_point_sale_app/common_view/date_range_picker/widgets/typedefs.dart';
+import 'package:fnb_point_sale_base/common/date_range_picker/models.dart';
+import 'package:fnb_point_sale_base/common/date_range_picker/widgets/dialogs.dart';
+import 'package:fnb_point_sale_base/common/date_range_picker/widgets/inputs/field.dart';
+import 'package:fnb_point_sale_base/common/date_range_picker/widgets/typedefs.dart';
 
 /// A [FormField] that wraps a [DateRangeField] and integrates with a form.
-class DateRangeFormField extends FormField<DateRange> {
+class DateRangeFormField extends FormField<DateRangeModel> {
   /// Creates a [DateRangeFormField].
   ///
   /// * [decoration] - The decoration to show around the field. If null, defaults to [InputDecoration].
@@ -21,23 +21,23 @@ class DateRangeFormField extends FormField<DateRange> {
     Key? key,
     InputDecoration? decoration,
     bool enabled = true,
-    DateRange? initialValue,
+    DateRangeModel? initialValue,
     required DateRangerPickerWidgetBuilder pickerBuilder,
-    FormFieldSetter<DateRange>? onSaved,
-    FormFieldValidator<DateRange>? validator,
-    Future<DateRange?> Function({
+    FormFieldSetter<DateRangeModel>? onSaved,
+    FormFieldValidator<DateRangeModel>? validator,
+    Future<DateRangeModel?> Function({
       required BuildContext widgetContext,
       required DateRangerPickerWidgetBuilder pickerBuilder,
     }) showDateRangePicker = showDateRangePickerDialogOnWidget,
-    Widget Function({DateRange? selectedDateRange})? dialogFooterBuilder,
-    Widget Function(BuildContext, DateRange?)? builder,
+    Widget Function({DateRangeModel? selectedDateRange})? dialogFooterBuilder,
+    Widget Function(BuildContext, DateRangeModel?)? builder,
   }) : super(
           key: key,
           initialValue:
-              initialValue ?? DateRange(DateTime.now(), DateTime.now()),
+              initialValue ?? DateRangeModel(DateTime.now(), DateTime.now()),
           onSaved: onSaved,
           validator: validator,
-          builder: (FormFieldState<DateRange> state) {
+          builder: (FormFieldState<DateRangeModel> state) {
             final selectedDateRange = state.value;
             final inputDecoration =
                 (decoration ?? const InputDecoration()).applyDefaults(

@@ -9,38 +9,30 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f183d832-d61e-4cff-a26c-5db2e295bf43" name="Changes" comment="add items">
-      <change afterPath="$PROJECT_DIR$/assets/calendar.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/controllers.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/models.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/utils.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/bricks/month_selector.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/bricks/month_wrap.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/bricks/tile.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/date_range_picker.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/dialogs.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/inputs/field.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/inputs/form_field.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/quick_selector.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/typedefs.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_sales/view/sales_list/sales_list_view.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_sales/view/top_search_view/calender_view.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_sales/view/top_search_view/search_date_view.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/pay_now/controller/pay_now_controller.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/pay_now/view/pay_now_order_list.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/pay_now/view/pay_now_order_screen.dart" afterDir="false" />
+    <list default="true" id="f183d832-d61e-4cff-a26c-5db2e295bf43" name="Changes" comment="sales done">
       <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/dashboard_screen/view/dashboard_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/view/dashboard_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Flutter/Generated.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/Generated.xcconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Flutter/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/common_view/check_box_create/coustom_check_box.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/check_box_create/coustom_check_box.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/common_view/date_range_picker/controllers.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/date_range_picker/controllers.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/common_view/date_range_picker/models.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/date_range_picker/models.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/common_view/date_range_picker/utils.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/date_range_picker/utils.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/bricks/month_selector.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/date_range_picker/widgets/bricks/month_selector.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/bricks/month_wrap.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/date_range_picker/widgets/bricks/month_wrap.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/bricks/tile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/date_range_picker/widgets/bricks/tile.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/date_range_picker.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/date_range_picker/widgets/date_range_picker.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/dialogs.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/date_range_picker/widgets/dialogs.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/inputs/field.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/date_range_picker/widgets/inputs/field.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/inputs/form_field.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/date_range_picker/widgets/inputs/form_field.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/quick_selector.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/date_range_picker/widgets/quick_selector.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/common_view/date_range_picker/widgets/typedefs.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/date_range_picker/widgets/typedefs.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/menu_home/view/add_item/view/add_item_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_home/view/add_item/view/add_item_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/model/menu_sales/controller/menu_sales_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_sales/controller/menu_sales_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/menu_sales/view/menu_sales_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_sales/view/menu_sales_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/menu_table/view/table_view/table_summary/controller/table_summary_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_table/view/table_view/table_summary/controller/table_summary_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/menu_sales/view/top_search_view/calender_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_sales/view/top_search_view/calender_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/table_select/view/table_select_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/table_select/view/table_select_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/button_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/button_constants.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/color_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/color_constants.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/image_assets_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/image_assets_constants.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/lang/translation_service_key.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/lang/translation_service_key.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,19 +65,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "cidr.known.project.marker": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "io.flutter.reload.alreadyRun": "true",
-    "last_opened_file_path": "/Users/parthapaul/all_project/macbookpro/android_studio/dev_project/F-B-Point-of-Sales/fnb_point_sale_app/lib/model",
-    "settings.editor.selected.configurable": "flutter.settings",
-    "show.migrate.to.gradle.popup": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/parthapaul/all_project/macbookpro/android_studio/dev_project/F-B-Point-of-Sales/fnb_point_sale_app/lib/model&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;flutter.settings&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib/model" />
@@ -208,7 +200,14 @@
       <option name="project" value="LOCAL" />
       <updated>1732256107863</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="sales done">
+      <created>1732288223883</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1732288223883</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -228,6 +227,7 @@
     <MESSAGE value="home page top bar , side manu , drop down" />
     <MESSAGE value="shift details" />
     <MESSAGE value="add items" />
-    <option name="LAST_COMMIT_MESSAGE" value="add items" />
+    <MESSAGE value="sales done" />
+    <option name="LAST_COMMIT_MESSAGE" value="sales done" />
   </component>
 </project>

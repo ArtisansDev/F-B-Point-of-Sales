@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fnb_point_sale_app/model/table_select/view/take_away/take_away_screen.dart';
 import 'package:fnb_point_sale_base/common/button_constants.dart';
+import 'package:fnb_point_sale_base/common/check_box_create/coustom_check_box.dart';
 import 'package:fnb_point_sale_base/common/text_input_widget.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/pattern_constants.dart';
@@ -11,8 +11,6 @@ import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-
-import '../../../../../common_view/check_box_create/coustom_check_box.dart';
 import '../controller/add_item_controller.dart';
 
 class AddItemScreen extends GetView<AddItemController> {

@@ -5,6 +5,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
+import 'package:fnb_point_sale_base/common/date_range_picker/models.dart';
+import 'package:fnb_point_sale_base/common/date_range_picker/widgets/date_range_picker.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/image_assets_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
@@ -15,9 +17,6 @@ import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
-import '../../../common_view/date_range_picker/widgets/date_range_picker.dart';
-import '../../../common_view/date_range_picker/widgets/inputs/field.dart';
-import '../../../common_view/date_range_picker/models.dart';
 import '../../menu_table/view/table_view/table_summary/controller/table_summary_controller.dart';
 import '../../menu_table/view/table_view/table_summary/view/table_summary_order_screen.dart';
 import '../../pay_now/controller/pay_now_controller.dart';

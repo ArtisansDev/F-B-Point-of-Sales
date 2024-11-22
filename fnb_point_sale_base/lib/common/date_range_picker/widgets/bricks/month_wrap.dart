@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fnb_point_sale_app/common_view/date_range_picker/models.dart';
+import 'package:fnb_point_sale_base/common/date_range_picker/models.dart';
 
 /// A widget that displays a wrap of a month's worth of day tiles.
 class MonthWrapWidget extends StatelessWidget {

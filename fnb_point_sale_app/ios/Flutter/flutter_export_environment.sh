@@ -1,6 +1,6 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Users/parthapaul/all_project/macbookpro/android_studio/flutter_sdk/flutter_3_22_2"
+export "FLUTTER_ROOT=/Users/parthapaul/all_project/macbookpro/android_studio/flutter_sdk/flutter_3_24_3"
 export "FLUTTER_APPLICATION_PATH=/Users/parthapaul/all_project/macbookpro/android_studio/dev_project/F-B-Point-of-Sales/fnb_point_sale_app"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib/main.dart"

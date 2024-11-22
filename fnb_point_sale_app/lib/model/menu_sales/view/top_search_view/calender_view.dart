@@ -9,17 +9,10 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:fnb_point_sale_base/common/text_input_widget.dart';
-import 'package:fnb_point_sale_base/constants/color_constants.dart';
+import 'package:fnb_point_sale_base/common/date_range_picker/models.dart';
+import 'package:fnb_point_sale_base/common/date_range_picker/widgets/inputs/field.dart';
 import 'package:fnb_point_sale_base/constants/image_assets_constants.dart';
-import 'package:fnb_point_sale_base/constants/pattern_constants.dart';
-import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
-import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:get/get.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
-import '../../../../common_view/date_range_picker/models.dart';
-import '../../../../common_view/date_range_picker/widgets/inputs/field.dart';
 import '../../controller/menu_sales_controller.dart';
 
 class CalenderView extends StatelessWidget {

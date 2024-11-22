@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:fnb_point_sale_app/common_view/date_range_picker/models.dart';
-import 'package:fnb_point_sale_app/common_view/date_range_picker/controllers.dart';
-import 'package:fnb_point_sale_app/common_view/date_range_picker/utils.dart';
-import 'package:fnb_point_sale_app/common_view/date_range_picker/widgets/bricks/month_selector.dart';
-import 'package:fnb_point_sale_app/common_view/date_range_picker/widgets/bricks/month_wrap.dart';
-import 'package:fnb_point_sale_app/common_view/date_range_picker/widgets/bricks/tile.dart';
-import 'package:fnb_point_sale_app/common_view/date_range_picker/widgets/quick_selector.dart';
+import 'package:fnb_point_sale_base/common/date_range_picker/models.dart';
+import 'package:fnb_point_sale_base/common/date_range_picker/controllers.dart';
+import 'package:fnb_point_sale_base/common/date_range_picker/utils.dart';
+import 'package:fnb_point_sale_base/common/date_range_picker/widgets/bricks/month_selector.dart';
+import 'package:fnb_point_sale_base/common/date_range_picker/widgets/bricks/month_wrap.dart';
+import 'package:fnb_point_sale_base/common/date_range_picker/widgets/bricks/tile.dart';
+import 'package:fnb_point_sale_base/common/date_range_picker/widgets/quick_selector.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 

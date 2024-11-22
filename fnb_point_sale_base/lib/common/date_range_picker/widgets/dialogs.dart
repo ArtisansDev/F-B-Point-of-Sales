@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:fnb_point_sale_app/common_view/date_range_picker/models.dart';
-import 'package:fnb_point_sale_app/common_view/date_range_picker/widgets/typedefs.dart';
+import 'package:fnb_point_sale_base/common/date_range_picker/models.dart';
+import 'package:fnb_point_sale_base/common/date_range_picker/widgets/typedefs.dart';
 import 'package:fnb_point_sale_base/common/button_constants.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
