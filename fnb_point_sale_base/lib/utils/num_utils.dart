@@ -215,3 +215,10 @@ bool hasOnlyNumbers(String input) {
   final RegExp regex = RegExp(r'^[0-9]+(\.[0-9]+)?$');
   return regex.hasMatch(input);
 }
+
+getRandomNumber(){
+  final random = Random();
+  final randomNumber = (random.nextDouble() * 1e10).toInt();
+  return '$randomNumber';
+}
+

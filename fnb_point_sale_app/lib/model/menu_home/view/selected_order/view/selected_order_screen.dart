@@ -38,49 +38,54 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
             child: Column(
               children: [
                 ///select order title
-                Container(
-                  margin: EdgeInsets.only(top: 8.sp, left: 8.sp, right: 8.sp),
-                  padding: EdgeInsets.all(8.sp),
-                  decoration: BoxDecoration(
-                    color: ColorConstants.cAppButtonLightColour,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(8.sp),
+                GestureDetector(
+                  onTap: () {
+                    controller.onSelectOrder();
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(top: 8.sp, left: 8.sp, right: 8.sp),
+                    padding: EdgeInsets.all(8.sp),
+                    decoration: BoxDecoration(
+                      color: ColorConstants.cAppButtonLightColour,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8.sp),
+                      ),
                     ),
-                  ),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        ImageAssetsConstants.selectOrder,
-                        fit: BoxFit.fitHeight,
-                        height: 16.5.sp,
-                      ),
-                      SizedBox(
-                        width: 8.sp,
-                      ),
-                      Expanded(
-                          child: Text(
-                        sSelectOrder.tr,
-                        style: getText500(
-                            size: 11.5.sp,
-                            colors: ColorConstants.cAppButtonColour),
-                      )),
-                      Container(
-                        margin: EdgeInsets.only(left: 8.sp),
-                        padding: EdgeInsets.all(8.sp),
-                        decoration: BoxDecoration(
-                          color: ColorConstants.cAppButtonColour,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(8.sp),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          ImageAssetsConstants.selectOrder,
+                          fit: BoxFit.fitHeight,
+                          height: 16.5.sp,
+                        ),
+                        SizedBox(
+                          width: 8.sp,
+                        ),
+                        Expanded(
+                            child: Text(
+                          sSelectOrder.tr,
+                          style: getText500(
+                              size: 11.5.sp,
+                              colors: ColorConstants.cAppButtonColour),
+                        )),
+                        Container(
+                          margin: EdgeInsets.only(left: 8.sp),
+                          padding: EdgeInsets.all(8.sp),
+                          decoration: BoxDecoration(
+                            color: ColorConstants.cAppButtonColour,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8.sp),
+                            ),
                           ),
-                        ),
-                        child: Image.asset(
-                          ImageAssetsConstants.selectOrderArror,
-                          fit: BoxFit.fitWidth,
-                          height: 11.5.sp,
-                          width: 11.5.sp,
-                        ),
-                      )
-                    ],
+                          child: Image.asset(
+                            ImageAssetsConstants.selectOrderArror,
+                            fit: BoxFit.fitWidth,
+                            height: 11.5.sp,
+                            width: 11.5.sp,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
 
@@ -200,7 +205,8 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
                     margin: EdgeInsets.all(
                       8.sp,
                     ),
-                    padding: EdgeInsets.only(left:8.sp,right: 8.sp,top: 3.sp,bottom: 5.sp),
+                    padding: EdgeInsets.only(
+                        left: 8.sp, right: 8.sp, top: 3.sp, bottom: 5.sp),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -229,7 +235,8 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
                     margin: EdgeInsets.all(
                       8.sp,
                     ),
-                    padding: EdgeInsets.only(left:8.sp,right: 8.sp,top: 5.sp,bottom: 5.sp),
+                    padding: EdgeInsets.only(
+                        left: 8.sp, right: 8.sp, top: 5.sp, bottom: 5.sp),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

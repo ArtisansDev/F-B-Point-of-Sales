@@ -25,8 +25,8 @@ class PaymentScreen extends GetView<PaymentScreenController> {
         onVisibilityGained: () {},
         onVisibilityLost: () {},
         child: Container(
-          height: 85.h,
-          width: 25.w,
+          height: 88.h,
+          width: 30.w,
           alignment: Alignment.topCenter,
           decoration: BoxDecoration(
             color: ColorConstants.white,

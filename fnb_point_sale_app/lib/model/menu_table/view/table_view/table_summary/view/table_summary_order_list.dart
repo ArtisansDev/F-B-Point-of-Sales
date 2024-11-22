@@ -136,27 +136,32 @@ class TableSummaryOrderList extends StatelessWidget {
                 ),
 
                 /// Add More Items
-                Container(
-                  margin: EdgeInsets.only(top: 8.sp, left: 8.sp, right: 8.sp),
-                  padding: EdgeInsets.all(8.sp),
-                  decoration: BoxDecoration(
-                    color: ColorConstants.cAppButtonLightColour,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(8.sp),
+                GestureDetector(
+                  onTap: (){
+                    controller.addMore();
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(top: 8.sp, left: 8.sp, right: 8.sp),
+                    padding: EdgeInsets.all(8.sp),
+                    decoration: BoxDecoration(
+                      color: ColorConstants.cAppButtonLightColour,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8.sp),
+                      ),
                     ),
-                  ),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 13.sp,
-                      ),
-                      Text(
-                        sAddMoreItems.tr,
-                        style: getText600(
-                            size: 12.sp,
-                            colors: ColorConstants.cAppButtonColour),
-                      ),
-                    ],
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 13.sp,
+                        ),
+                        Text(
+                          sAddMoreItems.tr,
+                          style: getText600(
+                              size: 12.sp,
+                              colors: ColorConstants.cAppButtonColour),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

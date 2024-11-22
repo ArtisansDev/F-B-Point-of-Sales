@@ -10,46 +10,25 @@ import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import '../../controller/create_order_controller.dart';
+import '../../controller/table_select_controller.dart';
 
-class DineInScreen extends StatelessWidget {
-  late CreateOrderController controller;
+class TakeAwayScreen extends StatelessWidget {
+  late TableSelectController controller;
 
-  DineInScreen({super.key}) {
-    controller = Get.find<CreateOrderController>();
-  }
+   TakeAwayScreen({super.key}){
+     controller =  Get.find<TableSelectController>();
+   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Column(
+          () => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ///Table No
-          Container(
-              height: 20.sp,
-              margin: EdgeInsets.only(left: 13.sp, right: 13.sp, top: 5.sp),
-              child: TextInputWidget(
-                placeHolder: sTableNo.tr,
-                controller: controller.sTableNoController.value,
-                errorText: null,
-                textInputType: TextInputType.emailAddress,
-                hintText: sTableNo.tr,
-                showFloatingLabel: false,
-                topPadding: 5.sp,
-                hintTextSize: 11.sp,
-                textSize: 11.5.sp,
-                hintTextColor: ColorConstants.black.withOpacity(0.80),
-                onFilteringTextInputFormatter: [
-                  FilteringTextInputFormatter.allow(
-                      RegExp(AppUtilConstants.patternOnlyString)),
-                ],
-              )),
-
           ///Enter Name
           Container(
               height: 20.sp,
-              margin: EdgeInsets.only(left: 13.sp, right: 13.sp, top: 10.sp),
+              margin: EdgeInsets.only(left: 13.sp, right: 13.sp,top: 5.sp),
               child: TextInputWidget(
                 placeHolder: sEnterName.tr,
                 controller: controller.enterNameController.value,
@@ -70,7 +49,7 @@ class DineInScreen extends StatelessWidget {
           ///Phone Number
           Container(
               height: 20.sp,
-              margin: EdgeInsets.only(left: 13.sp, right: 13.sp, top: 10.sp),
+              margin: EdgeInsets.only(left: 13.sp, right: 13.sp,top: 10.sp),
               child: TextInputWidget(
                 placeHolder: sPhoneNumber.tr,
                 controller: controller.sPhoneNumberController.value,
@@ -89,37 +68,16 @@ class DineInScreen extends StatelessWidget {
                 ],
               )),
 
-          ///Date to come
+          ///Schedule
           Container(
               height: 20.sp,
-              margin: EdgeInsets.only(left: 13.sp, right: 13.sp, top: 10.sp),
+              margin: EdgeInsets.only(left: 13.sp, right: 13.sp,top: 10.sp),
               child: TextInputWidget(
-                placeHolder: sDatetocome.tr,
-                controller: controller.sDateToComeController.value,
+                placeHolder: sSchedule.tr,
+                controller: controller.scheduleController.value,
                 errorText: null,
                 textInputType: TextInputType.text,
-                hintText: sDatetocome.tr,
-                showFloatingLabel: false,
-                topPadding: 12.sp,
-                hintTextSize: 11.sp,
-                textSize: 11.5.sp,
-                hintTextColor: ColorConstants.black.withOpacity(0.80),
-                onFilteringTextInputFormatter: [
-                  FilteringTextInputFormatter.allow(
-                      RegExp(AppUtilConstants.patternOnlyString)),
-                ],
-              )),
-
-          ///Time to come
-          Container(
-              height: 20.sp,
-              margin: EdgeInsets.only(left: 13.sp, right: 13.sp, top: 10.sp),
-              child: TextInputWidget(
-                placeHolder: sTimeToCome.tr,
-                controller: controller.sTimeToComeController.value,
-                errorText: null,
-                textInputType: TextInputType.text,
-                hintText: sTimeToCome.tr,
+                hintText: sSchedule.tr,
                 showFloatingLabel: false,
                 topPadding: 12.sp,
                 hintTextSize: 11.sp,
@@ -133,7 +91,7 @@ class DineInScreen extends StatelessWidget {
 
           ///notes
           Container(
-              margin: EdgeInsets.only(left: 13.sp, right: 13.sp, top: 10.sp),
+              margin: EdgeInsets.only(left: 13.sp, right: 13.sp,top: 10.sp),
               child: TextInputWidget(
                 placeHolder: sNotes.tr,
                 controller: controller.notesController.value,
@@ -151,6 +109,7 @@ class DineInScreen extends StatelessWidget {
                       RegExp(AppUtilConstants.patternOnlyString)),
                 ],
               )),
+
         ],
       ),
     );

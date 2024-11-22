@@ -24,4 +24,10 @@ class TableSummaryController extends GetxController {
       Get.delete<PaymentScreenController>();
     }
   }
+
+  void addMore() {
+    Get.back();
+    mTableController.value?.mDashboardScreenController.selectMenu.value = 0;
+    mTableController.value?.mDashboardScreenController.selectMenu.refresh();
+  }
 }

@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import '../../../model/cancel_order/controller/cancel_order_controller.dart';
 import '../../../model/cancel_order/view/cancel_order_screen.dart';
 import '../../../model/dashboard_screen/controller/dashboard_screen_controller.dart';
+import '../../../model/table_select/controller/table_select_controller.dart';
+import '../../../model/table_select/view/table_select_screen.dart';
 
 class ButtonViewController extends GetxController {
   Rxn<DashboardScreenController> mDashboardScreenController =
@@ -24,6 +26,20 @@ class ButtonViewController extends GetxController {
             barrierDismissible: true);
         if (Get.isRegistered<CancelOrderController>()) {
           Get.delete<CancelOrderController>();
+        }
+        break;
+      case 'Reservation':
+        await AppAlert.showView(Get.context!, const TableSelectScreen(),
+            barrierDismissible: true);
+        if (Get.isRegistered<TableSelectController>()) {
+          Get.delete<TableSelectController>();
+        }
+        break;
+      case 'New Order':
+        await AppAlert.showView(Get.context!, const TableSelectScreen(),
+            barrierDismissible: true);
+        if (Get.isRegistered<TableSelectController>()) {
+          Get.delete<TableSelectController>();
         }
         break;
     }

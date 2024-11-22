@@ -319,7 +319,7 @@ class TableSummaryOrderScreen extends GetView<TableSummaryController> {
 
                 ///button Pay and Invoice
                 Container(
-                    margin: EdgeInsets.only(left: 8.sp, right: 8.sp, top: 8.sp),
+                    margin: EdgeInsets.only(left: 8.sp, right: 8.sp, top: 8.sp,bottom: 8.sp),
                     child: rectangleCornerButtonText600(
                       boderColor: ColorConstants.cAppButtonInviceColour,
                       bgColor: ColorConstants.cAppButtonInviceColour,
