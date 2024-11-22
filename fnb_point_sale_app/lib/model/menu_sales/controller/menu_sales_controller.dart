@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
 
-class MenuItemController extends GetxController {
+class MenuSalesController extends GetxController {
   DashboardScreenController mDashboardScreenController = Get.find<DashboardScreenController>();
 
 

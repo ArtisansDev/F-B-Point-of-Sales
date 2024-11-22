@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fnb_point_sale_base/constants/color_constants.dart';
-import 'package:fnb_point_sale_base/constants/image_assets_constants.dart';
-import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 import '../controller/shift_details_controller.dart';
+import 'details/details_screen.dart';
+import 'open_cash_drawer/open_cash_drawer_screen.dart';
 
 class ShiftDetailsScreen extends GetView<ShiftDetailsController> {
   const ShiftDetailsScreen({super.key});
@@ -17,19 +15,13 @@ class ShiftDetailsScreen extends GetView<ShiftDetailsController> {
     return FocusDetector(
         onVisibilityGained: () {},
         onVisibilityLost: () {},
-        child: Container(
-          margin: EdgeInsets.only(top: 8.sp, left: 8.sp, right: 8.sp,bottom: 8.sp),
-          decoration: BoxDecoration(
-            color: ColorConstants.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(8.sp),
-            ),
-          ),
-          alignment: Alignment.center,
-          child: Text(
-            'ShiftDetails In-processing',
-            style: getText600(size: 15.sp, colors: ColorConstants.cAppColors),
-          ),
-        ));
+        child: const Row(
+          children: [
+            Expanded(flex: 9, child: DetailsScreen()),
+            Expanded(flex: 4, child: OpenCashDrawerScreen())
+          ],
+        )
+
+    );
   }
 }

@@ -15,9 +15,23 @@ const String sTimeToCome = "Time to come";
 const String sUsernameHint = "Please enter your username";
 
 const String sPassword = "password";
-const String sPasswordHint = "password_hint";
+const String sPasswordHint = "password hint";
 
 const String sLogin = "Login";
+const String sPrintOpeningBalance = "Print Opening Balance";
+const String sOpenCashDrawer = "Open Cash Drawer";
+const String sUserInfo = "User Info";
+const String sTransactionInfo = "Transaction Info";
+const String sPaymentDeclaration = "Payment Declaration";
+const String sCounter = "Counter";
+const String sCashier = "Cashier";
+const String sCash = "Cash";
+const String sSales = "Sales";
+const String sVouchersCreate = "Vouchers\nGenerated";
+const String sRefund = "Refund";
+const String sBookingPayment = "Booking Payment";
+const String sBusinessDay = "Business Day";
+const String sCashCollected = "Cash Collected";
 const String sPlaceOrder = "PLACE ORDER";
 const String sCancelOrder = "Cancel Order";
 const String sReserveNow = "Reserve Now";

@@ -14,8 +14,14 @@ class ColorConstants {
   static const Color cAppButtonLightColour = Color(0xFFE7EFF4);
   static const Color cAppCancelDilogBackgroundColour = Color(0xFFE8EAEA);
   static const Color cAppCancelDilogDeviderColour = Color(0xFFC2c2c2);
+  static const Color cAppOpenCounterAmountBackground = Color(0xFFB8B8B8);
   static const Color cAppButtonInviceColour = Color(0xFF85D4A0);
   static const Color cAppTextInviceColour = Color(0xFF108438);
+
+  ///shift details
+  static const Color cShiftDetailsColour1 = Color(0xFFE4F6F8);
+  static const Color cShiftDetailsColour2 = Color(0xFFEBE3FF);
+  static const Color cShiftDetailsColour3 = Color(0xFFFFE4FB);
 
 
 

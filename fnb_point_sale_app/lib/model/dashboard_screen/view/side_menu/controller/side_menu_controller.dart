@@ -12,7 +12,7 @@ class SideMenuController extends GetxController {
   RxList<String> sideMenu = (dotenv.env['SIDE_MENU']?.split(',') ?? []).obs;
   RxList<String> sideMenuImage = ([
     ImageAssetsConstants.sideMenuHome,
-    ImageAssetsConstants.sideMenu,
+    ImageAssetsConstants.sideMenuSales,
     ImageAssetsConstants.sideMenuTable,
     ImageAssetsConstants.sideMenuSettings,
     ImageAssetsConstants.sideMenuShift

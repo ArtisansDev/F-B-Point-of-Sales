@@ -5,14 +5,15 @@ import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import '../controller/menu_item_controller.dart';
 
-class MenuItemScreen extends GetView<MenuItemController> {
-  const MenuItemScreen({super.key});
+import '../controller/menu_sales_controller.dart';
+
+class MenuSalesScreen extends GetView<MenuSalesController> {
+  const MenuSalesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => MenuItemController());
+    Get.lazyPut(() => MenuSalesController());
     return FocusDetector(
         onVisibilityGained: () {},
         onVisibilityLost: () {},
@@ -27,7 +28,7 @@ class MenuItemScreen extends GetView<MenuItemController> {
           ),
           alignment: Alignment.center,
           child: Text(
-            'Menu In-processing',
+            'Menu sales',
             style: getText600(size: 15.sp, colors: ColorConstants.cAppColors),
           ),
         ));

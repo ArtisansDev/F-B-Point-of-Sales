@@ -5,9 +5,17 @@
 import 'package:get/get.dart';
 
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
+import '../view/details/controller/details_screen_controller.dart';
+import '../view/open_cash_drawer/controller/open_cash_drawer_screen_controller.dart';
 
 class ShiftDetailsController extends GetxController {
   DashboardScreenController mDashboardScreenController = Get.find<DashboardScreenController>();
 
+  @override
+  void onClose() {
+    Get.delete<OpenCashDrawerScreenController>();
+    Get.delete<DetailsScreenController>();
+    super.onClose();
+  }
 
 }

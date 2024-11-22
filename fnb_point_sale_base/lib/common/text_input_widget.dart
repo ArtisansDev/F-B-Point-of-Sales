@@ -31,6 +31,7 @@ class TextInputWidget extends StatelessWidget {
   Function? onTextChange;
   int maxLines;
   double? topPadding;
+  double? leftPadding;
   double? prefixHeight;
   double? hintTextSize;
   double? textSize;
@@ -62,6 +63,7 @@ class TextInputWidget extends StatelessWidget {
     this.hintTextSize,
     this.textSize,
     this.topPadding,
+    this.leftPadding,
     this.onFilteringTextInputFormatter,
     this.maxLines = 1,
   });
@@ -208,8 +210,8 @@ class TextInputWidget extends StatelessWidget {
       cursorColor: ColorConstants.cAppButtonColour,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.only(
-            left: 15.sp,
-            right: 15.sp,
+            left: leftPadding??15.sp,
+            right: leftPadding??15.sp,
             top: topPadding ?? 13.sp,
             bottom: topPadding ?? 13.sp),
         floatingLabelBehavior: (showFloatingLabel ?? true)
