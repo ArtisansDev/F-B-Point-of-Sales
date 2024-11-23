@@ -31,6 +31,8 @@ dependencies:
     sdk: flutter
   flutter_pos_printer_platform:
     path: ../flutter_pos_printer_platform/
+
+  easy_localization: ^3.0.1
   json_annotation: ^4.8.0
   fluttertoast: 8.2.8
   intl: 0.19.0
