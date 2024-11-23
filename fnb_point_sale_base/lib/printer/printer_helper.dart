@@ -1,12 +1,11 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:typed_data';
 
 import 'package:barcode/barcode.dart';
-import 'package:fnb_point_sale_base/constants.dart';
 import 'package:fnb_point_sale_base/printer/types/open_cash_drawer_via_print_esc.dart';
 import 'package:fnb_point_sale_base/printer/types/printer_cut_via_print_esc.dart';
-import 'package:fnb_point_sale_base/utils/my_log_utils.dart';
 
-// import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -14,7 +13,6 @@ import 'package:printing/printing.dart';
 import '../data/local/database/printer/model/my_printer.dart';
 import '../data/local/database/printer/printer_local_api.dart';
 import '../locator.dart';
-import '../utils/num_utils.dart';
 import 'printer_view_model.dart';
 
 pw.Document createPDF(List<pw.Widget> allWidgets, bool isMultiPageNeeded) {

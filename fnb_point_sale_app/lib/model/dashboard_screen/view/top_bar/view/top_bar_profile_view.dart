@@ -120,6 +120,13 @@ class TopBarProfileView extends StatelessWidget {
               style: getTextRegular(size: 12.5.sp, colors: ColorConstants.cAppColors),
             ),
           ),
+          PopupMenuItem(
+            value: 5,
+            child: Text(
+              'Config Serial Port Devices',
+              style: getTextRegular(size: 12.5.sp, colors: ColorConstants.cAppColors),
+            ),
+          ),
         ],
         offset: Offset(0, 10.h),
         tooltip: 'Menu',
