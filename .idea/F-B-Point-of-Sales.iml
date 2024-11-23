@@ -2,7 +2,20 @@
 <module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/flutter_pos_printer_platform/build" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_pos_printer_platform/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_pos_printer_platform/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/fnb_point_sale_app/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/fnb_point_sale_app/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/fnb_point_sale_app/build" />
+      <excludeFolder url="file://$MODULE_DIR$/fnb_point_sale_base/build" />
+      <excludeFolder url="file://$MODULE_DIR$/fnb_point_sale_base/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/fnb_point_sale_base/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_pos_printer_platform/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_pos_printer_platform/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_pos_printer_platform/example/build" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
