@@ -8,8 +8,8 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
 void printPdf() async {
-  final doc = getDocument();
-  await printWidgets(doc,false,false);
+  List<pw.Widget> widgets = getDocument();
+  await printWidgets(widgets,false,false);
   // await Printing.layoutPdf(onLayout: (format) async => await doc.save());
 }
 
@@ -21,7 +21,7 @@ void printPdfDirect(Printer printer) async {
 }
 
 getDocument() {
-  return createPDF([
+  return [
     pw.Center(
       child: pw.Text('1. Hello World'),
     ),
@@ -62,7 +62,7 @@ getDocument() {
       child: pw.Text('10. Hello World'),
     ),
     pw.Container(height: 30),
-  ], true);
+  ];
 }
 
 void openCashDrawer(Printer printer) async {

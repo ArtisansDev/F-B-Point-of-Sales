@@ -72,7 +72,6 @@ Future<bool> printWidgets(List<pw.Widget> widgets, bool isMultiPageNeeded,
     if (!result) {
       return initiateManualPrint(createPDF(widgets, isMultiPageNeeded));
     }
-
     return true;
   } else {
     return initiateManualPrint(createPDF(widgets, isMultiPageNeeded));
