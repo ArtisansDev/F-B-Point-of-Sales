@@ -4,8 +4,11 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus
+  flutter_pos_printer_platform
   flutter_secure_storage_windows
+  network_info_plus
   permission_handler_windows
+  printing
   screen_retriever
   window_manager
 )

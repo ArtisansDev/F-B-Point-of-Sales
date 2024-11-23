@@ -2,8 +2,11 @@
 
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_app/common_view/logout_expired.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
+import 'package:fnb_point_sale_base/printer/types/test_printing.dart';
+import 'package:fnb_point_sale_base/printer/widgets/printer_configuration_widget.dart';
 import 'package:get/get.dart';
 
 import '../../../../../routes/route_constants.dart';
@@ -28,10 +31,22 @@ class TopBarController extends GetxController {
             Get.context!, 'Logout!', 'Do you want to log out?', () {
           logout();
         });
-
         break;
       case 2:
         exit(0);
+        break;
+      case 3:
+        printPdf();
+      case 4:
+        _searchPrinterDialog();
     }
+  }
+
+  Future<void> _searchPrinterDialog() async {
+    await showDialog(
+      context: Get.context!,
+      barrierDismissible: false,
+      builder: (context) => const PrinterConfigurationWidget(),
+    );
   }
 }

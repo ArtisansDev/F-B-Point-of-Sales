@@ -106,6 +106,20 @@ class TopBarProfileView extends StatelessWidget {
               getTextRegular(size: 12.5.sp, colors: ColorConstants.cAppColors),
             ),
           ),
+          PopupMenuItem(
+            value: 3,
+            child: Text(
+              'Test Manual Print',
+              style: getTextRegular(size: 12.5.sp, colors: ColorConstants.cAppColors),
+            ),
+          ),
+          PopupMenuItem(
+            value: 4,
+            child: Text(
+              'Printer Settings',
+              style: getTextRegular(size: 12.5.sp, colors: ColorConstants.cAppColors),
+            ),
+          ),
         ],
         offset: Offset(0, 10.h),
         tooltip: 'Menu',

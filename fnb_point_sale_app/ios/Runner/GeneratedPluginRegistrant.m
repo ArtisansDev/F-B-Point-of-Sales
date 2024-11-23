@@ -30,6 +30,12 @@
 @import flutter_pdfview;
 #endif
 
+#if __has_include(<flutter_pos_printer_platform/FlutterPosPrinterPlatformPlugin.h>)
+#import <flutter_pos_printer_platform/FlutterPosPrinterPlatformPlugin.h>
+#else
+@import flutter_pos_printer_platform;
+#endif
+
 #if __has_include(<flutter_secure_storage/FlutterSecureStoragePlugin.h>)
 #import <flutter_secure_storage/FlutterSecureStoragePlugin.h>
 #else
@@ -42,6 +48,12 @@
 @import fluttertoast;
 #endif
 
+#if __has_include(<network_info_plus/FLTNetworkInfoPlusPlugin.h>)
+#import <network_info_plus/FLTNetworkInfoPlusPlugin.h>
+#else
+@import network_info_plus;
+#endif
+
 #if __has_include(<path_provider_foundation/PathProviderPlugin.h>)
 #import <path_provider_foundation/PathProviderPlugin.h>
 #else
@@ -52,6 +64,12 @@
 #import <permission_handler_apple/PermissionHandlerPlugin.h>
 #else
 @import permission_handler_apple;
+#endif
+
+#if __has_include(<printing/PrintingPlugin.h>)
+#import <printing/PrintingPlugin.h>
+#else
+@import printing;
 #endif
 
 #if __has_include(<shared_preferences_foundation/SharedPreferencesPlugin.h>)
@@ -73,10 +91,13 @@
   [FilePickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FilePickerPlugin"]];
   [FlutterBluePlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterBluePlusPlugin"]];
   [FLTPDFViewFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPDFViewFlutterPlugin"]];
+  [FlutterPosPrinterPlatformPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterPosPrinterPlatformPlugin"]];
   [FlutterSecureStoragePlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterSecureStoragePlugin"]];
   [FluttertoastPlugin registerWithRegistrar:[registry registrarForPlugin:@"FluttertoastPlugin"]];
+  [FLTNetworkInfoPlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTNetworkInfoPlusPlugin"]];
   [PathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"PathProviderPlugin"]];
   [PermissionHandlerPlugin registerWithRegistrar:[registry registrarForPlugin:@"PermissionHandlerPlugin"]];
+  [PrintingPlugin registerWithRegistrar:[registry registrarForPlugin:@"PrintingPlugin"]];
   [SharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"SharedPreferencesPlugin"]];
   [SqflitePlugin registerWithRegistrar:[registry registrarForPlugin:@"SqflitePlugin"]];
 }
