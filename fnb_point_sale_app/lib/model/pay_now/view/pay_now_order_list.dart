@@ -76,7 +76,7 @@ class PayNowOrderList extends StatelessWidget {
 
         ///Order listing
         Container(
-            constraints: BoxConstraints(minHeight: Platform.isWindows?40.5.h:45.5.h),
+            constraints: BoxConstraints(minHeight: Platform.isWindows?35.h:45.5.h),
             child: Container(
               margin: EdgeInsets.only(
                   top: 0.sp, left: 8.sp, right: 8.sp, bottom: 8.sp),
