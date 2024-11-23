@@ -8,6 +8,8 @@
  * Ticket       : 
  */
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
@@ -75,7 +77,7 @@ class TableSummaryOrderList extends StatelessWidget {
 
         ///Order listing
         Container(
-            constraints: BoxConstraints(minHeight: 40.5.h),
+            constraints: BoxConstraints(minHeight: Platform.isWindows?36.h:40.5.h),
             child: Column(
               children: [
                 Container(

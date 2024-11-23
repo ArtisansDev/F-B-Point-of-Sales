@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,7 +25,7 @@ class AddItemScreen extends GetView<AddItemController> {
         onVisibilityGained: () {},
         onVisibilityLost: () {},
         child: Container(
-          height: 75.h,
+          height:  Platform.isWindows?80.h:75.h,
           width: 50.w,
           alignment: Alignment.topCenter,
           decoration: BoxDecoration(
