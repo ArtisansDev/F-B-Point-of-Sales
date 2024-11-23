@@ -7,6 +7,7 @@ import '../../common/button_constants.dart';
 import '../../common/my_data_container_widget.dart';
 import '../../common/my_ink_well_widget.dart';
 import '../../constants/color_constants.dart';
+import '../../constants/text_styles_constants.dart';
 import '../../lang/translation_service_key.dart';
 import '../printer_view_model.dart';
 import '../types/test_printing.dart';
@@ -39,11 +40,11 @@ class _PrinterConfigurationWidgetState
           children: [
             getHeader(),
             const Divider(),
-            const Text(
+             Text(
               'Primary Printer',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+              style: getText600(
+                size: 11.sp,
+                colors: ColorConstants.black
               ),
             ),
             getPrimaryPrinter(),
@@ -60,7 +61,7 @@ class _PrinterConfigurationWidgetState
               child: getPrinters(),
             ),
             SizedBox(width: 2.0.h),
-            Container(
+            SizedBox(
               width: 10.w,
               child: rectangleCornerButtonText600(
                 textSize: 10.sp,
