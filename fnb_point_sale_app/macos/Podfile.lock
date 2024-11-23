@@ -4,9 +4,13 @@ PODS:
     - ReachabilitySwift
   - flutter_blue_plus (0.0.1):
     - FlutterMacOS
+  - flutter_libserialport (0.0.1):
+    - FlutterMacOS
+    - libserialport
   - flutter_secure_storage_macos (6.1.1):
     - FlutterMacOS
   - FlutterMacOS (1.0.0)
+  - libserialport (0.1.1)
   - network_info_plus (0.0.1):
     - FlutterMacOS
   - path_provider_foundation (0.0.1):
@@ -29,6 +33,7 @@ PODS:
 DEPENDENCIES:
   - connectivity_plus (from `Flutter/ephemeral/.symlinks/plugins/connectivity_plus/macos`)
   - flutter_blue_plus (from `Flutter/ephemeral/.symlinks/plugins/flutter_blue_plus/macos`)
+  - flutter_libserialport (from `Flutter/ephemeral/.symlinks/plugins/flutter_libserialport/macos`)
   - flutter_secure_storage_macos (from `Flutter/ephemeral/.symlinks/plugins/flutter_secure_storage_macos/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - network_info_plus (from `Flutter/ephemeral/.symlinks/plugins/network_info_plus/macos`)
@@ -41,6 +46,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - libserialport
     - ReachabilitySwift
 
 EXTERNAL SOURCES:
@@ -48,6 +54,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/connectivity_plus/macos
   flutter_blue_plus:
     :path: Flutter/ephemeral/.symlinks/plugins/flutter_blue_plus/macos
+  flutter_libserialport:
+    :path: Flutter/ephemeral/.symlinks/plugins/flutter_libserialport/macos
   flutter_secure_storage_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/flutter_secure_storage_macos/macos
   FlutterMacOS:
@@ -70,8 +78,10 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   connectivity_plus: 18d3c32514c886e046de60e9c13895109866c747
   flutter_blue_plus: e2868679021f19d12a8c0c58a33f1df66ec7fa6a
+  flutter_libserialport: d1a505fd4b05785f7b50cc7c93b361937ea1c5bd
   flutter_secure_storage_macos: 59459653abe1adb92abbc8ea747d79f8d19866c9
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
+  libserialport: 1cb25e66ef3c92a8e59c2ea3820302c3fa2268cd
   network_info_plus: f4fbc7877ab7b3294500d9441dfa53cd54972d05
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   printing: 1dd6a1fce2209ec240698e2439a4adbb9b427637

@@ -31,6 +31,11 @@ public final class GeneratedPluginRegistrant {
       Log.e(TAG, "Error registering plugin flutter_blue_plus, com.lib.flutter_blue_plus.FlutterBluePlusPlugin", e);
     }
     try {
+      flutterEngine.getPlugins().add(new org.sigrok.flutter_libserialport.FlutterLibserialportPlugin());
+    } catch (Exception e) {
+      Log.e(TAG, "Error registering plugin flutter_libserialport, org.sigrok.flutter_libserialport.FlutterLibserialportPlugin", e);
+    }
+    try {
       flutterEngine.getPlugins().add(new io.endigo.plugins.pdfviewflutter.PDFViewFlutterPlugin());
     } catch (Exception e) {
       Log.e(TAG, "Error registering plugin flutter_pdfview, io.endigo.plugins.pdfviewflutter.PDFViewFlutterPlugin", e);

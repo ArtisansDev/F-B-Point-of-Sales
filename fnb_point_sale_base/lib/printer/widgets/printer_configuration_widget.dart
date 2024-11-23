@@ -31,64 +31,67 @@ class _PrinterConfigurationWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      backgroundColor: Colors.transparent,
-      alignment: Alignment.center,
-     // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-      child: Stack(
+    return Stack(
         alignment: Alignment.center,
-          children: [
-        // Blur effect
-        BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
-          child: Container(
-              color:
-                  Colors.black.withOpacity(0.2)), // Optional: Add overlay color
-        ),
-        Container(
-          height: 60.h,
-          width: 60.h,
-          decoration: BoxDecoration(
-              color: ColorConstants.white,
-              borderRadius: BorderRadius.circular(8.sp) // use instead of BorderRadius.all(Radius.circular(20))
-          ),
-          margin: const EdgeInsets.all(20),
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              getHeader(),
-              const Divider(),
-              Text(
-                'Primary Printer',
-                style: getText600(size: 13.sp, colors: ColorConstants.black),
+        children: [
+          // Blur effect
+          BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
+            child: Container(
+                color:
+                Colors.black.withOpacity(0.2)), // Optional: Add overlay color
+          ), Dialog(
+            backgroundColor: Colors.transparent,
+            alignment: Alignment.center,
+            // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+            child:
+            Container(
+              height: 60.h,
+              width: 60.h,
+              decoration: BoxDecoration(
+                  color: ColorConstants.white,
+                  borderRadius: BorderRadius.circular(8
+                      .sp) // use instead of BorderRadius.all(Radius.circular(20))
               ),
-              getPrimaryPrinter(),
-              const Divider(),
-              Text(
-                'Search Printers List',
-                style: getText600(size: 13.sp, colors: ColorConstants.black),
+              margin: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  getHeader(),
+                  const Divider(),
+                  Text(
+                    'Primary Printer',
+                    style: getText600(
+                        size: 13.sp, colors: ColorConstants.black),
+                  ),
+                  getPrimaryPrinter(),
+                  const Divider(),
+                  Text(
+                    'Search Printers List',
+                    style: getText600(
+                        size: 13.sp, colors: ColorConstants.black),
+                  ),
+                  const Divider(),
+                  Expanded(
+                    child: getPrinters(),
+                  ),
+                  SizedBox(width: 2.0.h),
+                  SizedBox(
+                    width: 10.w,
+                    child: rectangleCornerButtonText600(
+                      textSize: 11.sp,
+                      height: 19.sp,
+                      sCancel.tr,
+                          () {
+                        Get.back();
+                      },
+                    ),
+                  ),
+                ],
               ),
-              const Divider(),
-              Expanded(
-                child: getPrinters(),
-              ),
-              SizedBox(width: 2.0.h),
-              SizedBox(
-                width: 10.w,
-                child: rectangleCornerButtonText600(
-                  textSize: 11.sp,
-                  height: 19.sp,
-                  sCancel.tr,
-                  () {
-                    Get.back();
-                  },
-                ),
-              ),
-            ],
-          ),
-        )
-      ]),
-    );
+            ),
+          )
+        ]);
   }
 
   Widget getPrimaryPrinter() {
@@ -98,7 +101,10 @@ class _PrinterConfigurationWidgetState
           if (snapshot.hasError) {
             return Text(
               "Failed to search printers",
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .bodyLarge,
             );
           }
           if (snapshot.hasData) {
@@ -108,7 +114,10 @@ class _PrinterConfigurationWidgetState
             }
             return Text(
               "No Primary printer found",
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .bodyLarge,
             );
           }
           return const Text("Loading ...");
@@ -122,7 +131,10 @@ class _PrinterConfigurationWidgetState
           if (snapshot.hasError) {
             return Text(
               "Failed to search printers",
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .bodyLarge,
             );
           }
           if (snapshot.hasData) {
@@ -131,7 +143,10 @@ class _PrinterConfigurationWidgetState
             }
             return Text(
               "No printers found",
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .bodyLarge,
             );
           }
           return const Text("Loading ...");
@@ -152,63 +167,63 @@ class _PrinterConfigurationWidgetState
       padding: const EdgeInsets.all(10.0),
       child: MyDataContainerWidget(
           child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 5,
-          ),
-          Text('Url  : ${printer.url}'),
-          const SizedBox(
-            height: 5,
-          ),
-          Text('Name : ${printer.name}'),
-          const SizedBox(
-            height: 5,
-          ),
-          Text('Model : ${printer.model}'),
-          const SizedBox(
-            height: 5,
-          ),
-          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              InkWell(
-                  child: const Icon(
-                    Icons.open_in_browser,
-                    size: 20,
-                  ),
-                  onTap: () {
-                    openCashDrawer(printer);
-                  }),
               const SizedBox(
-                width: 40,
+                height: 5,
               ),
-              InkWell(
-                  child: const Icon(
-                    Icons.print,
-                    size: 20,
-                  ),
-                  onTap: () {
-                    printPdfDirect(printer);
-                  }),
+              Text('Url  : ${printer.url}'),
               const SizedBox(
-                width: 40,
+                height: 5,
               ),
-              InkWell(
-                  child: const Icon(
-                    Icons.save,
-                    size: 20,
+              Text('Name : ${printer.name}'),
+              const SizedBox(
+                height: 5,
+              ),
+              Text('Model : ${printer.model}'),
+              const SizedBox(
+                height: 5,
+              ),
+              Row(
+                children: [
+                  InkWell(
+                      child: const Icon(
+                        Icons.open_in_browser,
+                        size: 20,
+                      ),
+                      onTap: () {
+                        openCashDrawer(printer);
+                      }),
+                  const SizedBox(
+                    width: 40,
                   ),
-                  onTap: () {
-                    _savePrinter(printer);
-                  }),
+                  InkWell(
+                      child: const Icon(
+                        Icons.print,
+                        size: 20,
+                      ),
+                      onTap: () {
+                        printPdfDirect(printer);
+                      }),
+                  const SizedBox(
+                    width: 40,
+                  ),
+                  InkWell(
+                      child: const Icon(
+                        Icons.save,
+                        size: 20,
+                      ),
+                      onTap: () {
+                        _savePrinter(printer);
+                      }),
+                ],
+              ),
+              const SizedBox(
+                height: 5,
+              ),
             ],
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-        ],
-      )),
+          )),
     );
   }
 
@@ -216,7 +231,7 @@ class _PrinterConfigurationWidgetState
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-         Text(
+        Text(
           'Printer Configuration',
           style: getText600(size: 13.5.sp, colors: ColorConstants.black),
         ),

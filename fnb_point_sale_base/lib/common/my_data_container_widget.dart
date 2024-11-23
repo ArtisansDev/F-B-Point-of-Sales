@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 
+import '../constants/color_constants.dart';
+
 class MyDataContainerWidget extends StatelessWidget {
   final Widget child;
   final double? padding;
 
-  const MyDataContainerWidget({Key? key, required this.child, this.padding})
-      : super(key: key);
+  const MyDataContainerWidget({super.key, required this.child, this.padding});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(padding == null ? 15.0 : padding!),
       decoration: BoxDecoration(
-          color: Theme
-              .of(context)
-              .colorScheme
-              .onPrimaryContainer
-              .withOpacity(0.5),
+          color: ColorConstants.primaryBackgroundColor,
           border: Border.all(color: Theme
               .of(context)
               .dividerColor),

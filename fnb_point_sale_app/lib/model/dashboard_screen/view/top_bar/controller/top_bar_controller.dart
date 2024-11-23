@@ -7,6 +7,7 @@ import 'package:fnb_point_sale_app/common_view/logout_expired.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
 import 'package:fnb_point_sale_base/printer/types/test_printing.dart';
 import 'package:fnb_point_sale_base/printer/widgets/printer_configuration_widget.dart';
+import 'package:fnb_point_sale_base/serialportdevices/widgets/serial_port_device_config_widget.dart';
 import 'package:get/get.dart';
 
 import '../../../../../routes/route_constants.dart';
@@ -37,16 +38,29 @@ class TopBarController extends GetxController {
         break;
       case 3:
         printPdf();
+        break;
       case 4:
         _searchPrinterDialog();
+        break;
+      case 5:
+        _searchSerialPortDevicesDialog();
+        break;
     }
   }
 
   Future<void> _searchPrinterDialog() async {
     await showDialog(
       context: Get.context!,
-      barrierDismissible: false,
+      barrierDismissible: true,
       builder: (context) => const PrinterConfigurationWidget(),
+    );
+  }
+
+  Future<void> _searchSerialPortDevicesDialog() async {
+    await showDialog(
+      context: Get.context!,
+      barrierDismissible: true,
+      builder: (context) => const SerialPortDeviceConfigWidget(),
     );
   }
 }
