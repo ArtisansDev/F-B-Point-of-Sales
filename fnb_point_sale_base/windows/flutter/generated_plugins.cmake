@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus
+  flutter_libserialport
   flutter_pos_printer_platform
   flutter_secure_storage_windows
   network_info_plus
