@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/data/local/database/printer/model/my_printer.dart';
 import 'package:get/get.dart';
@@ -30,51 +32,62 @@ class _PrinterConfigurationWidgetState
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-      child: Container(
-        height: 600,
-        width: 600,
-        margin: const EdgeInsets.all(20),
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
+      backgroundColor: Colors.transparent,
+      alignment: Alignment.center,
+     // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      child: Stack(
+        alignment: Alignment.center,
           children: [
-            getHeader(),
-            const Divider(),
-             Text(
-              'Primary Printer',
-              style: getText600(
-                size: 11.sp,
-                colors: ColorConstants.black
-              ),
-            ),
-            getPrimaryPrinter(),
-            const Divider(),
-            const Text(
-              'Search Printers List',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const Divider(),
-            Expanded(
-              child: getPrinters(),
-            ),
-            SizedBox(width: 2.0.h),
-            SizedBox(
-              width: 10.w,
-              child: rectangleCornerButtonText600(
-                textSize: 10.sp,
-                height: 19.sp,
-                sCancel.tr,
-                () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ),
-          ],
+        // Blur effect
+        BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
+          child: Container(
+              color:
+                  Colors.black.withOpacity(0.2)), // Optional: Add overlay color
         ),
-      ),
+        Container(
+          height: 60.h,
+          width: 60.h,
+          decoration: BoxDecoration(
+              color: ColorConstants.white,
+              borderRadius: BorderRadius.circular(8.sp) // use instead of BorderRadius.all(Radius.circular(20))
+          ),
+          margin: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              getHeader(),
+              const Divider(),
+              Text(
+                'Primary Printer',
+                style: getText600(size: 13.sp, colors: ColorConstants.black),
+              ),
+              getPrimaryPrinter(),
+              const Divider(),
+              Text(
+                'Search Printers List',
+                style: getText600(size: 13.sp, colors: ColorConstants.black),
+              ),
+              const Divider(),
+              Expanded(
+                child: getPrinters(),
+              ),
+              SizedBox(width: 2.0.h),
+              SizedBox(
+                width: 10.w,
+                child: rectangleCornerButtonText600(
+                  textSize: 11.sp,
+                  height: 19.sp,
+                  sCancel.tr,
+                  () {
+                    Get.back();
+                  },
+                ),
+              ),
+            ],
+          ),
+        )
+      ]),
     );
   }
 
@@ -201,20 +214,12 @@ class _PrinterConfigurationWidgetState
 
   Widget getHeader() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text(
+         Text(
           'Printer Configuration',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
+          style: getText600(size: 13.5.sp, colors: ColorConstants.black),
         ),
-        MyInkWellWidget(
-            child: const Icon(Icons.close),
-            onTap: () {
-              Navigator.pop(context);
-            })
       ],
     );
   }

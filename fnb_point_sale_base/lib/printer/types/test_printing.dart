@@ -9,7 +9,8 @@ import 'package:printing/printing.dart';
 
 void printPdf() async {
   final doc = getDocument();
-  await Printing.layoutPdf(onLayout: (format) async => await doc.save());
+  await printWidgets(doc,false,false);
+  // await Printing.layoutPdf(onLayout: (format) async => await doc.save());
 }
 
 void printPdfDirect(Printer printer) async {
