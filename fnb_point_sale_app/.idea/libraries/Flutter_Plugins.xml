@@ -29,6 +29,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/printing-5.13.4" />
       <root url="file://$PROJECT_DIR$/../flutter_pos_printer_platform" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/network_info_plus-3.0.5" />
+      <root url="file://$PROJECT_DIR$/../flutter_libserialport" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

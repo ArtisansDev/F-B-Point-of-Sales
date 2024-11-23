@@ -9,6 +9,7 @@ class SplashScreenController extends GetxController {
   RxString version = ''.obs;
 
   getPackageInfo() async {
+    await Future.delayed(const Duration(seconds: 2));
     version.value = dotenv.env['APP_VERSION'] ?? '';
     nextPage();
   }
