@@ -9,6 +9,8 @@
  */
 
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
@@ -79,7 +81,7 @@ class SelectedOrderList extends StatelessWidget {
         Container(
             margin: EdgeInsets.only(
                 top: 0.sp, left: 8.sp, right: 8.sp, bottom: 8.sp),
-            constraints: BoxConstraints(minHeight: 31.h),
+            constraints: BoxConstraints(minHeight: Platform.isWindows?26.h:31.h),
             child: ListView.builder(
               padding: EdgeInsets.zero,
               shrinkWrap: true,
