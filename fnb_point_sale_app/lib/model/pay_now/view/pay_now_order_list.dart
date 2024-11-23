@@ -8,6 +8,8 @@
  * Ticket       : 
  */
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
@@ -74,7 +76,7 @@ class PayNowOrderList extends StatelessWidget {
 
         ///Order listing
         Container(
-            constraints: BoxConstraints(minHeight: 45.5.h),
+            constraints: BoxConstraints(minHeight: Platform.isWindows?40.5.h:45.5.h),
             child: Container(
               margin: EdgeInsets.only(
                   top: 0.sp, left: 8.sp, right: 8.sp, bottom: 8.sp),
