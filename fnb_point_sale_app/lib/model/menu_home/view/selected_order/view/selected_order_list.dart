@@ -29,6 +29,7 @@ class SelectedOrderList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Column(
       children: [
         ///title of order list
@@ -81,8 +82,7 @@ class SelectedOrderList extends StatelessWidget {
         Container(
             margin: EdgeInsets.only(
                 top: 0.sp, left: 8.sp, right: 8.sp, bottom: 8.sp),
-    // Platform.isWindows?26.:
-            constraints: BoxConstraints(minHeight: 50.sp),
+            constraints: BoxConstraints(minHeight: screenHeight*0.31),
             child: ListView.builder(
               padding: EdgeInsets.zero,
               shrinkWrap: true,
