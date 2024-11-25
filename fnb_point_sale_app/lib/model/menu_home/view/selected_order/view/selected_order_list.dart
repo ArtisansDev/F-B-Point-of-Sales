@@ -81,7 +81,8 @@ class SelectedOrderList extends StatelessWidget {
         Container(
             margin: EdgeInsets.only(
                 top: 0.sp, left: 8.sp, right: 8.sp, bottom: 8.sp),
-            constraints: BoxConstraints(minHeight: Platform.isWindows?26.h:31.h),
+    // Platform.isWindows?26.:
+            constraints: BoxConstraints(minHeight: 50.sp),
             child: ListView.builder(
               padding: EdgeInsets.zero,
               shrinkWrap: true,
