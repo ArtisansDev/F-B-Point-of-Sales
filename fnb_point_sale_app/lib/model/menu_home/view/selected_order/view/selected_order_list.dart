@@ -29,7 +29,6 @@ class SelectedOrderList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
     return Column(
       children: [
         ///title of order list
@@ -79,14 +78,12 @@ class SelectedOrderList extends StatelessWidget {
         ),
 
         ///Order listing
-        Container(
+        Expanded(child:  Container(
             margin: EdgeInsets.only(
                 top: 0.sp, left: 8.sp, right: 8.sp, bottom: 8.sp),
-            constraints: BoxConstraints(minHeight: screenHeight*0.31),
+            // constraints: BoxConstraints(minHeight: screenHeight*0.31),
             child: ListView.builder(
               padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
               itemCount: 3,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
@@ -114,9 +111,9 @@ class SelectedOrderList extends StatelessWidget {
                           ],
                         ) ,
                       ),
-                       Expanded(
-                              flex: 5,
-                              child: incDecView(index)),
+                      Expanded(
+                          flex: 5,
+                          child: incDecView(index)),
                       Expanded(
                           flex: 4,
                           child: Container(
@@ -130,7 +127,8 @@ class SelectedOrderList extends StatelessWidget {
                   ),
                 );
               },
-            )),
+            )))
+       ,
       ],
     );
   }

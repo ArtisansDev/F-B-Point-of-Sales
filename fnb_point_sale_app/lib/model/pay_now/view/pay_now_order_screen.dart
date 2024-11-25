@@ -33,8 +33,7 @@ class PayNowOrderScreen extends GetView<PayNowController> {
               Radius.circular(8.sp),
             ),
           ),
-          child: SingleChildScrollView(
-            child: Column(
+          child:  Column(
               children: [
                 ///select order title
                 Container(
@@ -195,7 +194,7 @@ class PayNowOrderScreen extends GetView<PayNowController> {
                 ),
 
                 ///OrderList
-                PayNowOrderList(),
+                Expanded(child: PayNowOrderList(),),
 
                 ///Sub Total
                 Container(
@@ -322,7 +321,6 @@ class PayNowOrderScreen extends GetView<PayNowController> {
                     )),
               ],
             ),
-          ),
         ));
   }
 }

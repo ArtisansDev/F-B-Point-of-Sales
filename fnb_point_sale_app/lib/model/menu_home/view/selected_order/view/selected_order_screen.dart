@@ -34,8 +34,7 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
               Radius.circular(8.sp),
             ),
           ),
-          child: SingleChildScrollView(
-            child: Column(
+          child:  Column(
               children: [
                 ///select order title
                 GestureDetector(
@@ -198,7 +197,7 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
                 ),
 
                 ///OrderList
-                SelectedOrderList(),
+                Expanded(child: SelectedOrderList()),
 
                 ///Sub Total
                 Container(
@@ -336,9 +335,10 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
                         controller.onPayment();
                       },
                     )),
+                SizedBox(height: 8.sp,)
               ],
             ),
-          ),
+
         ));
   }
 }

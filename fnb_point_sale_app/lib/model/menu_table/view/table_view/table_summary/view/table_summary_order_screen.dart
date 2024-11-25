@@ -33,8 +33,7 @@ class TableSummaryOrderScreen extends GetView<TableSummaryController> {
               Radius.circular(8.sp),
             ),
           ),
-          child: SingleChildScrollView(
-            child: Column(
+          child: Column(
               children: [
                 ///select order title
                 Container(
@@ -195,7 +194,7 @@ class TableSummaryOrderScreen extends GetView<TableSummaryController> {
                 ),
 
                 ///OrderList
-                TableSummaryOrderList(),
+                Expanded(child: TableSummaryOrderList()),
 
                 ///Sub Total
                 Container(
@@ -333,7 +332,6 @@ class TableSummaryOrderScreen extends GetView<TableSummaryController> {
                     )),
               ],
             ),
-          ),
         ));
   }
 }

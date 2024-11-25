@@ -1,7 +1,5 @@
 // ignore_for_file: depend_on_referenced_packages
 
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
@@ -23,15 +21,17 @@ import '../../pay_now/controller/pay_now_controller.dart';
 import '../../pay_now/view/pay_now_order_screen.dart';
 
 class MenuSalesController extends GetxController {
-  DashboardScreenController mDashboardScreenController = Get.find<DashboardScreenController>();
+  DashboardScreenController mDashboardScreenController =
+      Get.find<DashboardScreenController>();
   Rx<TextEditingController> searchController = TextEditingController().obs;
   RxString selectType = sAll.tr.obs;
-  Rx<TextEditingController> sSelectDateRangeController = TextEditingController().obs;
+  Rx<TextEditingController> sSelectDateRangeController =
+      TextEditingController().obs;
   DateRangeModel? selectedDateRange;
   List<DateTime> disabledDates = [];
 
-  Widget datePickerBuilder(
-      BuildContext context, dynamic Function(DateRangeModel?) onDateRangeChanged) {
+  Widget datePickerBuilder(BuildContext context,
+      dynamic Function(DateRangeModel?) onDateRangeChanged) {
     disabledDates.clear();
     for (var i = 1; i < 360; i++) {
       disabledDates.add(DateTime.now().add(Duration(days: i)));
@@ -86,41 +86,37 @@ class MenuSalesController extends GetxController {
       theme: CalendarTheme(
         selectedColor: ColorConstants.cAppButtonColour,
         dayNameTextStyle:
-        getTextRegular(colors: ColorConstants.cAppTaxColour, size: 10.4.sp),
+            getTextRegular(colors: ColorConstants.cAppTaxColour, size: 10.4.sp),
         inRangeColor: ColorConstants.cAppButtonLightColour,
         inRangeTextStyle:
-        getText500(colors: ColorConstants.cAppButtonColour, size: 11.sp),
+            getText500(colors: ColorConstants.cAppButtonColour, size: 11.sp),
         selectedTextStyle: getText500(size: 11.sp),
-        todayTextStyle:
-        getText600(colors: ColorConstants.black, size: 10.4.sp),
+        todayTextStyle: getText600(colors: ColorConstants.black, size: 10.4.sp),
         defaultTextStyle:
-        getTextRegular(colors: ColorConstants.black, size: 11.sp),
+            getTextRegular(colors: ColorConstants.black, size: 11.sp),
         radius: 10,
         tileSize: 40,
         disabledTextStyle: const TextStyle(color: Colors.grey),
         quickDateRangeBackgroundColor:
-        ColorConstants.cAppTaxColour.withOpacity(0.05),
+            ColorConstants.cAppTaxColour.withOpacity(0.05),
         selectedQuickDateRangeColor: ColorConstants.cAppButtonColour,
       ),
     );
   }
 
   void onDateSelected(DateTime? fromDate, DateTime? toDate) {
-      MyLogUtils.logDebug('fromDate : $fromDate, toDate : $toDate');
-      sSelectDateRangeController.value.text ='${DateFormat('dd/MM/yyyy').format(fromDate!)} - ${DateFormat('dd/MM/yyyy').format(toDate!)}';
+    MyLogUtils.logDebug('fromDate : $fromDate, toDate : $toDate');
+    sSelectDateRangeController.value.text =
+        '${DateFormat('dd/MM/yyyy').format(fromDate!)} - ${DateFormat('dd/MM/yyyy').format(toDate!)}';
   }
 
-  void onEdit(int index) async{
+  void onEdit(int index) async {
     await AppAlert.showView(
         Get.context!,
         const Row(
           children: [
-            Expanded(
-                flex: 7,
-                child: SizedBox()),
-            Expanded(
-                flex: 3,
-                child: TableSummaryOrderScreen())
+            Expanded(flex: 7, child: SizedBox()),
+            Expanded(flex: 3, child: TableSummaryOrderScreen())
           ],
         ),
         barrierDismissible: true);
@@ -129,17 +125,13 @@ class MenuSalesController extends GetxController {
     }
   }
 
-  void onPayNow(int index) async{
+  void onPayNow(int index) async {
     await AppAlert.showView(
         Get.context!,
         const Row(
           children: [
-            Expanded(
-                flex: 7,
-                child: SizedBox()),
-            Expanded(
-                flex: 3,
-                child: PayNowOrderScreen())
+            Expanded(flex: 7, child: SizedBox()),
+            Expanded(flex: 3, child: PayNowOrderScreen())
           ],
         ),
         barrierDismissible: true);
@@ -147,5 +139,4 @@ class MenuSalesController extends GetxController {
       Get.delete<PayNowController>();
     }
   }
-
 }

@@ -75,15 +75,12 @@ class PayNowOrderList extends StatelessWidget {
         ),
 
         ///Order listing
-        Container(
-            constraints: BoxConstraints(minHeight: Platform.isWindows?42.h:45.5.h),
+        Expanded(
             child: Container(
               margin: EdgeInsets.only(
                   top: 0.sp, left: 8.sp, right: 8.sp, bottom: 8.sp),
               child: ListView.builder(
                 padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
                 itemCount: 3,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(

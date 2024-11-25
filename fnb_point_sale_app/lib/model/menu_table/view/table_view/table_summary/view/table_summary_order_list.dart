@@ -76,98 +76,87 @@ class TableSummaryOrderList extends StatelessWidget {
         ),
 
         ///Order listing
-        Container(
-            constraints: BoxConstraints(minHeight: Platform.isWindows?36.h:40.5.h),
-            child: Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(
-                      top: 0.sp, left: 8.sp, right: 8.sp, bottom: 8.sp),
-                  child: ListView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 3,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        padding: EdgeInsets.only(
-                            left: 11.sp,
-                            right: 11.sp,
-                            top: 10.sp,
-                            bottom: 10.sp),
-                        child: Row(
+        Expanded(
+          child: Container(
+            margin: EdgeInsets.only(
+                top: 0.sp, left: 8.sp, right: 8.sp, bottom: 8.sp),
+            child: Expanded(
+                child: ListView.builder(
+              padding: EdgeInsets.zero,
+              itemCount: 3,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  padding: EdgeInsets.only(
+                      left: 11.sp, right: 11.sp, top: 10.sp, bottom: 10.sp),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 7,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(
-                              flex: 7,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Big Italian Salad',
-                                    maxLines: 1,
-                                    style: getText500(
-                                        size: 10.5.sp,
-                                        colors: ColorConstants.black),
-                                  ),
-                                  Text(
-                                    'This is some Description',
-                                    maxLines: 1,
-                                    style: getText300(
-                                        size: 10.5.sp,
-                                        colors: ColorConstants.black),
-                                  )
-                                ],
-                              ),
+                            Text(
+                              'Big Italian Salad',
+                              maxLines: 1,
+                              style: getText500(
+                                  size: 10.5.sp, colors: ColorConstants.black),
                             ),
-                            Expanded(flex: 5, child: incDecView(index)),
-                            Expanded(
-                                flex: 4,
-                                child: Container(
-                                    alignment: Alignment.centerRight,
-                                    child: Text(
-                                      'RM 25.00',
-                                      style: getText500(
-                                          size: 10.5.sp,
-                                          colors: ColorConstants.black),
-                                    ))),
+                            Text(
+                              'This is some Description',
+                              maxLines: 1,
+                              style: getText300(
+                                  size: 10.5.sp, colors: ColorConstants.black),
+                            )
                           ],
                         ),
-                      );
-                    },
-                  ),
-                ),
-
-                /// Add More Items
-                GestureDetector(
-                  onTap: (){
-                    controller.addMore();
-                  },
-                  child: Container(
-                    margin: EdgeInsets.only(top: 8.sp, left: 8.sp, right: 8.sp),
-                    padding: EdgeInsets.all(8.sp),
-                    decoration: BoxDecoration(
-                      color: ColorConstants.cAppButtonLightColour,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(8.sp),
                       ),
-                    ),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 13.sp,
-                        ),
-                        Text(
-                          sAddMoreItems.tr,
-                          style: getText600(
-                              size: 12.sp,
-                              colors: ColorConstants.cAppButtonColour),
-                        ),
-                      ],
-                    ),
+                      Expanded(flex: 5, child: incDecView(index)),
+                      Expanded(
+                          flex: 4,
+                          child: Container(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                'RM 25.00',
+                                style: getText500(
+                                    size: 10.5.sp,
+                                    colors: ColorConstants.black),
+                              ))),
+                    ],
                   ),
+                );
+              },
+            )),
+          ),
+        ),
+
+        /// Add More Items
+        GestureDetector(
+          onTap: () {
+            controller.addMore();
+          },
+          child: Container(
+            margin: EdgeInsets.only(top: 8.sp, left: 8.sp, right: 8.sp),
+            padding: EdgeInsets.all(8.sp),
+            decoration: BoxDecoration(
+              color: ColorConstants.cAppButtonLightColour,
+              borderRadius: BorderRadius.all(
+                Radius.circular(8.sp),
+              ),
+            ),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 13.sp,
+                ),
+                Text(
+                  sAddMoreItems.tr,
+                  style: getText600(
+                      size: 12.sp, colors: ColorConstants.cAppButtonColour),
                 ),
               ],
-            )),
+            ),
+          ),
+        ),
       ],
     );
   }
