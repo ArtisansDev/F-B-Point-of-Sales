@@ -15,6 +15,8 @@ class NetworkUtils {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile) {
       return true;
+    } else if (connectivityResult == ConnectivityResult.ethernet) {
+      return true;
     } else if (connectivityResult == ConnectivityResult.wifi) {
       return true;
     }
@@ -27,7 +29,6 @@ class NetworkUtils {
         .listen((ConnectivityResult connectivityResult) {
       if (connectivityResult == ConnectivityResult.mobile ||
           connectivityResult == ConnectivityResult.wifi) {
-        // debugPrint("Connected");
         listenForNetwork.add(true);
       } else {
         // debugPrint("No Internet");
