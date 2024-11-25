@@ -29,8 +29,10 @@ class SearchView extends GetView<SearchViewController> {
         ),
         child: Row(
           children: [
+
             Expanded(child:  Container(
               height: 22.sp,
+                alignment: Alignment.center,
                 margin: EdgeInsets.only( right: 13.sp),
                 child: TextInputWidget(
                   placeHolder: sSearchItems.tr,
