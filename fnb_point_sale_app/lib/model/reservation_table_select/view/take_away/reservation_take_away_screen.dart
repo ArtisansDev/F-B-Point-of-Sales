@@ -10,50 +10,25 @@ import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import '../../controller/table_select_controller.dart';
+import '../../controller/reservation_table_select_controller.dart';
 
-class DineInScreen extends StatelessWidget {
-  late TableSelectController controller;
+class ReservationTakeAwayScreen extends StatelessWidget {
+  late ReservationTableSelectController controller;
 
-  DineInScreen({super.key}) {
-    controller = Get.find<TableSelectController>();
-  }
+  ReservationTakeAwayScreen({super.key}){
+     controller =  Get.find<ReservationTableSelectController>();
+   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Column(
+          () => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ///Table No
-          Container(
-              height: 20.sp,
-              margin: EdgeInsets.only(left: 13.sp, right: 13.sp, top: 5.sp),
-              child: TextInputWidget(
-                isReadOnly: controller.sTableNumber.value != null,
-                placeHolder: sTableNo.tr,
-                controller: controller.sTableNoController.value,
-                errorText: null,
-                textInputType: TextInputType.emailAddress,
-                hintText: sTableNo.tr,
-                prefixIcon: Icons.table_bar,
-                prefixHeight: 13.sp,
-                showFloatingLabel: false,
-                topPadding: 5.sp,
-                hintTextSize: 11.sp,
-                textSize: 11.sp,
-                textColor: ColorConstants.cAppButtonColour,
-                hintTextColor: ColorConstants.black.withOpacity(0.80),
-                onFilteringTextInputFormatter: [
-                  FilteringTextInputFormatter.allow(
-                      RegExp(AppUtilConstants.patternOnlyString)),
-                ],
-              )),
-
           ///Enter Name
           Container(
               height: 20.sp,
-              margin: EdgeInsets.only(left: 13.sp, right: 13.sp, top: 10.sp),
+              margin: EdgeInsets.only(left: 13.sp, right: 13.sp,top: 5.sp),
               child: TextInputWidget(
                 placeHolder: sEnterName.tr,
                 controller: controller.enterNameController.value,
@@ -63,10 +38,8 @@ class DineInScreen extends StatelessWidget {
                 showFloatingLabel: false,
                 topPadding: 5.sp,
                 hintTextSize: 11.sp,
-                textSize: 11.sp,
+                textSize: 11.5.sp,
                 hintTextColor: ColorConstants.black.withOpacity(0.80),
-                prefixIcon: Icons.person_rounded,
-                prefixHeight: 13.sp,
                 onFilteringTextInputFormatter: [
                   FilteringTextInputFormatter.allow(
                       RegExp(AppUtilConstants.patternOnlyString)),
@@ -76,7 +49,7 @@ class DineInScreen extends StatelessWidget {
           ///Phone Number
           Container(
               height: 20.sp,
-              margin: EdgeInsets.only(left: 13.sp, right: 13.sp, top: 10.sp),
+              margin: EdgeInsets.only(left: 13.sp, right: 13.sp,top: 10.sp),
               child: TextInputWidget(
                 placeHolder: sPhoneNumber.tr,
                 controller: controller.sPhoneNumberController.value,
@@ -86,10 +59,8 @@ class DineInScreen extends StatelessWidget {
                 showFloatingLabel: false,
                 topPadding: 5.sp,
                 hintTextSize: 11.sp,
-                textSize: 11.sp,
+                textSize: 11.5.sp,
                 hintTextColor: ColorConstants.black.withOpacity(0.80),
-                prefixIcon: Icons.phone,
-                prefixHeight: 13.sp,
                 onFilteringTextInputFormatter: [
                   FilteringTextInputFormatter.allow(
                       RegExp(AppUtilConstants.patternOnlyNumber)),
@@ -97,9 +68,30 @@ class DineInScreen extends StatelessWidget {
                 ],
               )),
 
+          ///Schedule
+          Container(
+              height: 20.sp,
+              margin: EdgeInsets.only(left: 13.sp, right: 13.sp,top: 10.sp),
+              child: TextInputWidget(
+                placeHolder: sSchedule.tr,
+                controller: controller.scheduleController.value,
+                errorText: null,
+                textInputType: TextInputType.text,
+                hintText: sSchedule.tr,
+                showFloatingLabel: false,
+                topPadding: 12.sp,
+                hintTextSize: 11.sp,
+                textSize: 11.5.sp,
+                hintTextColor: ColorConstants.black.withOpacity(0.80),
+                onFilteringTextInputFormatter: [
+                  FilteringTextInputFormatter.allow(
+                      RegExp(AppUtilConstants.patternOnlyString)),
+                ],
+              )),
+
           ///notes
           Container(
-              margin: EdgeInsets.only(left: 13.sp, right: 13.sp, top: 10.sp),
+              margin: EdgeInsets.only(left: 13.sp, right: 13.sp,top: 10.sp),
               child: TextInputWidget(
                 placeHolder: sNotes.tr,
                 controller: controller.notesController.value,
@@ -110,13 +102,14 @@ class DineInScreen extends StatelessWidget {
                 topPadding: 12.sp,
                 maxLines: 4,
                 hintTextSize: 11.sp,
-                textSize: 11.sp,
+                textSize: 11.5.sp,
                 hintTextColor: ColorConstants.black.withOpacity(0.80),
                 onFilteringTextInputFormatter: [
                   FilteringTextInputFormatter.allow(
                       RegExp(AppUtilConstants.patternOnlyString)),
                 ],
               )),
+
         ],
       ),
     );

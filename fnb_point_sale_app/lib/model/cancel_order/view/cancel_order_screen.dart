@@ -23,8 +23,8 @@ class CancelOrderScreen extends GetView<CancelOrderController> {
         onVisibilityGained: () {},
         onVisibilityLost: () {},
         child: Container(
-          height: 70.h,
-          width: 25.w,
+          height: 80.h,
+          width: 30.w,
           alignment: Alignment.topCenter,
           decoration: BoxDecoration(
             color: ColorConstants.white,

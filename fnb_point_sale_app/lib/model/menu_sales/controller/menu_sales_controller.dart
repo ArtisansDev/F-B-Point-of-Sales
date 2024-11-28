@@ -14,6 +14,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
+import '../../cancel_order/controller/cancel_order_controller.dart';
+import '../../cancel_order/view/cancel_order_screen.dart';
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
 import '../../menu_table/view/table_view/table_summary/controller/table_summary_controller.dart';
 import '../../menu_table/view/table_view/table_summary/view/table_summary_order_screen.dart';
@@ -137,6 +139,14 @@ class MenuSalesController extends GetxController {
         barrierDismissible: true);
     if (Get.isRegistered<PayNowController>()) {
       Get.delete<PayNowController>();
+    }
+  }
+
+  void onDeleteSale(int index) async{
+    await AppAlert.showView(Get.context!, const CancelOrderScreen(),
+        barrierDismissible: true);
+    if (Get.isRegistered<CancelOrderController>()) {
+      Get.delete<CancelOrderController>();
     }
   }
 }

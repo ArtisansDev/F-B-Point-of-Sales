@@ -21,6 +21,7 @@ class TextInputWidget extends StatelessWidget {
   String? sPrefixText;
 
   Color? hintTextColor;
+  Color? textColor;
   Color? borderSideColor;
   Color? labelTextColor;
   Color? borderColor;
@@ -50,6 +51,7 @@ class TextInputWidget extends StatelessWidget {
     this.textInputType,
     this.borderColor,
     this.hintTextColor,
+    this.textColor,
     this.borderSideColor,
     this.labelTextColor,
     this.textCapitalization,
@@ -205,13 +207,13 @@ class TextInputWidget extends StatelessWidget {
       inputFormatters:
       onFilteringTextInputFormatter ?? <TextInputFormatter>[],
       style: getText500(
-          colors: ColorConstants.black, size: textSize ?? 12.5.sp),
+          colors: textColor??ColorConstants.black, size: textSize ?? 12.5.sp),
       textCapitalization: textCapitalization ?? TextCapitalization.none,
       cursorColor: ColorConstants.cAppButtonColour,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.only(
-            left: leftPadding??15.sp,
-            right: leftPadding??15.sp,
+            left: leftPadding ?? 15.sp,
+            right: leftPadding ?? 15.sp,
             top: topPadding ?? 13.sp,
             bottom: topPadding ?? 13.sp),
         floatingLabelBehavior: (showFloatingLabel ?? true)
@@ -219,7 +221,8 @@ class TextInputWidget extends StatelessWidget {
             : FloatingLabelBehavior.never,
         hintText: hintText,
         hintStyle: getText500(
-            colors: hintTextColor??ColorConstants.appEditTextHint, size: hintTextSize??12.sp),
+            colors: hintTextColor ?? ColorConstants.appEditTextHint,
+            size: hintTextSize ?? 12.sp),
         hintFadeDuration: const Duration(seconds: 0),
         errorText: errorText,
         errorStyle: getTextRegular(colors: Colors.red, size: 11.5.sp),
@@ -233,13 +236,19 @@ class TextInputWidget extends StatelessWidget {
         //     size: hintTextSize ?? 12.sp),
         prefixIcon: prefixIcon == null
             ? null
-            : Padding(
-          padding: EdgeInsets.only(right: 10.sp, left: 10.sp),
-          child: Icon(
-            prefixIcon,
-            size: 15.sp,
-          ), // icon is 48px widget.
-        ),
+            : GestureDetector(
+            onTap: () {
+              if (onClick != null) {
+                onClick!("prefixIcon");
+              }
+            },
+            child: Padding(
+              padding: EdgeInsets.only(right: 10.sp, left: 10.sp),
+              child: Icon(
+                prefixIcon,
+                size: prefixHeight ?? 15.sp,
+              ), // icon is 48px widget.
+            )),
         prefixIconColor: ColorConstants.cAppColorsMaterial.shade400,
         suffixIcon: suffixIcon == null
             ? null
@@ -260,28 +269,28 @@ class TextInputWidget extends StatelessWidget {
         suffixIconColor: ColorConstants.cAppColorsMaterial.shade700,
         border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.sp)),
-            borderSide:  BorderSide(
-              color:borderSideColor?? ColorConstants.appEditTextHint,
+            borderSide: BorderSide(
+              color: borderSideColor ?? ColorConstants.appEditTextHint,
             )),
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.sp)),
-            borderSide:  BorderSide(
-              color: borderSideColor??ColorConstants.appEditTextHint,
+            borderSide: BorderSide(
+              color: borderSideColor ?? ColorConstants.appEditTextHint,
             )),
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.sp)),
-            borderSide:  BorderSide(
-              color: borderSideColor??ColorConstants.appEditTextHint,
+            borderSide: BorderSide(
+              color: borderSideColor ?? ColorConstants.appEditTextHint,
             )),
         focusedErrorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.sp)),
-            borderSide:  BorderSide(
-              color: borderSideColor??ColorConstants.appEditTextHint,
+            borderSide: BorderSide(
+              color: borderSideColor ?? ColorConstants.appEditTextHint,
             )),
         disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.sp)),
-            borderSide:  BorderSide(
-              color: borderSideColor??ColorConstants.appEditTextHint,
+            borderSide: BorderSide(
+              color: borderSideColor ?? ColorConstants.appEditTextHint,
             )),
       ),
     );

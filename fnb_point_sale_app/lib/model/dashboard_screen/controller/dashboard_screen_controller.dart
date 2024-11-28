@@ -30,11 +30,12 @@ class DashboardScreenController extends GetxController {
     TobBarModel(name: 'OPEN', value: '5'),
     TobBarModel(name: 'OCCUPIED', value: '5'),
     TobBarModel(name: 'RESERVED', value: '5'),
-    TobBarModel(name: 'MY TABLE', value: '2'),
+    // TobBarModel(name: 'SELECT TABLE', value: '2'),
   ].obs;
 
   ///set Top Bar value
   setTopBarValue(int index, int value) {
+
     mTobBarModel.value[index].value =
         (int.parse((mTobBarModel.value[index].value ?? '0').toString()) + 1)
             .toString();

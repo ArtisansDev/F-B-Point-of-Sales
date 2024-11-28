@@ -21,7 +21,7 @@ class SearchOrderScreen extends GetView<SearchOrderController> {
         onVisibilityLost: () {},
         child: Container(
             margin: EdgeInsets.only(
-                top: 7.sp, left: 11.sp, right: 8.sp, bottom: 8.sp),
+                top: 7.sp, left: 11.sp, right: 8.sp),
             child: const Column(
               children: [
                 ///search

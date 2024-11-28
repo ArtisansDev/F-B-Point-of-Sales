@@ -1,51 +1,46 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:fnb_point_sale_app/model/table_select/view/take_away/take_away_screen.dart';
+import 'package:fnb_point_sale_app/model/reservation_table_select/view/take_away/reservation_take_away_screen.dart';
 import 'package:fnb_point_sale_base/common/button_constants.dart';
 import 'package:fnb_point_sale_base/common/check_box_create/coustom_check_box.dart';
-import 'package:fnb_point_sale_base/common/text_input_widget.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
-import 'package:fnb_point_sale_base/constants/pattern_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
 import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../controller/table_select_controller.dart';
-import 'dine_in/dine_in_screen.dart';
+import '../controller/reservation_table_select_controller.dart';
+import 'dine_in/reservation_dine_in_screen.dart';
 
-class TableSelectScreen extends GetView<TableSelectController> {
-  final String? tableNumber;
-  const TableSelectScreen({super.key,required this.tableNumber});
+class ReservationTableSelectScreen
+    extends GetView<ReservationTableSelectController> {
+  const ReservationTableSelectScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => TableSelectController());
+    Get.lazyPut(() => ReservationTableSelectController());
     return FocusDetector(
-        onVisibilityGained: () {
-          controller.setTableNumber(tableNumber);
-        },
+        onVisibilityGained: () {},
         onVisibilityLost: () {},
         child: Obx(() => Container(
-              height: controller.isDineIn.value
-                  ? Platform.isWindows
-                      ? 70.h
-                      : 67.h
-                  : Platform.isWindows
-                      ? 65.h
-                      : 60.h,
-              width: 30.w,
-              alignment: Alignment.topCenter,
-              decoration: BoxDecoration(
-                color: ColorConstants.white,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(11.sp),
-                ),
+            height: controller.isDineIn.value
+                ? Platform.isWindows
+                    ? 70.h
+                    : 67.h
+                : Platform.isWindows
+                    ? 65.h
+                    : 60.h,
+            width: 30.w,
+            alignment: Alignment.topCenter,
+            decoration: BoxDecoration(
+              color: ColorConstants.white,
+              borderRadius: BorderRadius.all(
+                Radius.circular(11.sp),
               ),
+            ),
+            child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -94,12 +89,10 @@ class TableSelectScreen extends GetView<TableSelectController> {
                     ),
                   ),
 
-                  ///isDineIn
-                  Expanded(
-                      child: Container(
-                          child: controller.isDineIn.value
-                              ? DineInScreen()
-                              : TakeAwayScreen())),
+                  Container(
+                      child: controller.isDineIn.value
+                          ? ReservationDineInScreen()
+                          : ReservationTakeAwayScreen()),
 
                   ///button
                   Container(
@@ -109,7 +102,7 @@ class TableSelectScreen extends GetView<TableSelectController> {
                         height: 19.5.sp,
                         textSize: 11.7.sp,
                         controller.isDineIn.value
-                            ? sCreateOrder.tr
+                            ? sReserveNow.tr
                             : sCreateOrder.tr,
                         () {
                           controller.onCreateOrder();
@@ -117,6 +110,6 @@ class TableSelectScreen extends GetView<TableSelectController> {
                       )),
                 ],
               ),
-            )));
+            ))));
   }
 }

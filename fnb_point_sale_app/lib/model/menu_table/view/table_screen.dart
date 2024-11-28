@@ -17,7 +17,7 @@ class TableScreen extends GetView<TableController> {
         onVisibilityLost: () {},
         child: Container(
           margin: EdgeInsets.only(
-              top: 11.sp, left: 11.sp, right: 11.sp, bottom: 8.sp),
+              top: 11.sp, left: 11.sp, right: 11.sp,),
           alignment: Alignment.center,
           child: Column(
             children: [Expanded(child: TableView()), const ButtonView()],

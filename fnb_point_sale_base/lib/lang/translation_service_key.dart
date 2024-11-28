@@ -48,6 +48,7 @@ const String sCreateOrder = "Create Order";
 const String sPrintInvoice = "Print Invoice";
 const String sPayInvoice = "PAY & PRINT INVOICE";
 const String sSelectOrder = "Select Order";
+const String sOrderDetails = "Order Details";
 const String sTableSummary = "Table Summary";
 const String sAddMoreItems = "+  ADD MORE ITEMS";
 const String sItems = "Items";

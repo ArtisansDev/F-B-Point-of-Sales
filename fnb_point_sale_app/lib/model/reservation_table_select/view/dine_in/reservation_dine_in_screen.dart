@@ -10,13 +10,13 @@ import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import '../../controller/table_select_controller.dart';
+import '../../controller/reservation_table_select_controller.dart';
 
-class DineInScreen extends StatelessWidget {
-  late TableSelectController controller;
+class ReservationDineInScreen extends StatelessWidget {
+  late ReservationTableSelectController controller;
 
-  DineInScreen({super.key}) {
-    controller = Get.find<TableSelectController>();
+  ReservationDineInScreen({super.key}) {
+    controller = Get.find<ReservationTableSelectController>();
   }
 
   @override
@@ -30,7 +30,6 @@ class DineInScreen extends StatelessWidget {
               height: 20.sp,
               margin: EdgeInsets.only(left: 13.sp, right: 13.sp, top: 5.sp),
               child: TextInputWidget(
-                isReadOnly: controller.sTableNumber.value != null,
                 placeHolder: sTableNo.tr,
                 controller: controller.sTableNoController.value,
                 errorText: null,
@@ -41,8 +40,7 @@ class DineInScreen extends StatelessWidget {
                 showFloatingLabel: false,
                 topPadding: 5.sp,
                 hintTextSize: 11.sp,
-                textSize: 11.sp,
-                textColor: ColorConstants.cAppButtonColour,
+                textSize: 11.5.sp,
                 hintTextColor: ColorConstants.black.withOpacity(0.80),
                 onFilteringTextInputFormatter: [
                   FilteringTextInputFormatter.allow(
@@ -62,11 +60,11 @@ class DineInScreen extends StatelessWidget {
                 hintText: sEnterName.tr,
                 showFloatingLabel: false,
                 topPadding: 5.sp,
-                hintTextSize: 11.sp,
-                textSize: 11.sp,
-                hintTextColor: ColorConstants.black.withOpacity(0.80),
                 prefixIcon: Icons.person_rounded,
                 prefixHeight: 13.sp,
+                hintTextSize: 11.sp,
+                textSize: 11.5.sp,
+                hintTextColor: ColorConstants.black.withOpacity(0.80),
                 onFilteringTextInputFormatter: [
                   FilteringTextInputFormatter.allow(
                       RegExp(AppUtilConstants.patternOnlyString)),
@@ -85,15 +83,71 @@ class DineInScreen extends StatelessWidget {
                 hintText: sPhoneNumber.tr,
                 showFloatingLabel: false,
                 topPadding: 5.sp,
-                hintTextSize: 11.sp,
-                textSize: 11.sp,
-                hintTextColor: ColorConstants.black.withOpacity(0.80),
                 prefixIcon: Icons.phone,
                 prefixHeight: 13.sp,
+                hintTextSize: 11.sp,
+                textSize: 11.5.sp,
+                hintTextColor: ColorConstants.black.withOpacity(0.80),
                 onFilteringTextInputFormatter: [
                   FilteringTextInputFormatter.allow(
                       RegExp(AppUtilConstants.patternOnlyNumber)),
                   LengthLimitingTextInputFormatter(10)
+                ],
+              )),
+
+          ///Date to come
+          Container(
+              height: 20.sp,
+              margin: EdgeInsets.only(left: 13.sp, right: 13.sp, top: 10.sp),
+              child: TextInputWidget(
+                isReadOnly: true,
+                placeHolder: sDatetocome.tr,
+                controller: controller.sDateToComeController.value,
+                errorText: null,
+                textInputType: TextInputType.text,
+                hintText: sDatetocome.tr,
+                showFloatingLabel: false,
+                topPadding: 2.sp,
+                hintTextSize: 11.sp,
+                textSize: 11.5.sp,
+                hintTextColor: ColorConstants.black.withOpacity(0.80),
+                prefixIcon: Icons.calendar_month_rounded,
+                prefixHeight: 13.sp,
+                onClick: (value) {
+                  // if(value=='prefixIcon'){
+                  controller.onDate();
+                  // }
+                },
+                onFilteringTextInputFormatter: [
+                  FilteringTextInputFormatter.allow(
+                      RegExp(AppUtilConstants.patternOnlyString)),
+                ],
+              )),
+
+          ///Time to come
+          Container(
+              height: 20.sp,
+              margin: EdgeInsets.only(left: 13.sp, right: 13.sp, top: 10.sp),
+              child: TextInputWidget(
+                isReadOnly: true,
+                placeHolder: sTimeToCome.tr,
+                controller: controller.sTimeToComeController.value,
+                errorText: null,
+                textInputType: TextInputType.text,
+                hintText: sTimeToCome.tr,
+                showFloatingLabel: false,
+                topPadding: 2.sp,
+                hintTextSize: 11.sp,
+                textSize: 11.5.sp,
+                prefixIcon: Icons.timer_outlined,
+                prefixHeight: 13.sp,
+                onClick: (value) {
+                  controller.onTime();
+                },
+                hintTextColor: ColorConstants.black.withOpacity(0.80),
+                onFilteringTextInputFormatter: [
+                  FilteringTextInputFormatter.allow(
+                      RegExp(AppUtilConstants.patternOnlyString)),
                 ],
               )),
 
@@ -110,7 +164,7 @@ class DineInScreen extends StatelessWidget {
                 topPadding: 12.sp,
                 maxLines: 4,
                 hintTextSize: 11.sp,
-                textSize: 11.sp,
+                textSize: 11.5.sp,
                 hintTextColor: ColorConstants.black.withOpacity(0.80),
                 onFilteringTextInputFormatter: [
                   FilteringTextInputFormatter.allow(

@@ -57,6 +57,12 @@ class SideMenuScreen extends GetView<SideMenuController> {
               },
             )),
 
+            ///Artisans logo
+            Image.asset(
+              ImageAssetsConstants.appArtisansLogo,
+              fit: BoxFit.fitWidth,
+              width: 20.sp,
+            ),
             ///Version
             Container(
               margin: EdgeInsets.all(11.sp),
@@ -69,7 +75,7 @@ class SideMenuScreen extends GetView<SideMenuController> {
                   Text(
                     '${controller.mDashboardScreenController.version}',
                     style: getText600(
-                        size: 11.sp, colors: ColorConstants.cAppButtonColour),
+                        size: 10.sp, colors: ColorConstants.cAppButtonColour),
                   )
                 ],
               ),

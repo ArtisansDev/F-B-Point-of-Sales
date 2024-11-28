@@ -12,6 +12,7 @@ import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
+import '../../../../common_view/button_view/button_view.dart';
 import 'controller/details_screen_controller.dart';
 
 class DetailsScreen extends GetView<DetailsScreenController> {
@@ -23,24 +24,34 @@ class DetailsScreen extends GetView<DetailsScreenController> {
     return FocusDetector(
         onVisibilityGained: () {},
         onVisibilityLost: () {},
-        child: Container(
-          margin: EdgeInsets.only(top: 11.sp, left: 11.sp, bottom: 11.sp),
-          decoration: BoxDecoration(
-            color: ColorConstants.white,
-            borderRadius: BorderRadius.all(
-              Radius.circular(8.sp),
-            ),
-          ),
-          alignment: Alignment.center,
-          child: Column(
-            children: [
-              UserInfoScreen(),
-              SizedBox(height: 10.sp,),
-              TransactionInfoScreen(),
-              SizedBox(height: 10.sp,),
-              PaymentDeclarationScreen()
-            ],
-          ),
+        child: Column(
+          children: [
+            Expanded(
+                child: Container(
+              margin: EdgeInsets.only(top: 11.sp, left: 11.sp),
+              decoration: BoxDecoration(
+                color: ColorConstants.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(8.sp),
+                ),
+              ),
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  UserInfoScreen(),
+                  SizedBox(
+                    height: 10.sp,
+                  ),
+                  TransactionInfoScreen(),
+                  SizedBox(
+                    height: 10.sp,
+                  ),
+                  PaymentDeclarationScreen()
+                ],
+              ),
+            )),
+            const ButtonView()
+          ],
         ));
   }
 }

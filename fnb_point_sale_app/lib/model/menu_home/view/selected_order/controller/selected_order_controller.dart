@@ -24,13 +24,13 @@ class SelectedOrderController extends GetxController {
     }
   }
   onSelectOrder() async{
-    await AppAlert.showView(
-        Get.context!,
-        const TableSelectScreen(),
-        barrierDismissible: true);
-    if (Get.isRegistered<TableSelectController>()) {
-      Get.delete<TableSelectController>();
-    }
+    // await AppAlert.showView(
+    //     Get.context!,
+    //     const TableSelectScreen(tableNumber: null,),
+    //     barrierDismissible: true);
+    // if (Get.isRegistered<TableSelectController>()) {
+    //   Get.delete<TableSelectController>();
+    // }
   }
 
   @override

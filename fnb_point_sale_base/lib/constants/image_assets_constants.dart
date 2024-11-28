@@ -1,6 +1,7 @@
 class ImageAssetsConstants {
   /// COMMON
   static String appLogo = "assets/app_logo.png";
+  static String appArtisansLogo = "assets/artisans_logo.png";
   static String appPrint = "assets/print.png";
   static String openDrawer = "assets/open_drawer.png";
   static String appSearch = "assets/search.png";

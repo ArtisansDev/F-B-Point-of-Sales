@@ -11,6 +11,8 @@ import 'package:fnb_point_sale_base/serialportdevices/widgets/serial_port_device
 import 'package:get/get.dart';
 
 import '../../../../../routes/route_constants.dart';
+import '../../../../reservation_table_select/controller/reservation_table_select_controller.dart';
+import '../../../../reservation_table_select/view/reservation_table_select_screen.dart';
 import '../../../controller/dashboard_screen_controller.dart';
 import '../model/tob_bar_model.dart';
 
@@ -19,8 +21,16 @@ class TopBarController extends GetxController {
       Get.find<DashboardScreenController>();
 
   ///top bar Menu select
-  void onClickTopBarMenu(int index) {
-    // mDashboardScreenController.setTopBarValue(index,0);
+  void onClickTopBarMenu(int index) async{
+    if(index==3){
+      await AppAlert.showView(Get.context!, const ReservationTableSelectScreen(),
+          barrierDismissible: true);
+      if (Get.isRegistered<ReservationTableSelectController>()) {
+        Get.delete<ReservationTableSelectController>();
+      }
+    }else {
+      mDashboardScreenController.setTopBarValue(index, 0);
+    }
   }
 
   void onSelectedProfileMenu(int value) {

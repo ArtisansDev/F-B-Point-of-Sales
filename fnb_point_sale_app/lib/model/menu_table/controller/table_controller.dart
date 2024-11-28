@@ -11,7 +11,7 @@ import '../view/table_view/table_summary/view/table_summary_order_screen.dart';
 
 class TableController extends GetxController {
   DashboardScreenController mDashboardScreenController =
-  Get.find<DashboardScreenController>();
+      Get.find<DashboardScreenController>();
 
   ///table click
   void onTableSelectClick(int index) async {
@@ -20,27 +20,21 @@ class TableController extends GetxController {
           Get.context!,
           const Row(
             children: [
-              Expanded(
-                  flex: 7,
-                  child: SizedBox()),
-              Expanded(
-                  flex: 3,
-                  child: TableSummaryOrderScreen())
+              Expanded(flex: 7, child: SizedBox()),
+              Expanded(flex: 3, child: TableSummaryOrderScreen())
             ],
           ),
           barrierDismissible: true);
       if (Get.isRegistered<TableSummaryController>()) {
         Get.delete<TableSummaryController>();
       }
-    }else {
+    } else {
       await AppAlert.showView(
-          Get.context!,
-          const TableSelectScreen(),
+          Get.context!, TableSelectScreen(tableNumber: 'Table No ${index + 1}'),
           barrierDismissible: true);
       if (Get.isRegistered<TableSelectController>()) {
         Get.delete<TableSelectController>();
       }
-
     }
   }
 }

@@ -347,7 +347,7 @@
       "name": "fnb_point_sale_base",
       "rootUri": "../../fnb_point_sale_base",
       "packageUri": "lib/",
-      "languageVersion": "3.5"
+      "languageVersion": "3.4"
     },
     {
       "name": "focus_detector",
@@ -956,7 +956,7 @@
       "languageVersion": "3.4"
     }
   ],
-  "generated": "2024-11-23T03:05:45.052762Z",
+  "generated": "2024-11-25T08:51:22.739981Z",
   "generator": "pub",
   "generatorVersion": "3.5.3",
   "flutterRoot": "file:///Users/parthapaul/all_project/macbookpro/android_studio/flutter_sdk/flutter_3_24_3",

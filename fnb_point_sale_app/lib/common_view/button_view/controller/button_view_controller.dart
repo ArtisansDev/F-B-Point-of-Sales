@@ -29,14 +29,14 @@ class ButtonViewController extends GetxController {
         }
         break;
       case 'Reservation':
-        await AppAlert.showView(Get.context!, const TableSelectScreen(),
+        await AppAlert.showView(Get.context!, const TableSelectScreen(tableNumber: null,),
             barrierDismissible: true);
         if (Get.isRegistered<TableSelectController>()) {
           Get.delete<TableSelectController>();
         }
         break;
       case 'New Order':
-        await AppAlert.showView(Get.context!, const TableSelectScreen(),
+        await AppAlert.showView(Get.context!, const TableSelectScreen(tableNumber: null,),
             barrierDismissible: true);
         if (Get.isRegistered<TableSelectController>()) {
           Get.delete<TableSelectController>();
