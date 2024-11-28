@@ -9,12 +9,17 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f183d832-d61e-4cff-a26c-5db2e295bf43" name="Changes" comment="1.Remove my table from top&#10;2.Add artisans left side top version&#10;3.Powered by artisans add button&#10;4.Select order change to Order details right side&#10;5.Click on top reserve show this dialog if we remove reserve from top this dialog auto magically remove&#10;6. from sales &#10;   1.Add delete icon&#10;   2.Remove add icon&#10;7.Create order">
+    <list default="true" id="f183d832-d61e-4cff-a26c-5db2e295bf43" name="Changes" comment="select date and time">
       <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/splash_screen/controller/splash_screen_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/splash_screen/controller/splash_screen_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/splash_screen/view/splash_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/splash_screen/view/splash_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/macos/Flutter/ephemeral/Flutter-Generated.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/ephemeral/Flutter-Generated.xcconfig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/macos/Flutter/ephemeral/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/ephemeral/flutter_export_environment.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/lang/translation_service_key.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/lang/translation_service_key.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/utils/network_utils.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/utils/network_utils.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -297,7 +302,14 @@
       <option name="project" value="LOCAL" />
       <updated>1732760974818</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="select date and time">
+      <created>1732761191198</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1732761191198</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -321,6 +333,7 @@
     <MESSAGE value="printer" />
     <MESSAGE value="pament terminal" />
     <MESSAGE value="1.Remove my table from top&#10;2.Add artisans left side top version&#10;3.Powered by artisans add button&#10;4.Select order change to Order details right side&#10;5.Click on top reserve show this dialog if we remove reserve from top this dialog auto magically remove&#10;6. from sales &#10;   1.Add delete icon&#10;   2.Remove add icon&#10;7.Create order" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.Remove my table from top&#10;2.Add artisans left side top version&#10;3.Powered by artisans add button&#10;4.Select order change to Order details right side&#10;5.Click on top reserve show this dialog if we remove reserve from top this dialog auto magically remove&#10;6. from sales &#10;   1.Add delete icon&#10;   2.Remove add icon&#10;7.Create order" />
+    <MESSAGE value="select date and time" />
+    <option name="LAST_COMMIT_MESSAGE" value="select date and time" />
   </component>
 </project>

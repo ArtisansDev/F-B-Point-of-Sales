@@ -28,6 +28,7 @@ class NetworkUtils {
         .onConnectivityChanged
         .listen((ConnectivityResult connectivityResult) {
       if (connectivityResult == ConnectivityResult.mobile ||
+          connectivityResult == ConnectivityResult.ethernet||
           connectivityResult == ConnectivityResult.wifi) {
         listenForNetwork.add(true);
       } else {

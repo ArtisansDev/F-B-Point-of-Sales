@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/image_assets_constants.dart';
@@ -14,24 +13,23 @@ class SplashScreen extends GetView<SplashScreenController> {
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => SplashScreenController());
-
+    controller.getPackageInfo();
     return Scaffold(
         backgroundColor: ColorConstants.cAppColorsMaterial,
-        body: Obx(
+        body: FocusDetector(onVisibilityGained: () {
+
+        }, onVisibilityLost: () {
+          Get.delete<SplashScreenController>();
+        }, child: Obx(
           () {
             return splashView();
           },
-        ));
+        )));
   }
 
   splashView() {
-    return FocusDetector(
-        onVisibilityGained: () {
-          controller.getPackageInfo();
-        },
-        onVisibilityLost: () {
-          Get.delete<SplashScreenController>();
-        },
+    return Visibility(
+        visible: controller.version.value.isNotEmpty,
         child: Stack(
           alignment: Alignment.center,
           children: [

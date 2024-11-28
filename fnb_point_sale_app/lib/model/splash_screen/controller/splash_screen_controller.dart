@@ -9,8 +9,9 @@ class SplashScreenController extends GetxController {
   RxString version = ''.obs;
 
   getPackageInfo() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(milliseconds: 1500));
     version.value = dotenv.env['APP_VERSION'] ?? '';
+    version.refresh();
     nextPage();
   }
 
@@ -18,7 +19,7 @@ class SplashScreenController extends GetxController {
     NetworkUtils().checkInternetConnection().then((isInternetAvailable) async {
       if (isInternetAvailable) {
         // String sLoginStatus = await SharedPrefs().getUserToken();
-        await Future.delayed(const Duration(seconds: 2));
+        await Future.delayed(const Duration(seconds: 1));
         // Get.delete<SplashScreenController>();
         // if(sLoginStatus.trim().isNotEmpty){
         //   Get.offNamed(
