@@ -13,8 +13,8 @@ const String sReasonCancel = "Reason for Cancel";
 const String sAddRemarks = "Add Remarks";
 const String sNotes = "Notes";
 const String sSchedule = "Schedule";
-const String sDatetocome = "Date to come";
-const String sTimeToCome = "Time to come";
+const String sDatetocome = "Select Date";
+const String sTimeToCome = "Select Time";
 const String sUsernameHint = "Please enter your username";
 
 const String sPassword = "password";

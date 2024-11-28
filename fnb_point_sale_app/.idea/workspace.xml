@@ -9,54 +9,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f183d832-d61e-4cff-a26c-5db2e295bf43" name="Changes" comment="pament terminal">
-      <change afterPath="$PROJECT_DIR$/assets/artisans_logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_sales/view/sales_list/sales_list_row_view.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/reservation_table_select/controller/reservation_table_select_controller.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/reservation_table_select/view/dine_in/reservation_dine_in_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/reservation_table_select/view/reservation_table_select_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/reservation_table_select/view/take_away/reservation_take_away_screen.dart" afterDir="false" />
+    <list default="true" id="f183d832-d61e-4cff-a26c-5db2e295bf43" name="Changes" comment="1.Remove my table from top&#10;2.Add artisans left side top version&#10;3.Powered by artisans add button&#10;4.Select order change to Order details right side&#10;5.Click on top reserve show this dialog if we remove reserve from top this dialog auto magically remove&#10;6. from sales &#10;   1.Add delete icon&#10;   2.Remove add icon&#10;7.Create order">
       <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config_subset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/common_view/button_view/button_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/common_view/button_view/button_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/common_view/button_view/controller/button_view_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/common_view/button_view/controller/button_view_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/cancel_order/view/cancel_order_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/cancel_order/view/cancel_order_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/dashboard_screen/controller/dashboard_screen_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/controller/dashboard_screen_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/dashboard_screen/view/side_menu/view/side_menu_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/view/side_menu/view/side_menu_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/dashboard_screen/view/top_bar/controller/top_bar_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/view/top_bar/controller/top_bar_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/menu_home/view/search_order/view/search_order_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_home/view/search_order/view/search_order_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/menu_home/view/selected_order/controller/selected_order_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_home/view/selected_order/controller/selected_order_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/menu_home/view/selected_order/view/selected_order_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_home/view/selected_order/view/selected_order_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/menu_sales/controller/menu_sales_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_sales/controller/menu_sales_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/menu_sales/view/sales_list/sales_list_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_sales/view/sales_list/sales_list_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/menu_shift_details/view/details/details_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_shift_details/view/details/details_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/menu_table/controller/table_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_table/controller/table_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/menu_table/view/table_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_table/view/table_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/table_select/controller/table_select_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/table_select/controller/table_select_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/table_select/view/dine_in/dine_in_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/table_select/view/dine_in/dine_in_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/table_select/view/table_select_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/table_select/view/table_select_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/.dart_tool/package_config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/.dart_tool/package_config_subset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/.flutter-plugins" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/android/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/android/local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/text_input_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/common/text_input_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/image_assets_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/constants/image_assets_constants.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Flutter/ephemeral/Flutter-Generated.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/ephemeral/Flutter-Generated.xcconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Flutter/ephemeral/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/ephemeral/flutter_export_environment.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/lang/translation_service_key.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/lang/translation_service_key.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/utils/date_time_utils.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/utils/date_time_utils.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/linux/flutter/ephemeral/.plugin_symlinks/connectivity_plus" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/linux/flutter/ephemeral/.plugin_symlinks/connectivity_plus" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/linux/flutter/ephemeral/.plugin_symlinks/flutter_secure_storage_linux" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/linux/flutter/ephemeral/.plugin_symlinks/flutter_secure_storage_linux" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/linux/flutter/ephemeral/.plugin_symlinks/shared_preferences_linux" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/linux/flutter/ephemeral/.plugin_symlinks/shared_preferences_linux" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/windows/flutter/ephemeral/.plugin_symlinks/connectivity_plus" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/windows/flutter/ephemeral/.plugin_symlinks/connectivity_plus" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/windows/flutter/ephemeral/.plugin_symlinks/flutter_secure_storage_windows" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/windows/flutter/ephemeral/.plugin_symlinks/flutter_secure_storage_windows" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/windows/flutter/ephemeral/.plugin_symlinks/permission_handler_windows" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/windows/flutter/ephemeral/.plugin_symlinks/permission_handler_windows" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/windows/flutter/ephemeral/.plugin_symlinks/shared_preferences_windows" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/windows/flutter/ephemeral/.plugin_symlinks/shared_preferences_windows" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -332,7 +290,14 @@
       <option name="project" value="LOCAL" />
       <updated>1732524706761</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="1.Remove my table from top&#10;2.Add artisans left side top version&#10;3.Powered by artisans add button&#10;4.Select order change to Order details right side&#10;5.Click on top reserve show this dialog if we remove reserve from top this dialog auto magically remove&#10;6. from sales &#10;   1.Add delete icon&#10;   2.Remove add icon&#10;7.Create order">
+      <created>1732760974818</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1732760974818</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -355,6 +320,7 @@
     <MESSAGE value="sales done" />
     <MESSAGE value="printer" />
     <MESSAGE value="pament terminal" />
-    <option name="LAST_COMMIT_MESSAGE" value="pament terminal" />
+    <MESSAGE value="1.Remove my table from top&#10;2.Add artisans left side top version&#10;3.Powered by artisans add button&#10;4.Select order change to Order details right side&#10;5.Click on top reserve show this dialog if we remove reserve from top this dialog auto magically remove&#10;6. from sales &#10;   1.Add delete icon&#10;   2.Remove add icon&#10;7.Create order" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.Remove my table from top&#10;2.Add artisans left side top version&#10;3.Powered by artisans add button&#10;4.Select order change to Order details right side&#10;5.Click on top reserve show this dialog if we remove reserve from top this dialog auto magically remove&#10;6. from sales &#10;   1.Add delete icon&#10;   2.Remove add icon&#10;7.Create order" />
   </component>
 </project>
