@@ -67,22 +67,6 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
                             size: 11.5.sp,
                             colors: ColorConstants.cAppButtonColour),
                       )),
-                      // Container(
-                      //   margin: EdgeInsets.only(left: 8.sp),
-                      //   padding: EdgeInsets.all(8.sp),
-                      //   decoration: BoxDecoration(
-                      //     color: ColorConstants.cAppButtonColour,
-                      //     borderRadius: BorderRadius.all(
-                      //       Radius.circular(8.sp),
-                      //     ),
-                      //   ),
-                      //   child: Image.asset(
-                      //     ImageAssetsConstants.selectOrderArror,
-                      //     fit: BoxFit.fitWidth,
-                      //     height: 11.5.sp,
-                      //     width: 11.5.sp,
-                      //   ),
-                      // )
                     ],
                   ),
                 ),

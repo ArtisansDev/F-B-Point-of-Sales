@@ -45,6 +45,21 @@ svgImageSet(String assetName, double width, double height,
   );
 }
 
+///Returns an [SVG] widgets
+Widget svgView(String asset,
+    {double? height, double? width, Color? color, Key? key}) =>
+    SvgPicture.asset(
+      asset,
+      key: key,
+      height: height,
+      width: width,
+      colorFilter: ColorFilter.mode(
+        color ?? Colors.white,
+        BlendMode.srcIn,
+      ),
+      matchTextDirection: true,
+    );
+
 svgImageSetNoColour(String assetName, double width, double height) {
   return SvgPicture.asset(
     assetName,

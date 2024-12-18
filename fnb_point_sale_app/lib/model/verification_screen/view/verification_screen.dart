@@ -23,7 +23,6 @@ class VerificationScreen extends GetView<VerificationController> {
     Get.lazyPut(() => VerificationController());
     return Scaffold(body: Obx(
       () {
-        print("###### ${controller.text.value}");
         return loginView();
       },
     ));

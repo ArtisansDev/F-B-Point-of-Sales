@@ -32,57 +32,69 @@ class LoginScreen extends GetView<LoginScreenController> {
         // controller.getPackageInfo();
       },
       onVisibilityLost: () {},
-      child: SizedBox(
+      child: Container(
         width: 100.w,
         height: 100.h,
+        decoration: BoxDecoration(
+            color: ColorConstants.cAppColors,
+            image: DecorationImage(
+              image: AssetImage(
+                ImageAssetsConstants.loginBackground1,
+              ),
+              fit: BoxFit.fill,
+            )),
         child: Row(
           children: [
             Expanded(
-                child: Container(
+                child: SizedBox(
                     height: 100.h,
-                    color: ColorConstants.cAppColorsMaterial,
-                    child: Stack(
-                      alignment: Alignment.center,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Hero(
-                            tag: 'appLogo', // Hero tag for transition
-                            child: Image.asset(
-                              ImageAssetsConstants.appLogo,
-                              fit: BoxFit.fitWidth,
-                              height: 35.w,
-                              width: 35.w,
-                            )),
+                        Image.asset(
+                          ImageAssetsConstants.appLogo,
+                          fit: BoxFit.fitWidth,
+                          width: 23.w,
+                        ),
                         Container(
-                          width: 100.w,
-                          height: 100.h,
-                          padding: EdgeInsets.all(30.sp),
-                          alignment: Alignment.bottomCenter,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Version: ',
-                                style: getTextRegular(size: 14.sp),
-                              ),
-                              Text(
-                                controller.version.value ?? '',
-                                style: getText600(size: 14.sp),
-                              )
-                            ],
+                          width: 30.w,
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Effortless Ordering,',
+                            style: getTextRegular(size: 17.sp),
                           ),
-                        )
+                        ),
+                        Container(
+                          width: 30.w,
+                          margin: EdgeInsets.only(top: 10.sp,bottom: 10.sp),
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Elevated Dining.',
+                            style: getText600(size: 17.sp),
+                          ),
+                        ),
+                        Container(
+                          width: 30.w,
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+                            textAlign: TextAlign.center,
+                            style: getTextRegular(size: 14.5.sp),
+                          ),
+                        ),
                       ],
                     ))),
             Expanded(
                 child: Container(
-                    color: ColorConstants.primaryBackgroundColor,
                     alignment: Alignment.center,
                     child: SingleChildScrollView(
                       child: Container(
-                        width: 35.w,
-                        padding: EdgeInsets.all(14.sp),
+                        width: 30.w,
+                        padding: EdgeInsets.only(top:14.sp,bottom:14.sp,left: 19.sp,right: 19.sp),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color:
+                          ColorConstants.cAppButtonColour.withOpacity(0.50),
                           borderRadius: BorderRadius.circular(11.sp),
                           // Rounded corners
                           boxShadow: [
@@ -101,55 +113,94 @@ class LoginScreen extends GetView<LoginScreenController> {
                         child: Column(
                           children: [
                             SizedBox(
-                              height: 1.5.h,
+                              height: 15.sp,
                             ),
                             Text(
                               'Welcome Back',
                               style: getText600(
-                                  colors: ColorConstants.cAppButtonColour,
-                                  size: 14.5.sp),
+                                  colors: ColorConstants.white, size: 14.sp),
                             ),
                             SizedBox(
-                              height: 15.sp,
+                              height: 18.sp,
                             ),
-                            TextInputWidget(
-                              placeHolder: sUsername.tr,
-                              controller: controller.userNameController.value,
-                              errorText: null,
-                              textInputType: TextInputType.emailAddress,
-                              hintText: sUsernameHint.tr,
-                              showFloatingLabel: false,
-                              prefixIcon: Icons.person_rounded,
-                              topPadding: 5.sp,
-                              onFilteringTextInputFormatter: [
-                                FilteringTextInputFormatter.allow(
-                                    RegExp(AppUtilConstants.patternOnlyString)),
-                              ],
+                            Container(
+                              decoration: BoxDecoration(
+                                color: ColorConstants.white,
+                                borderRadius: BorderRadius.circular(8.sp),
+                                // Rounded corners
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.1),
+                                    // Shadow color
+                                    spreadRadius: 1,
+                                    // Spread radius
+                                    blurRadius: 3,
+                                    // Blur radius
+                                    offset: const Offset(0,
+                                        0), // Shadow position (horizontal, vertical)
+                                  ),
+                                ],
+                              ),
+                              child: TextInputWidget(
+                                placeHolder: sUsername.tr,
+                                controller: controller.userNameController.value,
+                                errorText: null,
+                                textInputType: TextInputType.emailAddress,
+                                hintText: sUsernameHint.tr,
+                                showFloatingLabel: false,
+                                prefixIcon: Icons.person_rounded,
+                                topPadding: 5.sp,
+
+                                onFilteringTextInputFormatter: [
+                                  FilteringTextInputFormatter.allow(RegExp(
+                                      AppUtilConstants.patternEmailStringAtDot)),
+                                ],
+                              ),
                             ),
                             SizedBox(
                               height: 13.sp,
                             ),
-                            TextInputWidget(
-                                placeHolder: sPassword.tr,
-                                controller: controller.passwordController.value,
-                                errorText: null,
-                                textInputType: TextInputType.text,
-                                hintText: sPasswordHint.tr,
-                                showFloatingLabel: false,
-                                prefixIcon: Icons.password,
-                                topPadding: 5.sp,
-                                hidePassword: true),
+                            Container(
+                                decoration: BoxDecoration(
+                                  color: ColorConstants.white,
+                                  borderRadius: BorderRadius.circular(8.sp),
+                                  // Rounded corners
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.1),
+                                      // Shadow color
+                                      spreadRadius: 1,
+                                      // Spread radius
+                                      blurRadius: 3,
+                                      // Blur radius
+                                      offset: const Offset(0,
+                                          0), // Shadow position (horizontal, vertical)
+                                    ),
+                                  ],
+                                ),
+                                child: TextInputWidget(
+                                    placeHolder: sPassword.tr,
+                                    controller:
+                                    controller.passwordController.value,
+                                    errorText: null,
+                                    textInputType: TextInputType.text,
+                                    hintText: sPasswordHint.tr,
+                                    showFloatingLabel: false,
+                                    prefixIcon: Icons.password,
+                                    topPadding: 5.sp,
+                                    hidePassword: true)),
                             SizedBox(
                               height: 15.sp,
                             ),
                             rectangleCornerButtonText600(
                               sLogin.tr,
-                              () {
+                              textSize: 12.5.sp,
+                                  () {
                                 controller.isLoginCheck();
                               },
                             ),
                             SizedBox(
-                              height: 2.h,
+                              height: 18.sp,
                             ),
                           ],
                         ),

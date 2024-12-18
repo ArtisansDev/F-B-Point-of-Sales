@@ -15,16 +15,18 @@ class TableSelectController extends GetxController {
   Rx<TextEditingController> notesController = TextEditingController().obs;
   RxBool isDineIn = true.obs;
   RxString orderNumber = '1234567890'.obs;
+  RxBool isCreateOrder = false.obs;
 
   TableSelectController() {
     if (Get.isRegistered<DashboardScreenController>()) {
       mDashboardScreenController.value = Get.find<DashboardScreenController>();
     }
-
+    isCreateOrder.value = false;
     orderNumber.value = getRandomNumber();
   }
 
   void onCreateOrder() {
+    isCreateOrder.value = true;
     Get.back();
   }
 

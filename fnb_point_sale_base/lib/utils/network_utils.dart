@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 class NetworkUtils {
@@ -13,29 +14,29 @@ class NetworkUtils {
 
   Future<bool> checkInternetConnection() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile) {
+    if (connectivityResult.contains(ConnectivityResult.mobile)) {
       return true;
-    } else if (connectivityResult == ConnectivityResult.ethernet) {
+    } else if (connectivityResult.contains(ConnectivityResult.wifi)) {
       return true;
-    } else if (connectivityResult == ConnectivityResult.wifi) {
+    } else if (connectivityResult.contains(ConnectivityResult.ethernet)) {
       return true;
+    } else if (connectivityResult.contains(ConnectivityResult.vpn)) {
+      // Vpn connection active.
+      // Note for iOS and macOS:
+      // There is no separate network interface type for [vpn].
+      // It returns [other] on any device (also simulator)
+    } else if (connectivityResult.contains(ConnectivityResult.bluetooth)) {
+      // Bluetooth connection available.
+    } else if (connectivityResult.contains(ConnectivityResult.other)) {
+      // Connected to a network which is not in the above mentioned networks.
+    } else if (connectivityResult.contains(ConnectivityResult.none)) {
+      // No available network types
     }
     return false;
   }
 
-  Stream<bool> listenNetworkChanges() {
-    Connectivity()
-        .onConnectivityChanged
-        .listen((ConnectivityResult connectivityResult) {
-      if (connectivityResult == ConnectivityResult.mobile ||
-          connectivityResult == ConnectivityResult.ethernet||
-          connectivityResult == ConnectivityResult.wifi) {
-        listenForNetwork.add(true);
-      } else {
-        // debugPrint("No Internet");
-        listenForNetwork.add(false);
-      }
-    });
-    return listenForNetwork.stream.asBroadcastStream();
+  bool isTypeCheck() {
+    return (Platform.isAndroid || Platform.isIOS);
   }
+
 }

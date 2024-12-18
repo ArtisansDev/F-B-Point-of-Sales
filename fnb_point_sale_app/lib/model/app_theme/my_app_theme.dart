@@ -6,9 +6,9 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:fnb_point_sale_base/lang/translation_service.dart';
 import '../../routes/generated_routes.dart';
 import '../../routes/route_constants.dart';
+import '../configuration_screen/view/configuration_screen.dart';
 import '../dashboard_screen/view/dashboard_screen.dart';
 import '../login_screen/view/login_screen.dart';
-import '../login_screen/view/login_screen_one.dart';
 import '../splash_screen/view/splash_screen.dart';
 import '../verification_screen/view/verification_screen.dart';
 import 'theme/my_theme.dart';
@@ -37,12 +37,12 @@ class MyAppTheme extends StatelessWidget {
           locale: TranslationService.locale,
           fallbackLocale: TranslationService.fallbackLocale,
           getPages: [
-            // GetPage(
-            //     name: RouteConstants.rLoginScreen,
-            //     page: () => const LoginScreen()),
+            GetPage(
+                name: RouteConstants.rConfigurationScreen,
+                page: () => const ConfigurationScreen()),
             GetPage(
                 name: RouteConstants.rLoginScreen,
-                page: () => const LoginScreenOne()),
+                page: () => const LoginScreen()),
             GetPage(
                 name: RouteConstants.rVerificationScreen,
                 page: () => const VerificationScreen()),

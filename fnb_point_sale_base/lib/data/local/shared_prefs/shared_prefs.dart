@@ -39,16 +39,16 @@ class SharedPrefs {
 
 
   /// userDetails
-  Future<void> setUserDetails(String? setUserDetails) async {
-    sharedPreferences!.setString(PrefConstants.sUserDetails, setUserDetails ?? "");
-  }
+  // Future<void> setUserDetails(String? setUserDetails) async {
+  //   sharedPreferences!.setString(PrefConstants.sUserDetails, setUserDetails ?? "");
+  // }
 
-  Future<UserData> getUserDetails() async {
-    String value = sharedPreferences!.getString(PrefConstants.sUserDetails) ?? "";
-    if (value.isNotEmpty) {
-      return UserData.fromJson(json.decode(value));
-    }
-    return  UserData();
-  }
+  // Future<UserData> getUserDetails() async {
+  //   String value = sharedPreferences!.getString(PrefConstants.sUserDetails) ?? "";
+  //   if (value.isNotEmpty) {
+  //     return UserData.fromJson(json.decode(value));
+  //   }
+  //   return  UserData();
+  // }
 
 }

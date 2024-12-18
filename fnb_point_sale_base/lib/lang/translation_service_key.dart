@@ -2,6 +2,8 @@
 const String sLanguage = "language";
 
 const String sUsername = "Username";
+const String sConfiguration = "Configuration";
+const String sConfigurationKey = "Configuration Key";
 const String sEnterName = "Enter Name";
 const String sTableNo = "Table No";
 const String sPhoneNumber = "Phone Number";

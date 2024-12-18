@@ -35,9 +35,11 @@ class MenuRowView extends StatelessWidget {
         },
         child: Container(
             decoration: BoxDecoration(
-              color: controller.isSelected(controller.menuList.value[index])
-                  ? ColorConstants.cAppColors
-                  : ColorConstants.cAppButtonColour,
+              color:
+              // controller.isSelected(controller.menuList.value[index])
+              //     ? ColorConstants.cAppColors
+              //     :
+              ColorConstants.cAppButtonColour,
               borderRadius: BorderRadius.all(
                 Radius.circular(8.sp),
               ),
@@ -45,7 +47,7 @@ class MenuRowView extends StatelessWidget {
             height: 10.h,
             alignment: Alignment.center,
             child: Text(
-              controller.menuList.value[index],
+              controller.mGetAllCategoryData.value[index].categoryName??'',
               style: getText500(size: 11.5.sp),
             )),
       )

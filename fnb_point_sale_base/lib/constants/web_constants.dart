@@ -3,12 +3,13 @@
 import 'app_constants.dart';
 
 class WebConstants {
-
+  static bool isFastTimeLogin = false;
   // Standard Comparison Values
   static int statusCode200 = 200;
   static int statusCode201 = 201;
   static int statusCode204 = 204;
   static int statusCode400 = 400;
+  static int statusCode404 = 404;
   static int statusCode401 = 401;
   static int statusCode422 = 422;
 
@@ -28,43 +29,32 @@ class WebConstants {
       "{  \"error\" : true,\n  \"status\" : 503,\n  \"message\" : \"Bad Request\",\n  \"data\" : {\"message\":\"Unable to process your request right now, Please try again later\"},\n  \"responseTime\" : 1639548038\n  }";
 
   ///APP_NAME
-  static String appName = "auth/";
+  static String appName = "api/";
 
   ///API_VERSION
   static String apiVersion = "";
 
   /// Base URL
-  static String baseUrlLive = "https://ldcldlygclwxedygjted.supabase.co/";
-  static String baseUrlDev = "https://ldcldlygclwxedygjted.supabase.co/";
+  static String baseUrlLive = "http://staging.artisanssolutions.com/";
+  static String baseUrlDev = "http://staging.artisanssolutions.com/";
   static String baseURL =
   BaseAppConstants.isLiveURLToUse ? baseUrlLive : baseUrlDev;
 
   /// Webservice
   /// Avoid kDebugMode(it can be profile mode) prefer using kReleaseMode only
   // static String baseUrlCommon = baseURL+appName+apiVersion;
-  static String baseUrlCommon = baseURL+apiVersion;
+  static String baseUrlCommon = baseURL+appName+apiVersion;
   static bool auth = false;
 
 
   /// Master - all Url
-  static String actionLogin =  "auth/v1/token?grant_type=password";  //post
-  static String actionSignup =  "auth/v1/signup";  //post
-  static String actionLogout =  "auth/v1/logout";  //post
-  static String actionFotGottenPassword =  "auth/v1/recover";  //post
-  static String actionConfigurationAll =  "rest/v1/configuration";  //get
-  static String actionConfigurationAdd=  "rest/v1/configuration";  //post
-  static String actionDeviceGroupAll =  "rest/v1/device_group?select=*";  //get
-  static String actionDeviceGroupAdd=  "rest/v1/device_group";  //post
-  static String actionDeviceAll =  "rest/v1/device?select=*"; //get
-  static String actionDeviceAdd=  "rest/v1/device";  //post
-  static String actionDeviceLogsAll =  "rest/v1/device_logs?select=*";  //get
-  static String actionApplicationsAll =  "rest/v1/applications?select=*";//get
-  static String actionApplicationAdd=  "rest/v1/applications";  //post
-  static String actionPushMessageAll =  "rest/v1/push_message?select=*";//get
-  static String actionPushMessageAdd=  "rest/v1/push_message";  //post
-  static String actionLocationLogsId =  "rest/v1/location_logs?select=*&device_id=eq.";//get
-  static String actionDataUsageId =  "rest/v1/data_usage?select=*&device_id=eq.";//get
-  static String actionInstalledAppsId =  "rest/v1/installed_apps?select=*&device_id=eq.";//get
-  static String actionDeviceInfoId =  "rest/v1/device_info?select=*&device_id=eq.";//get
-  static String actionDashboard =  "rest/v1/rpc/get_dashboard_data";//post
+  static String actionLogin =  "Account/operatorLogin";  //post
+  static String actionConfiguration =  "Configuration/getConfiguration";  //post
+
+  ///product
+  static String actionGetAllCategory =  "Category/GetAllCategory";  //post
+  static String actionGetAllMenuItem =  "Menu/getAllMenuItem";  //post
+  static String actionGetAllModifier =  "Menu/getAllModifier";  //post
+  static String actionGetAllVariant =  "Menu/getAllVariant";  //post
+
 }

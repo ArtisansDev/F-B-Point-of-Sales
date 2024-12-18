@@ -21,6 +21,8 @@ import '../../menu_table/view/table_view/table_summary/controller/table_summary_
 import '../../menu_table/view/table_view/table_summary/view/table_summary_order_screen.dart';
 import '../../pay_now/controller/pay_now_controller.dart';
 import '../../pay_now/view/pay_now_order_screen.dart';
+import '../../payment_screen/controller/payment_screen_controller.dart';
+import '../../payment_screen/view/payment_screen.dart';
 
 class MenuSalesController extends GetxController {
   DashboardScreenController mDashboardScreenController =
@@ -128,17 +130,22 @@ class MenuSalesController extends GetxController {
   }
 
   void onPayNow(int index) async {
-    await AppAlert.showView(
-        Get.context!,
-        const Row(
-          children: [
-            Expanded(flex: 7, child: SizedBox()),
-            Expanded(flex: 3, child: PayNowOrderScreen())
-          ],
-        ),
+    // await AppAlert.showView(
+    //     Get.context!,
+    //     const Row(
+    //       children: [
+    //         Expanded(flex: 7, child: SizedBox()),
+    //         Expanded(flex: 3, child: PayNowOrderScreen())
+    //       ],
+    //     ),
+    //     barrierDismissible: true);
+    // if (Get.isRegistered<PayNowController>()) {
+    //   Get.delete<PayNowController>();
+    // }
+    await AppAlert.showView(Get.context!, const PaymentScreen(),
         barrierDismissible: true);
-    if (Get.isRegistered<PayNowController>()) {
-      Get.delete<PayNowController>();
+    if (Get.isRegistered<PaymentScreenController>()) {
+      Get.delete<PaymentScreenController>();
     }
   }
 

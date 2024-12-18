@@ -1,6 +1,10 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:fnb_point_sale_base/data/local/database/configuration/configuration_local_api.dart';
+import 'package:fnb_point_sale_base/data/local/shared_prefs/shared_prefs.dart';
+import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
+import 'package:fnb_point_sale_base/locator.dart';
 import 'package:fnb_point_sale_base/utils/network_utils.dart';
 import 'package:get/get.dart';
 import '../../../routes/route_constants.dart';
@@ -18,18 +22,27 @@ class SplashScreenController extends GetxController {
   void nextPage() {
     NetworkUtils().checkInternetConnection().then((isInternetAvailable) async {
       if (isInternetAvailable) {
-        // String sLoginStatus = await SharedPrefs().getUserToken();
+        String sLoginStatus = await SharedPrefs().getUserToken();
         await Future.delayed(const Duration(seconds: 1));
-        // Get.delete<SplashScreenController>();
-        // if(sLoginStatus.trim().isNotEmpty){
-        //   Get.offNamed(
-        //     RouteConstants.rDashboardScreen,
-        //   );
-        // } else {
-        Get.offNamed(
-          RouteConstants.rLoginScreen,
-        );
-        // }
+        if (sLoginStatus.trim().isNotEmpty) {
+          Get.offNamed(
+            RouteConstants.rDashboardScreen,
+          );
+        } else {
+          var configurationLocalApi = locator.get<ConfigurationLocalApi>();
+          ConfigurationResponse mConfigurationResponse =
+              await configurationLocalApi.getConfigurationResponse() ??
+                  ConfigurationResponse();
+          if (mConfigurationResponse.error ?? false) {
+            Get.offNamed(
+              RouteConstants.rConfigurationScreen,
+            );
+          } else {
+            Get.offNamed(
+              RouteConstants.rLoginScreen,
+            );
+          }
+        }
       }
     });
   }

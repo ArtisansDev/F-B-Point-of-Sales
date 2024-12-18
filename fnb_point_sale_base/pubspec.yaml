@@ -64,7 +64,7 @@ dependencies:
   ################## App Core #####################
   # Check Internet connection check new branch for leader board
   # Now both conference and digital coaching changes are in base branch
-  connectivity_plus: ^5.0.2
+  connectivity_plus: ^6.1.0
   ################## Google Fonts ("Exo")#####################
   google_fonts: ^5.1.0
   ################## Image store in  cached ("Exo")#####################

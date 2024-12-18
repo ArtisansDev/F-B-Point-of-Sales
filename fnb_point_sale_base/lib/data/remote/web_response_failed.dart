@@ -1,39 +1,28 @@
 // error : true
 // statusCode : 400
 // statusMessage : "Bad Request"
-// data : {"message":"Token is Expired"}
-// responseTime : 1639548038
+
 
 class WebResponseFailed {
   WebResponseFailed({
     bool? error,
     int? statusCode,
     String? statusMessage,
-    WebResponseFailedData? data,
-    int? responseTime,
   }) {
     _error = error;
     _statusCode = statusCode;
     _statusMessage = statusMessage;
-    _data = data;
-    _responseTime = responseTime;
   }
 
   WebResponseFailed.fromJson(dynamic json) {
     _error = json['error'];
-    _statusCode = json['status'];
-    _statusMessage = json['message'];
-    _data = json['data'] != null
-        ? WebResponseFailedData.fromJson(json['data'])
-        : null;
-    _responseTime = json['responseTime'];
+    _statusCode = json['statusCode'];
+    _statusMessage = json['statusMessage'];
   }
 
   bool? _error;
   int? _statusCode;
   String? _statusMessage;
-  WebResponseFailedData? _data;
-  int? _responseTime;
 
   bool? get error => _error;
 
@@ -41,43 +30,11 @@ class WebResponseFailed {
 
   String? get statusMessage => _statusMessage;
 
-  WebResponseFailedData? get data => _data;
-
-  int? get responseTime => _responseTime;
-
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['error'] = _error;
-    map['status'] = _statusCode;
-    map['message'] = _statusMessage;
-    if (_data != null) {
-      map['data'] = _data?.toJson();
-    }
-    map['responseTime'] = _responseTime;
-    return map;
-  }
-}
-
-/// message : "Token is Expired"
-
-class WebResponseFailedData {
-  WebResponseFailedData({
-    String? message,
-  }) {
-    _message = message;
-  }
-
-  WebResponseFailedData.fromJson(dynamic json) {
-    _message = json['message'];
-  }
-
-  String? _message;
-
-  String? get message => _message;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['message'] = _message;
+    map['statusCode'] = _statusCode;
+    map['statusMessage'] = _statusMessage;
     return map;
   }
 }

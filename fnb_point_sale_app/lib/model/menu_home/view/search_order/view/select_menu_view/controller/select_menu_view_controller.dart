@@ -6,13 +6,13 @@ import 'package:get/get.dart';
 import '../../../controller/search_order_controller.dart';
 
 class SelectMenuViewController extends GetxController {
-  Rxn<SearchOrderController> mDashboardScreenController =
+  Rxn<SearchOrderController> mSearchOrderController =
       Rxn<SearchOrderController>();
   RxList<String> selectMenu = <String>[].obs;
 
   SelectMenuViewController() {
     if (Get.isRegistered<SearchOrderController>()) {
-      mDashboardScreenController.value = Get.find<SearchOrderController>();
+      mSearchOrderController.value = Get.find<SearchOrderController>();
     }
   }
 

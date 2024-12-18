@@ -29,11 +29,17 @@ class TableController extends GetxController {
         Get.delete<TableSummaryController>();
       }
     } else {
+      bool isCreateOrder = false;
       await AppAlert.showView(
           Get.context!, TableSelectScreen(tableNumber: 'Table No ${index + 1}'),
           barrierDismissible: true);
       if (Get.isRegistered<TableSelectController>()) {
+        isCreateOrder = Get.find<TableSelectController>().isCreateOrder.value;
         Get.delete<TableSelectController>();
+      }
+      if(isCreateOrder){
+        mDashboardScreenController.selectMenu.value = 0;
+        mDashboardScreenController.selectMenu.refresh();
       }
     }
   }

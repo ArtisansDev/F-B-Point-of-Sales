@@ -28,5 +28,8 @@ class ImageAssetsConstants {
   static String reservationButton = "assets/button_bar/reservation_button.png";
   static String sendOrderButton = "assets/button_bar/send_order_button.png";
 
+  ///svg
+  static String topBarSync = 'assets/svg_image/top_bar/sync.svg';
+
 
 }

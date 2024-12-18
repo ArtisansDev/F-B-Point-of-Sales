@@ -23,6 +23,21 @@ class AllApiImpl {
               wrapWidth: 3072);
         }
         return responseBody;
+      case 401:
+        var responseJson = jsonEncode(responseBody);
+        if (BaseAppConstants.isWebLogToPrint) {
+          debugPrint("Webservices 200 decoded Response $responseJson",
+              wrapWidth: 3072);
+        }
+        return responseBody;
+
+      case 404:
+        var responseJson = jsonEncode(responseBody);
+        if (BaseAppConstants.isWebLogToPrint) {
+          debugPrint("Webservices 200 decoded Response $responseJson",
+              wrapWidth: 3072);
+        }
+        return responseBody;
       case 400:
         Map responseJson = json.decode(responseBody);
         if (BaseAppConstants.isWebLogToPrint) {
@@ -34,13 +49,6 @@ class AllApiImpl {
         Map responseJson = json.decode(WebConstants.statusCode404Message);
         if (BaseAppConstants.isWebLogToPrint) {
           debugPrint("Webservices 403 decoded Response $responseJson",
-              wrapWidth: 3072);
-        }
-        return responseJson;
-      case 404:
-        Map responseJson = json.decode(WebConstants.statusCode404Message);
-        if (BaseAppConstants.isWebLogToPrint) {
-          debugPrint("Webservices 404 decoded Response $responseJson",
               wrapWidth: 3072);
         }
         return responseJson;

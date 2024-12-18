@@ -98,4 +98,6 @@ flutter:
     - assets/side_menu/
     - assets/select_order/
     - assets/button_bar/
+    - assets/svg_image/
+    - assets/svg_image/top_bar/
     - .env

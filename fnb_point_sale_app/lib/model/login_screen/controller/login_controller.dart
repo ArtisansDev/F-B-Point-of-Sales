@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:fnb_point_sale_base/data/local/database/configuration/configuration_local_api.dart';
+import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/data/remote/api_call/login/login_api.dart';
 import 'package:fnb_point_sale_base/locator.dart';
 import 'package:get/get.dart';
@@ -17,7 +19,6 @@ import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/utils/network_utils.dart';
 
 import '../../../routes/route_constants.dart';
-
 
 class LoginScreenController extends GetxController {
   Rx<TextEditingController> userNameController = TextEditingController().obs;
@@ -43,26 +44,43 @@ class LoginScreenController extends GetxController {
     } else if (passwordController.value.text.trim().isEmpty) {
       AppAlert.showSnackBar(Get.context!, 'Please enter the password');
     } else {
-      Get.offNamed(
-        RouteConstants.rVerificationScreen,
-      );
-      // loginApiCall();
+      loginApiCall();
     }
   }
 
   void loginApiCall() {
     NetworkUtils().checkInternetConnection().then((isInternetAvailable) async {
       if (isInternetAvailable) {
+        var configurationLocalApi = locator.get<ConfigurationLocalApi>();
+        ConfigurationResponse mConfigurationResponse =
+            await configurationLocalApi.getConfigurationResponse() ??
+                ConfigurationResponse();
         final localApi = locator.get<LoginApi>();
         LoginRequest mLoginRequest = LoginRequest(
+            branchID: (mConfigurationResponse.configurationData?.branchData ?? []).isEmpty
+                ? ""
+                : (mConfigurationResponse.configurationData?.branchData ?? [])
+                    .first
+                    .branchIDP,
+            counterID: (mConfigurationResponse.configurationData?.counterData ?? []).isEmpty
+                ? ""
+                : (mConfigurationResponse.configurationData?.counterData ?? [])
+                    .first
+                    .counterIDP,
             email: userNameController.value.text.trim(),
             password: passwordController.value.text.trim());
         WebResponseSuccess mWebResponseSuccess =
             await localApi.postLogin(mLoginRequest);
         if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
           LoginResponse mLoginResponse = mWebResponseSuccess.data;
-          await SharedPrefs().setUserToken(mLoginResponse.accessToken);
-          await SharedPrefs().setUserDetails(jsonEncode(mLoginResponse.user));
+          await SharedPrefs()
+              .setUserToken(mLoginResponse.data?.accessToken ?? '');
+          AppAlert.showSnackBar(
+              Get.context!, mWebResponseSuccess.statusMessage ?? '');
+          WebConstants.isFastTimeLogin = true;
+          Get.offNamed(
+            RouteConstants.rDashboardScreen,
+          );
         } else {
           AppAlert.showSnackBar(
               Get.context!, mWebResponseSuccess.statusMessage ?? '');

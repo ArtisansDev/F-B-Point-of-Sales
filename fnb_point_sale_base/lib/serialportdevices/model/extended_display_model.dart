@@ -1,6 +1,5 @@
 
-
-import '../../data/mode/getconfiguration/get_configuration_response.dart';
+import '../../data/mode/get_configuration/get_configuration_response.dart';
 
 /// args1 : "Customer Display"
 /// args2 : 100

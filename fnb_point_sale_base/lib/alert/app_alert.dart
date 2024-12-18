@@ -37,9 +37,9 @@ class AppAlert {
                   decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(20))),
-                  padding: EdgeInsets.all(18.5.sp),
-                  height: 90,
-                  width: 90,
+                  padding: EdgeInsets.all(10.5.sp),
+                  height: 25.sp,
+                  width: 25.sp,
                   child: const CircularProgressIndicator()),
             ),
           );
