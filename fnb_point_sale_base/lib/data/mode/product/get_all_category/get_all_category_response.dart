@@ -53,7 +53,7 @@ class GetAllCategoryData {
       bool? isDeleted, 
       bool? isUpdated, 
       String? categoryImagePath, 
-      List<SubCategories>? subCategories,}){
+      List<GetAllCategoryData>? subCategories,}){
     _categoryIDP = categoryIDP;
     _categoryName = categoryName;
     _parentCategoryID = parentCategoryID;
@@ -75,7 +75,7 @@ class GetAllCategoryData {
     if (json['SubCategories'] != null) {
       _subCategories = [];
       json['SubCategories'].forEach((v) {
-        _subCategories?.add(SubCategories.fromJson(v));
+        _subCategories?.add(GetAllCategoryData.fromJson(v));
       });
     }
   }
@@ -86,7 +86,7 @@ class GetAllCategoryData {
   bool? _isDeleted;
   bool? _isUpdated;
   String? _categoryImagePath;
-  List<SubCategories>? _subCategories;
+  List<GetAllCategoryData>? _subCategories;
 
   String? get categoryIDP => _categoryIDP;
   String? get categoryName => _categoryName;
@@ -95,77 +95,7 @@ class GetAllCategoryData {
   bool? get isDeleted => _isDeleted;
   bool? get isUpdated => _isUpdated;
   String? get categoryImagePath => _categoryImagePath;
-  List<SubCategories>? get subCategories => _subCategories;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['CategoryIDP'] = _categoryIDP;
-    map['CategoryName'] = _categoryName;
-    map['ParentCategoryID'] = _parentCategoryID;
-    map['IsActive'] = _isActive;
-    map['IsDeleted'] = _isDeleted;
-    map['IsUpdated'] = _isUpdated;
-    map['CategoryImagePath'] = _categoryImagePath;
-    if (_subCategories != null) {
-      map['SubCategories'] = _subCategories?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
-
-}
-
-class SubCategories {
-  SubCategories({
-      String? categoryIDP, 
-      String? categoryName, 
-      String? parentCategoryID, 
-      bool? isActive, 
-      bool? isDeleted, 
-      bool? isUpdated, 
-      String? categoryImagePath, 
-      List<SubCategories>? subCategories,}){
-    _categoryIDP = categoryIDP;
-    _categoryName = categoryName;
-    _parentCategoryID = parentCategoryID;
-    _isActive = isActive;
-    _isDeleted = isDeleted;
-    _isUpdated = isUpdated;
-    _categoryImagePath = categoryImagePath;
-    _subCategories = subCategories;
-}
-
-  SubCategories.fromJson(dynamic json) {
-    _categoryIDP = json['CategoryIDP'];
-    _categoryName = json['CategoryName'];
-    _parentCategoryID = json['ParentCategoryID'];
-    _isActive = json['IsActive'];
-    _isDeleted = json['IsDeleted'];
-    _isUpdated = json['IsUpdated'];
-    _categoryImagePath = json['CategoryImagePath'];
-    if (json['SubCategories'] != null) {
-      _subCategories = [];
-      json['SubCategories'].forEach((v) {
-        _subCategories?.add(SubCategories.fromJson(v));
-      });
-    }
-  }
-  String? _categoryIDP;
-  String? _categoryName;
-  String? _parentCategoryID;
-  bool? _isActive;
-  bool? _isDeleted;
-  bool? _isUpdated;
-  String? _categoryImagePath;
-  List<SubCategories>? _subCategories;
-
-  String? get categoryIDP => _categoryIDP;
-  String? get categoryName => _categoryName;
-  String? get parentCategoryID => _parentCategoryID;
-  bool? get isActive => _isActive;
-  bool? get isDeleted => _isDeleted;
-  bool? get isUpdated => _isUpdated;
-  String? get categoryImagePath => _categoryImagePath;
-  List<SubCategories>? get subCategories => _subCategories;
+  List<GetAllCategoryData>? get subCategories => _subCategories;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

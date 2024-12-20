@@ -9,20 +9,18 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:fnb_point_sale_base/common/dynamic_height_grid_view.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
-import 'package:fnb_point_sale_base/data/mode/button_bar/button_bar_model.dart';
-import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
 import 'controller/menu_view_controller.dart';
 
-class MenuRowView extends StatelessWidget {
+class CategoryRowView extends StatelessWidget {
   late MenuViewController controller;
   final int index;
 
-  MenuRowView({super.key, required this.index}) {
+  CategoryRowView({super.key, required this.index}) {
     controller = Get.find<MenuViewController>();
   }
 
@@ -31,13 +29,11 @@ class MenuRowView extends StatelessWidget {
     return Obx(
       () =>  GestureDetector(
         onTap: () {
-          controller.onMenuSelect(index);
+          controller.onCategorySelect(index);
         },
         child: Container(
-            padding: EdgeInsets.only(left:15.sp,right:15.sp),
             decoration: BoxDecoration(
-              color:
-              controller.isSelectedMenuItem(controller.mMenuItemData[index])
+              color: controller.isSelectedCategory(controller.mGetAllCategoryView[index])
                   ? ColorConstants.cAppColors
                   : ColorConstants.cAppButtonColour,
               borderRadius: BorderRadius.all(
@@ -47,7 +43,7 @@ class MenuRowView extends StatelessWidget {
             height: 10.h,
             alignment: Alignment.center,
             child: Text(
-              controller.mMenuItemData[index].itemName??'',
+              controller.mGetAllCategoryView[index].categoryName??'',
               style: getText500(size: 11.5.sp),
             )),
       )

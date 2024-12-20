@@ -5,9 +5,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/data/local/shared_prefs/shared_prefs.dart';
 import 'package:fnb_point_sale_base/data/remote/web_http_overrides.dart';
 import 'package:fnb_point_sale_base/locator.dart';
@@ -50,7 +48,6 @@ void main() async {
     //   enabled: !kReleaseMode,
     //   builder: (context) => const
     // Enable debug paint
-
       const MyAppTheme(), // Wrap your app
     // ),
   );

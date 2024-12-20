@@ -3,21 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
 import 'package:get/get.dart';
 
+import '../../../../../home_base_controller/home_base_controller.dart';
 import '../../../controller/search_order_controller.dart';
 
-class SelectMenuViewController extends GetxController {
-  Rxn<SearchOrderController> mSearchOrderController =
-      Rxn<SearchOrderController>();
-  RxList<String> selectMenu = <String>[].obs;
-
+class SelectMenuViewController extends HomeBaseController {
   SelectMenuViewController() {
-    if (Get.isRegistered<SearchOrderController>()) {
-      mSearchOrderController.value = Get.find<SearchOrderController>();
-    }
-  }
-
-  void onClickHome() {
-    selectMenu.clear();
-    selectMenu.refresh();
+    mSelectMenuViewController.value = this;
   }
 }

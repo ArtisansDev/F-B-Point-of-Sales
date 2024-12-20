@@ -6,10 +6,12 @@ import 'package:get/get.dart';
 import '../../../../alert/app_alert.dart';
 import '../../../../constants/web_constants.dart';
 import '../../../mode/product/get_all_category/get_all_category_response.dart';
+import '../../../mode/product/get_all_menu_item/menu_item_response.dart';
+import '../../../mode/product/get_all_modifier/get_all_modifier_response.dart';
+import '../../../mode/product/get_all_variant/get_all_variant_response.dart';
 import '../../web_response_failed.dart';
 
 class ProductApiImpl extends AllApiImpl with ProductApi {
-
   ///post GetAllCategory
   @override
   Future<WebResponseSuccess> postGetAllCategory(exhibitorsListRequest) async {
@@ -24,7 +26,7 @@ class ProductApiImpl extends AllApiImpl with ProductApi {
       mWebResponseSuccess = WebResponseSuccess(
         statusCode: cases.statusCode,
         data: mGetAllCategoryResponse,
-        statusMessage: "User login successfully",
+        statusMessage: "Get all category downloaded successfully",
         error: false,
       );
     } else if (cases.statusCode == WebConstants.statusCode400) {
@@ -52,27 +54,27 @@ class ProductApiImpl extends AllApiImpl with ProductApi {
   ///post GetAllMenuItem
   @override
   Future<WebResponseSuccess> postGetAllMenuItem(exhibitorsListRequest) async {
-    AppAlert.showProgressDialog(Get.context!);
-    WebConstants.auth = false;
+    // AppAlert.showProgressDialog(Get.context!);
+    WebConstants.auth = true;
     final cases = await mWebProvider.postWithRequest(
         WebConstants.actionGetAllMenuItem, exhibitorsListRequest);
-    AppAlert.hideLoadingDialog(Get.context!);
+    // AppAlert.hideLoadingDialog(Get.context!);
     if (cases.statusCode == WebConstants.statusCode200) {
-      // LoginResponse mLoginResponse =
-      //     LoginResponse.fromJson(processResponseToJson(cases));
+      MenuItemResponse mMenuItemResponse =
+          MenuItemResponse.fromJson(processResponseToJson(cases));
       mWebResponseSuccess = WebResponseSuccess(
         statusCode: cases.statusCode,
-        // data: mLoginResponse,
-        statusMessage: "User login successfully",
+        data: mMenuItemResponse,
+        statusMessage: "Get all menu item downloaded successfully",
         error: false,
       );
-    } else if (cases.statusCode == WebConstants.statusCode400) {
-      // LoginFailedResponse mLoginFailedResponse =
-      //     LoginFailedResponse.fromJson(json.decode(jsonEncode(cases.body)));
+    } else if (cases.statusCode == WebConstants.statusCode401) {
+      mWebResponseFailed =
+          WebResponseFailed.fromJson(processResponseToJson(cases));
       mWebResponseSuccess = WebResponseSuccess(
         statusCode: cases.statusCode,
         // data: mLoginFailedResponse,
-        statusMessage: '',
+        statusMessage: mWebResponseFailed.statusMessage,
         error: false,
       );
     } else {
@@ -91,27 +93,26 @@ class ProductApiImpl extends AllApiImpl with ProductApi {
   ///post GetAllModifier
   @override
   Future<WebResponseSuccess> postGetAllModifier(exhibitorsListRequest) async {
-    AppAlert.showProgressDialog(Get.context!);
-    WebConstants.auth = false;
+    // AppAlert.showProgressDialog(Get.context!);
+    WebConstants.auth = true;
     final cases = await mWebProvider.postWithRequest(
         WebConstants.actionGetAllModifier, exhibitorsListRequest);
-    AppAlert.hideLoadingDialog(Get.context!);
+    // AppAlert.hideLoadingDialog(Get.context!);
     if (cases.statusCode == WebConstants.statusCode200) {
-      // LoginResponse mLoginResponse =
-      //     LoginResponse.fromJson(processResponseToJson(cases));
+      GetAllModifierResponse mGetAllModifierResponse =
+          GetAllModifierResponse.fromJson(processResponseToJson(cases));
       mWebResponseSuccess = WebResponseSuccess(
         statusCode: cases.statusCode,
-        // data: mLoginResponse,
-        statusMessage: "User login successfully",
+        data: mGetAllModifierResponse,
+        statusMessage: "Get all modifier downloaded successfully",
         error: false,
       );
-    } else if (cases.statusCode == WebConstants.statusCode400) {
-      // LoginFailedResponse mLoginFailedResponse =
-      //     LoginFailedResponse.fromJson(json.decode(jsonEncode(cases.body)));
+    } else if (cases.statusCode == WebConstants.statusCode401) {
+      mWebResponseFailed =
+          WebResponseFailed.fromJson(processResponseToJson(cases));
       mWebResponseSuccess = WebResponseSuccess(
         statusCode: cases.statusCode,
-        // data: mLoginFailedResponse,
-        statusMessage: '',
+        statusMessage: mWebResponseFailed.statusMessage,
         error: false,
       );
     } else {
@@ -130,27 +131,26 @@ class ProductApiImpl extends AllApiImpl with ProductApi {
   ///post GetAllVariant
   @override
   Future<WebResponseSuccess> postGetAllVariant(exhibitorsListRequest) async {
-    AppAlert.showProgressDialog(Get.context!);
-    WebConstants.auth = false;
+    // AppAlert.showProgressDialog(Get.context!);
+    WebConstants.auth = true;
     final cases = await mWebProvider.postWithRequest(
         WebConstants.actionGetAllVariant, exhibitorsListRequest);
-    AppAlert.hideLoadingDialog(Get.context!);
+    // AppAlert.hideLoadingDialog(Get.context!);
     if (cases.statusCode == WebConstants.statusCode200) {
-      // LoginResponse mLoginResponse =
-      //     LoginResponse.fromJson(processResponseToJson(cases));
+      GetAllVariantResponse mGetAllVariantResponse =
+          GetAllVariantResponse.fromJson(processResponseToJson(cases));
       mWebResponseSuccess = WebResponseSuccess(
         statusCode: cases.statusCode,
-        // data: mLoginResponse,
-        statusMessage: "User login successfully",
+        data: mGetAllVariantResponse,
+        statusMessage: "Get all variant downloaded successfully",
         error: false,
       );
-    } else if (cases.statusCode == WebConstants.statusCode400) {
-      // LoginFailedResponse mLoginFailedResponse =
-      //     LoginFailedResponse.fromJson(json.decode(jsonEncode(cases.body)));
+    } else if (cases.statusCode == WebConstants.statusCode401) {
+      mWebResponseFailed =
+          WebResponseFailed.fromJson(processResponseToJson(cases));
       mWebResponseSuccess = WebResponseSuccess(
         statusCode: cases.statusCode,
-        // data: mLoginFailedResponse,
-        statusMessage: '',
+        statusMessage: mWebResponseFailed.statusMessage,
         error: false,
       );
     } else {
@@ -165,5 +165,4 @@ class ProductApiImpl extends AllApiImpl with ProductApi {
     }
     return mWebResponseSuccess;
   }
-
 }

@@ -21,7 +21,9 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
   Widget build(BuildContext context) {
     Get.lazyPut(() => SelectedOrderController());
     return FocusDetector(
-        onVisibilityGained: () {},
+        onVisibilityGained: () {
+          controller.createController();
+        },
         onVisibilityLost: () {},
         child: Container(
           height: 100.h,

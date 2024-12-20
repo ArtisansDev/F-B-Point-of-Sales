@@ -6,13 +6,14 @@ import 'package:fnb_point_sale_base/locator.dart';
 import 'package:get/get.dart';
 
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
+import '../home_base_controller/home_base_controller.dart';
 import '../view/search_order/controller/search_order_controller.dart';
 import '../view/selected_order/controller/selected_order_controller.dart';
 
-class HomeController extends GetxController {
-  DashboardScreenController mDashboardScreenController =
-      Get.find<DashboardScreenController>();
-
+class HomeController extends HomeBaseController {
+  HomeController(){
+    mHomeController.value = this;
+  }
   @override
   void onClose() {
     ///delete all sub Controller

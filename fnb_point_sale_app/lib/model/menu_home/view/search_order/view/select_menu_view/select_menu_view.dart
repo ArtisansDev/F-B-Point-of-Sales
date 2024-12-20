@@ -61,18 +61,29 @@ class SelectMenuView extends GetView<SelectMenuViewController> {
                         height: 22.sp,
                         child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: controller.selectMenu.value.length,
+                            itemCount: controller.selectGetAllCategory.length,
                             itemBuilder: (BuildContext context, int index) {
                               return Container(
-                                  margin: EdgeInsets.only(
-                                      left: 11.sp, top: 5.sp, bottom: 5.sp),
-                                  height: 22.sp,
+                                  padding: EdgeInsets.only(
+                                      left: 15.sp, right: 15.sp),
+                                  margin: EdgeInsets.only(left: 5.sp),
                                   alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      color: (controller.selectGetAllCategory
+                                                      .length -
+                                                  1 ==
+                                              index)
+                                          ? ColorConstants.cAppColors
+                                          : ColorConstants.cAppButtonColour,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(7.sp))),
                                   child: Text(
-                                    controller.selectMenu.value[index],
+                                    controller.selectGetAllCategory[index]
+                                            .categoryName ??
+                                        '',
                                     style: getText500(
-                                        size: 11.sp,
-                                        colors: ColorConstants.cAppTaxColour),
+                                      size: 11.sp,
+                                    ),
                                   ));
                             })))
               ],

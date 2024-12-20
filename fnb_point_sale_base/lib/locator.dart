@@ -11,12 +11,18 @@ import 'package:fnb_point_sale_base/serialportdevices/service/rakyat_bank_termin
 import 'package:get_it/get_it.dart';
 import 'data/local/database/configuration/configuration_local_api.dart';
 import 'data/local/database/configuration/configuration_local_api_impl.dart';
+import 'data/local/database/menu_item/menu_item_local_api.dart';
+import 'data/local/database/menu_item/menu_item_local_api_impl.dart';
+import 'data/local/database/modifier/modifier_local_api.dart';
+import 'data/local/database/modifier/modifier_local_api_impl.dart';
 import 'data/local/database/printer/printer_local_api.dart';
 import 'data/local/database/printer/printer_local_api_impl.dart';
 import 'data/local/database/product/all_category/all_category_local_api.dart';
 import 'data/local/database/product/all_category/all_category_local_api_impl.dart';
 import 'data/local/database/serialport/serial_port_devices_api.dart';
 import 'data/local/database/serialport/serial_port_devices_api_impl.dart';
+import 'data/local/database/variant/variant_local_api.dart';
+import 'data/local/database/variant/variant_local_api_impl.dart';
 import 'data/remote/api_call/login/login_api.dart';
 import 'data/remote/api_call/login/login_api_impl.dart';
 import 'data/remote/api_call/product/product_api.dart';
@@ -28,14 +34,26 @@ GetIt locator = GetIt.instance;
 
 void setupLocator() {
   /// Local Database API
-
   /// Configuration
   locator.registerLazySingleton<ConfigurationLocalApi>(
       () => ConfigurationLocalApiImpl());
 
   /// Product
+  /// CategoryList
   locator.registerLazySingleton<AllCategoryLocalApi>(
       () => AllCategoryLocalApiImpl());
+
+  /// ModifierList
+  locator.registerLazySingleton<ModifierLocalApi>(
+          () => ModifierLocalApiImpl());
+
+  /// ModifierList
+  locator.registerLazySingleton<MenuItemLocalApi>(
+          () => MenuItemLocalApiImpl());
+
+  /// VariantLocalList
+  locator.registerLazySingleton<VariantLocalApi>(
+          () => VariantLocalApiImpl());
 
   ///Printer
   locator.registerLazySingleton<PrinterLocalApi>(() => PrinterLocalApiImpl());

@@ -13,19 +13,22 @@ import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import '../../../home_base_controller/home_base_controller.dart';
 import '../controller/add_item_controller.dart';
 
 class AddItemScreen extends GetView<AddItemController> {
-  const AddItemScreen({super.key});
+  final HomeBaseController mHomeBaseController;
+
+  const AddItemScreen(this.mHomeBaseController, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => AddItemController());
+    Get.lazyPut(() => AddItemController(mHomeBaseController));
     return FocusDetector(
         onVisibilityGained: () {},
         onVisibilityLost: () {},
         child: Container(
-          height:  Platform.isWindows?80.h:75.h,
+          height: Platform.isWindows ? 80.h : 75.h,
           width: 50.w,
           alignment: Alignment.topCenter,
           decoration: BoxDecoration(
