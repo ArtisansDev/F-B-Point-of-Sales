@@ -19,9 +19,9 @@ class SplashScreenController extends GetxController {
     nextPage();
   }
 
-  void nextPage() {
-    NetworkUtils().checkInternetConnection().then((isInternetAvailable) async {
-      if (isInternetAvailable) {
+  void nextPage() async{
+    // NetworkUtils().checkInternetConnection().then((isInternetAvailable) async {
+    //   if (isInternetAvailable) {
         String sLoginStatus = await SharedPrefs().getUserToken();
         await Future.delayed(const Duration(seconds: 1));
         if (sLoginStatus.trim().isNotEmpty) {
@@ -43,7 +43,7 @@ class SplashScreenController extends GetxController {
             );
           }
         }
-      }
-    });
+    //   }
+    // });
   }
 }

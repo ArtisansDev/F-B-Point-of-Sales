@@ -222,3 +222,7 @@ getRandomNumber(){
   return '$randomNumber';
 }
 
+double calculatePercentageOf(double total, double percent) {
+  return getDoubleValue(((total * percent )/ 100).toStringAsFixed(2));
+}
+

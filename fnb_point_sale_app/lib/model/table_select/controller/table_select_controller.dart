@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:get/get.dart';
+import '../../../cart_item/order_place.dart';
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
 
 class TableSelectController extends GetxController {
@@ -27,6 +28,9 @@ class TableSelectController extends GetxController {
 
   void onCreateOrder() {
     isCreateOrder.value = true;
+    mDashboardScreenController.value?.mOrderPlace.value =OrderPlace(cartItem: []);
+    mDashboardScreenController.value?.mOrderPlace.value?.tableNo = sTableNumber.value??'--';
+    mDashboardScreenController.value?.mOrderPlace.value?.sOrderNo = orderNumber.value;
     Get.back();
   }
 
@@ -39,4 +43,6 @@ class TableSelectController extends GetxController {
       sTableNoController.refresh();
     }
   }
+
+
 }

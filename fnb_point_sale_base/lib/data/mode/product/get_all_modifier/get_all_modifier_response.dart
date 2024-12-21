@@ -83,13 +83,18 @@ class ModifierList {
   String? _modifierIDP;
   String? _modifierName;
   double? _price;
+  int _count = 1;
   bool? _isActive;
   bool? _isDeleted;
   bool? _isUpdated;
 
+  setCount(int count){
+    _count = count;
+  }
   String? get modifierIDP => _modifierIDP;
   String? get modifierName => _modifierName;
   double? get price => _price;
+  int? get count => _count;
   bool? get isActive => _isActive;
   bool? get isDeleted => _isDeleted;
   bool? get isUpdated => _isUpdated;
@@ -99,6 +104,7 @@ class ModifierList {
     map['ModifierIDP'] = _modifierIDP;
     map['ModifierName'] = _modifierName;
     map['Price'] = _price;
+    map['count'] = _count;
     map['IsActive'] = _isActive;
     map['IsDeleted'] = _isDeleted;
     map['IsUpdated'] = _isUpdated;

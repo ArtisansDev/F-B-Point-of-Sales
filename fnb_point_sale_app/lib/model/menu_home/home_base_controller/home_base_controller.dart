@@ -15,6 +15,7 @@ import 'package:fnb_point_sale_base/locator.dart';
 import 'package:fnb_point_sale_base/utils/my_log_utils.dart';
 import 'package:get/get.dart';
 
+import '../../../cart_item/cart_item.dart';
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
 import '../controller/home_controller.dart';
 import '../view/add_item/controller/add_item_controller.dart';
@@ -69,11 +70,6 @@ class HomeBaseController extends GetxController {
   onHomeUpdate() {
     mDashboardScreenController.onUpdate(() async {
       await getAllCategoryList();
-      if (mSelectMenuViewController.value == null) {
-        createController();
-      }
-      mSelectMenuViewController.value?.selectGetAllCategory.clear();
-      mSelectMenuViewController.value?.selectGetAllCategory.refresh();
     });
   }
 
@@ -121,6 +117,12 @@ class HomeBaseController extends GetxController {
       mGetAllCategoryData.refresh();
       mGetAllCategoryView.refresh();
     }
+
+    if (mSelectMenuViewController.value == null) {
+      createController();
+    }
+    mSelectMenuViewController.value?.selectGetAllCategory.clear();
+    mSelectMenuViewController.value?.selectGetAllCategory.refresh();
   }
 
   void onCategorySelect(int index) async {
@@ -131,18 +133,18 @@ class HomeBaseController extends GetxController {
 
     ///
     // if ((mGetAllCategoryView[index].subCategories ?? []).isNotEmpty) {
-      ///selectCategory
-      selectCategory(index);
+    ///selectCategory
+    selectCategory(index);
 
-      ///GetAllCategoryView
-      mGetAllCategoryView.clear();
-      mGetAllCategoryView
-          .addAll((mGetAllCategoryData[index].subCategories ?? []));
-      mGetAllCategoryView.refresh();
+    ///GetAllCategoryView
+    mGetAllCategoryView.clear();
+    mGetAllCategoryView
+        .addAll((mGetAllCategoryData[index].subCategories ?? []));
+    mGetAllCategoryView.refresh();
 
-      ///GetAllCategory
-      mGetAllCategoryData.clear();
-      mGetAllCategoryData.addAll(mGetAllCategoryView.toList());
+    ///GetAllCategory
+    mGetAllCategoryData.clear();
+    mGetAllCategoryData.addAll(mGetAllCategoryView.toList());
     // } else {
     //   selectCategory(index);
     // }
@@ -251,34 +253,21 @@ class HomeBaseController extends GetxController {
     mModifierListData.refresh();
   }
 
-  ///add item
-  // void onItemClick(int index) async {
-  //   ///
-  //   MyLogUtils.logDebug(
-  //       "##### mMenuItemSelected ${jsonEncode(mMenuItemSelected.value)}");
-  //   MyLogUtils.logDebug("##### mVariantListData ${mVariantListData.length}");
-  //   MyLogUtils.logDebug(
-  //       "##### mVariantListData ${jsonEncode(mVariantListData)}");
-  //
-  //   MyLogUtils.logDebug(
-  //       "##### mModifierListData ${jsonEncode(mModifierListData.length)}");
-  //   MyLogUtils.logDebug(
-  //       "##### mModifierListData ${jsonEncode(mModifierListData)}");
-  //
-  //   ///addItemView
-  //   await addItemView();
-  //
-  //   ///
-  //   // mSelectMenuViewController.selectMenu.value.clear();
-  //   // mSelectMenuViewController.selectMenu.value.add(menuList.value[index]);
-  //   // mSelectMenuViewController.selectMenu.refresh();
-  // }
-
   addItemView() async {
-    await AppAlert.showView(Get.context!,  AddItemScreen(this),
+    await AppAlert.showView(Get.context!, AddItemScreen(this),
         barrierDismissible: true);
     if (Get.isRegistered<AddItemController>()) {
-      Get.delete<AddItemController>();
+      await Get.delete<AddItemController>();
+      getAllCategoryList();
     }
+  }
+
+  onAddValue(CartItem mCartItem) {
+    MyLogUtils.logDebug("##### mModifierListData ${mCartItem.totalPrice}");
+    getAllCategoryList();
+    if (mSelectedOrderController.value == null) {
+      createController();
+    }
+    mSelectedOrderController.value?.onSelectOrder(mCartItem);
   }
 }

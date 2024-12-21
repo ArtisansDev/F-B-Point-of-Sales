@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
 import 'package:get/get.dart';
 
+import '../../../cart_item/order_place.dart';
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
 import '../../table_select/controller/table_select_controller.dart';
 import '../../table_select/view/table_select_screen.dart';
@@ -37,7 +38,7 @@ class TableController extends GetxController {
         isCreateOrder = Get.find<TableSelectController>().isCreateOrder.value;
         Get.delete<TableSelectController>();
       }
-      if(isCreateOrder){
+      if(isCreateOrder) {
         mDashboardScreenController.selectMenu.value = 0;
         mDashboardScreenController.selectMenu.refresh();
       }

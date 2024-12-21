@@ -9,6 +9,7 @@ class ColorConstants {
   static const Color appBackground = Color(0xFFDFDFDF);
   static const Color black = Colors.black;
   static const Color white = Colors.white;
+  static const Color red = Colors.red;
   static const Color cAppButtonColour = Color(0xFF5591B2);
   static const Color cAppCancelDilogColour = Color(0xFF333333);
   static const Color cAppTaxColour = Color(0xFF4E4E4E);

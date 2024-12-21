@@ -44,6 +44,18 @@ TextStyle getTextRegular(
   );
 }
 
+TextStyle getTextRegularLineThrough(
+    {Color colors = Colors.white, size = 14.0, heights = 1.2}) {
+  return GoogleFonts.poppins(
+    decoration: TextDecoration.lineThrough,
+    color: colors,
+    fontSize: size,
+    fontWeight: FontWeight.w400,
+    letterSpacing: -0.2,
+    height: heights,
+  );
+}
+
 TextStyle getTextRegularUnderline(
     {Color colors = Colors.white, size = 14.0, heights = 1.2}) {
   return GoogleFonts.poppins(

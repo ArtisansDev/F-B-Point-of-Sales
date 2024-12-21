@@ -11,9 +11,13 @@ import 'package:fnb_point_sale_base/common/download_data/download_data_view_mode
 import 'package:fnb_point_sale_base/common/download_data/ui/download_data_menu_widget.dart';
 import 'package:fnb_point_sale_base/constants/image_assets_constants.dart';
 import 'package:fnb_point_sale_base/constants/web_constants.dart';
+import 'package:fnb_point_sale_base/data/local/database/configuration/configuration_local_api.dart';
 import 'package:fnb_point_sale_base/data/mode/button_bar/button_bar_model.dart';
+import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
+import 'package:fnb_point_sale_base/locator.dart';
 import 'package:get/get.dart';
 
+import '../../../cart_item/order_place.dart';
 import '../../menu_home/controller/home_controller.dart';
 import '../../menu_home/view/home_screen.dart';
 import '../../menu_sales/controller/menu_sales_controller.dart';
@@ -36,7 +40,7 @@ class DashboardScreenController extends GetxController {
     TobBarModel(name: 'RESERVED', value: '5'),
     // TobBarModel(name: 'SELECT TABLE', value: '2'),
   ].obs;
-
+  Rxn<OrderPlace> mOrderPlace = Rxn<OrderPlace>();
   ///set Top Bar value
   setTopBarValue(int index, int value) {
     mTobBarModel.value[index].value =
@@ -152,6 +156,7 @@ class DashboardScreenController extends GetxController {
         }
         break;
       case 4:
+
         ///ShiftDetails
         if (Get.isRegistered<HomeController>()) {
           Get.find<HomeController>().onClose();
@@ -193,8 +198,16 @@ class DashboardScreenController extends GetxController {
         buttonBarName: 'Reservation'),
   ].obs;
 
+  ///getCurrencyData
+  CurrencyData mCurrencyData = CurrencyData();
+  getCurrencyData() async{
+    var configurationLocalApi = locator.get<ConfigurationLocalApi>();
+    mCurrencyData = ((await configurationLocalApi.getConfigurationResponse())?.configurationData?.currencyData??[]).first;
+  }
+
   ///onSync
   fastTimeSync() {
+    getCurrencyData();
     if (WebConstants.isFastTimeLogin) {
       WebConstants.isFastTimeLogin = false;
       unawaited(DownloadDataViewModel().startDownloading((value) {
@@ -204,7 +217,10 @@ class DashboardScreenController extends GetxController {
         sDownloadText.value = '';
         sDownloadText.refresh();
         onUpdateDate.value!();
-      }, (value) {}, DownloadDataMenu.values, onlyLatestChange: false));
+      }, (value) {
+        sDownloadText.value = '';
+        sDownloadText.refresh();
+      }, DownloadDataMenu.values, onlyLatestChange: false));
     }
   }
 
@@ -215,8 +231,13 @@ class DashboardScreenController extends GetxController {
         context: Get.context!,
         barrierDismissible: false,
         builder: (context) => DownloadDataMenuWidget(
-              onError: (value) {},
+              onError: (value) {
+                print("####### onError");
+                sDownloadText.value = '';
+                sDownloadText.refresh();
+              },
               updateMessage: (value) {
+                print("####### updateMessage");
                 sDownloadText.value = value;
                 sDownloadText.refresh();
               },

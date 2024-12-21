@@ -87,7 +87,7 @@ class MenuItemData {
       String? nutritionalInfo, 
       List<ModifierIDs>? modifierIDs,
       List<dynamic>? ingredients, 
-      List<TaxData>? taxData, 
+      List<MenuItemTaxData>? taxData, 
       List<CategoryIDs>? categoryIDs, 
       String? branchIDF, 
       int? approxCookingHour, 
@@ -145,7 +145,7 @@ class MenuItemData {
     if (json['TaxData'] != null) {
       _taxData = [];
       json['TaxData'].forEach((v) {
-        _taxData?.add(TaxData.fromJson(v));
+        _taxData?.add(MenuItemTaxData.fromJson(v));
       });
     }
     if (json['CategoryIDs'] != null) {
@@ -174,7 +174,7 @@ class MenuItemData {
   String? _nutritionalInfo;
   List<ModifierIDs>? _modifierIDs;
   List<dynamic>? _ingredients;
-  List<TaxData>? _taxData;
+  List<MenuItemTaxData>? _taxData;
   List<CategoryIDs>? _categoryIDs;
   String? _branchIDF;
   int? _approxCookingHour;
@@ -196,7 +196,7 @@ class MenuItemData {
   String? get nutritionalInfo => _nutritionalInfo;
   List<ModifierIDs>? get modifierIDs => _modifierIDs;
   List<dynamic>? get ingredients => _ingredients;
-  List<TaxData>? get taxData => _taxData;
+  List<MenuItemTaxData>? get taxData => _taxData;
   List<CategoryIDs>? get categoryIDs => _categoryIDs;
   String? get branchIDF => _branchIDF;
   int? get approxCookingHour => _approxCookingHour;
@@ -290,8 +290,8 @@ class ModifierIDs {
 /// TaxName : "Service Tax"
 /// TaxPercentage : "10.00"
 
-class TaxData {
-  TaxData({
+class MenuItemTaxData {
+  MenuItemTaxData({
       String? taxIDP, 
       String? taxName, 
       String? taxPercentage,}){
@@ -300,7 +300,7 @@ class TaxData {
     _taxPercentage = taxPercentage;
 }
 
-  TaxData.fromJson(dynamic json) {
+  MenuItemTaxData.fromJson(dynamic json) {
     _taxIDP = json['TaxIDP'];
     _taxName = json['TaxName'];
     _taxPercentage = json['TaxPercentage'];
