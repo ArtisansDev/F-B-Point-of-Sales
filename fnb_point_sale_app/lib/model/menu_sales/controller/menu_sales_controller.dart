@@ -8,6 +8,7 @@ import 'package:fnb_point_sale_base/common/date_range_picker/widgets/date_range_
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/image_assets_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
+import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:fnb_point_sale_base/utils/my_log_utils.dart';
 import 'package:get/get.dart';
@@ -142,18 +143,18 @@ class MenuSalesController extends GetxController {
     // if (Get.isRegistered<PayNowController>()) {
     //   Get.delete<PayNowController>();
     // }
-    await AppAlert.showView(Get.context!, const PaymentScreen(),
+    await AppAlert.showView(Get.context!,  PaymentScreen(OrderPlace()),
         barrierDismissible: true);
     if (Get.isRegistered<PaymentScreenController>()) {
       Get.delete<PaymentScreenController>();
     }
   }
 
-  void onDeleteSale(int index) async{
-    await AppAlert.showView(Get.context!, const CancelOrderScreen(),
-        barrierDismissible: true);
-    if (Get.isRegistered<CancelOrderController>()) {
-      Get.delete<CancelOrderController>();
-    }
-  }
+  // void onDeleteSale(int index) async{
+  //   await AppAlert.showView(Get.context!, const CancelOrderScreen(),
+  //       barrierDismissible: true);
+  //   if (Get.isRegistered<CancelOrderController>()) {
+  //     Get.delete<CancelOrderController>();
+  //   }
+  // }
 }

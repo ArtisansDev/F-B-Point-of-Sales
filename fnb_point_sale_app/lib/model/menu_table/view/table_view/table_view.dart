@@ -18,16 +18,29 @@ class TableView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DynamicHeightGridView(
-        itemCount: 12,
-        crossAxisCount: 4,
-        crossAxisSpacing: 10.sp,
-        mainAxisSpacing: 13.sp,
-        builder: (ctx, index) {
-          /// return your widget here.
-          return TableRowView(
-            index: index,
-          );
-        });
+    return Obx(
+      () => controller.mGetAllTablesList.isEmpty
+          ? Center(
+              child: Container(
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  padding: EdgeInsets.all(10.5.sp),
+                  height: 25.sp,
+                  width: 25.sp,
+                  child: const CircularProgressIndicator()),
+            )
+          : DynamicHeightGridView(
+              itemCount: controller.mGetAllTablesList.length,
+              crossAxisCount: 4,
+              crossAxisSpacing: 10.sp,
+              mainAxisSpacing: 13.sp,
+              builder: (ctx, index) {
+                /// return your widget here.
+                return TableRowView(
+                  index: index,
+                );
+              }),
+    );
   }
 }

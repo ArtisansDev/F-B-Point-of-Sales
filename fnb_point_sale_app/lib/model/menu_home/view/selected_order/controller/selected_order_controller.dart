@@ -1,15 +1,19 @@
 // ignore_for_file: depend_on_referenced_packages
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
+import 'package:fnb_point_sale_base/data/local/database/hold_sale/hold_sale_local_api.dart';
+import 'package:fnb_point_sale_base/data/local/database/hold_sale/hold_sale_model.dart';
+import 'package:fnb_point_sale_base/locator.dart';
 import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:get/get.dart';
-import '../../../../../cart_item/cart_item.dart';
-import '../../../../../cart_item/order_place.dart';
+import 'package:fnb_point_sale_base/data/mode/cart_item/cart_item.dart';
+import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
+import '../../../../cancel_order/controller/cancel_order_controller.dart';
+import '../../../../cancel_order/view/cancel_order_screen.dart';
 import '../../../../payment_screen/controller/payment_screen_controller.dart';
 import '../../../../payment_screen/view/payment_screen.dart';
-import '../../../../table_select/controller/table_select_controller.dart';
-import '../../../../table_select/view/table_select_screen.dart';
-import '../../../controller/home_controller.dart';
 import '../../../home_base_controller/home_base_controller.dart';
 
 class SelectedOrderController extends HomeBaseController {
@@ -21,15 +25,15 @@ class SelectedOrderController extends HomeBaseController {
   }
 
   void onPayment() async {
-    await AppAlert.showView(Get.context!, const PaymentScreen(),
+    await AppAlert.showView(Get.context!,  PaymentScreen(mOrderPlace.value??OrderPlace()),
         barrierDismissible: true);
     if (Get.isRegistered<PaymentScreenController>()) {
       Get.delete<PaymentScreenController>();
     }
   }
 
-  ///Order Place from outher page
-  onOrderPlace() async{
+  ///Order Place from Another page
+  onOrderPlaceAnotherPage() async {
     if (mDashboardScreenController.mOrderPlace.value != null) {
       mOrderPlace.value = mDashboardScreenController.mOrderPlace.value;
       mOrderPlace.refresh();
@@ -88,5 +92,35 @@ class SelectedOrderController extends HomeBaseController {
   void onClose() {
     ///delete all sub Controller
     super.onClose();
+  }
+
+  void onCancelSale() async {
+    await AppAlert.showView(Get.context!, CancelOrderScreen(this),
+        barrierDismissible: true);
+    if (Get.isRegistered<CancelOrderController>()) {
+      Get.delete<CancelOrderController>();
+    }
+  }
+
+  void onHoldSale() async {
+    ///local data base save
+
+    var holdSaleLocalApi = locator.get<HoldSaleLocalApi>();
+    HoldSaleModel mHoldSaleModel =
+        await holdSaleLocalApi.getAllHoldSale() ??
+            HoldSaleModel();
+
+    if((mHoldSaleModel.mOrderPlace??[]).isEmpty){
+      mHoldSaleModel = HoldSaleModel(mOrderPlace: [mOrderPlace.value!]);
+      await holdSaleLocalApi.save(mHoldSaleModel);
+    }else {
+
+      await holdSaleLocalApi.getHoldSaleEdit(mOrderPlace.value!);
+    }
+
+    ///clear data
+    mOrderPlace.value = null;
+    mOrderPlace.refresh();
+    mDashboardScreenController.onUpdateHoldSale();
   }
 }

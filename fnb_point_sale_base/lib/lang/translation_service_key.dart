@@ -67,3 +67,6 @@ const String sTime  = "Time";
 const String sType  = "Type";
 const String sTable  = "Table";
 const String sTotalBill  = "Total Bill";
+const String sHoldSale  = "Hold sale";
+const String sDeleteAll = "Delete All";
+

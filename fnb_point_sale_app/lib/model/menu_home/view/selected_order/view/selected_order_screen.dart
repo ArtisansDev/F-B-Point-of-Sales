@@ -25,7 +25,7 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
     return FocusDetector(
         onVisibilityGained: () {
           controller.createController();
-          controller.onOrderPlace();
+          controller.onOrderPlaceAnotherPage();
         },
         onVisibilityLost: () {},
         child: Obx(
@@ -72,14 +72,39 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
                               colors: ColorConstants.cAppButtonColour),
                         )),
                         Visibility(
-                          visible: controller.mOrderPlace.value != null,
+                          visible: controller.mOrderPlace.value != null &&
+                              (controller.mOrderPlace.value?.cartItem ?? [])
+                                  .isNotEmpty,
                           child: GestureDetector(
                             onTap: () {
-                              controller.mOrderPlace.value = null;
-                              controller.mOrderPlace.refresh();
+                              controller.onHoldSale();
                             },
                             child: Container(
-                                margin: EdgeInsets.only(right: 3.sp),
+                                margin: EdgeInsets.only(right: 8.sp),
+                                height: 16.5.sp,
+                                width: 6.w,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: ColorConstants.cAppButtonColour,
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(7.sp)),
+                                ),
+                                child: Text(
+                                  'HOLD',
+                                  style: getText500(size: 10.5.sp),
+                                )),
+                          ),
+                        ),
+                        Visibility(
+                          visible: controller.mOrderPlace.value != null &&
+                              (controller.mOrderPlace.value?.cartItem ?? [])
+                                  .isNotEmpty,
+                          child: GestureDetector(
+                            onTap: () {
+                              controller.onCancelSale();
+                            },
+                            child: Container(
+                                margin: EdgeInsets.only(right: 0.sp),
                                 height: 16.5.sp,
                                 width: 6.w,
                                 alignment: Alignment.center,

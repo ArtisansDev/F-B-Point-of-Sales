@@ -23,9 +23,15 @@ class ProductRequest {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['RestaurantIDF'] = _restaurantIDF;
-    map['BranchIDF'] = _branchIDF;
-    map['LastSyncTime'] = _lastSyncTime;
+    if(_restaurantIDF!=null) {
+      map['RestaurantIDF'] = _restaurantIDF;
+    }
+    if(_branchIDF!=null) {
+      map['BranchIDF'] = _branchIDF;
+    }
+    if(_lastSyncTime!=null) {
+      map['LastSyncTime'] = _lastSyncTime;
+    }
     return map;
   }
 

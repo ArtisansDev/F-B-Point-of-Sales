@@ -8,6 +8,8 @@ import '../../../../constants/web_constants.dart';
 import '../../../mode/product/get_all_category/get_all_category_response.dart';
 import '../../../mode/product/get_all_menu_item/menu_item_response.dart';
 import '../../../mode/product/get_all_modifier/get_all_modifier_response.dart';
+import '../../../mode/product/get_all_payment_type/get_all_payment_type_response.dart';
+import '../../../mode/product/get_all_tables/get_all_tables_response.dart';
 import '../../../mode/product/get_all_variant/get_all_variant_response.dart';
 import '../../web_response_failed.dart';
 
@@ -143,6 +145,82 @@ class ProductApiImpl extends AllApiImpl with ProductApi {
         statusCode: cases.statusCode,
         data: mGetAllVariantResponse,
         statusMessage: "Get all variant downloaded successfully",
+        error: false,
+      );
+    } else if (cases.statusCode == WebConstants.statusCode401) {
+      mWebResponseFailed =
+          WebResponseFailed.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        statusMessage: mWebResponseFailed.statusMessage,
+        error: false,
+      );
+    } else {
+      mWebResponseFailed =
+          WebResponseFailed.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        // data: mWebResponseFailed,
+        statusMessage: mWebResponseFailed.statusMessage,
+        error: true,
+      );
+    }
+    return mWebResponseSuccess;
+  }
+
+  ///post GetAllTables
+  @override
+  Future<WebResponseSuccess> postGetAllTables(exhibitorsListRequest) async {
+    // AppAlert.showProgressDialog(Get.context!);
+    WebConstants.auth = true;
+    final cases = await mWebProvider.postWithRequest(
+        WebConstants.actionGetAllTables, exhibitorsListRequest);
+    // AppAlert.hideLoadingDialog(Get.context!);
+    if (cases.statusCode == WebConstants.statusCode200) {
+      GetAllTablesResponse mGetAllTablesResponse =
+      GetAllTablesResponse.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        data: mGetAllTablesResponse,
+        statusMessage: "Get all Tables downloaded successfully",
+        error: false,
+      );
+    } else if (cases.statusCode == WebConstants.statusCode401) {
+      mWebResponseFailed =
+          WebResponseFailed.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        statusMessage: mWebResponseFailed.statusMessage,
+        error: false,
+      );
+    } else {
+      mWebResponseFailed =
+          WebResponseFailed.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        // data: mWebResponseFailed,
+        statusMessage: mWebResponseFailed.statusMessage,
+        error: true,
+      );
+    }
+    return mWebResponseSuccess;
+  }
+
+  ///post GetAllPaymentType
+  @override
+  Future<WebResponseSuccess> postGetAllPaymentType(exhibitorsListRequest) async {
+    // AppAlert.showProgressDialog(Get.context!);
+    WebConstants.auth = true;
+    final cases = await mWebProvider.postWithRequest(
+        WebConstants.actionGetAllPaymentType, exhibitorsListRequest);
+    // AppAlert.hideLoadingDialog(Get.context!);
+    if (cases.statusCode == WebConstants.statusCode200) {
+      GetAllPaymentTypeResponse mGetAllPaymentTypeResponse =
+      GetAllPaymentTypeResponse.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        data: mGetAllPaymentTypeResponse,
+        statusMessage: "Get all Tables downloaded successfully",
         error: false,
       );
     } else if (cases.statusCode == WebConstants.statusCode401) {

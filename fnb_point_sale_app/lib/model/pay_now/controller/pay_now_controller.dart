@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
+import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 import 'package:get/get.dart';
 
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
@@ -19,7 +20,7 @@ class PayNowController extends GetxController {
 
   void onPayment() async {
     Get.back();
-    await AppAlert.showView(Get.context!, const PaymentScreen(),
+    await AppAlert.showView(Get.context!, PaymentScreen(OrderPlace()),
         barrierDismissible: true);
     if (Get.isRegistered<PaymentScreenController>()) {
       Get.delete<PaymentScreenController>();

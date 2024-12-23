@@ -26,6 +26,7 @@ class TopBarScreen extends GetView<TopBarController> {
 
   sideMenuView() {
     Get.lazyPut(() => TopBarController());
+    controller.mDashboardScreenController.onUpdateHoldSale();
     return FocusDetector(
         onVisibilityGained: () {},
         onVisibilityLost: () {},
@@ -50,7 +51,7 @@ class TopBarScreen extends GetView<TopBarController> {
                     width: 10.sp,
                   ),
                   Expanded(
-                      flex: 5,
+                      flex: 10,
                       child: SizedBox(
                         height: 20.sp,
                         child: ListView.builder(

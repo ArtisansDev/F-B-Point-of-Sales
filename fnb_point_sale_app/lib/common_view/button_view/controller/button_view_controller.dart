@@ -22,11 +22,11 @@ class ButtonViewController extends GetxController {
     switch (mDashboardScreenController
         .value!.mButtonBarModel.value[index].buttonBarName) {
       case 'Cancel Order':
-        await AppAlert.showView(Get.context!, const CancelOrderScreen(),
-            barrierDismissible: true);
-        if (Get.isRegistered<CancelOrderController>()) {
-          Get.delete<CancelOrderController>();
-        }
+        // await AppAlert.showView(Get.context!, const CancelOrderScreen(),
+        //     barrierDismissible: true);
+        // if (Get.isRegistered<CancelOrderController>()) {
+        //   Get.delete<CancelOrderController>();
+        // }
         break;
       case 'Reservation':
         await AppAlert.showView(Get.context!, const TableSelectScreen(tableNumber: null,),

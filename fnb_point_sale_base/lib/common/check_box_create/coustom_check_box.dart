@@ -12,10 +12,10 @@ import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-selectCheckBox({bool isRound = true, bool isSelect = false}) {
+selectCheckBox({bool isRound = true, bool isSelect = false,double? size}) {
   return Container(
-    width: 14.sp,
-    height: 14.sp,
+    width: size??14.sp,
+    height: size??14.sp,
     decoration: BoxDecoration(
       color: Colors.white,
       // Background color

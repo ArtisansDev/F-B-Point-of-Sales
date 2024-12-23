@@ -12,12 +12,14 @@ import 'package:fnb_point_sale_base/common/download_data/ui/download_data_menu_w
 import 'package:fnb_point_sale_base/constants/image_assets_constants.dart';
 import 'package:fnb_point_sale_base/constants/web_constants.dart';
 import 'package:fnb_point_sale_base/data/local/database/configuration/configuration_local_api.dart';
+import 'package:fnb_point_sale_base/data/local/database/hold_sale/hold_sale_local_api.dart';
+import 'package:fnb_point_sale_base/data/local/database/hold_sale/hold_sale_model.dart';
 import 'package:fnb_point_sale_base/data/mode/button_bar/button_bar_model.dart';
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/locator.dart';
 import 'package:get/get.dart';
+import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 
-import '../../../cart_item/order_place.dart';
 import '../../menu_home/controller/home_controller.dart';
 import '../../menu_home/view/home_screen.dart';
 import '../../menu_sales/controller/menu_sales_controller.dart';
@@ -38,9 +40,10 @@ class DashboardScreenController extends GetxController {
     TobBarModel(name: 'OPEN', value: '5'),
     TobBarModel(name: 'OCCUPIED', value: '5'),
     TobBarModel(name: 'RESERVED', value: '5'),
-    // TobBarModel(name: 'SELECT TABLE', value: '2'),
+    TobBarModel(name: 'HOLD SALE', value: '0'),
   ].obs;
   Rxn<OrderPlace> mOrderPlace = Rxn<OrderPlace>();
+
   ///set Top Bar value
   setTopBarValue(int index, int value) {
     mTobBarModel.value[index].value =
@@ -200,9 +203,14 @@ class DashboardScreenController extends GetxController {
 
   ///getCurrencyData
   CurrencyData mCurrencyData = CurrencyData();
-  getCurrencyData() async{
+
+  getCurrencyData() async {
     var configurationLocalApi = locator.get<ConfigurationLocalApi>();
-    mCurrencyData = ((await configurationLocalApi.getConfigurationResponse())?.configurationData?.currencyData??[]).first;
+    mCurrencyData = ((await configurationLocalApi.getConfigurationResponse())
+                ?.configurationData
+                ?.currencyData ??
+            [])
+        .first;
   }
 
   ///onSync
@@ -256,5 +264,15 @@ class DashboardScreenController extends GetxController {
 
   onUpdate(Function update) {
     onUpdateDate.value = update;
+  }
+
+  onUpdateHoldSale() async {
+    var holdSaleLocalApi = locator.get<HoldSaleLocalApi>();
+    HoldSaleModel mHoldSaleModel =
+        await holdSaleLocalApi.getAllHoldSale() ?? HoldSaleModel();
+
+    mTobBarModel.value[4].value =
+        (mHoldSaleModel.mOrderPlace ?? []).length.toString();
+    mTobBarModel.refresh();
   }
 }

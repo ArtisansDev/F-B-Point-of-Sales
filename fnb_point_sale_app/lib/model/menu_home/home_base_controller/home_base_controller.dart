@@ -7,6 +7,7 @@ import 'package:fnb_point_sale_base/data/local/database/menu_item/menu_item_loca
 import 'package:fnb_point_sale_base/data/local/database/modifier/modifier_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/product/all_category/all_category_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/variant/variant_local_api.dart';
+import 'package:fnb_point_sale_base/data/mode/cart_item/cart_item.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_category/get_all_category_response.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_menu_item/menu_item_response.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_modifier/get_all_modifier_response.dart';
@@ -15,7 +16,6 @@ import 'package:fnb_point_sale_base/locator.dart';
 import 'package:fnb_point_sale_base/utils/my_log_utils.dart';
 import 'package:get/get.dart';
 
-import '../../../cart_item/cart_item.dart';
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
 import '../controller/home_controller.dart';
 import '../view/add_item/controller/add_item_controller.dart';

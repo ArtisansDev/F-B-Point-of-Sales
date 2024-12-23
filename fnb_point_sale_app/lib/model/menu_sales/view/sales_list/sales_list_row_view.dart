@@ -168,29 +168,7 @@ class SalesListRowView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      controller.onDeleteSale(index);
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(
-                          right: 10.sp),
-                      height: 16.5.sp,
-                      width: 16.5.sp,
-                      padding: EdgeInsets.all(4.5.sp),
-                      decoration: BoxDecoration(
-                        color: ColorConstants.cAppButtonColour,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8.sp),
-                        ),
-                      ),
-                      child: Icon(
-                        Icons.delete,
-                        color: ColorConstants.white,
-                        size: 11.sp,
-                      ),
-                    ),
-                  ),
+
                   GestureDetector(
                     onTap: () {
                       // Get.back();

@@ -13,7 +13,9 @@ class TableScreen extends GetView<TableController> {
   Widget build(BuildContext context) {
     Get.lazyPut(() => TableController());
     return FocusDetector(
-        onVisibilityGained: () {},
+        onVisibilityGained: () {
+          controller.loadAllTables();
+        },
         onVisibilityLost: () {},
         child: Container(
           margin: EdgeInsets.only(
