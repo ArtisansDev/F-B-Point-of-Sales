@@ -1,3 +1,5 @@
+import '../../../../utils/num_utils.dart';
+
 /// error : false
 /// statusCode : 200
 /// statusMessage : "Data Retrieved Successfully"
@@ -5,15 +7,16 @@
 
 class MenuItemResponse {
   MenuItemResponse({
-      bool? error, 
-      int? statusCode, 
-      String? statusMessage, 
-      List<MenuItemData>? data,}){
+    bool? error,
+    int? statusCode,
+    String? statusMessage,
+    List<MenuItemData>? data,
+  }) {
     _error = error;
     _statusCode = statusCode;
     _statusMessage = statusMessage;
     _data = data;
-}
+  }
 
   MenuItemResponse.fromJson(dynamic json) {
     _error = json['error'];
@@ -26,14 +29,18 @@ class MenuItemResponse {
       });
     }
   }
+
   bool? _error;
   int? _statusCode;
   String? _statusMessage;
   List<MenuItemData>? _data;
 
   bool? get error => _error;
+
   int? get statusCode => _statusCode;
+
   String? get statusMessage => _statusMessage;
+
   List<MenuItemData>? get data => _data;
 
   Map<String, dynamic> toJson() {
@@ -46,7 +53,6 @@ class MenuItemResponse {
     }
     return map;
   }
-
 }
 
 /// MenuItemIDP : "73c212d4-0d16-4c07-9bb9-03b8ae5acec8"
@@ -73,27 +79,28 @@ class MenuItemResponse {
 
 class MenuItemData {
   MenuItemData({
-      String? menuItemIDP, 
-      String? restaurantIDF, 
-      String? itemName, 
-      String? description, 
-      bool? isActive, 
-      String? creationDate, 
-      String? createdBy, 
-      String? updationDate, 
-      String? updatedBy, 
-      bool? isVeg, 
-      double? itemTaxPercent, 
-      String? nutritionalInfo, 
-      List<ModifierIDs>? modifierIDs,
-      List<dynamic>? ingredients, 
-      List<MenuItemTaxData>? taxData, 
-      List<CategoryIDs>? categoryIDs, 
-      String? branchIDF, 
-      int? approxCookingHour, 
-      int? approxCookingMinute, 
-      bool? isDeleted, 
-      String? archiveDate,}){
+    String? menuItemIDP,
+    String? restaurantIDF,
+    String? itemName,
+    String? description,
+    bool? isActive,
+    String? creationDate,
+    String? createdBy,
+    String? updationDate,
+    String? updatedBy,
+    bool? isVeg,
+    double? itemTaxPercent,
+    String? nutritionalInfo,
+    List<ModifierIDs>? modifierIDs,
+    List<dynamic>? ingredients,
+    List<MenuItemTaxData>? taxData,
+    List<CategoryIDs>? categoryIDs,
+    String? branchIDF,
+    int? approxCookingHour,
+    int? approxCookingMinute,
+    bool? isDeleted,
+    String? archiveDate,
+  }) {
     _menuItemIDP = menuItemIDP;
     _restaurantIDF = restaurantIDF;
     _itemName = itemName;
@@ -115,7 +122,7 @@ class MenuItemData {
     _approxCookingMinute = approxCookingMinute;
     _isDeleted = isDeleted;
     _archiveDate = archiveDate;
-}
+  }
 
   MenuItemData.fromJson(dynamic json) {
     _menuItemIDP = json['MenuItemIDP'];
@@ -128,7 +135,7 @@ class MenuItemData {
     _updationDate = json['UpdationDate'];
     _updatedBy = json['UpdatedBy'];
     _isVeg = json['IsVeg'];
-    _itemTaxPercent = json['ItemTaxPercent'];
+    _itemTaxPercent = getDoubleValue(json['ItemTaxPercent'] ?? 0.0);
     _nutritionalInfo = json['NutritionalInfo'];
     if (json['ModifierIDs'] != null) {
       _modifierIDs = [];
@@ -160,6 +167,7 @@ class MenuItemData {
     _isDeleted = json['IsDeleted'];
     _archiveDate = json['ArchiveDate'];
   }
+
   String? _menuItemIDP;
   String? _restaurantIDF;
   String? _itemName;
@@ -183,25 +191,45 @@ class MenuItemData {
   String? _archiveDate;
 
   String? get menuItemIDP => _menuItemIDP;
+
   String? get restaurantIDF => _restaurantIDF;
+
   String? get itemName => _itemName;
+
   String? get description => _description;
+
   bool? get isActive => _isActive;
+
   String? get creationDate => _creationDate;
+
   String? get createdBy => _createdBy;
+
   String? get updationDate => _updationDate;
+
   String? get updatedBy => _updatedBy;
+
   bool? get isVeg => _isVeg;
+
   double? get itemTaxPercent => _itemTaxPercent;
+
   String? get nutritionalInfo => _nutritionalInfo;
+
   List<ModifierIDs>? get modifierIDs => _modifierIDs;
+
   List<dynamic>? get ingredients => _ingredients;
+
   List<MenuItemTaxData>? get taxData => _taxData;
+
   List<CategoryIDs>? get categoryIDs => _categoryIDs;
+
   String? get branchIDF => _branchIDF;
+
   int? get approxCookingHour => _approxCookingHour;
+
   int? get approxCookingMinute => _approxCookingMinute;
+
   bool? get isDeleted => _isDeleted;
+
   String? get archiveDate => _archiveDate;
 
   Map<String, dynamic> toJson() {
@@ -237,20 +265,21 @@ class MenuItemData {
     map['ArchiveDate'] = _archiveDate;
     return map;
   }
-
 }
 
 /// CategoryIDP : "5062dbb1-190d-4a9e-8597-2450678951f1"
 
 class CategoryIDs {
   CategoryIDs({
-      String? categoryIDP,}){
+    String? categoryIDP,
+  }) {
     _categoryIDP = categoryIDP;
-}
+  }
 
   CategoryIDs.fromJson(dynamic json) {
     _categoryIDP = json['CategoryIDP'];
   }
+
   String? _categoryIDP;
 
   String? get categoryIDP => _categoryIDP;
@@ -260,20 +289,21 @@ class CategoryIDs {
     map['CategoryIDP'] = _categoryIDP;
     return map;
   }
-
 }
 
 /// ModifierIDP : "5062dbb1-190d-4a9e-8597-2450678951f1"
 
 class ModifierIDs {
   ModifierIDs({
-    String? modifierIDP,}){
+    String? modifierIDP,
+  }) {
     _modifierIDP = modifierIDP;
   }
 
   ModifierIDs.fromJson(dynamic json) {
     _modifierIDP = json['ModifierIDP'];
   }
+
   String? _modifierIDP;
 
   String? get modifierIDP => _modifierIDP;
@@ -283,7 +313,6 @@ class ModifierIDs {
     map['ModifierIDP'] = _modifierIDP;
     return map;
   }
-
 }
 
 /// TaxIDP : "d327b6d4-85a9-4feb-b7a9-e23dd802e8e7"
@@ -292,25 +321,29 @@ class ModifierIDs {
 
 class MenuItemTaxData {
   MenuItemTaxData({
-      String? taxIDP, 
-      String? taxName, 
-      String? taxPercentage,}){
+    String? taxIDP,
+    String? taxName,
+    String? taxPercentage,
+  }) {
     _taxIDP = taxIDP;
     _taxName = taxName;
     _taxPercentage = taxPercentage;
-}
+  }
 
   MenuItemTaxData.fromJson(dynamic json) {
     _taxIDP = json['TaxIDP'];
     _taxName = json['TaxName'];
     _taxPercentage = json['TaxPercentage'];
   }
+
   String? _taxIDP;
   String? _taxName;
   String? _taxPercentage;
 
   String? get taxIDP => _taxIDP;
+
   String? get taxName => _taxName;
+
   String? get taxPercentage => _taxPercentage;
 
   Map<String, dynamic> toJson() {
@@ -320,5 +353,4 @@ class MenuItemTaxData {
     map['TaxPercentage'] = _taxPercentage;
     return map;
   }
-
 }

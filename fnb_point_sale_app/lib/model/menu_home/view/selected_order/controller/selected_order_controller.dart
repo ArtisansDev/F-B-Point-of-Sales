@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
 import 'package:fnb_point_sale_base/data/local/database/hold_sale/hold_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/hold_sale/hold_sale_model.dart';
+import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/locator.dart';
 import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:get/get.dart';
@@ -25,7 +26,8 @@ class SelectedOrderController extends HomeBaseController {
   }
 
   void onPayment() async {
-    await AppAlert.showView(Get.context!,  PaymentScreen(mOrderPlace.value??OrderPlace()),
+    await AppAlert.showView(
+        Get.context!, PaymentScreen(mOrderPlace.value ?? OrderPlace()),
         barrierDismissible: true);
     if (Get.isRegistered<PaymentScreenController>()) {
       Get.delete<PaymentScreenController>();
@@ -58,6 +60,7 @@ class SelectedOrderController extends HomeBaseController {
     if (value == 0) {
       mOrderPlace.value?.cartItem?.removeAt(index);
       mOrderPlace.refresh();
+      getCalculateSubTotal();
       return;
     }
 
@@ -79,12 +82,25 @@ class SelectedOrderController extends HomeBaseController {
     mOrderPlace.value?.subTotalPrice = 0.0;
     mOrderPlace.value?.taxAmount = 0.0;
     mOrderPlace.value?.totalPrice = 0.0;
+
+    ///subTotal
     for (CartItem mCartItem in mOrderPlace.value?.cartItem ?? []) {
       mOrderPlace.value?.subTotalPrice =
           (mOrderPlace.value?.subTotalPrice ?? 0) +
               ((mCartItem.taxPriceAmount ?? 0) * (mCartItem.count));
     }
-    mOrderPlace.value?.totalPrice = mOrderPlace.value?.subTotalPrice ?? 0;
+
+    ///taxPrice
+    for (TaxData mTaxData in mDashboardScreenController.taxData ?? []) {
+      mOrderPlace.value?.taxAmount = (mOrderPlace.value?.taxAmount ?? 0.0) +
+          calculatePercentageOf(
+              getDoubleValue(mOrderPlace.value?.subTotalPrice ?? 0),
+              getDoubleValue(mTaxData.taxPercentage));
+    }
+
+    ///TotalPrice
+    mOrderPlace.value?.totalPrice = (mOrderPlace.value?.taxAmount ?? 0) +
+        (mOrderPlace.value?.subTotalPrice ?? 0);
     mOrderPlace.refresh();
   }
 
@@ -107,14 +123,12 @@ class SelectedOrderController extends HomeBaseController {
 
     var holdSaleLocalApi = locator.get<HoldSaleLocalApi>();
     HoldSaleModel mHoldSaleModel =
-        await holdSaleLocalApi.getAllHoldSale() ??
-            HoldSaleModel();
+        await holdSaleLocalApi.getAllHoldSale() ?? HoldSaleModel();
 
-    if((mHoldSaleModel.mOrderPlace??[]).isEmpty){
+    if ((mHoldSaleModel.mOrderPlace ?? []).isEmpty) {
       mHoldSaleModel = HoldSaleModel(mOrderPlace: [mOrderPlace.value!]);
       await holdSaleLocalApi.save(mHoldSaleModel);
-    }else {
-
+    } else {
       await holdSaleLocalApi.getHoldSaleEdit(mOrderPlace.value!);
     }
 

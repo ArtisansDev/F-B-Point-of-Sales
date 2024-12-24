@@ -203,14 +203,25 @@ class DashboardScreenController extends GetxController {
 
   ///getCurrencyData
   CurrencyData mCurrencyData = CurrencyData();
+  var configurationLocalApi = locator.get<ConfigurationLocalApi>();
 
   getCurrencyData() async {
-    var configurationLocalApi = locator.get<ConfigurationLocalApi>();
     mCurrencyData = ((await configurationLocalApi.getConfigurationResponse())
                 ?.configurationData
                 ?.currencyData ??
             [])
         .first;
+    getTexList();
+  }
+
+  RxList<TaxData> taxData = <TaxData>[].obs;
+
+  getTexList() async {
+    ConfigurationResponse mConfigurationResponse =
+        await configurationLocalApi.getConfigurationResponse() ??
+            ConfigurationResponse();
+    taxData.clear();
+    taxData.addAll(mConfigurationResponse.configurationData?.taxData??[]);
   }
 
   ///onSync

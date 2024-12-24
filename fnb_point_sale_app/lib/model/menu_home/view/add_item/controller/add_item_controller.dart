@@ -112,13 +112,9 @@ class AddItemController extends GetxController {
 
     ///tax
     mCartItem.value?.taxAmount = 0.0;
-    if ((mCartItem.value?.mMenuItemData?.taxData ?? []).isNotEmpty) {
-      for (MenuItemTaxData mTaxData
-          in mCartItem.value!.mMenuItemData!.taxData!) {
-        mCartItem.value?.taxAmount = (mCartItem.value?.taxAmount ?? 0) +
-            calculatePercentageOf(mCartItem.value?.price ?? 0,
-                getDoubleValue(mTaxData.taxPercentage));
-      }
+    if((mCartItem.value?.mMenuItemData?.itemTaxPercent??0)>0){
+      mCartItem.value?.taxAmount = calculatePercentageOf(mCartItem.value?.price ?? 0,
+                      getDoubleValue((mCartItem.value?.mMenuItemData?.itemTaxPercent??0)));
     }
 
     ///Modifier
