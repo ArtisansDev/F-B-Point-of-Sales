@@ -8,6 +8,7 @@ import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
+import '../../../../home_base_controller/home_base_controller.dart';
 import 'controller/search_view_controller.dart';
 
 class SearchView extends GetView<SearchViewController> {
@@ -36,8 +37,11 @@ class SearchView extends GetView<SearchViewController> {
                 margin: EdgeInsets.only( right: 13.sp),
                 child: TextInputWidget(
                   placeHolder: sSearchItems.tr,
-                  controller: controller.searchController.value,
+                  controller: HomeBaseController.searchController.value,
                   errorText: null,
+                  onTextChange: (value){
+                    controller.onSearchText(value);
+                  },
                   textInputType: TextInputType.emailAddress,
                   hintText: sSearchItems.tr,
                   showFloatingLabel: false,

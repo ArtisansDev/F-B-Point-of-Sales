@@ -132,11 +132,17 @@ class SelectedOrderList extends StatelessWidget {
                                     Expanded(
                                         flex: 5,
                                         child: incDecView(
+                                            placeOrder:
+                                                mCartItem.placeOrder ?? false,
                                             count: mCartItem.count,
                                             priceIncDec: (value) {
-                                              controller
-                                                  .onCalculateTotalPricePerItem(
-                                                      value, index, mCartItem);
+                                              if (!mCartItem.placeOrder) {
+                                                controller
+                                                    .onCalculateTotalPricePerItem(
+                                                        value,
+                                                        index,
+                                                        mCartItem);
+                                              }
                                             })),
                                     Expanded(
                                         flex: 4,
@@ -160,7 +166,7 @@ class SelectedOrderList extends StatelessWidget {
     );
   }
 
-  incDecView({int? count, Function? priceIncDec}) {
+  incDecView({bool? placeOrder, int? count, Function? priceIncDec}) {
     return Container(
         width: double.infinity,
         padding: EdgeInsets.all(5.sp),
@@ -171,13 +177,15 @@ class SelectedOrderList extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-// Decrement button
+            /// Decrement button
             Container(
               height: 15.5.sp,
               width: 15.5.sp,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.sp),
-                  color: ColorConstants.cAppButtonColour),
+                  color: placeOrder ?? false
+                      ? ColorConstants.appEditText
+                      : ColorConstants.cAppButtonColour),
               child: IconButton(
                 padding: EdgeInsets.zero,
                 icon: const Icon(Icons.remove),
@@ -189,19 +197,21 @@ class SelectedOrderList extends StatelessWidget {
               ),
             ),
 
-// Counter display
+            /// Counter display
             Text(
               '$count',
               style: getText500(colors: ColorConstants.black, size: 11.sp),
             ),
 
-// Increment button
+            /// Increment button
             Container(
                 height: 15.5.sp,
                 width: 15.5.sp,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.sp),
-                    color: ColorConstants.cAppButtonColour),
+                    color: placeOrder ?? false
+                        ? ColorConstants.appEditText
+                        : ColorConstants.cAppButtonColour),
                 child: IconButton(
                   padding: EdgeInsets.zero,
                   icon: const Icon(Icons.add),

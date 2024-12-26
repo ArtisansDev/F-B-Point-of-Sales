@@ -14,12 +14,16 @@ class TableScreen extends GetView<TableController> {
     Get.lazyPut(() => TableController());
     return FocusDetector(
         onVisibilityGained: () {
+          controller.allOrderPlace();
           controller.loadAllTables();
         },
         onVisibilityLost: () {},
         child: Container(
           margin: EdgeInsets.only(
-              top: 11.sp, left: 11.sp, right: 11.sp,),
+            top: 11.sp,
+            left: 11.sp,
+            right: 11.sp,
+          ),
           alignment: Alignment.center,
           child: Column(
             children: [Expanded(child: TableView()), const ButtonView()],

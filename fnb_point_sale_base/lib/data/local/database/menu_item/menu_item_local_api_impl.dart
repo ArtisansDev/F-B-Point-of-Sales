@@ -57,6 +57,28 @@ class MenuItemLocalApiImpl extends MenuItemLocalApi {
   }
 
   @override
+  Future<List<MenuItemData>?> getMenuItemDataSearch(String name) async {
+    if(name.isEmpty){
+      return [];
+    }
+    MenuItemResponse mMenuItemResponse =
+        await getMenuItemResponse() ?? MenuItemResponse();
+    List<MenuItemData> selectMenuItem = [];
+    if ((mMenuItemResponse.data ?? []).isNotEmpty) {
+      for (MenuItemData mMenuItemData in (mMenuItemResponse.data ?? [])) {
+        String sValueMenuItemIDP = jsonEncode(mMenuItemData.menuItemIDP ?? []).toLowerCase();
+        String sValueName = jsonEncode(mMenuItemData.itemName ?? []).toLowerCase();
+        debugPrint("MenuList $sValueMenuItemIDP == $name");
+        debugPrint("MenuList $sValueName == $name");
+        if (sValueMenuItemIDP.contains(name)||sValueName.contains(name)) {
+          selectMenuItem.add(mMenuItemData);
+        }
+      }
+    }
+    return selectMenuItem;
+  }
+
+  @override
   Future<bool> deleteAllMenuItem() async {
     Box<dynamic> box = await _getBox();
     await box.delete(_boxName);

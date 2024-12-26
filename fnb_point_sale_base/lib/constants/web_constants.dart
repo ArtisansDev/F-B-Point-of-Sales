@@ -11,6 +11,7 @@ class WebConstants {
   static int statusCode400 = 400;
   static int statusCode404 = 404;
   static int statusCode401 = 401;
+  static int statusCode409 = 409;
   static int statusCode422 = 422;
 
   static String statusMessageOK = "OK";
@@ -60,5 +61,9 @@ class WebConstants {
   ///
   static String actionGetAllTables =  "Seat/getAllTables";  //post
   static String actionGetAllPaymentType =  "POSPayment/getPaymentType";  //post
+
+///CustomerApi
+  static String actionCustomerSave =  "Customer/customerSave";  //post
+  static String actionGetAllCustomer =  "Customer/GetCustomer";
 
 }

@@ -39,8 +39,11 @@ class SplashScreenController extends GetxController {
             );
           } else {
             Get.offNamed(
-              RouteConstants.rLoginScreen,
+              RouteConstants.rConfigurationScreen,
             );
+            // Get.offNamed(
+            //   RouteConstants.rLoginScreen,
+            // );
           }
         }
     //   }

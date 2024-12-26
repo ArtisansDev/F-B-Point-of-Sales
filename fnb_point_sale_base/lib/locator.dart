@@ -11,6 +11,8 @@ import 'package:fnb_point_sale_base/serialportdevices/service/rakyat_bank_termin
 import 'package:get_it/get_it.dart';
 import 'data/local/database/configuration/configuration_local_api.dart';
 import 'data/local/database/configuration/configuration_local_api_impl.dart';
+import 'data/local/database/customer/customer_local_api.dart';
+import 'data/local/database/customer/customer_local_api_impl.dart';
 import 'data/local/database/hold_sale/hold_sale_local_api.dart';
 import 'data/local/database/hold_sale/hold_sale_local_api_impl.dart';
 import 'data/local/database/menu_item/menu_item_local_api.dart';
@@ -19,6 +21,8 @@ import 'data/local/database/modifier/modifier_local_api.dart';
 import 'data/local/database/modifier/modifier_local_api_impl.dart';
 import 'data/local/database/payment_type/payment_type_local_api.dart';
 import 'data/local/database/payment_type/payment_type_local_api_impl.dart';
+import 'data/local/database/place_order/place_order_sale_local_api.dart';
+import 'data/local/database/place_order/place_order_sale_local_api_impl.dart';
 import 'data/local/database/printer/printer_local_api.dart';
 import 'data/local/database/printer/printer_local_api_impl.dart';
 import 'data/local/database/product/all_category/all_category_local_api.dart';
@@ -29,6 +33,8 @@ import 'data/local/database/table_list/table_list_local_api.dart';
 import 'data/local/database/table_list/table_list_local_api_impl.dart';
 import 'data/local/database/variant/variant_local_api.dart';
 import 'data/local/database/variant/variant_local_api_impl.dart';
+import 'data/remote/api_call/customer/customer_api.dart';
+import 'data/remote/api_call/customer/customer_api_impl.dart';
 import 'data/remote/api_call/login/login_api.dart';
 import 'data/remote/api_call/login/login_api_impl.dart';
 import 'data/remote/api_call/product/product_api.dart';
@@ -43,6 +49,14 @@ void setupLocator() {
   /// HoldSale
   locator.registerLazySingleton<HoldSaleLocalApi>(
       () => HoldSaleLocalApiImpl());
+
+  /// Customer
+  locator.registerLazySingleton<CustomerLocalApi>(
+      () => CustomerLocalApiImpl());
+
+  /// PlaceOrder
+  locator.registerLazySingleton<PlaceOrderSaleLocalApi>(
+      () => PlaceOrderSaleLocalApiImpl());
 
   /// Configuration
   locator.registerLazySingleton<ConfigurationLocalApi>(
@@ -83,6 +97,7 @@ void setupLocator() {
   /// All Api Call
   locator.registerLazySingleton<LoginApi>(() => LoginApiImpl());
   locator.registerLazySingleton<ProductApi>(() => ProductApiImpl());
+  locator.registerLazySingleton<CustomerApi>(() => CustomerApiImpl());
 
   /// Services
   locator.registerLazySingleton<MyPrinterService>(() => MyPrinterServiceImpl());

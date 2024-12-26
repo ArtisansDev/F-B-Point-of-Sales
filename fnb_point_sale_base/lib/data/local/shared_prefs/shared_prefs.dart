@@ -37,6 +37,20 @@ class SharedPrefs {
     return  "";
   }
 
+  /// configurationAccessToken
+  Future<void> setConfigurationAccessToken(String? configurationAccessToken) async {
+    /// debugPrint("setToken configurationAccessToken");
+    sharedPreferences!.setString(PrefConstants.configurationAccessToken, configurationAccessToken ?? "");
+  }
+
+  Future<String> getConfigurationAccessToken() async {
+    String value = sharedPreferences!.getString(PrefConstants.configurationAccessToken) ?? "";
+    if (value.isNotEmpty) {
+      return value;
+    }
+    return  "";
+  }
+
 
   /// userDetails
   // Future<void> setUserDetails(String? setUserDetails) async {

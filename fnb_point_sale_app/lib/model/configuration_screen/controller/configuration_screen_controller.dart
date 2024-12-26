@@ -57,6 +57,8 @@ class ConfigurationScreenController extends GetxController {
         if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
           ConfigurationResponse mConfigurationResponse =
               mWebResponseSuccess.data;
+          await SharedPrefs()
+              .setConfigurationAccessToken(userNameController.value.text.trim());
           var configurationLocalApi = locator.get<ConfigurationLocalApi>();
           await configurationLocalApi.save(mConfigurationResponse);
           AppAlert.showSnackBar(

@@ -164,7 +164,9 @@ class SelectedOrderBottomView extends StatelessWidget {
                 height: 19.5.sp,
                 textSize: 11.5.sp,
                 sPlaceOrder.tr,
-                () {},
+                () {
+                  controller.onPlaceOrder();
+                },
               )),
 
           ///button Pay and Invoice

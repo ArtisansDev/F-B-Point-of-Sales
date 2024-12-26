@@ -5,6 +5,7 @@ class ImageAssetsConstants {
   static String appPrint = "assets/print.png";
   static String openDrawer = "assets/open_drawer.png";
   static String appSearch = "assets/search.png";
+  static String appAddUser = "assets/add_user.png";
   static String appCalendar = "assets/calendar.png";
   static String appArrow = "assets/arrow.png";
   static String loginBackground = "assets/login_background.png";
@@ -15,7 +16,8 @@ class ImageAssetsConstants {
   static String sideMenuSales = "assets/side_menu/menu.png";
   static String sideMenuTable = "assets/side_menu/table_menu.png";
   static String sideMenuSettings = "assets/side_menu/settings_menu.png";
-  static String sideMenuShift = "assets/side_menu/shift_menu.png";
+  static String customer = "assets/side_menu/shift_menu.png";
+  static String sideMenuShift = "assets/side_menu/shift_details.png";
 
   ///select order
   static String selectOrder = "assets/select_order/select_order.png";

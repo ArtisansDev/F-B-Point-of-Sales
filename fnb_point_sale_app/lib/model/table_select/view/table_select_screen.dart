@@ -10,6 +10,7 @@ import 'package:fnb_point_sale_base/common/text_input_widget.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/pattern_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
+import 'package:fnb_point_sale_base/data/mode/product/get_all_tables/get_all_tables_response.dart';
 import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
@@ -19,7 +20,7 @@ import '../controller/table_select_controller.dart';
 import 'dine_in/dine_in_screen.dart';
 
 class TableSelectScreen extends GetView<TableSelectController> {
-  final String? tableNumber;
+  final GetAllTablesResponseData? tableNumber;
   const TableSelectScreen({super.key,required this.tableNumber});
 
   @override

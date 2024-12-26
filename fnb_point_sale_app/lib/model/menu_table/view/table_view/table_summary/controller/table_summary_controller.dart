@@ -9,10 +9,13 @@ import '../../../../../payment_screen/view/payment_screen.dart';
 import '../../../../controller/table_controller.dart';
 
 class TableSummaryController extends GetxController {
-  Rxn<DashboardScreenController> mDashboardScreenController = Rxn<DashboardScreenController>();
+  Rxn<DashboardScreenController> mDashboardScreenController =
+      Rxn<DashboardScreenController>();
   Rx<TextEditingController> remarkController = TextEditingController().obs;
+  Rx<OrderPlace> mOrderPlace = OrderPlace().obs;
 
-  TableSummaryController() {
+  TableSummaryController(OrderPlace mOrder) {
+    mOrderPlace.value = mOrder;
     if (Get.isRegistered<DashboardScreenController>()) {
       mDashboardScreenController.value = Get.find<DashboardScreenController>();
     }
@@ -20,14 +23,18 @@ class TableSummaryController extends GetxController {
 
   void onPayment() async {
     Get.back();
-    await AppAlert.showView(Get.context!,  PaymentScreen(OrderPlace()),
+    await AppAlert.showView(
+        Get.context!, PaymentScreen(mOrderPlace.value ?? OrderPlace()),
         barrierDismissible: true);
     if (Get.isRegistered<PaymentScreenController>()) {
       Get.delete<PaymentScreenController>();
     }
+
   }
 
   void addMore() {
+    mDashboardScreenController.value?.mOrderPlace.value =
+        mOrderPlace.value;
     Get.back();
     mDashboardScreenController.value!.selectMenu.value = 0;
     mDashboardScreenController.value!.selectMenu.refresh();

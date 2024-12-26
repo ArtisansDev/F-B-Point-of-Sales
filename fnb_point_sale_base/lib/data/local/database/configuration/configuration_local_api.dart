@@ -10,7 +10,7 @@ abstract class ConfigurationLocalApi {
   Future<ConfigurationResponse?> getConfigurationResponse();
 
   /// Delete the current AllCategory
-  Future<bool> deleteAllCategory();
+  Future<bool> deleteAllConfiguration();
 
   Future<void> clearBox();
 }

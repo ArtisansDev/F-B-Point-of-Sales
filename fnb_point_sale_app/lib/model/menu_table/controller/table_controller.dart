@@ -2,7 +2,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
 import 'package:fnb_point_sale_base/data/local/database/payment_type/payment_type_local_api.dart';
+import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
+import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_model.dart';
 import 'package:fnb_point_sale_base/data/local/database/table_list/table_list_local_api.dart';
+import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_tables/get_all_tables_response.dart';
 import 'package:fnb_point_sale_base/locator.dart';
 import 'package:get/get.dart';
@@ -19,13 +22,15 @@ class TableController extends GetxController {
 
   ///table click
   void onTableSelectClick(int index) async {
-    if (!(index % 3 == 0)) {
+    OrderPlace mOrderPlace =
+        getOrderPlace(mGetAllTablesList[index].seatIDP ?? '');
+    if ((mOrderPlace.cartItem ?? []).isNotEmpty) {
       await AppAlert.showView(
           Get.context!,
-          const Row(
+          Row(
             children: [
-              Expanded(flex: 7, child: SizedBox()),
-              Expanded(flex: 3, child: TableSummaryOrderScreen())
+              const Expanded(flex: 7, child: SizedBox()),
+              Expanded(flex: 3, child: TableSummaryOrderScreen(mOrderPlace))
             ],
           ),
           barrierDismissible: true);
@@ -33,29 +38,65 @@ class TableController extends GetxController {
         Get.delete<TableSummaryController>();
       }
     } else {
-      bool isCreateOrder = false;
-      await AppAlert.showView(
-          Get.context!, TableSelectScreen(tableNumber: '${mGetAllTablesList[index].seatNumber}'),
-          barrierDismissible: true);
-      if (Get.isRegistered<TableSelectController>()) {
-        isCreateOrder = Get.find<TableSelectController>().isCreateOrder.value;
-        Get.delete<TableSelectController>();
-      }
-      if(isCreateOrder) {
-        mDashboardScreenController.selectMenu.value = 0;
-        mDashboardScreenController.selectMenu.refresh();
+      GetAllTablesResponseData mGetAllTablesResponseData =
+          mGetAllTablesList[index];
+      bool value = (!(mGetAllTablesResponseData.isDeleted ?? false) &&
+          (mGetAllTablesResponseData.isActive ?? false));
+      if (value) {
+        bool isCreateOrder = false;
+        await AppAlert.showView(Get.context!,
+            TableSelectScreen(tableNumber: mGetAllTablesList[index]),
+            barrierDismissible: true);
+        if (Get.isRegistered<TableSelectController>()) {
+          isCreateOrder = Get.find<TableSelectController>().isCreateOrder.value;
+          Get.delete<TableSelectController>();
+        }
+        if (isCreateOrder) {
+          mDashboardScreenController.selectMenu.value = 0;
+          mDashboardScreenController.selectMenu.refresh();
+        }
       }
     }
   }
-  RxList<GetAllTablesResponseData> mGetAllTablesList = <GetAllTablesResponseData>[].obs;
+
+  ///order place
+  Rxn<PlaceOrderSaleModel> mPlaceOrderSaleModel = Rxn<PlaceOrderSaleModel>();
+  var mPlaceOrderSaleLocalApi = locator.get<PlaceOrderSaleLocalApi>();
+
+  allOrderPlace() async {
+    mPlaceOrderSaleModel.value =
+        await mPlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
+            PlaceOrderSaleModel();
+  }
+
+  OrderPlace getOrderPlace(String sSeatIDP) {
+    OrderPlace mOrderPlace = OrderPlace();
+    if ((mPlaceOrderSaleModel.value?.mOrderPlace ?? []).isEmpty) {
+      return mOrderPlace;
+    }
+    int? value = mPlaceOrderSaleModel.value?.mOrderPlace?.indexWhere(
+      (element) => element.seatIDP.toString() == sSeatIDP.toString(),
+    );
+    if ((value ?? -1) == -1) {
+      return mOrderPlace;
+    } else {
+      mOrderPlace =
+          mPlaceOrderSaleModel.value?.mOrderPlace?[value ?? -1] ?? OrderPlace();
+      return mOrderPlace;
+    }
+  }
+
+  ///all table
+  RxList<GetAllTablesResponseData> mGetAllTablesList =
+      <GetAllTablesResponseData>[].obs;
+
   loadAllTables() async {
     var mTableListLocalApi = locator.get<TableListLocalApi>();
     GetAllTablesResponse mGetAllTablesResponse =
         await mTableListLocalApi.getTablesListResponse() ??
             GetAllTablesResponse();
     mGetAllTablesList.clear();
-    mGetAllTablesList.addAll(mGetAllTablesResponse.data??[]);
+    mGetAllTablesList.addAll(mGetAllTablesResponse.data ?? []);
     mGetAllTablesList.refresh();
   }
-
 }

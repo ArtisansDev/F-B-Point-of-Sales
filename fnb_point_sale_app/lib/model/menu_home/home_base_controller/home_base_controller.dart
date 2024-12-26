@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
 import 'package:fnb_point_sale_base/data/local/database/menu_item/menu_item_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/modifier/modifier_local_api.dart';
@@ -30,7 +31,7 @@ class HomeBaseController extends GetxController {
   ///Dashboard
   DashboardScreenController mDashboardScreenController =
       Get.find<DashboardScreenController>();
-
+  static Rx<TextEditingController> searchController = TextEditingController().obs;
   ///Home
   Rxn<HomeController> mHomeController = Rxn<HomeController>();
 
@@ -56,14 +57,41 @@ class HomeBaseController extends GetxController {
   RxList<GetAllCategoryData> selectGetAllCategory = <GetAllCategoryData>[].obs;
 
   void onClickHome() {
-    selectGetAllCategory.clear();
-    selectGetAllCategory.refresh();
-
     ///
     if (mMenuViewController.value == null) {
       createController();
     }
     mMenuViewController.value!.getAllCategoryList();
+  }
+
+  onSearchText(value) async {
+    if (mMenuViewController.value == null) {
+      createController();
+    }
+
+    ///Category
+    var localAllCategoryApi = locator.get<AllCategoryLocalApi>();
+    mMenuViewController.value!.mGetAllCategoryData.clear();
+    mMenuViewController.value!.mGetAllCategoryView.clear();
+    mMenuViewController.value!.mGetAllCategoryData.addAll(
+        await localAllCategoryApi
+                .getCategoryListSearch(value.toString().toLowerCase()) ??
+            []);
+    mMenuViewController.value!.mGetAllCategoryView
+        .addAll(mMenuViewController.value!.mGetAllCategoryData.toList());
+    mMenuViewController.value!.mGetAllCategoryData.refresh();
+    mMenuViewController.value!.mGetAllCategoryView.refresh();
+    mSelectMenuViewController.value?.selectGetAllCategory.clear();
+    mSelectMenuViewController.value?.selectGetAllCategory.refresh();
+
+    ///menu
+    var localMenuItemApi = locator.get<MenuItemLocalApi>();
+    mMenuViewController.value!.mMenuItemSelected.value = null;
+    mMenuViewController.value!.mMenuItemData.clear();
+    mMenuViewController.value!.mMenuItemData.addAll(await localMenuItemApi
+            .getMenuItemDataSearch(value.toString().toLowerCase()) ??
+        []);
+    mMenuViewController.value!.mMenuItemData.refresh();
   }
 
   ///sync update
@@ -123,6 +151,7 @@ class HomeBaseController extends GetxController {
     }
     mSelectMenuViewController.value?.selectGetAllCategory.clear();
     mSelectMenuViewController.value?.selectGetAllCategory.refresh();
+    searchController.value.text = "";
   }
 
   void onCategorySelect(int index) async {
@@ -172,17 +201,17 @@ class HomeBaseController extends GetxController {
   }
 
   isSelectedCategory(GetAllCategoryData mGetAllCategoryData) {
-    if (mSelectMenuViewController.value == null) {
-      return false;
-    }
-    if (mSelectMenuViewController.value!.selectGetAllCategory.isNotEmpty &&
-        (mSelectMenuViewController
-                        .value!.selectGetAllCategory.value.last.categoryIDP ??
-                    '')
-                .toString() ==
-            (mGetAllCategoryData.categoryIDP ?? '').toString()) {
-      return true;
-    }
+    // if (mSelectMenuViewController.value == null) {
+    //   return false;
+    // }
+    // if (mSelectMenuViewController.value!.selectGetAllCategory.isNotEmpty &&
+    //     (mSelectMenuViewController
+    //                     .value!.selectGetAllCategory.value.last.categoryIDP ??
+    //                 '')
+    //             .toString() ==
+    //         (mGetAllCategoryData.categoryIDP ?? '').toString()) {
+    //   return true;
+    // }
     return false;
   }
 

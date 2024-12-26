@@ -9,6 +9,9 @@ abstract class AllCategoryLocalApi {
   /// Get Current logged in AllCategory
   Future<GetAllCategoryResponse?> getAllCategoryResponse();
 
+  ///search
+  Future<List<GetAllCategoryData>?> getCategoryListSearch(String name);
+
   /// Delete the current AllCategory
   Future<bool> deleteAllCategory();
 

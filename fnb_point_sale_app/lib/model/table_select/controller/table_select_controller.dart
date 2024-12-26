@@ -1,5 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'package:flutter/material.dart';
+import 'package:fnb_point_sale_base/data/mode/product/get_all_tables/get_all_tables_response.dart';
 import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:get/get.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
@@ -28,21 +29,31 @@ class TableSelectController extends GetxController {
 
   void onCreateOrder() {
     isCreateOrder.value = true;
-    mDashboardScreenController.value?.mOrderPlace.value =OrderPlace(cartItem: []);
-    mDashboardScreenController.value?.mOrderPlace.value?.tableNo = sTableNumber.value??'--';
-    mDashboardScreenController.value?.mOrderPlace.value?.sOrderNo = orderNumber.value;
+    mDashboardScreenController.value?.mOrderPlace.value =
+        OrderPlace(cartItem: []);
+    mDashboardScreenController.value?.mOrderPlace.value?.seatIDP =
+        sTablesData.value?.seatIDP ?? '--';
+    mDashboardScreenController.value?.mOrderPlace.value?.tableNo =
+        sTableNumber.value ?? '--';
+    mDashboardScreenController.value?.mOrderPlace.value?.userName =
+        enterNameController.value.text;
+    mDashboardScreenController.value?.mOrderPlace.value?.userPhone =
+        sPhoneNumberController.value.text;
+    mDashboardScreenController.value?.mOrderPlace.value?.sOrderNo =
+        orderNumber.value;
+
     Get.back();
   }
 
   Rxn<String> sTableNumber = Rxn<String>();
+  Rxn<GetAllTablesResponseData> sTablesData = Rxn<GetAllTablesResponseData>();
 
-  void setTableNumber(String? tableNumber) {
-    sTableNumber.value = tableNumber;
+  void setTableNumber(GetAllTablesResponseData? mGetAllTablesResponseData) {
+    sTablesData.value = mGetAllTablesResponseData ?? GetAllTablesResponseData();
+    sTableNumber.value = mGetAllTablesResponseData?.seatNumber ?? '';
     if (sTableNumber.value != null) {
-      sTableNoController.value.text = tableNumber ?? '';
+      sTableNoController.value.text = sTableNumber.value ?? '';
       sTableNoController.refresh();
     }
   }
-
-
 }

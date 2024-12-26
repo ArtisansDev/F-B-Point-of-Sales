@@ -36,7 +36,7 @@ class ConfigurationLocalApiImpl extends ConfigurationLocalApi {
   }
 
   @override
-  Future<bool> deleteAllCategory() async {
+  Future<bool> deleteAllConfiguration() async {
     Box<dynamic> box = await _getBox();
     await box.delete(_boxName);
     return true;

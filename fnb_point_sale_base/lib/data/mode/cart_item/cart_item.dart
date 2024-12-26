@@ -24,7 +24,7 @@ class CartItem {
   List<ModifierList>? mSelectModifierList;
 
   String textRemarks = "";
-  bool placeOrder = true;
+  bool placeOrder = false;
 
   CartItem(
       {this.mMenuItemData,
@@ -73,7 +73,7 @@ class CartItem {
 
     ///
     textRemarks = json['text_remarks']??'';
-    placeOrder = json['place_order']??true;
+    placeOrder = json['place_order']??false;
   }
 
   Map<String, dynamic> toJson() {

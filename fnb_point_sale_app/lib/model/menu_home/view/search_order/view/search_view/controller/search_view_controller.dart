@@ -7,10 +7,6 @@ import '../../../../../home_base_controller/home_base_controller.dart';
 import '../../../controller/search_order_controller.dart';
 
 class SearchViewController extends HomeBaseController {
-  Rxn<SearchOrderController> mSearchOrderController =
-      Rxn<SearchOrderController>();
-  Rx<TextEditingController> searchController = TextEditingController().obs;
-
   SearchViewController() {
     if (Get.isRegistered<SearchOrderController>()) {
       mSearchOrderController.value = Get.find<SearchOrderController>();

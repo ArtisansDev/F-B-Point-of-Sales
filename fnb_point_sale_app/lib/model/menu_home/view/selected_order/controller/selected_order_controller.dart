@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
 import 'package:fnb_point_sale_base/data/local/database/hold_sale/hold_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/hold_sale/hold_sale_model.dart';
+import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
+import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_model.dart';
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/locator.dart';
 import 'package:fnb_point_sale_base/utils/num_utils.dart';
@@ -23,15 +25,6 @@ class SelectedOrderController extends HomeBaseController {
 
   SelectedOrderController() {
     mSelectedOrderController.value = this;
-  }
-
-  void onPayment() async {
-    await AppAlert.showView(
-        Get.context!, PaymentScreen(mOrderPlace.value ?? OrderPlace()),
-        barrierDismissible: true);
-    if (Get.isRegistered<PaymentScreenController>()) {
-      Get.delete<PaymentScreenController>();
-    }
   }
 
   ///Order Place from Another page
@@ -104,12 +97,7 @@ class SelectedOrderController extends HomeBaseController {
     mOrderPlace.refresh();
   }
 
-  @override
-  void onClose() {
-    ///delete all sub Controller
-    super.onClose();
-  }
-
+  ///cancel sale
   void onCancelSale() async {
     await AppAlert.showView(Get.context!, CancelOrderScreen(this),
         barrierDismissible: true);
@@ -118,6 +106,7 @@ class SelectedOrderController extends HomeBaseController {
     }
   }
 
+  ///hold sale
   void onHoldSale() async {
     ///local data base save
 
@@ -136,5 +125,53 @@ class SelectedOrderController extends HomeBaseController {
     mOrderPlace.value = null;
     mOrderPlace.refresh();
     mDashboardScreenController.onUpdateHoldSale();
+  }
+
+  ///place order
+  void onPlaceOrder() async {
+    ///local data base save
+    var mPlaceOrderSaleLocalApi = locator.get<PlaceOrderSaleLocalApi>();
+
+    PlaceOrderSaleModel mPlaceOrderSaleModel =
+        await mPlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
+            PlaceOrderSaleModel();
+
+    List<CartItem> mCartItemList = mOrderPlace.value?.cartItem ?? [];
+    if (mCartItemList.isNotEmpty) {
+      List<CartItem> mSetCartItemList = [];
+      for (CartItem mCartItem in mCartItemList) {
+        mCartItem.placeOrder = true;
+        mSetCartItemList.add(mCartItem);
+      }
+      mOrderPlace.value?.cartItem?.clear();
+      mOrderPlace.value?.cartItem?.addAll(mSetCartItemList);
+      if ((mPlaceOrderSaleModel.mOrderPlace ?? []).isEmpty) {
+        mPlaceOrderSaleModel =
+            PlaceOrderSaleModel(mOrderPlace: [mOrderPlace.value!]);
+        await mPlaceOrderSaleLocalApi.save(mPlaceOrderSaleModel);
+      } else {
+        await mPlaceOrderSaleLocalApi.getPlaceOrderSaleEdit(mOrderPlace.value!);
+      }
+      var holdSaleLocalApi = locator.get<HoldSaleLocalApi>();
+      await holdSaleLocalApi
+          .getHoldSaleDelete(mOrderPlace.value?.sOrderNo ?? '');
+
+      ///clear data
+      mOrderPlace.value = null;
+      mOrderPlace.refresh();
+      mDashboardScreenController.onUpdateHoldSale();
+    }else {
+      AppAlert.showSnackBar(Get.context!, 'Please add item in the cart');
+    }
+  }
+
+  ///Payment
+  void onPayment() async {
+    await AppAlert.showView(
+        Get.context!, PaymentScreen(mOrderPlace.value ?? OrderPlace()),
+        barrierDismissible: true);
+    if (Get.isRegistered<PaymentScreenController>()) {
+      Get.delete<PaymentScreenController>();
+    }
   }
 }

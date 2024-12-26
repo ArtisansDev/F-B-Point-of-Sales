@@ -9,7 +9,9 @@ import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/pattern_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
+import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
+import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -183,29 +185,52 @@ class PaymentScreen extends GetView<PaymentScreenController> {
                         SizedBox(
                           height: 5.sp,
                         ),
-                        Row(
-                          children: [
-                            Expanded(
-                                child: Text(
-                              'Tax 0%',
-                              style: getText600(
-                                size: 10.sp,
-                                colors: ColorConstants.cAppCancelDilogColour,
-                              ),
-                            )),
-                            Expanded(
-                                child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                'RM 0.00',
-                                style: getText600(
-                                  size: 10.sp,
-                                  colors: ColorConstants.cAppCancelDilogColour,
-                                ),
-                              ),
-                            ))
-                          ],
-                        ),
+                        ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.zero,
+                            itemCount:
+                            (controller.mDashboardScreenController.value?.taxData ?? []).length,
+                            itemBuilder: (BuildContext context, int index) {
+                              TaxData mTaxData =
+                              (controller.mDashboardScreenController.value?.taxData ??
+                                  [])[index];
+                              return Column(
+                                children: [
+                                  Container(
+                                      // margin: EdgeInsets.all(
+                                      //   8.sp,
+                                      // ),
+                                      padding: EdgeInsets.only(
+                                          bottom: 5.sp),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                              '${mTaxData.taxName ?? ''}+ (${mTaxData.taxPercentage}%)',
+
+                                              style: getText600(
+                                                size: 10.sp,
+                                                colors: ColorConstants.cAppCancelDilogColour,
+                                              )
+                                          ),
+                                          Text(
+                                              '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${calculatePercentageOf(getDoubleValue(controller.mOrderPlace.value?.subTotalPrice ?? 0), getDoubleValue(mTaxData.taxPercentage)).toStringAsFixed(2)}',
+                                              style:getText600(
+                                                size: 10.sp,
+                                                colors: ColorConstants.cAppCancelDilogColour,
+                                              )
+                                          ),
+                                        ],
+                                      )),
+                                  // Container(
+                                  //   height: 3.sp,
+                                  //   margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
+                                  //   color: Colors.grey.shade300,
+                                  // ),
+                                ],
+                              );
+                            }),
                         Container(
                           margin: EdgeInsets.only(top: 10.sp, bottom: 10.sp),
                           width: double.infinity,

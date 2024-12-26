@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import '../../alert/app_alert.dart';
 import '../../constants/message_constants.dart';
 import '../../utils/network_utils.dart';
+import 'jobs/download_configuration_job.dart';
+import 'jobs/download_customer_list_job.dart';
 import 'jobs/download_list_of_table_job.dart';
 import 'jobs/download_payment_type_job.dart';
 import 'jobs/download_product_category_job.dart';
@@ -19,13 +21,17 @@ class DownloadDataMenu {
   static String sVariantList = 'Variant';
   static String sTable = 'Table\'s';
   static String sPaymentType = 'Payment Type';
+  static String sConfiguration = 'Configuration';
+  static String sCustomer = 'Customer';
   static List<String> values = [
     sCategoryList,
     sModifierList,
     sMenuItems,
     sVariantList,
     sTable,
-    sPaymentType
+    sPaymentType,
+    sConfiguration,
+    sCustomer
   ];
 }
 
@@ -70,6 +76,18 @@ class DownloadDataViewModel {
           callBack('Downloading Payment Type...');
           await Future.delayed(const Duration(microseconds: 500));
           await downloadPaymentType(onError);
+        }
+
+        if (selectedDownloadOptions.contains(DownloadDataMenu.sConfiguration)) {
+          callBack('Downloading Configuration ...');
+          await Future.delayed(const Duration(microseconds: 500));
+          await downloadConfiguration(onError);
+        }
+
+        if (selectedDownloadOptions.contains(DownloadDataMenu.sCustomer)) {
+          callBack('Downloading Customer list...');
+          await Future.delayed(const Duration(microseconds: 500));
+          await downloadCustomerList(onError);
         }
 
         callBack('Completed');

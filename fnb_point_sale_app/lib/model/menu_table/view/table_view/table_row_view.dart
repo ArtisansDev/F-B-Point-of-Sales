@@ -13,7 +13,9 @@ import 'package:fnb_point_sale_base/common/dynamic_height_grid_view.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
 import 'package:fnb_point_sale_base/data/mode/button_bar/button_bar_model.dart';
+import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_tables/get_all_tables_response.dart';
+import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -31,6 +33,8 @@ class TableRowView extends StatelessWidget {
   Widget build(BuildContext context) {
     GetAllTablesResponseData mGetAllTablesResponseData =
         controller.mGetAllTablesList[index];
+    OrderPlace mOrderPlace =
+        controller.getOrderPlace(mGetAllTablesResponseData.seatIDP ?? '');
     return GestureDetector(
       onTap: () {
         controller.onTableSelectClick(index);
@@ -75,91 +79,101 @@ class TableRowView extends StatelessWidget {
             Stack(
               alignment: Alignment.center,
               children: [
-                Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(
-                          top: 8.sp, left: 11.sp, right: 11.sp, bottom: 8.sp),
-                      child: Row(
+                (mOrderPlace.cartItem ?? []).isNotEmpty
+                    ? Column(
                         children: [
-                          Expanded(
-                            flex: 1,
-                            child: Text(
-                              'Attendant: ',
-                              style: getText300(
-                                  size: 11.sp, colors: ColorConstants.black),
+                          Container(
+                            padding: EdgeInsets.only(
+                                top: 8.sp,
+                                left: 11.sp,
+                                right: 11.sp,
+                                bottom: 8.sp),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    'Order No: ',
+                                    style: getText300(
+                                        size: 11.sp,
+                                        colors: ColorConstants.black),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    mOrderPlace.sOrderNo,
+                                    style: getText500(
+                                        size: 11.5.sp,
+                                        colors: ColorConstants.cAppTaxColour),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
-                          Expanded(
-                            flex: 2,
-                            child: Text(
-                              'Jack Demon',
-                              style: getText500(
-                                  size: 11.5.sp,
-                                  colors: ColorConstants.cAppTaxColour),
+                          Container(
+                            padding: EdgeInsets.only(
+                              left: 11.sp,
+                              right: 11.sp,
                             ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(
-                        left: 11.sp,
-                        right: 11.sp,
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Text(
-                              'Time: ',
-                              style: getText300(
-                                  size: 11.sp, colors: ColorConstants.black),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Text(
-                              '11/10/2024  19:30:00',
-                              style: getText500(
-                                  size: 11.5.sp,
-                                  colors: ColorConstants.cAppTaxColour),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(
-                          top: 8.sp, left: 11.sp, right: 11.sp, bottom: 11.sp),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Text(
-                              'Amount: ',
-                              style: getText300(
-                                  size: 11.sp, colors: ColorConstants.black),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    'Time: ',
+                                    style: getText300(
+                                        size: 11.sp,
+                                        colors: ColorConstants.black),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    mOrderPlace.dateTime ?? '',
+                                    style: getText500(
+                                        size: 11.5.sp,
+                                        colors: ColorConstants.cAppTaxColour),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
-                          Expanded(
-                            flex: 2,
-                            child: Text(
-                              'RM 35.00',
-                              style: getText500(
-                                  size: 11.5.sp,
-                                  colors: ColorConstants.cAppTaxColour),
+                          Container(
+                            padding: EdgeInsets.only(
+                                top: 8.sp,
+                                left: 11.sp,
+                                right: 11.sp,
+                                bottom: 11.sp),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    'Amount: ',
+                                    style: getText300(
+                                        size: 11.sp,
+                                        colors: ColorConstants.black),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(mOrderPlace.totalPrice ?? 0).toStringAsFixed(2)}',
+                                    style: getText500(
+                                        size: 11.5.sp,
+                                        colors: ColorConstants.cAppTaxColour),
+                                  ),
+                                )
+                              ],
                             ),
-                          )
+                          ),
                         ],
-                      ),
-                    ),
-                  ],
-                ),
-                index % 3 == 0
-                    ? Container(
+                      )
+                    : Container(
                         width: double.infinity,
                         height: 10.2.h,
+                        margin: EdgeInsets.only(bottom: 1.1.h),
                         color: Colors.white,
                         alignment: Alignment.center,
                         child: Column(
@@ -167,11 +181,21 @@ class TableRowView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              'OPEN',
+                              (!(mGetAllTablesResponseData.isDeleted ??
+                                          false) &&
+                                      (mGetAllTablesResponseData.isActive ??
+                                          false))
+                                  ? 'OPEN'
+                                  : 'CLOSE',
                               style: getText500(
                                   size: 11.5.sp,
-                                  colors:
-                                      ColorConstants.cAppButtonInviceColour),
+                                  colors: (!(mGetAllTablesResponseData
+                                                  .isDeleted ??
+                                              false) &&
+                                          (mGetAllTablesResponseData.isActive ??
+                                              false))
+                                      ? ColorConstants.cAppButtonInviceColour
+                                      : ColorConstants.red),
                             ),
                             SizedBox(
                               height: 5.sp,
@@ -187,7 +211,6 @@ class TableRowView extends StatelessWidget {
                           ],
                         ),
                       )
-                    : const Stack()
               ],
             )
           ],

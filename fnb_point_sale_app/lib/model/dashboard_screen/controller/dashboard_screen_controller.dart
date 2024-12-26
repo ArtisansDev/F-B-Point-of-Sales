@@ -20,6 +20,7 @@ import 'package:fnb_point_sale_base/locator.dart';
 import 'package:get/get.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 
+import '../../menu_customer/view/customer_screen.dart';
 import '../../menu_home/controller/home_controller.dart';
 import '../../menu_home/view/home_screen.dart';
 import '../../menu_sales/controller/menu_sales_controller.dart';
@@ -63,12 +64,14 @@ class DashboardScreenController extends GetxController {
       case 0:
         return const HomeScreen();
       case 1:
-        return const MenuSalesScreen();
-      case 2:
         return const TableScreen();
+      case 2:
+        return const MenuSalesScreen();
       case 3:
         return const SettingsScreen();
       case 4:
+        return const CustomerScreen();
+      case 5:
         return const ShiftDetailsScreen();
     }
   }
@@ -251,12 +254,10 @@ class DashboardScreenController extends GetxController {
         barrierDismissible: false,
         builder: (context) => DownloadDataMenuWidget(
               onError: (value) {
-                print("####### onError");
                 sDownloadText.value = '';
                 sDownloadText.refresh();
               },
               updateMessage: (value) {
-                print("####### updateMessage");
                 sDownloadText.value = value;
                 sDownloadText.refresh();
               },

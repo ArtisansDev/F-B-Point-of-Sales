@@ -23,6 +23,13 @@ class AllApiImpl {
               wrapWidth: 3072);
         }
         return responseBody;
+      case 409:
+        var responseJson = jsonEncode(responseBody);
+        if (BaseAppConstants.isWebLogToPrint) {
+          debugPrint("Webservices 409 decoded Response $responseJson",
+              wrapWidth: 3072);
+        }
+        return responseBody;
       case 401:
         var responseJson = jsonEncode(responseBody);
         if (BaseAppConstants.isWebLogToPrint) {
@@ -82,5 +89,4 @@ class AllApiImpl {
         return responseBody;
     }
   }
-
 }

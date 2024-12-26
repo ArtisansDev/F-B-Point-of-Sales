@@ -116,18 +116,18 @@ class MenuSalesController extends GetxController {
   }
 
   void onEdit(int index) async {
-    await AppAlert.showView(
-        Get.context!,
-        const Row(
-          children: [
-            Expanded(flex: 7, child: SizedBox()),
-            Expanded(flex: 3, child: TableSummaryOrderScreen())
-          ],
-        ),
-        barrierDismissible: true);
-    if (Get.isRegistered<TableSummaryController>()) {
-      Get.delete<TableSummaryController>();
-    }
+    // await AppAlert.showView(
+    //     Get.context!,
+    //     const Row(
+    //       children: [
+    //         Expanded(flex: 7, child: SizedBox()),
+    //         Expanded(flex: 3, child: TableSummaryOrderScreen())
+    //       ],
+    //     ),
+    //     barrierDismissible: true);
+    // if (Get.isRegistered<TableSummaryController>()) {
+    //   Get.delete<TableSummaryController>();
+    // }
   }
 
   void onPayNow(int index) async {

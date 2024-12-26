@@ -16,6 +16,12 @@ class WebResponseSuccess {
     _data = data;
 }
 
+  WebResponseSuccess.fromJson(dynamic json) {
+    _error = json['error'];
+    _statusCode = json['statusCode'];
+    _statusMessage = json['statusMessage']??json['Message'];
+  }
+
   bool? _error;
   int? _statusCode;
   String? _statusMessage;
