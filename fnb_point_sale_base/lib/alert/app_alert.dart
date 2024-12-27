@@ -170,12 +170,46 @@ class AppAlert {
     await showDialog(
         context: context,
         barrierDismissible: barrierDismissible ?? false,
+        barrierColor: Colors.transparent,
         builder: (BuildContext context) {
           return Stack(
             children: [
               // Blur effect
               BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
+                child: Container(
+                    color: Colors.black
+                        .withOpacity(0.2)), // Optional: Add overlay color
+              ),
+              // Dialog
+              Dialog(
+                insetPadding: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6.sp),
+                ),
+                elevation: 0,
+                backgroundColor: Colors.transparent,
+                child: showWidget,
+              )
+            ],
+          );
+        });
+  }
+
+  static Future<void> showViewWithoutBlur(BuildContext context,
+      Widget showWidget, {
+        bool? barrierDismissible,
+      }) async {
+    await showDialog(
+        context: context,
+        barrierDismissible: barrierDismissible ?? false,
+        barrierColor: Colors.transparent,
+        builder: (BuildContext context) {
+          return Stack(
+            children: [
+              // Blur effect
+              BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 0.5, sigmaY: 0.5),
                 child: Container(
                     color: Colors.black
                         .withOpacity(0.2)), // Optional: Add overlay color

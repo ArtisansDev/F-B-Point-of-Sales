@@ -5,6 +5,8 @@ const String sUsername = "Username";
 const String sConfiguration = "Configuration";
 const String sConfigurationKey = "Configuration Key";
 const String sEnterName = "Enter Name";
+const String sEnterEmail = "Enter Email";
+const String sEnterDob = "Select Dob";
 const String sTableNo = "Table No";
 const String sPhoneNumber = "Phone Number";
 const String sRemark = "Remark";
@@ -15,6 +17,7 @@ const String sSelectDateRange = "Select Date Range";
 const String sReasonCancel = "Reason for Cancel";
 const String sAddRemarks = "Add Remarks";
 const String sNotes = "Notes";
+const String sEnterAddress = "Enter the address";
 const String sSchedule = "Schedule";
 const String sDatetocome = "Select Date";
 const String sTimeToCome = "Select Time";
@@ -64,6 +67,7 @@ const String sTakeAway = "Take Away";
 const String sDineIn = "Dine-In";
 const String sOrder = "Order#";
 const String sSrNo = "SrNo#";
+const String sAddCustomer = "Add Customer";
 const String sCustomerName = "Customer Name";
 const String sTime  = "Time";
 const String sType  = "Type";
@@ -73,4 +77,9 @@ const String sAddress  = "Address";
 const String sTotalBill  = "Total Bill";
 const String sHoldSale  = "Hold sale";
 const String sDeleteAll = "Delete All";
+const String sSubmit = "Submit";
+
+const String sPleaseEnterMobileNumber = "Please enter your mobile number";
+const String sPleaseEnterValidMobileNumber =
+    "Please enter your valid mobile number";
 

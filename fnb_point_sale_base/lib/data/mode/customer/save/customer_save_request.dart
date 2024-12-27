@@ -63,7 +63,9 @@ class CustomerSaveRequest {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['CustomerIDP'] = _customerIDP;
+    if(_customerIDP!=null) {
+      map['CustomerIDP'] = _customerIDP;
+    }
     map['Name'] = _name;
     map['PhoneCountryCode'] = _phoneCountryCode;
     map['PhoneNumber'] = _phoneNumber;

@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -60,13 +58,17 @@ class LoginApiImpl extends AllApiImpl with LoginApi {
 
   ///post Configuration
   @override
-  Future<WebResponseSuccess> postConfiguration(dynamic exhibitorsListRequest) async {
-    AppAlert.showProgressDialog(Get.context!);
+  Future<WebResponseSuccess> postConfiguration(dynamic exhibitorsListRequest,
+      {bool flag = true}) async {
+    if (flag) {
+      AppAlert.showProgressDialog(Get.context!);
+    }
     WebConstants.auth = false;
     final cases = await mWebProvider.postWithRequest(
         WebConstants.actionConfiguration, exhibitorsListRequest);
-
-    AppAlert.hideLoadingDialog(Get.context!);
+    if (flag) {
+      AppAlert.hideLoadingDialog(Get.context!);
+    }
     if (cases.statusCode == WebConstants.statusCode200) {
       ConfigurationResponse mConfigurationResponse =
       ConfigurationResponse.fromJson(processResponseToJson(cases));

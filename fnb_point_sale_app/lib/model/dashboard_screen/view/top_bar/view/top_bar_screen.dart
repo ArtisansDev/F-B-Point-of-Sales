@@ -28,7 +28,10 @@ class TopBarScreen extends GetView<TopBarController> {
     Get.lazyPut(() => TopBarController());
     controller.mDashboardScreenController.onUpdateHoldSale();
     return FocusDetector(
-        onVisibilityGained: () {},
+        onVisibilityGained: () {
+          controller.onHomeUpdate();
+          controller.loadAllTables();
+        },
         onVisibilityLost: () {},
         child: Obx(
           () {

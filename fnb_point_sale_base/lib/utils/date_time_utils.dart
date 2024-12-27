@@ -57,3 +57,28 @@ getTime(TimeOfDay? selectedTime) {
   return '$formattedHour:${selectedTime.minute.toString().padLeft(
       2, '0')} $period';
 }
+
+getUTCValue(DateTime selected) {
+  String value = selected.toUtc().toIso8601String().toString();
+  return value;
+}
+
+getUTCToLocalValue(String sValue) {
+  return DateTime.parse(sValue).toLocal();
+}
+
+getUTCToLocalDateOrderHistory(String sValue) {
+  DateTime selected=  DateTime.parse(sValue).toLocal();
+  String formattedTime = DateFormat('hh:mm a').format(selected);
+  String sDate =
+      '${selected.day.toString().padLeft(2, '0')}-${selected.month.toString().padLeft(2, '0')}-${selected.year.toString()}  $formattedTime';
+  return sDate;
+}
+
+getUTCToLocalDateTime(String sValue) {
+  DateTime selected=  DateTime.parse(sValue).toLocal();
+  String formattedTime = DateFormat('hh:mm a').format(selected);
+  String sDate =
+      '${selected.day.toString().padLeft(2, '0')}-${selected.month.toString().padLeft(2, '0')}-${selected.year.toString()} | $formattedTime';
+  return sDate;
+}

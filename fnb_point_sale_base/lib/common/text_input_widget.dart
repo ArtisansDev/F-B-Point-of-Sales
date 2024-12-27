@@ -32,6 +32,7 @@ class TextInputWidget extends StatelessWidget {
   Function? onTextChange;
   int maxLines;
   double? topPadding;
+  double? prefixPadding;
   double? leftPadding;
   double? prefixHeight;
   double? hintTextSize;
@@ -50,6 +51,7 @@ class TextInputWidget extends StatelessWidget {
     this.showFloatingLabel,
     this.textInputType,
     this.borderColor,
+    this.prefixPadding,
     this.hintTextColor,
     this.textColor,
     this.borderSideColor,
@@ -93,27 +95,26 @@ class TextInputWidget extends StatelessWidget {
       obscureText: hidePassword ?? false,
       inputFormatters:
       onFilteringTextInputFormatter ?? <TextInputFormatter>[],
-      style: getText500(colors: ColorConstants.black, size: 16.sp),
+      style: getText500(
+          colors: textColor ?? ColorConstants.black, size: textSize ?? 12.5.sp),
       textCapitalization: textCapitalization ?? TextCapitalization.none,
       cursorColor: ColorConstants.cAppButtonColour,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.only(
-            left: 0.sp,
-            right: 15.sp,
+            left: leftPadding ?? 15.sp,
+            right: leftPadding ?? 15.sp,
             top: topPadding ?? 13.sp,
             bottom: topPadding ?? 13.sp),
         floatingLabelBehavior: (showFloatingLabel ?? true)
             ? FloatingLabelBehavior.auto
             : FloatingLabelBehavior.never,
         hintText: hintText,
-        hintStyle: getTextRegular(
-            colors: ColorConstants.appEditTextHint, size: 13.sp),
+        hintStyle: getText500(
+            colors: hintTextColor ?? ColorConstants.appEditTextHint,
+            size: hintTextSize ?? 12.sp),
         errorText: errorText,
         errorStyle: getTextRegular(colors: Colors.red, size: 12.5.sp),
         alignLabelWithHint: true,
-        labelText: placeHolder,
-        labelStyle: getTextRegular(
-            colors: ColorConstants.appEditTextHint, size: 13.sp),
         prefixIcon: sPrefixText == null
             ? null
             : GestureDetector(
@@ -124,21 +125,20 @@ class TextInputWidget extends StatelessWidget {
           },
           child: Container(
               alignment: Alignment.center,
-              margin: EdgeInsets.only(right: 13.sp),
-              padding: EdgeInsets.only(left: 13.sp, right: 13.sp),
+              margin: EdgeInsets.only(right: prefixPadding??8.sp),
               height: prefixHeight ?? 10.h,
-              width: ((prefixHeight ?? 10.h) + 16.sp),
+              width: 5.w,
               decoration: BoxDecoration(
-                color: ColorConstants.appEditTextHint.withOpacity(0.5),
+                color: ColorConstants.appEditTextHint.withOpacity(0.75),
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(11.sp),
-                    bottomLeft: Radius.circular(11.sp)),
+                    topLeft: Radius.circular(8.sp),
+                    bottomLeft: Radius.circular(8.sp)),
               ),
               child: Text(
                 '+$sPrefixText',
                 maxLines: 1,
                 style: getText500(
-                    colors: ColorConstants.black, size: 16.sp),
+                    colors: ColorConstants.black, size: 11.5.sp),
               )),
         ),
         prefixIconColor: ColorConstants.cAppColorsMaterial.shade400,
@@ -160,29 +160,29 @@ class TextInputWidget extends StatelessWidget {
         ),
         suffixIconColor: ColorConstants.cAppColorsMaterial.shade700,
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(11.sp)),
-            borderSide: const BorderSide(
-              color: ColorConstants.appEditTextHint,
+            borderRadius: BorderRadius.all(Radius.circular(8.sp)),
+            borderSide: BorderSide(
+              color: borderSideColor ?? ColorConstants.appEditTextHint,
             )),
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(11.sp)),
-            borderSide: const BorderSide(
-              color: ColorConstants.appEditTextHint,
+            borderRadius: BorderRadius.all(Radius.circular(8.sp)),
+            borderSide: BorderSide(
+              color: borderSideColor ?? ColorConstants.appEditTextHint,
             )),
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(11.sp)),
-            borderSide: const BorderSide(
-              color: ColorConstants.appEditTextHint,
+            borderRadius: BorderRadius.all(Radius.circular(8.sp)),
+            borderSide: BorderSide(
+              color: borderSideColor ?? ColorConstants.appEditTextHint,
             )),
         focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(11.sp)),
-            borderSide: const BorderSide(
-              color: ColorConstants.appEditTextHint,
+            borderRadius: BorderRadius.all(Radius.circular(8.sp)),
+            borderSide: BorderSide(
+              color: borderSideColor ?? ColorConstants.appEditTextHint,
             )),
         disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(11.sp)),
-            borderSide: const BorderSide(
-              color: ColorConstants.appEditTextHint,
+            borderRadius: BorderRadius.all(Radius.circular(8.sp)),
+            borderSide: BorderSide(
+              color: borderSideColor ?? ColorConstants.appEditTextHint,
             )),
       ),
     )
@@ -207,7 +207,7 @@ class TextInputWidget extends StatelessWidget {
       inputFormatters:
       onFilteringTextInputFormatter ?? <TextInputFormatter>[],
       style: getText500(
-          colors: textColor??ColorConstants.black, size: textSize ?? 12.5.sp),
+          colors: textColor ?? ColorConstants.black, size: textSize ?? 12.5.sp),
       textCapitalization: textCapitalization ?? TextCapitalization.none,
       cursorColor: ColorConstants.cAppButtonColour,
       decoration: InputDecoration(

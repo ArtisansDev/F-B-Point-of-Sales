@@ -37,6 +37,20 @@ class SharedPrefs {
     return  "";
   }
 
+  /// userId
+  Future<void> setUserId(String? userId) async {
+    /// debugPrint("setToken $bearerToken");
+    sharedPreferences!.setString(PrefConstants.userId, userId ?? "");
+  }
+
+  Future<String> getUserId() async {
+    String value = sharedPreferences!.getString(PrefConstants.userId) ?? "";
+    if (value.isNotEmpty) {
+      return value;
+    }
+    return  "";
+  }
+
   /// configurationAccessToken
   Future<void> setConfigurationAccessToken(String? configurationAccessToken) async {
     /// debugPrint("setToken configurationAccessToken");
@@ -51,18 +65,5 @@ class SharedPrefs {
     return  "";
   }
 
-
-  /// userDetails
-  // Future<void> setUserDetails(String? setUserDetails) async {
-  //   sharedPreferences!.setString(PrefConstants.sUserDetails, setUserDetails ?? "");
-  // }
-
-  // Future<UserData> getUserDetails() async {
-  //   String value = sharedPreferences!.getString(PrefConstants.sUserDetails) ?? "";
-  //   if (value.isNotEmpty) {
-  //     return UserData.fromJson(json.decode(value));
-  //   }
-  //   return  UserData();
-  // }
 
 }

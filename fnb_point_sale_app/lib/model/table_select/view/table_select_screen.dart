@@ -26,6 +26,7 @@ class TableSelectScreen extends GetView<TableSelectController> {
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => TableSelectController());
+    controller.getAllCustomerList();
     return FocusDetector(
         onVisibilityGained: () {
           controller.setTableNumber(tableNumber);

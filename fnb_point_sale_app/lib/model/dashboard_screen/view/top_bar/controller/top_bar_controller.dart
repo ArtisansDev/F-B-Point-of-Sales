@@ -1,10 +1,17 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_app/common_view/logout_expired.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
+import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
+import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_model.dart';
+import 'package:fnb_point_sale_base/data/local/database/table_list/table_list_local_api.dart';
+import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
+import 'package:fnb_point_sale_base/data/mode/product/get_all_tables/get_all_tables_response.dart';
+import 'package:fnb_point_sale_base/locator.dart';
 import 'package:fnb_point_sale_base/printer/types/test_printing.dart';
 import 'package:fnb_point_sale_base/printer/widgets/printer_configuration_widget.dart';
 import 'package:fnb_point_sale_base/serialportdevices/widgets/serial_port_device_config_widget.dart';
@@ -94,5 +101,78 @@ class TopBarController extends GetxController {
       barrierDismissible: true,
       builder: (context) => const SerialPortDeviceConfigWidget(),
     );
+  }
+
+  ///sync update
+  onHomeUpdate() async {
+    await allOrderPlace();
+    mDashboardScreenController.onUpdate(() async {
+      await loadAllTables();
+    });
+  }
+
+  ///OrderPlace
+  Rxn<PlaceOrderSaleModel> mPlaceOrderSaleModel = Rxn<PlaceOrderSaleModel>();
+  var mPlaceOrderSaleLocalApi = locator.get<PlaceOrderSaleLocalApi>();
+
+  allOrderPlace() async {
+    mPlaceOrderSaleModel.value =
+        await mPlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
+            PlaceOrderSaleModel();
+    showTableCount();
+  }
+
+  ///all table
+  RxList<GetAllTablesResponseData> mGetAllTablesList =
+      <GetAllTablesResponseData>[].obs;
+
+  loadAllTables() async {
+    var mTableListLocalApi = locator.get<TableListLocalApi>();
+    GetAllTablesResponse mGetAllTablesResponse =
+        await mTableListLocalApi.getTablesListResponse() ??
+            GetAllTablesResponse();
+    mGetAllTablesList.clear();
+    mGetAllTablesList.addAll(mGetAllTablesResponse.data ?? []);
+    mGetAllTablesList.refresh();
+
+    ///groupTable
+    groupTable();
+
+    ///show table count
+    showTableCount();
+  }
+
+  showTableCount() {
+    String totalTable = (mGetAllTablesList.length ?? 0).toString();
+    int occupiedTable = 0;
+    String openTable = totalTable;
+    String value = jsonEncode(mGetAllTablesList);
+    for (OrderPlace totalOrder
+        in (mPlaceOrderSaleModel.value ?? PlaceOrderSaleModel()).mOrderPlace ??
+            []) {
+      if (value.contains(totalOrder.tableNo.toString())) {
+        occupiedTable = occupiedTable + 1;
+      }
+    }
+
+    mDashboardScreenController.mTobBarModel[0].value = totalTable;
+    mDashboardScreenController.mTobBarModel[1].value =
+        (int.parse(openTable) - occupiedTable).toString();
+    mDashboardScreenController.mTobBarModel[2].value = occupiedTable.toString();
+    mDashboardScreenController.mTobBarModel.refresh();
+  }
+
+  RxMap<String, List<GetAllTablesResponseData>> groupedByDepartment =
+      <String, List<GetAllTablesResponseData>>{}.obs;
+
+  groupTable() {
+    // Create a map for grouping
+
+    for (var mTable in mGetAllTablesList) {
+      groupedByDepartment.putIfAbsent(mTable.locationType ?? '', () => []);
+      groupedByDepartment[mTable.locationType]!.add(mTable);
+    }
+    groupedByDepartment.refresh();
+    // debugPrint(groupedByDepartment as String?);
   }
 }

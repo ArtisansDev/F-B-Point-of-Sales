@@ -158,16 +158,18 @@ class SelectedOrderBottomView extends StatelessWidget {
               )),
 
           ///button Place Order
-          Container(
-              margin: EdgeInsets.only(left: 8.sp, right: 8.sp, top: 8.sp),
-              child: rectangleCornerButtonText600(
-                height: 19.5.sp,
-                textSize: 11.5.sp,
-                sPlaceOrder.tr,
-                () {
-                  controller.onPlaceOrder();
-                },
-              )),
+          Visibility(
+              visible: (controller.mOrderPlace.value?.tableNo ?? '') != '--',
+              child: Container(
+                  margin: EdgeInsets.only(left: 8.sp, right: 8.sp, top: 8.sp),
+                  child: rectangleCornerButtonText600(
+                    height: 19.5.sp,
+                    textSize: 11.5.sp,
+                    sPlaceOrder.tr,
+                    () {
+                      controller.onPlaceOrder();
+                    },
+                  ))),
 
           ///button Pay and Invoice
           Container(

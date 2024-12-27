@@ -13,6 +13,7 @@ class PaymentScreenController extends GetxController {
   Rx<TextEditingController> nameController = TextEditingController().obs;
   Rx<TextEditingController> phoneNumberController = TextEditingController().obs;
   Rxn<OrderPlace> mOrderPlace = Rxn<OrderPlace>();
+  RxString phoneCode = '60'.obs;
 
   PaymentScreenController(OrderPlace selectOrderPlace) {
     mOrderPlace.value = selectOrderPlace;

@@ -19,7 +19,7 @@ class TableView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => controller.mGetAllTablesList.isEmpty
+      () => controller.groupedByDepartment.isEmpty
           ? Center(
               child: Container(
                   decoration: const BoxDecoration(
@@ -29,18 +29,43 @@ class TableView extends StatelessWidget {
                   height: 25.sp,
                   width: 25.sp,
                   child: const CircularProgressIndicator()),
-            )
-          : DynamicHeightGridView(
-              itemCount: controller.mGetAllTablesList.length,
-              crossAxisCount: 4,
-              crossAxisSpacing: 10.sp,
-              mainAxisSpacing: 13.sp,
-              builder: (ctx, index) {
-                /// return your widget here.
-                return TableRowView(
-                  index: index,
-                );
-              }),
+            ) :
+      ListView(
+          children: controller.groupedByDepartment.entries.map((entry) {
+            final department = entry.key;
+            final mGetAllTablesResponseList = entry.value;
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Department Header
+                Padding(
+                  padding:  EdgeInsets.all(8.sp),
+                  child: Text(
+                    department,
+                    style: getText600(size: 13.sp,colors: Colors.black),
+                  ),
+                ),
+                DynamicHeightGridView(
+                    itemCount: mGetAllTablesResponseList.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    crossAxisCount: 4,
+                    crossAxisSpacing: 10.sp,
+                    mainAxisSpacing: 13.sp,
+                    builder: (ctx, index) {
+                      /// return your widget here.
+                      return TableRowView(
+                        index: index,
+                        mGetAllTablesResponseData: mGetAllTablesResponseList[index],
+                      );
+                    }),
+              ],
+            );
+          }).toList()
+
+    )
+
     );
   }
 }

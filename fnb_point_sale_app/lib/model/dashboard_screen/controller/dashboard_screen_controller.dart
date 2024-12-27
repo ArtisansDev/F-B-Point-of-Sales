@@ -38,19 +38,27 @@ class DashboardScreenController extends GetxController {
       name: 'ALL',
       value: '20',
     ),
-    TobBarModel(name: 'OPEN', value: '5'),
-    TobBarModel(name: 'OCCUPIED', value: '5'),
-    TobBarModel(name: 'RESERVED', value: '5'),
+    TobBarModel(name: 'OPEN', value: '0'),
+    TobBarModel(name: 'OCCUPIED', value: '0'),
+    TobBarModel(name: 'RESERVED', value: '0'),
     TobBarModel(name: 'HOLD SALE', value: '0'),
   ].obs;
   Rxn<OrderPlace> mOrderPlace = Rxn<OrderPlace>();
 
   ///set Top Bar value
+  RxInt topBarIndex = 0.obs;
   setTopBarValue(int index, int value) {
-    mTobBarModel.value[index].value =
-        (int.parse((mTobBarModel.value[index].value ?? '0').toString()) + 1)
-            .toString();
-    mTobBarModel.refresh();
+    if(index<3){
+      topBarIndex.value = index;
+      topBarIndex.refresh();
+      if (Get.isRegistered<TableController>()) {
+        onUpdateTable.value!();
+      }else {
+        selectMenu.value = 1;
+        selectMenu.refresh();
+      }
+    }
+
   }
 
   ///set APP VERSION
@@ -283,8 +291,14 @@ class DashboardScreenController extends GetxController {
     HoldSaleModel mHoldSaleModel =
         await holdSaleLocalApi.getAllHoldSale() ?? HoldSaleModel();
 
-    mTobBarModel.value[4].value =
+    mTobBarModel[4].value =
         (mHoldSaleModel.mOrderPlace ?? []).length.toString();
     mTobBarModel.refresh();
   }
+  Rxn<Function> onUpdateTable = Rxn<Function>();
+
+  onUpdateViewTable(Function update) {
+    onUpdateTable.value = update;
+  }
+
 }

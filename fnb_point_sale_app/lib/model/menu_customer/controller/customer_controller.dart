@@ -17,6 +17,8 @@ import 'package:fnb_point_sale_base/utils/network_utils.dart';
 import 'package:get/get.dart';
 
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
+import '../add_customer/controller/add_customer_controller.dart';
+import '../add_customer/view/add_customer_screen.dart';
 
 class CustomerController extends GetxController {
   DashboardScreenController mDashboardScreenController =
@@ -26,8 +28,6 @@ class CustomerController extends GetxController {
   Rxn<List<GetAllCustomerList>> mGetAllCustomerList =
       Rxn<List<GetAllCustomerList>>();
   final customerLocalApi = locator.get<CustomerLocalApi>();
-
-  void addCustomer() {}
 
   ///sync update
   onCustomerUpdate() {
@@ -90,6 +90,7 @@ class CustomerController extends GetxController {
             mGetAllCustomerData.value =
                 mGetAllCustomerResponse.getAllCustomerData ??
                     GetAllCustomerData();
+
             ///
             mGetAllCustomerList.value = [];
             mGetAllCustomerList.value
@@ -108,6 +109,23 @@ class CustomerController extends GetxController {
       MyLogUtils.logDebug('downloadTableList failed with exception $e');
       AppAlert.showSnackBar(
           Get.context!, 'downloadTableList failed with exception $e');
+    }
+  }
+
+  ///addCustomer
+  addCustomer() async {
+    await AppAlert.showViewWithoutBlur(Get.context!, const AddCustomerScreen(),
+        barrierDismissible: true);
+    bool isAddMember = false;
+    if (Get.isRegistered<AddCustomerController>()) {
+      AddCustomerController mAddCustomerController =
+          Get.find<AddCustomerController>();
+      isAddMember = mAddCustomerController.isAddMember;
+      Get.delete<AddCustomerController>();
+    }
+
+    if(isAddMember) {
+      callGetAllCustomer();
     }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -50,6 +51,67 @@ class DineInScreen extends StatelessWidget {
                 ],
               )),
 
+          ///Phone Number
+          Container(
+            height: 20.sp,
+            margin: EdgeInsets.only(left: 13.sp, right: 13.sp, top: 10.sp),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(35.sp),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.22),
+                  spreadRadius: 3,
+                  blurRadius: 5,
+                  offset: const Offset(0, 0), // changes position of shadow
+                ),
+              ], // use instead of BorderRadius.all(Radius.circular(20))
+            ),
+            child: TextInputWidget(
+              controller: controller.sPhoneNumberController.value,
+              showFloatingLabel: false,
+              isPhone: true,
+              sPrefixText: controller.phoneCode.value,
+              placeHolder: sPhoneNumber.tr,
+              topPadding: 5.sp,
+              hintTextSize: 11.sp,
+              textSize: 11.sp,
+              onClick: (value) {
+                if (value == 'prefixIcon') {
+                  showCountryPicker(
+                    context: Get.context!,
+                    countryListTheme: CountryListThemeData(
+                      backgroundColor: Colors.white,
+                      textStyle:
+                      getText500(colors: ColorConstants.black, size: 12.sp),
+                      bottomSheetHeight: 69.h,
+                      // Optional. Country list modal height
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(11.sp),
+                        topRight: Radius.circular(11.sp),
+                      ),
+                    ),
+                    showPhoneCode: true,
+                    // optional. Shows phone code before the country name.
+                    onSelect: (Country country) {
+                      controller.phoneCode.value = country.phoneCode;
+                    },
+                  );
+                }
+              },
+              hintText: sPhoneNumber.tr,
+              errorText: null,
+              prefixHeight: 20.sp,
+              hintTextColor: ColorConstants.black.withOpacity(0.80),
+              onFilteringTextInputFormatter: [
+                FilteringTextInputFormatter.allow(
+                  RegExp(AppUtilConstants.patternOnlyNumber),
+                ),
+                LengthLimitingTextInputFormatter(10)
+              ],
+            ),
+          ),
+
           ///Enter Name
           Container(
               height: 20.sp,
@@ -70,30 +132,6 @@ class DineInScreen extends StatelessWidget {
                 onFilteringTextInputFormatter: [
                   FilteringTextInputFormatter.allow(
                       RegExp(AppUtilConstants.patternOnlyString)),
-                ],
-              )),
-
-          ///Phone Number
-          Container(
-              height: 20.sp,
-              margin: EdgeInsets.only(left: 13.sp, right: 13.sp, top: 10.sp),
-              child: TextInputWidget(
-                placeHolder: sPhoneNumber.tr,
-                controller: controller.sPhoneNumberController.value,
-                errorText: null,
-                textInputType: TextInputType.phone,
-                hintText: sPhoneNumber.tr,
-                showFloatingLabel: false,
-                topPadding: 5.sp,
-                hintTextSize: 11.sp,
-                textSize: 11.sp,
-                hintTextColor: ColorConstants.black.withOpacity(0.80),
-                prefixIcon: Icons.phone,
-                prefixHeight: 13.sp,
-                onFilteringTextInputFormatter: [
-                  FilteringTextInputFormatter.allow(
-                      RegExp(AppUtilConstants.patternOnlyNumber)),
-                  LengthLimitingTextInputFormatter(10)
                 ],
               )),
 

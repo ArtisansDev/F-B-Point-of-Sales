@@ -92,27 +92,39 @@ class CustomerSearchView extends StatelessWidget {
                   )),
             ),
 
-            GestureDetector(
-              onTap: () {
-               controller.addCustomer();
-              },
-              child: Container(
-                margin: EdgeInsets.only(right: 11.sp),
-                height: 21.sp,
-                width: 21.sp,
-                padding: EdgeInsets.all(9.5.sp),
-                decoration: BoxDecoration(
-                  color: ColorConstants.cAppButtonColour,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(8.sp),
-                  ),
-                ),
-                child: Image.asset(
-                  ImageAssetsConstants.appAddUser,
-                  fit: BoxFit.fitWidth,
+            Container(
+              height: 22.sp,
+              width: 22.sp,
+              margin: EdgeInsets.only(
+                  top: 11.sp,right: 11.sp, bottom: 8.sp),
+              padding: EdgeInsets.all(6.5.sp),
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(8.sp),
                 ),
               ),
-            ),
+              child:
+             GestureDetector(
+                onTap: () {
+                  controller.addCustomer();
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: ColorConstants.cAppButtonColour,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(8.sp),
+                    ),
+                  ),
+                  padding: EdgeInsets.all(8.5.sp),
+                  child: Image.asset(
+                    ImageAssetsConstants.appAddUser,
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
+              ) ,
+            )
+            ,
           ],
         ));
   }

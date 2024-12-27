@@ -60,3 +60,4 @@ void _disableDebugLogs() {
     debugPrint = (String? message, {int? wrapWidth}) {};
   }
 }
+

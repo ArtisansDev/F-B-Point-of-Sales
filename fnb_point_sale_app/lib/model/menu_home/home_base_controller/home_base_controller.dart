@@ -18,6 +18,7 @@ import 'package:fnb_point_sale_base/utils/my_log_utils.dart';
 import 'package:get/get.dart';
 
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
+import '../../dashboard_screen/view/top_bar/controller/top_bar_controller.dart';
 import '../controller/home_controller.dart';
 import '../view/add_item/controller/add_item_controller.dart';
 import '../view/add_item/view/add_item_screen.dart';
@@ -31,6 +32,8 @@ class HomeBaseController extends GetxController {
   ///Dashboard
   DashboardScreenController mDashboardScreenController =
       Get.find<DashboardScreenController>();
+  TopBarController mTopBarController =
+  Get.find<TopBarController>();
   static Rx<TextEditingController> searchController = TextEditingController().obs;
   ///Home
   Rxn<HomeController> mHomeController = Rxn<HomeController>();

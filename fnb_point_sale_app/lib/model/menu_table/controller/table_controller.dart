@@ -11,6 +11,7 @@ import 'package:fnb_point_sale_base/locator.dart';
 import 'package:get/get.dart';
 
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
+import '../../dashboard_screen/view/top_bar/controller/top_bar_controller.dart';
 import '../../table_select/controller/table_select_controller.dart';
 import '../../table_select/view/table_select_screen.dart';
 import '../view/table_view/table_summary/controller/table_summary_controller.dart';
@@ -20,10 +21,13 @@ class TableController extends GetxController {
   DashboardScreenController mDashboardScreenController =
       Get.find<DashboardScreenController>();
 
+  TopBarController mTopBarController = Get.find<TopBarController>();
+
   ///table click
-  void onTableSelectClick(int index) async {
+  void onTableSelectClick(
+      GetAllTablesResponseData mGetAllTablesResponseData) async {
     OrderPlace mOrderPlace =
-        getOrderPlace(mGetAllTablesList[index].seatIDP ?? '');
+        getOrderPlace(mGetAllTablesResponseData.seatIDP ?? '');
     if ((mOrderPlace.cartItem ?? []).isNotEmpty) {
       await AppAlert.showView(
           Get.context!,
@@ -38,14 +42,12 @@ class TableController extends GetxController {
         Get.delete<TableSummaryController>();
       }
     } else {
-      GetAllTablesResponseData mGetAllTablesResponseData =
-          mGetAllTablesList[index];
       bool value = (!(mGetAllTablesResponseData.isDeleted ?? false) &&
           (mGetAllTablesResponseData.isActive ?? false));
       if (value) {
         bool isCreateOrder = false;
         await AppAlert.showView(Get.context!,
-            TableSelectScreen(tableNumber: mGetAllTablesList[index]),
+            TableSelectScreen(tableNumber: mGetAllTablesResponseData),
             barrierDismissible: true);
         if (Get.isRegistered<TableSelectController>()) {
           isCreateOrder = Get.find<TableSelectController>().isCreateOrder.value;
@@ -87,16 +89,18 @@ class TableController extends GetxController {
   }
 
   ///all table
-  RxList<GetAllTablesResponseData> mGetAllTablesList =
-      <GetAllTablesResponseData>[].obs;
+  RxMap<String, List<GetAllTablesResponseData>> groupedByDepartment =
+      <String, List<GetAllTablesResponseData>>{}.obs;
 
-  loadAllTables() async {
-    var mTableListLocalApi = locator.get<TableListLocalApi>();
-    GetAllTablesResponse mGetAllTablesResponse =
-        await mTableListLocalApi.getTablesListResponse() ??
-            GetAllTablesResponse();
-    mGetAllTablesList.clear();
-    mGetAllTablesList.addAll(mGetAllTablesResponse.data ?? []);
-    mGetAllTablesList.refresh();
+  groupTable() {
+    groupedByDepartment.clear();
+    groupedByDepartment.addAll(mTopBarController.groupedByDepartment);
+    groupedByDepartment.refresh();
   }
+
+  // void onUpdateViewTable() {
+  //   // mDashboardScreenController.onUpdateViewTable(() {
+  //   //   mDashboardScreenController.topBarIndex.refresh();
+  //   // });
+  // }
 }

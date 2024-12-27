@@ -62,6 +62,7 @@ class GetAllTablesResponse {
 /// UpdationDate : "2024-12-09T12:17:48.77"
 /// LocationIDF : "07cd1402-aa58-42fb-90e3-7353843b37f7"
 /// SeatingType : "First Floor"
+/// LocationType : "First Floor"
 
 class GetAllTablesResponseData {
   GetAllTablesResponseData({
@@ -77,7 +78,8 @@ class GetAllTablesResponseData {
       bool? isDeleted, 
       String? updationDate, 
       String? locationIDF, 
-      String? seatingType,}){
+      String? seatingType,
+      String? locationType,}){
     _seatIDP = seatIDP;
     _branchIDF = branchIDF;
     _restaurantIDF = restaurantIDF;
@@ -91,6 +93,7 @@ class GetAllTablesResponseData {
     _updationDate = updationDate;
     _locationIDF = locationIDF;
     _seatingType = seatingType;
+    _locationType = locationType;
 }
 
   GetAllTablesResponseData.fromJson(dynamic json) {
@@ -107,6 +110,7 @@ class GetAllTablesResponseData {
     _updationDate = json['UpdationDate'];
     _locationIDF = json['LocationIDF'];
     _seatingType = json['SeatingType'];
+    _locationType = json['LocationType'];
   }
   String? _seatIDP;
   String? _branchIDF;
@@ -121,6 +125,7 @@ class GetAllTablesResponseData {
   String? _updationDate;
   String? _locationIDF;
   String? _seatingType;
+  String? _locationType;
 
   String? get seatIDP => _seatIDP;
   String? get branchIDF => _branchIDF;
@@ -135,6 +140,7 @@ class GetAllTablesResponseData {
   String? get updationDate => _updationDate;
   String? get locationIDF => _locationIDF;
   String? get seatingType => _seatingType;
+  String? get locationType => _locationType;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -151,6 +157,7 @@ class GetAllTablesResponseData {
     map['UpdationDate'] = _updationDate;
     map['LocationIDF'] = _locationIDF;
     map['SeatingType'] = _seatingType;
+    map['LocationType'] = _locationType;
     return map;
   }
 

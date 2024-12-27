@@ -3,13 +3,21 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
+import 'package:fnb_point_sale_base/constants/message_constants.dart';
+import 'package:fnb_point_sale_base/constants/web_constants.dart';
 import 'package:fnb_point_sale_base/data/local/database/hold_sale/hold_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/hold_sale/hold_sale_model.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_model.dart';
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
+import 'package:fnb_point_sale_base/data/mode/order_place/process_multiple_orders_request.dart';
+import 'package:fnb_point_sale_base/data/remote/api_call/customer/customer_api.dart';
+import 'package:fnb_point_sale_base/data/remote/api_call/order_place/order_place_api.dart';
+import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/locator.dart';
+import 'package:fnb_point_sale_base/utils/network_utils.dart';
 import 'package:fnb_point_sale_base/utils/num_utils.dart';
+import 'package:fnb_point_sale_base/utils/tracking_order_id.dart';
 import 'package:get/get.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/cart_item.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
@@ -101,9 +109,6 @@ class SelectedOrderController extends HomeBaseController {
   void onCancelSale() async {
     await AppAlert.showView(Get.context!, CancelOrderScreen(this),
         barrierDismissible: true);
-    if (Get.isRegistered<CancelOrderController>()) {
-      Get.delete<CancelOrderController>();
-    }
   }
 
   ///hold sale
@@ -152,15 +157,22 @@ class SelectedOrderController extends HomeBaseController {
       } else {
         await mPlaceOrderSaleLocalApi.getPlaceOrderSaleEdit(mOrderPlace.value!);
       }
+      mTopBarController.allOrderPlace();
       var holdSaleLocalApi = locator.get<HoldSaleLocalApi>();
       await holdSaleLocalApi
           .getHoldSaleDelete(mOrderPlace.value?.sOrderNo ?? '');
 
+      OrderDetailList mOrderDetailList = await createOrderPlaceRequest(
+          remarksController: remarkController.value.text,
+          mOrderPlace: mOrderPlace.value);
+      print("####### ${jsonEncode(mOrderDetailList)}");
+      callSaveCustomer(mOrderDetailList);
+
       ///clear data
-      mOrderPlace.value = null;
-      mOrderPlace.refresh();
-      mDashboardScreenController.onUpdateHoldSale();
-    }else {
+      // mOrderPlace.value = null;
+      // mOrderPlace.refresh();
+      // mDashboardScreenController.onUpdateHoldSale();
+    } else {
       AppAlert.showSnackBar(Get.context!, 'Please add item in the cart');
     }
   }
@@ -172,6 +184,37 @@ class SelectedOrderController extends HomeBaseController {
         barrierDismissible: true);
     if (Get.isRegistered<PaymentScreenController>()) {
       Get.delete<PaymentScreenController>();
+    }
+  }
+
+  void callSaveCustomer(OrderDetailList mOrderDetailList) async {
+    try {
+      ///api product call
+      final orderPlaceApi = locator.get<OrderPlaceApi>();
+
+      await NetworkUtils()
+          .checkInternetConnection()
+          .then((isInternetAvailable) async {
+        if (isInternetAvailable) {
+          ProcessMultipleOrdersRequest mProcessMultipleOrdersRequest =
+              ProcessMultipleOrdersRequest(orderDetailList: [mOrderDetailList]);
+          WebResponseSuccess mWebResponseSuccess =
+              await orderPlaceApi.postOrderPlace(mProcessMultipleOrdersRequest);
+          if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
+            AppAlert.showSnackBar(
+                Get.context!, mWebResponseSuccess.statusMessage ?? '');
+          } else {
+            AppAlert.showSnackBar(
+                Get.context!, mWebResponseSuccess.statusMessage ?? '');
+          }
+        } else {
+          AppAlert.showSnackBar(
+              Get.context!, MessageConstants.noInternetConnection);
+        }
+      });
+    } catch (e) {
+      AppAlert.showSnackBar(
+          Get.context!, 'downloadTableList failed with exception $e');
     }
   }
 }

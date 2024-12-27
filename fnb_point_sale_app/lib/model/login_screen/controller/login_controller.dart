@@ -75,6 +75,8 @@ class LoginScreenController extends GetxController {
           LoginResponse mLoginResponse = mWebResponseSuccess.data;
           await SharedPrefs()
               .setUserToken(mLoginResponse.data?.accessToken ?? '');
+          await SharedPrefs()
+              .setUserId(mLoginResponse.data?.userId ?? '');
           AppAlert.showSnackBar(
               Get.context!, mWebResponseSuccess.statusMessage ?? '');
           WebConstants.isFastTimeLogin = true;

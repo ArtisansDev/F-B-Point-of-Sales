@@ -14,20 +14,21 @@ class CancelOrderController extends GetxController {
   Rx<TextEditingController> remarkController = TextEditingController().obs;
   Rxn<OrderPlace> mOrderPlace = Rxn<OrderPlace>();
 
-  CancelOrderController(SelectedOrderController mSelectedOrder) {
+  setOrder(SelectedOrderController mSelectedOrder){
     mSelectedOrderController.value = mSelectedOrder;
     mOrderPlace.value = mSelectedOrder.mOrderPlace.value;
     if (Get.isRegistered<DashboardScreenController>()) {
       mDashboardScreenController.value = Get.find<DashboardScreenController>();
     }
+    mOrderPlace.refresh();
   }
 
   void onCancel() {
     if (mSelectedOrderController.value != null) {
+      mOrderPlace.value =null;
       mSelectedOrderController.value?.mOrderPlace.value = null;
       mSelectedOrderController.value?.mOrderPlace.refresh();
     }
-
     Get.back();
   }
 }

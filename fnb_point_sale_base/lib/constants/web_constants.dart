@@ -65,5 +65,7 @@ class WebConstants {
 ///CustomerApi
   static String actionCustomerSave =  "Customer/customerSave";  //post
   static String actionGetAllCustomer =  "Customer/GetCustomer";
+  /// order place
+  static String actionPOSOrder =  "POSOrder/ProcessMultipleOrders";
 
 }

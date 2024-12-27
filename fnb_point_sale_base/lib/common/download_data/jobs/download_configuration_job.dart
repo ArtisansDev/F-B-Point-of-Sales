@@ -48,7 +48,7 @@ Future<void> downloadConfiguration(Function onError) async {
                         .first
                         .counterIDP);
         WebResponseSuccess mWebResponseSuccess =
-            await localApi.postConfiguration(mConfigurationRequest);
+            await localApi.postConfiguration(mConfigurationRequest,flag: false);
 
         if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
           ConfigurationResponse mConfigurationResponseData =
