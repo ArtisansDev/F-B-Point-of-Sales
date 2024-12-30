@@ -14,6 +14,7 @@ import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/locator.dart';
 import 'package:fnb_point_sale_base/utils/my_log_utils.dart';
 import 'package:fnb_point_sale_base/utils/network_utils.dart';
+import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:get/get.dart';
 
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
@@ -25,9 +26,14 @@ class CustomerController extends GetxController {
       Get.find<DashboardScreenController>();
   Rx<TextEditingController> searchController = TextEditingController().obs;
   Rxn<GetAllCustomerData> mGetAllCustomerData = Rxn<GetAllCustomerData>();
-  Rxn<List<GetAllCustomerList>> mGetAllCustomerList =
+  Rxn<List<GetAllCustomerList>> mAllCustomerList =
+      Rxn<List<GetAllCustomerList>>();
+
+  Rxn<List<GetAllCustomerList>> mSelectCustomerList =
       Rxn<List<GetAllCustomerList>>();
   final customerLocalApi = locator.get<CustomerLocalApi>();
+  RxInt pageNumber = 0.obs;
+  RxInt totalPage = 0.obs;
 
   ///sync update
   onCustomerUpdate() {
@@ -43,13 +49,17 @@ class CustomerController extends GetxController {
     mGetAllCustomerData.value =
         mGetAllCustomerResponse.getAllCustomerData ?? GetAllCustomerData();
 
-    mGetAllCustomerList.value = [];
-    mGetAllCustomerList.value
+    mAllCustomerList.value = [];
+    mAllCustomerList.value
         ?.addAll(mGetAllCustomerData.value?.getAllCustomerList ?? []);
-    mGetAllCustomerList.refresh();
+    mAllCustomerList.refresh();
 
-    if ((mGetAllCustomerList.value ?? []).isEmpty) {
+    if ((mAllCustomerList.value ?? []).isEmpty) {
       callGetAllCustomer();
+    } else {
+      (mSelectCustomerList.value ?? []).clear();
+      mSelectCustomerList.refresh();
+      selectPage();
     }
   }
 
@@ -90,12 +100,16 @@ class CustomerController extends GetxController {
             mGetAllCustomerData.value =
                 mGetAllCustomerResponse.getAllCustomerData ??
                     GetAllCustomerData();
-
-            ///
-            mGetAllCustomerList.value = [];
-            mGetAllCustomerList.value
+            mAllCustomerList.value = [];
+            mAllCustomerList.value
                 ?.addAll(mGetAllCustomerData.value?.getAllCustomerList ?? []);
-            mGetAllCustomerList.refresh();
+            mAllCustomerList.refresh();
+
+            if ((mAllCustomerList.value ?? []).isNotEmpty) {
+              (mSelectCustomerList.value ?? []).clear();
+              mSelectCustomerList.refresh();
+              selectPage();
+            }
           } else {
             AppAlert.showSnackBar(
                 Get.context!, mWebResponseSuccess.statusMessage ?? '');
@@ -124,8 +138,73 @@ class CustomerController extends GetxController {
       Get.delete<AddCustomerController>();
     }
 
-    if(isAddMember) {
+    if (isAddMember) {
       callGetAllCustomer();
+    }
+  }
+
+  RxInt page = 1.obs;
+  RxInt perPage = 15.obs;
+
+  selectPage() {
+    (mSelectCustomerList.value ?? []).clear();
+    mSelectCustomerList.value = [];
+    if ((mAllCustomerList.value ?? []).length >
+        (perPage.value) * (page.value)) {
+      mSelectCustomerList.value?.addAll((mAllCustomerList.value ?? []).getRange(
+          (perPage.value) * (page.value - 1), (perPage.value) * (page.value)));
+    } else {
+      mSelectCustomerList.value?.addAll((mAllCustomerList.value ?? []).getRange(
+          (perPage.value) * (page.value - 1),
+          (mAllCustomerList.value ?? []).length));
+    }
+    pageNumberCalculation();
+  }
+
+  void pageNumberCalculation() {
+    int len = (mAllCustomerList.value ?? []).length;
+    totalPage.value = (len % perPage.value) == 0
+        ? getInValue(len / perPage.value)
+        : getInValue((len / perPage.value) + 1);
+    if (totalPage.value > 0 && pageNumber.value == 0) {
+      pageNumber.value = 1;
+    }
+    totalPage.refresh();
+    pageNumber.refresh();
+    mSelectCustomerList.refresh();
+  }
+
+  void onTextChange(value) {
+    if (value.toString().isEmpty) {
+      mAllCustomerList.value = [];
+      mAllCustomerList.value
+          ?.addAll(mGetAllCustomerData.value?.getAllCustomerList ?? []);
+      if ((mAllCustomerList.value ?? []).isNotEmpty) {
+        (mSelectCustomerList.value ?? []).clear();
+        mSelectCustomerList.refresh();
+        selectPage();
+      }
+    } else {
+      mAllCustomerList.value = [];
+      mAllCustomerList.value
+          ?.addAll((mGetAllCustomerData.value?.getAllCustomerList ?? []).where(
+        (element) {
+          return element.name
+                  .toString()
+                  .toLowerCase()
+                  .contains(value.toString().toLowerCase()) ||
+              element.phoneNumber
+                  .toString()
+                  .toLowerCase()
+                  .contains(value.toString().toLowerCase());
+        },
+      ));
+
+      if ((mAllCustomerList.value ?? []).isNotEmpty) {
+        (mSelectCustomerList.value ?? []).clear();
+        mSelectCustomerList.refresh();
+      }
+      selectPage();
     }
   }
 }

@@ -14,9 +14,8 @@ class TableScreen extends GetView<TableController> {
     Get.lazyPut(() => TableController());
     return FocusDetector(
         onVisibilityGained: () {
-            // controller.onUpdateViewTable();
-            controller.allOrderPlace();
-            controller.groupTable();
+            controller.onUpdateViewTable();
+
         },
         onVisibilityLost: () {},
         child: Container(

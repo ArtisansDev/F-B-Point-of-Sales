@@ -1,27 +1,29 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
 import 'package:fnb_point_sale_base/common/date_range_picker/models.dart';
 import 'package:fnb_point_sale_base/common/date_range_picker/widgets/date_range_picker.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
-import 'package:fnb_point_sale_base/constants/image_assets_constants.dart';
+import 'package:fnb_point_sale_base/constants/message_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
+import 'package:fnb_point_sale_base/constants/web_constants.dart';
+import 'package:fnb_point_sale_base/data/local/database/configuration/configuration_local_api.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
+import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
+import 'package:fnb_point_sale_base/data/mode/order_history/order_history_request.dart';
+import 'package:fnb_point_sale_base/data/remote/api_call/order_place/order_place_api.dart';
+import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
+import 'package:fnb_point_sale_base/locator.dart';
+import 'package:fnb_point_sale_base/utils/date_time_utils.dart';
 import 'package:fnb_point_sale_base/utils/my_log_utils.dart';
+import 'package:fnb_point_sale_base/utils/network_utils.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../../cancel_order/controller/cancel_order_controller.dart';
-import '../../cancel_order/view/cancel_order_screen.dart';
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
-import '../../menu_table/view/table_view/table_summary/controller/table_summary_controller.dart';
-import '../../menu_table/view/table_view/table_summary/view/table_summary_order_screen.dart';
-import '../../pay_now/controller/pay_now_controller.dart';
-import '../../pay_now/view/pay_now_order_screen.dart';
 import '../../payment_screen/controller/payment_screen_controller.dart';
 import '../../payment_screen/view/payment_screen.dart';
 
@@ -143,7 +145,7 @@ class MenuSalesController extends GetxController {
     // if (Get.isRegistered<PayNowController>()) {
     //   Get.delete<PayNowController>();
     // }
-    await AppAlert.showView(Get.context!,  PaymentScreen(OrderPlace()),
+    await AppAlert.showView(Get.context!, PaymentScreen(OrderPlace()),
         barrierDismissible: true);
     if (Get.isRegistered<PaymentScreenController>()) {
       Get.delete<PaymentScreenController>();
@@ -157,4 +159,65 @@ class MenuSalesController extends GetxController {
   //     Get.delete<CancelOrderController>();
   //   }
   // }
+
+  ///button bar
+
+  ///api call
+  RxInt pageNumber = 1.obs;
+
+  void callOrderHistory({
+    String search = "",
+    String trackingOrderID = "",
+    int orderType = 0,
+    DateTime? fromDate,
+    DateTime? toDate,
+  }) async {
+    try {
+      ///api product call
+      final orderPlaceApi = locator.get<OrderPlaceApi>();
+
+      await NetworkUtils()
+          .checkInternetConnection()
+          .then((isInternetAvailable) async {
+        if (isInternetAvailable) {
+          var configurationLocalApi = locator.get<ConfigurationLocalApi>();
+          ConfigurationResponse mConfigurationResponse =
+              await configurationLocalApi.getConfigurationResponse() ??
+                  ConfigurationResponse();
+          OrderHistoryRequest mOrderHistoryRequest = OrderHistoryRequest(
+              rowsPerPage: 20,
+              counterIDF:
+                  (mConfigurationResponse.configurationData?.counterData ?? [])
+                          .isEmpty
+                      ? ""
+                      : (mConfigurationResponse
+                                  .configurationData?.counterData ??
+                              [])
+                          .first
+                          .counterIDP,
+              pageNumber: pageNumber.value,
+              searchValue: search,
+              fromDate: fromDate == null ? "" : getUTCValue(fromDate),
+              toDate: toDate == null ? "" : getUTCValue(toDate),
+              orderType: orderType,
+              trackingOrderID: trackingOrderID);
+          WebResponseSuccess mWebResponseSuccess =
+              await orderPlaceApi.postOrderHistory(mOrderHistoryRequest);
+          if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
+            AppAlert.showSnackBar(
+                Get.context!, mWebResponseSuccess.statusMessage ?? '');
+          } else {
+            AppAlert.showSnackBar(
+                Get.context!, mWebResponseSuccess.statusMessage ?? '');
+          }
+        } else {
+          AppAlert.showSnackBar(
+              Get.context!, MessageConstants.noInternetConnection);
+        }
+      });
+    } catch (e) {
+      AppAlert.showSnackBar(
+          Get.context!, 'downloadTableList failed with exception $e');
+    }
+  }
 }

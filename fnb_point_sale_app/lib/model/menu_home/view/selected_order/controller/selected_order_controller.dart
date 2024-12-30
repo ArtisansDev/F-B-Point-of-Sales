@@ -165,13 +165,13 @@ class SelectedOrderController extends HomeBaseController {
       OrderDetailList mOrderDetailList = await createOrderPlaceRequest(
           remarksController: remarkController.value.text,
           mOrderPlace: mOrderPlace.value);
-      print("####### ${jsonEncode(mOrderDetailList)}");
-      callSaveCustomer(mOrderDetailList);
+      debugPrint("OrderDetail ----- ${jsonEncode(mOrderDetailList)}");
+      callSaveOrder(mOrderDetailList);
 
       ///clear data
-      // mOrderPlace.value = null;
-      // mOrderPlace.refresh();
-      // mDashboardScreenController.onUpdateHoldSale();
+      mOrderPlace.value = null;
+      mOrderPlace.refresh();
+      mDashboardScreenController.onUpdateHoldSale();
     } else {
       AppAlert.showSnackBar(Get.context!, 'Please add item in the cart');
     }
@@ -187,7 +187,7 @@ class SelectedOrderController extends HomeBaseController {
     }
   }
 
-  void callSaveCustomer(OrderDetailList mOrderDetailList) async {
+  void callSaveOrder(OrderDetailList mOrderDetailList) async {
     try {
       ///api product call
       final orderPlaceApi = locator.get<OrderPlaceApi>();

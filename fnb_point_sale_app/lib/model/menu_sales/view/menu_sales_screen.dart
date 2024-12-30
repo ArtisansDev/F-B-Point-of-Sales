@@ -13,6 +13,7 @@ class MenuSalesScreen extends GetView<MenuSalesController> {
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => MenuSalesController());
+    // controller.setCurrentPage();
     return FocusDetector(
         onVisibilityGained: () {},
         onVisibilityLost: () {},

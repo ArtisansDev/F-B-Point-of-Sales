@@ -20,6 +20,7 @@ import 'package:fnb_point_sale_base/locator.dart';
 import 'package:get/get.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 
+import '../../menu_customer/controller/customer_controller.dart';
 import '../../menu_customer/view/customer_screen.dart';
 import '../../menu_home/controller/home_controller.dart';
 import '../../menu_home/view/home_screen.dart';
@@ -52,7 +53,9 @@ class DashboardScreenController extends GetxController {
       topBarIndex.value = index;
       topBarIndex.refresh();
       if (Get.isRegistered<TableController>()) {
+        if(onUpdateTable.value!=null){
         onUpdateTable.value!();
+        }
       }else {
         selectMenu.value = 1;
         selectMenu.refresh();
@@ -87,7 +90,6 @@ class DashboardScreenController extends GetxController {
   deleteController() {
     switch (selectMenu.value) {
       case 0:
-
         ///home
         if (Get.isRegistered<ShiftDetailsController>()) {
           Get.find<ShiftDetailsController>().onClose();
@@ -105,30 +107,12 @@ class DashboardScreenController extends GetxController {
           Get.find<TableController>().onClose();
           Get.delete<TableController>();
         }
+        if (Get.isRegistered<CustomerController>()) {
+          Get.find<CustomerController>().onClose();
+          Get.delete<CustomerController>();
+        }
         break;
       case 1:
-
-        ///MenuSales
-        if (Get.isRegistered<ShiftDetailsController>()) {
-          Get.find<ShiftDetailsController>().onClose();
-          Get.delete<ShiftDetailsController>();
-        }
-        if (Get.isRegistered<HomeController>()) {
-          Get.find<HomeController>().onClose();
-          Get.delete<HomeController>();
-          Get.delete<HomeBaseController>();
-        }
-        if (Get.isRegistered<SettingsMenuController>()) {
-          Get.find<SettingsMenuController>().onClose();
-          Get.delete<SettingsMenuController>();
-        }
-        if (Get.isRegistered<TableController>()) {
-          Get.find<TableController>().onClose();
-          Get.delete<TableController>();
-        }
-        return;
-      case 2:
-
         ///MenuTable
         if (Get.isRegistered<ShiftDetailsController>()) {
           Get.find<ShiftDetailsController>().onClose();
@@ -146,6 +130,34 @@ class DashboardScreenController extends GetxController {
         if (Get.isRegistered<SettingsMenuController>()) {
           Get.find<SettingsMenuController>().onClose();
           Get.delete<SettingsMenuController>();
+        }
+        if (Get.isRegistered<CustomerController>()) {
+          Get.find<CustomerController>().onClose();
+          Get.delete<CustomerController>();
+        }
+        return;
+      case 2:
+      ///MenuSales
+        if (Get.isRegistered<ShiftDetailsController>()) {
+          Get.find<ShiftDetailsController>().onClose();
+          Get.delete<ShiftDetailsController>();
+        }
+        if (Get.isRegistered<HomeController>()) {
+          Get.find<HomeController>().onClose();
+          Get.delete<HomeController>();
+          Get.delete<HomeBaseController>();
+        }
+        if (Get.isRegistered<SettingsMenuController>()) {
+          Get.find<SettingsMenuController>().onClose();
+          Get.delete<SettingsMenuController>();
+        }
+        if (Get.isRegistered<TableController>()) {
+          Get.find<TableController>().onClose();
+          Get.delete<TableController>();
+        }
+        if (Get.isRegistered<CustomerController>()) {
+          Get.find<CustomerController>().onClose();
+          Get.delete<CustomerController>();
         }
         break;
       case 3:
@@ -168,9 +180,36 @@ class DashboardScreenController extends GetxController {
           Get.find<TableController>().onClose();
           Get.delete<TableController>();
         }
+        if (Get.isRegistered<CustomerController>()) {
+          Get.find<CustomerController>().onClose();
+          Get.delete<CustomerController>();
+        }
         break;
       case 4:
-
+      ///CustomerController
+        if (Get.isRegistered<HomeController>()) {
+          Get.find<HomeController>().onClose();
+          Get.delete<HomeController>();
+          Get.delete<HomeBaseController>();
+        }
+        if (Get.isRegistered<MenuSalesController>()) {
+          Get.find<MenuSalesController>().onClose();
+          Get.delete<MenuSalesController>();
+        }
+        if (Get.isRegistered<SettingsMenuController>()) {
+          Get.find<SettingsMenuController>().onClose();
+          Get.delete<SettingsMenuController>();
+        }
+        if (Get.isRegistered<TableController>()) {
+          Get.find<TableController>().onClose();
+          Get.delete<TableController>();
+        }
+        if (Get.isRegistered<ShiftDetailsController>()) {
+          Get.find<ShiftDetailsController>().onClose();
+          Get.delete<ShiftDetailsController>();
+        }
+        break;
+      case 5:
         ///ShiftDetails
         if (Get.isRegistered<HomeController>()) {
           Get.find<HomeController>().onClose();
@@ -188,6 +227,10 @@ class DashboardScreenController extends GetxController {
         if (Get.isRegistered<TableController>()) {
           Get.find<TableController>().onClose();
           Get.delete<TableController>();
+        }
+        if (Get.isRegistered<CustomerController>()) {
+          Get.find<CustomerController>().onClose();
+          Get.delete<CustomerController>();
         }
         break;
     }

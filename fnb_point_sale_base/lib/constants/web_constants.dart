@@ -67,5 +67,6 @@ class WebConstants {
   static String actionGetAllCustomer =  "Customer/GetCustomer";
   /// order place
   static String actionPOSOrder =  "POSOrder/ProcessMultipleOrders";
+  static String actionPOSOrderHistory =  "POSOrder/GetOrderHistory";
 
 }

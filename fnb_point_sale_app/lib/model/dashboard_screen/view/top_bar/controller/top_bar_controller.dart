@@ -166,8 +166,7 @@ class TopBarController extends GetxController {
       <String, List<GetAllTablesResponseData>>{}.obs;
 
   groupTable() {
-    // Create a map for grouping
-
+    /// Create a map for grouping
     for (var mTable in mGetAllTablesList) {
       groupedByDepartment.putIfAbsent(mTable.locationType ?? '', () => []);
       groupedByDepartment[mTable.locationType]!.add(mTable);

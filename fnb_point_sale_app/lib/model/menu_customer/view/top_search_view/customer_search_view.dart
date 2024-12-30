@@ -57,6 +57,9 @@ class CustomerSearchView extends StatelessWidget {
                         textInputType: TextInputType.emailAddress,
                         hintText: sSearchCustomer.tr,
                         showFloatingLabel: false,
+                        onTextChange: (value){
+                          controller.onTextChange(value);
+                        },
                         topPadding: 5.sp,
                         hintTextSize: 11.sp,
                         textSize: 11.5.sp,
@@ -64,7 +67,7 @@ class CustomerSearchView extends StatelessWidget {
                         borderSideColor: Colors.transparent,
                         onFilteringTextInputFormatter: [
                           FilteringTextInputFormatter.allow(
-                              RegExp(AppUtilConstants.patternOnlyString)),
+                              RegExp(AppUtilConstants.patternStringNumberSpace)),
                         ],
                       )),
                       GestureDetector(

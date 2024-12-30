@@ -89,18 +89,69 @@ class TableController extends GetxController {
   }
 
   ///all table
+  List<GetAllTablesResponseData> selectGetAllTablesResponseData = [];
   RxMap<String, List<GetAllTablesResponseData>> groupedByDepartment =
       <String, List<GetAllTablesResponseData>>{}.obs;
 
-  groupTable() {
-    groupedByDepartment.clear();
-    groupedByDepartment.addAll(mTopBarController.groupedByDepartment);
-    groupedByDepartment.refresh();
+
+
+  void onUpdateViewTable() async{
+    await allOrderPlace();
+    mDashboardScreenController.onUpdateViewTable(() {
+      setGroupTable();
+    });
+    setGroupTable();
   }
 
-  // void onUpdateViewTable() {
-  //   // mDashboardScreenController.onUpdateViewTable(() {
-  //   //   mDashboardScreenController.topBarIndex.refresh();
-  //   // });
-  // }
+  setGroupTable() {
+    ///
+    List<GetAllTablesResponseData> selectTablesData = [];
+    selectGetAllTablesResponseData.clear();
+    selectGetAllTablesResponseData.addAll(mTopBarController.mGetAllTablesList.toList());
+    ///
+    groupedByDepartment.clear();
+    groupedByDepartment.refresh();
+    ///
+    if (mDashboardScreenController.topBarIndex.value == 1) {
+      for (OrderPlace mOrderPlace
+      in mPlaceOrderSaleModel.value?.mOrderPlace ?? []) {
+        selectTablesData.clear();
+        selectTablesData.addAll(selectGetAllTablesResponseData.toList());
+        selectGetAllTablesResponseData.clear();
+        selectGetAllTablesResponseData.addAll(selectTablesData.where(
+              (element) {
+            if (mOrderPlace.seatIDP.toString() != element.seatIDP.toString()) {
+              return true;
+            } else {
+              return false;
+            }
+          },
+        ).toList());
+      }
+    } else if (mDashboardScreenController.topBarIndex.value == 2) {
+      for (OrderPlace mOrderPlace in mPlaceOrderSaleModel.value?.mOrderPlace ?? []) {
+        selectTablesData.addAll(selectGetAllTablesResponseData.where(
+              (element) {
+            if (mOrderPlace.seatIDP.toString() == element.seatIDP.toString()) {
+              return true;
+            } else {
+              return false;
+            }
+          },
+        ).toList());
+      }
+      selectGetAllTablesResponseData.clear();
+      selectGetAllTablesResponseData.addAll(selectTablesData.toList());
+    }
+    groupTable();
+  }
+
+  groupTable() {
+    /// Create a map for grouping
+    for (var mTable in selectGetAllTablesResponseData) {
+      groupedByDepartment.putIfAbsent(mTable.locationType ?? '', () => []);
+      groupedByDepartment[mTable.locationType]!.add(mTable);
+    }
+    groupedByDepartment.refresh();
+  }
 }

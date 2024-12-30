@@ -31,7 +31,7 @@ class CustomerListRowView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GetAllCustomerList mGetAllCustomerList =
-        controller.mGetAllCustomerList.value?[index] ?? GetAllCustomerList();
+        controller.mSelectCustomerList.value?[index] ?? GetAllCustomerList();
     return Container(
       padding:
           EdgeInsets.only(top: 11.sp, left: 11.sp, right: 11.sp, bottom: 11.sp),

@@ -15,11 +15,14 @@ class CustomerScreen extends GetView<CustomerController> {
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => CustomerController());
+    // controller.pageNumber.value = 0;
+    // controller.page.value = 1;
+    // controller.totalPage.value = 0;
+    // controller.mSelectCustomerList.value = [];
     controller.onCustomerUpdate();
     return FocusDetector(
         onVisibilityGained: () {
           controller.getAllCustomerList();
-
         },
         onVisibilityLost: () {},
         child: Column(
