@@ -15,6 +15,7 @@ import 'package:fnb_point_sale_base/data/remote/api_call/customer/customer_api.d
 import 'package:fnb_point_sale_base/data/remote/api_call/order_place/order_place_api.dart';
 import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/locator.dart';
+import 'package:fnb_point_sale_base/printer/service/my_printer_service.dart';
 import 'package:fnb_point_sale_base/utils/network_utils.dart';
 import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:fnb_point_sale_base/utils/tracking_order_id.dart';
@@ -30,6 +31,8 @@ import '../../../home_base_controller/home_base_controller.dart';
 class SelectedOrderController extends HomeBaseController {
   Rx<TextEditingController> remarkController = TextEditingController().obs;
   Rxn<OrderPlace> mOrderPlace = Rxn<OrderPlace>();
+  Rxn<OrderPlace> mOrderPlacePrint = Rxn<OrderPlace>();
+  RxBool placeOrder = false.obs;
 
   SelectedOrderController() {
     mSelectedOrderController.value = this;
@@ -39,6 +42,7 @@ class SelectedOrderController extends HomeBaseController {
   onOrderPlaceAnotherPage() async {
     if (mDashboardScreenController.mOrderPlace.value != null) {
       mOrderPlace.value = mDashboardScreenController.mOrderPlace.value;
+      remarkController.value.text = mOrderPlace.value?.remarkController ?? '';
       mOrderPlace.refresh();
       mDashboardScreenController.mOrderPlace.value = null;
     }
@@ -80,6 +84,7 @@ class SelectedOrderController extends HomeBaseController {
 
   ///Calculate sub total
   getCalculateSubTotal() {
+    placeOrder.value = false;
     mOrderPlace.value?.subTotalPrice = 0.0;
     mOrderPlace.value?.taxAmount = 0.0;
     mOrderPlace.value?.totalPrice = 0.0;
@@ -89,6 +94,9 @@ class SelectedOrderController extends HomeBaseController {
       mOrderPlace.value?.subTotalPrice =
           (mOrderPlace.value?.subTotalPrice ?? 0) +
               ((mCartItem.taxPriceAmount ?? 0) * (mCartItem.count));
+      if(mCartItem.placeOrder==false){
+        placeOrder.value = true;
+      }
     }
 
     ///taxPrice
@@ -140,7 +148,7 @@ class SelectedOrderController extends HomeBaseController {
     PlaceOrderSaleModel mPlaceOrderSaleModel =
         await mPlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
             PlaceOrderSaleModel();
-
+    mOrderPlacePrint.value = OrderPlace.fromJson((mOrderPlace.value ?? OrderPlace()).toJson());
     List<CartItem> mCartItemList = mOrderPlace.value?.cartItem ?? [];
     if (mCartItemList.isNotEmpty) {
       List<CartItem> mSetCartItemList = [];
@@ -150,6 +158,8 @@ class SelectedOrderController extends HomeBaseController {
       }
       mOrderPlace.value?.cartItem?.clear();
       mOrderPlace.value?.cartItem?.addAll(mSetCartItemList);
+      mOrderPlace.value?.remarkController = remarkController.value.text;
+
       if ((mPlaceOrderSaleModel.mOrderPlace ?? []).isEmpty) {
         mPlaceOrderSaleModel =
             PlaceOrderSaleModel(mOrderPlace: [mOrderPlace.value!]);
@@ -166,6 +176,10 @@ class SelectedOrderController extends HomeBaseController {
           remarksController: remarkController.value.text,
           mOrderPlace: mOrderPlace.value);
       debugPrint("OrderDetail ----- ${jsonEncode(mOrderDetailList)}");
+      // debugPrint("mOrderPlacePrint ----- ${jsonEncode(mOrderPlacePrint.value)}");
+      ///place order print
+      // printPlaceOrder(mOrderDetailList, mOrderPlacePrint.value ?? OrderPlace());
+
       callSaveOrder(mOrderDetailList);
 
       ///clear data
@@ -191,7 +205,6 @@ class SelectedOrderController extends HomeBaseController {
     try {
       ///api product call
       final orderPlaceApi = locator.get<OrderPlaceApi>();
-
       await NetworkUtils()
           .checkInternetConnection()
           .then((isInternetAvailable) async {
@@ -201,6 +214,9 @@ class SelectedOrderController extends HomeBaseController {
           WebResponseSuccess mWebResponseSuccess =
               await orderPlaceApi.postOrderPlace(mProcessMultipleOrdersRequest);
           if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
+            ///print....
+            printPlaceOrder(
+                mOrderDetailList, mOrderPlacePrint.value ?? OrderPlace());
             AppAlert.showSnackBar(
                 Get.context!, mWebResponseSuccess.statusMessage ?? '');
           } else {
@@ -216,5 +232,11 @@ class SelectedOrderController extends HomeBaseController {
       AppAlert.showSnackBar(
           Get.context!, 'downloadTableList failed with exception $e');
     }
+  }
+
+  void printPlaceOrder(
+      OrderDetailList mOrderDetailList, OrderPlace mOrderPlace) {
+    final myPrinterService = locator.get<MyPrinterService>();
+    myPrinterService.salePlaceOrder(mOrderDetailList, mOrderPlace);
   }
 }

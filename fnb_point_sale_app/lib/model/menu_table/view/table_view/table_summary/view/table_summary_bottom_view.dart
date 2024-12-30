@@ -141,6 +141,8 @@ class TableSummaryBottomView extends StatelessWidget {
               height: 19.5.sp,
               child: TextInputWidget(
                 placeHolder: sRemark.tr,
+                isReadOnly: true,
+                textColor: Colors.grey,
                 controller: controller.remarkController.value,
                 errorText: null,
                 textInputType: TextInputType.emailAddress,

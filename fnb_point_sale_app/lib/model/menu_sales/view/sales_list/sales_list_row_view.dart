@@ -16,7 +16,9 @@ import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/image_assets_constants.dart';
 import 'package:fnb_point_sale_base/constants/pattern_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
+import 'package:fnb_point_sale_base/data/mode/order_history/order_history_response.dart';
 import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
+import 'package:fnb_point_sale_base/utils/date_time_utils.dart';
 import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -27,15 +29,16 @@ class SalesListRowView extends StatelessWidget {
   late MenuSalesController controller;
   late int index;
 
-  SalesListRowView({super.key,required this.index}) {
+  SalesListRowView({super.key, required this.index}) {
     controller = Get.find<MenuSalesController>();
   }
 
   @override
   Widget build(BuildContext context) {
+    OrderHistoryData mOrderHistoryData = controller.mOrderHistoryData[index];
     return Container(
-      padding: EdgeInsets.only(
-          top: 11.sp, left: 11.sp, right: 11.sp, bottom: 11.sp),
+      padding:
+          EdgeInsets.only(top: 11.sp, left: 11.sp, right: 11.sp, bottom: 11.sp),
       child: Row(
         children: [
           Container(
@@ -57,10 +60,9 @@ class SalesListRowView extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  getRandomNumber(),
+                  mOrderHistoryData.trackingOrderID ?? '',
                   style: getTextRegular(
-                      colors: ColorConstants.appTextSalesHader,
-                      size: 10.5.sp),
+                      colors: ColorConstants.appTextSalesHader, size: 10.5.sp),
                 ),
               )),
           Expanded(
@@ -68,10 +70,11 @@ class SalesListRowView extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'Name of Customer',
+                  (mOrderHistoryData.name ?? '').isEmpty
+                      ? '--'
+                      : (mOrderHistoryData.name ?? ''),
                   style: getTextRegular(
-                      colors: ColorConstants.appTextSalesHader,
-                      size: 11.sp),
+                      colors: ColorConstants.appTextSalesHader, size: 11.sp),
                 ),
               )),
           Expanded(
@@ -79,10 +82,9 @@ class SalesListRowView extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  '08-11-2024  6:30 PM',
+                  getUTCToLocalDateTime(mOrderHistoryData.orderDate ?? ''),
                   style: getTextRegular(
-                      colors: ColorConstants.appTextSalesHader,
-                      size: 11.sp),
+                      colors: ColorConstants.appTextSalesHader, size: 11.sp),
                 ),
               )),
           Expanded(
@@ -90,10 +92,11 @@ class SalesListRowView extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'Dine-In',
+                  (mOrderHistoryData.orderType ?? 1) == 1
+                      ? 'Dine In'
+                      : 'Take Away',
                   style: getTextRegular(
-                      colors: ColorConstants.appTextSalesHader,
-                      size: 11.sp),
+                      colors: ColorConstants.appTextSalesHader, size: 11.sp),
                 ),
               )),
           Expanded(
@@ -101,10 +104,9 @@ class SalesListRowView extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  '#6',
+                  mOrderHistoryData.tableNo ?? '--',
                   style: getTextRegular(
-                      colors: ColorConstants.appTextSalesHader,
-                      size: 11.sp),
+                      colors: ColorConstants.appTextSalesHader, size: 11.sp),
                 ),
               )),
           Expanded(
@@ -112,10 +114,9 @@ class SalesListRowView extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'RM 56.45',
+                  '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${(mOrderHistoryData.totalAmount ?? 0.0).toStringAsFixed(2)}',
                   style: getTextRegular(
-                      colors: ColorConstants.appTextSalesHader,
-                      size: 11.sp),
+                      colors: ColorConstants.appTextSalesHader, size: 11.sp),
                 ),
               )),
           Expanded(
@@ -126,32 +127,24 @@ class SalesListRowView extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: 5.5.w,
-                    child: index % 2 == 1
-                        ? Center(
-                      child: Text(
-                        'Done',
-                        style: getText600(
-                            size: 10.5,
-                            colors: ColorConstants
-                                .cAppTextInviceColour),
-                      ),
-                    )
-                        : rectangleCornerButtonText600(
-                      sPAY.tr,
-                      height: 16.5.sp,
-                      textSize: 10.5.sp,
-                          () {
-                        controller.onPayNow(index);
-                      },
-                    ),
+                    child: mOrderHistoryData.paymentStatus == 'P' ||
+                            mOrderHistoryData.paymentStatus == 'F'
+                        ? rectangleCornerButtonText600(
+                            sPAY.tr,
+                            height: 16.5.sp,
+                            textSize: 10.5.sp,
+                            () {
+                              controller.onPayNow(index);
+                            },
+                          )
+                        : const SizedBox(),
                   ),
                   GestureDetector(
                     onTap: () {
                       controller.onEdit(index);
                     },
                     child: Container(
-                      margin: EdgeInsets.only(
-                          right: 10.sp, left: 10.sp),
+                      margin: EdgeInsets.only(right: 10.sp, left: 10.sp),
                       height: 16.5.sp,
                       width: 16.5.sp,
                       padding: EdgeInsets.all(4.5.sp),
@@ -162,13 +155,12 @@ class SalesListRowView extends StatelessWidget {
                         ),
                       ),
                       child: Icon(
-                        Icons.edit,
+                        Icons.remove_red_eye_outlined,
                         color: ColorConstants.white,
                         size: 11.sp,
                       ),
                     ),
                   ),
-
                   GestureDetector(
                     onTap: () {
                       // Get.back();
@@ -194,6 +186,6 @@ class SalesListRowView extends StatelessWidget {
         ],
       ),
     );
-      ;
+    ;
   }
 }

@@ -30,15 +30,16 @@ class TopBarController extends GetxController {
 
   ///top bar Menu select
   void onClickTopBarMenu(int index) async {
-    if (index == 3) {
-      ///Reservation Table
-      await AppAlert.showView(
-          Get.context!, const ReservationTableSelectScreen(),
-          barrierDismissible: true);
-      if (Get.isRegistered<ReservationTableSelectController>()) {
-        Get.delete<ReservationTableSelectController>();
-      }
-    } else if (index == 4) {
+    // if (index == 3) {
+    //   ///Reservation Table
+    //   await AppAlert.showView(
+    //       Get.context!, const ReservationTableSelectScreen(),
+    //       barrierDismissible: true);
+    //   if (Get.isRegistered<ReservationTableSelectController>()) {
+    //     Get.delete<ReservationTableSelectController>();
+    //   }
+    // } else
+      if (index == 3) {
       /// hold sale
       await AppAlert.showView(Get.context!, const HoldSalesScreen(),
           barrierDismissible: true);

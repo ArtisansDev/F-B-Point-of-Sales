@@ -2,11 +2,16 @@ import 'dart:collection';
 
 import 'package:printing/printing.dart';
 
+import '../../data/mode/cart_item/order_place.dart';
+import '../../data/mode/order_place/process_multiple_orders_request.dart';
+
 
 mixin MyPrinterService {
   void testManualPrint();
 
   void testAutoMaticPrint(Printer printer);
+
+  Future<bool> salePlaceOrder(OrderDetailList mOrderDetailList, OrderPlace mOrderPlace);
 
   // Future<bool> salePrint(
   //     String? title, Sale sale, bool duplicateCopy, bool voidSale,

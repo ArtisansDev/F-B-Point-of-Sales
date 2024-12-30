@@ -16,6 +16,7 @@ class TableSummaryController extends GetxController {
 
   TableSummaryController(OrderPlace mOrder) {
     mOrderPlace.value = mOrder;
+    remarkController.value.text = mOrderPlace.value.remarkController??'' ;
     if (Get.isRegistered<DashboardScreenController>()) {
       mDashboardScreenController.value = Get.find<DashboardScreenController>();
     }

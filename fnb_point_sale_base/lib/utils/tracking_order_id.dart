@@ -169,6 +169,11 @@ createOrderPlaceRequest({
   ///OrderPlaceRequest
   OrderDetailList mOrderDetailList = OrderDetailList(
     trackingOrderID: mOrderPlace?.sOrderNo ?? '',
+    counterIDF:   (mConfigurationResponse.configurationData?.counterData ?? []).isEmpty
+        ? ""
+        : (mConfigurationResponse.configurationData?.counterData ?? [])
+        .first
+        .counterIDP,
     orderSource: "2",
     orderType: '1',
     branchIDF:

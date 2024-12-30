@@ -12,6 +12,7 @@ import 'package:fnb_point_sale_base/data/local/database/configuration/configurat
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/data/mode/order_history/order_history_request.dart';
+import 'package:fnb_point_sale_base/data/mode/order_history/order_history_response.dart';
 import 'package:fnb_point_sale_base/data/remote/api_call/order_place/order_place_api.dart';
 import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
@@ -26,6 +27,8 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
 import '../../payment_screen/controller/payment_screen_controller.dart';
 import '../../payment_screen/view/payment_screen.dart';
+import '../view/item_summary/controller/item_summary_controller.dart';
+import '../view/item_summary/view/item_summary_order_screen.dart';
 
 class MenuSalesController extends GetxController {
   DashboardScreenController mDashboardScreenController =
@@ -118,18 +121,19 @@ class MenuSalesController extends GetxController {
   }
 
   void onEdit(int index) async {
-    // await AppAlert.showView(
-    //     Get.context!,
-    //     const Row(
-    //       children: [
-    //         Expanded(flex: 7, child: SizedBox()),
-    //         Expanded(flex: 3, child: TableSummaryOrderScreen())
-    //       ],
-    //     ),
-    //     barrierDismissible: true);
-    // if (Get.isRegistered<TableSummaryController>()) {
-    //   Get.delete<TableSummaryController>();
-    // }
+    OrderHistoryData mOrderData =  mOrderHistoryData[index];
+    await AppAlert.showView(
+        Get.context!,
+         Row(
+          children: [
+            const Expanded(flex: 7, child: SizedBox()),
+            Expanded(flex: 3, child: ItemSummaryOrderScreen(mOrderData))
+          ],
+        ),
+        barrierDismissible: true);
+    if (Get.isRegistered<ItemSummaryController>()) {
+      Get.delete<ItemSummaryController>();
+    }
   }
 
   void onPayNow(int index) async {
@@ -160,10 +164,11 @@ class MenuSalesController extends GetxController {
   //   }
   // }
 
-  ///button bar
-
   ///api call
   RxInt pageNumber = 1.obs;
+  RxInt totalPageNumber = 0.obs;
+  RxList<OrderHistoryData> mOrderHistoryData = <OrderHistoryData>[].obs;
+  RxString sLoading = 'Loading...'.obs;
 
   void callOrderHistory({
     String search = "",
@@ -175,7 +180,6 @@ class MenuSalesController extends GetxController {
     try {
       ///api product call
       final orderPlaceApi = locator.get<OrderPlaceApi>();
-
       await NetworkUtils()
           .checkInternetConnection()
           .then((isInternetAvailable) async {
@@ -204,8 +208,24 @@ class MenuSalesController extends GetxController {
           WebResponseSuccess mWebResponseSuccess =
               await orderPlaceApi.postOrderHistory(mOrderHistoryRequest);
           if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
-            AppAlert.showSnackBar(
-                Get.context!, mWebResponseSuccess.statusMessage ?? '');
+            OrderHistoryResponse mOrderHistoryResponse =
+                mWebResponseSuccess.data;
+
+            totalPageNumber.value =
+                mOrderHistoryResponse.mOrderHistoryResponseData?.totalPage ?? 0;
+            if (totalPageNumber.value == 0) {
+              sLoading.value = "No sale history found";
+              sLoading.refresh();
+            } else {
+              sLoading.value = "";
+              sLoading.refresh();
+
+              mOrderHistoryData.clear();
+              mOrderHistoryData.addAll(
+                  mOrderHistoryResponse.mOrderHistoryResponseData?.data ?? []);
+              totalPageNumber.refresh();
+              mOrderHistoryData.refresh();
+            }
           } else {
             AppAlert.showSnackBar(
                 Get.context!, mWebResponseSuccess.statusMessage ?? '');

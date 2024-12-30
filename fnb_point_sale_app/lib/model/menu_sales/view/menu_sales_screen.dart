@@ -15,7 +15,9 @@ class MenuSalesScreen extends GetView<MenuSalesController> {
     Get.lazyPut(() => MenuSalesController());
     // controller.setCurrentPage();
     return FocusDetector(
-        onVisibilityGained: () {},
+        onVisibilityGained: () {
+          controller.callOrderHistory();
+        },
         onVisibilityLost: () {},
         child: Column(
           children: [SearchDateView(), Expanded(child: SalesListView())],

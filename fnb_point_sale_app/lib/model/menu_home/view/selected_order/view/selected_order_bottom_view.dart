@@ -141,6 +141,10 @@ class SelectedOrderBottomView extends StatelessWidget {
               margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
               height: 19.5.sp,
               child: TextInputWidget(
+                isReadOnly: controller.remarkController.value.text.isNotEmpty,
+                textColor: controller.remarkController.value.text.isEmpty
+                    ? Colors.black
+                    : Colors.grey,
                 placeHolder: sRemark.tr,
                 controller: controller.remarkController.value,
                 errorText: null,
@@ -160,16 +164,19 @@ class SelectedOrderBottomView extends StatelessWidget {
           ///button Place Order
           Visibility(
               visible: (controller.mOrderPlace.value?.tableNo ?? '') != '--',
-              child: Container(
-                  margin: EdgeInsets.only(left: 8.sp, right: 8.sp, top: 8.sp),
-                  child: rectangleCornerButtonText600(
-                    height: 19.5.sp,
-                    textSize: 11.5.sp,
-                    sPlaceOrder.tr,
-                    () {
-                      controller.onPlaceOrder();
-                    },
-                  ))),
+              child: Visibility(
+                  visible: controller.placeOrder.value,
+                  child: Container(
+                      margin:
+                          EdgeInsets.only(left: 8.sp, right: 8.sp, top: 8.sp),
+                      child: rectangleCornerButtonText600(
+                        height: 19.5.sp,
+                        textSize: 11.5.sp,
+                        sPlaceOrder.tr,
+                        () {
+                          controller.onPlaceOrder();
+                        },
+                      )))),
 
           ///button Pay and Invoice
           Container(

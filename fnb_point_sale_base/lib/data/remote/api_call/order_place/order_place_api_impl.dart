@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import '../../../../alert/app_alert.dart';
 import '../../../../constants/web_constants.dart';
 import '../../../mode/customer/get_all_customer/get_all_customer_response.dart';
+import '../../../mode/order_history/order_history_request.dart';
+import '../../../mode/order_history/order_history_response.dart';
 import '../../web_response_failed.dart';
 import 'order_place_api.dart';
 
@@ -51,8 +53,14 @@ class OrderPlaceApiImpl extends AllApiImpl with OrderPlaceApi {
         WebConstants.actionPOSOrderHistory, exhibitorsListRequest);
     AppAlert.hideLoadingDialog(Get.context!);
     if (cases.statusCode == WebConstants.statusCode200) {
-      mWebResponseSuccess =
-          WebResponseSuccess.fromJson(processResponseToJson(cases));
+      OrderHistoryResponse mOrderHistoryResponse =
+      OrderHistoryResponse.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        data: mOrderHistoryResponse,
+        statusMessage: '',
+        error: false,
+      );
     } else if (cases.statusCode == WebConstants.statusCode400) {
       // LoginFailedResponse mLoginFailedResponse =
       //     LoginFailedResponse.fromJson(json.decode(jsonEncode(cases.body)));

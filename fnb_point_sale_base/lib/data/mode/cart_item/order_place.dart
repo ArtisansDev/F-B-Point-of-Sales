@@ -9,6 +9,7 @@ import 'cart_item.dart';
 ///21/12/24
 class OrderPlace {
   String userName = "";
+  String remarkController = "";
   String userPhone = "";
   String seatIDP = "";
   String tableNo = "--";
@@ -26,6 +27,7 @@ class OrderPlace {
   }
 
   OrderPlace.fromJson(dynamic json) {
+    remarkController = json['remarkController']??'';
     userName = json['userName']??'';
     userPhone = json['userPhone']??'';
     seatIDP = json['seatIDP']??'';
@@ -45,6 +47,7 @@ class OrderPlace {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['remarkController'] = remarkController;
     map['userName'] = userName;
     map['userPhone'] = userPhone;
     map['seatIDP'] = seatIDP;

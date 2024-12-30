@@ -41,7 +41,7 @@ class DashboardScreenController extends GetxController {
     ),
     TobBarModel(name: 'OPEN', value: '0'),
     TobBarModel(name: 'OCCUPIED', value: '0'),
-    TobBarModel(name: 'RESERVED', value: '0'),
+    // TobBarModel(name: 'RESERVED', value: '0'),
     TobBarModel(name: 'HOLD SALE', value: '0'),
   ].obs;
   Rxn<OrderPlace> mOrderPlace = Rxn<OrderPlace>();
@@ -334,7 +334,7 @@ class DashboardScreenController extends GetxController {
     HoldSaleModel mHoldSaleModel =
         await holdSaleLocalApi.getAllHoldSale() ?? HoldSaleModel();
 
-    mTobBarModel[4].value =
+    mTobBarModel[3].value =
         (mHoldSaleModel.mOrderPlace ?? []).length.toString();
     mTobBarModel.refresh();
   }
