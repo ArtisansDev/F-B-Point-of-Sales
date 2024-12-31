@@ -149,7 +149,9 @@ class MenuSalesController extends GetxController {
     // if (Get.isRegistered<PayNowController>()) {
     //   Get.delete<PayNowController>();
     // }
-    await AppAlert.showView(Get.context!, PaymentScreen(OrderPlace()),
+    await AppAlert.showView(Get.context!, PaymentScreen(OrderPlace(),  onPayment: () {
+      Get.back();
+    },),
         barrierDismissible: true);
     if (Get.isRegistered<PaymentScreenController>()) {
       Get.delete<PaymentScreenController>();

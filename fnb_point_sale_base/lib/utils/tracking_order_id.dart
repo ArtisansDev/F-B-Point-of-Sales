@@ -11,7 +11,6 @@
  */
 
 import 'dart:convert';
-import 'package:crypto/crypto.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -22,25 +21,16 @@ import '../data/mode/cart_item/order_place.dart';
 import '../data/mode/configuration/configuration_response.dart';
 import '../data/mode/order_place/process_multiple_orders_request.dart';
 import '../data/mode/product/get_all_modifier/get_all_modifier_response.dart';
+import '../data/mode/product/get_all_payment_type/get_all_payment_type_response.dart';
 import '../locator.dart';
 import 'date_time_utils.dart';
 import 'num_utils.dart';
 
-// String getTrackingOrderID(
-//     String userIDF, String restaurentIDP, String branchIDF) {
-//   final combinedString =
-//       '$userIDF$restaurentIDP$branchIDF${DateTime.now().millisecondsSinceEpoch}';
-//   final bytes = utf8.encode(combinedString);
-//   final digest = sha1.convert(bytes);
-//   return digest.toString();
-// }
-
-createOrderPlaceRequest({
-  String? remarksController,
-  // String? orderDate,
-  OrderPlace? mOrderPlace,
-  // PaymentTypeResponseData? mPaymentTypeResponseData
-}) async {
+createOrderPlaceRequest(
+    {String? remarksController,
+    // String? orderDate,
+    OrderPlace? mOrderPlace,
+    GetAllPaymentTypeData? printOrderPayment}) async {
   var configurationLocalApi = locator.get<ConfigurationLocalApi>();
   ConfigurationResponse mConfigurationResponse =
       await configurationLocalApi.getConfigurationResponse() ??
@@ -166,67 +156,85 @@ createOrderPlaceRequest({
     orderTaxList.add(mOrderTax);
   }
 
+  ///payment
+  PaymentResponse mPaymentResponse = PaymentResponse();
+  if (printOrderPayment != null) {
+    if (printOrderPayment.paymentGatewayNo.toString() == "0") {
+      mPaymentResponse = PaymentResponse(
+        transactionID: "",
+        paidAmount: getDoubleValue(subTotal + taxTotal),
+        paymentGatewayNo: printOrderPayment.paymentGatewayNo,
+        paymentStatus: "S",
+        responseCode: "200",
+        responseData: "",
+        responseMessage: "",
+      );
+    }
+  }
+
   ///OrderPlaceRequest
   OrderDetailList mOrderDetailList = OrderDetailList(
-    trackingOrderID: mOrderPlace?.sOrderNo ?? '',
-    counterIDF:   (mConfigurationResponse.configurationData?.counterData ?? []).isEmpty
-        ? ""
-        : (mConfigurationResponse.configurationData?.counterData ?? [])
-        .first
-        .counterIDP,
-    orderSource: "2",
-    orderType: '1',
-    branchIDF:
-        (mConfigurationResponse.configurationData?.branchData ?? []).isEmpty
-            ? ""
-            : (mConfigurationResponse.configurationData?.branchData ?? [])
-                .first
-                .branchIDP,
-    userIDF: sUserId.toString(),
-    restaurantIDF:
-        (mConfigurationResponse.configurationData?.restaurantData ?? []).isEmpty
-            ? ""
-            : (mConfigurationResponse.configurationData?.restaurantData ?? [])
-                .first
-                .restaurantIDP,
-    additionalNotes: remarksController ?? '',
-    orderDate: getUTCValue(mOrderPlace!.dateTime.isEmpty
-        ? DateTime.now()
-        : DateFormat("dd-MM-yyyy hh:mm a").parse(mOrderPlace.dateTime)),
+      trackingOrderID: mOrderPlace?.sOrderNo ?? '',
+      counterIDF:
+          (mConfigurationResponse.configurationData?.counterData ?? []).isEmpty
+              ? ""
+              : (mConfigurationResponse.configurationData?.counterData ?? [])
+                  .first
+                  .counterIDP,
+      orderSource: "2",
+      orderType: '1',
+      branchIDF:
+          (mConfigurationResponse.configurationData?.branchData ?? []).isEmpty
+              ? ""
+              : (mConfigurationResponse.configurationData?.branchData ?? [])
+                  .first
+                  .branchIDP,
+      userIDF: sUserId.toString(),
+      restaurantIDF:
+          (mConfigurationResponse.configurationData?.restaurantData ?? [])
+                  .isEmpty
+              ? ""
+              : (mConfigurationResponse.configurationData?.restaurantData ?? [])
+                  .first
+                  .restaurantIDP,
+      additionalNotes: remarksController ?? '',
+      orderDate: getUTCValue(mOrderPlace!.dateTime.isEmpty
+          ? DateTime.now()
+          : DateFormat("dd-MM-yyyy hh:mm a").parse(mOrderPlace.dateTime)),
 
-    ///quantityTotal
-    quantityTotal: quantityTotal,
+      ///quantityTotal
+      quantityTotal: quantityTotal,
 
-    ///subTotal
-    itemTotal: totalAmount,
-    modifierTotal: modifierTotal,
-    itemTaxTotal: itemTaxTotal,
-    discountTotal: discountTotal,
-    subTotal: subTotal,
+      ///subTotal
+      itemTotal: totalAmount,
+      modifierTotal: modifierTotal,
+      itemTaxTotal: itemTaxTotal,
+      discountTotal: discountTotal,
+      subTotal: subTotal,
 
-    ///grandTotal
-    taxAmountTotal: getDoubleValue(taxTotal),
-    totalAmount: getDoubleValue(subTotal + taxTotal),
-    grandTotal: getDoubleValue(subTotal + taxTotal),
+      ///grandTotal
+      taxAmountTotal: getDoubleValue(taxTotal),
+      totalAmount: getDoubleValue(subTotal + taxTotal),
+      grandTotal: getDoubleValue(subTotal + taxTotal),
 
-    ///table no
-    tableNo: (mOrderPlace?.tableNo == '--') ? '' : mOrderPlace?.tableNo,
-    seatIDF: (mOrderPlace?.seatIDP ?? ""),
+      ///table no
+      tableNo: (mOrderPlace.tableNo == '--') ? '' : mOrderPlace?.tableNo,
+      seatIDF: (mOrderPlace.seatIDP ?? ""),
 
-    ///payment_service
-    // paymentGatewayID: mPaymentTypeResponseData?.paymentGatewayIDP ?? '',
-    // paymentGatewaySettingID:
-    //     mPaymentTypeResponseData?.paymentGatewaySettingIDP ?? '',
+      ///orderTax
+      orderTax: orderTaxList,
 
-    ///orderTax
-    orderTax: orderTaxList,
+      ///orderMenu
+      orderMenu: orderMenu,
 
-    ///orderMenu
-    orderMenu: orderMenu,
+      ///payment_service
+      paymentGatewayIDF: printOrderPayment?.paymentGatewayIDP ?? '',
+      paymentGatewaySettingIDF:
+          printOrderPayment?.paymentGatewaySettingIDP ?? '',
+      paymentStatus: printOrderPayment == null ? "P" : "S",
 
-    ///orderPlaceGuestInfoRequest
-    // orderPlaceGuestInfoRequest: null
-  );
+      ///orderPlaceGuestInfoRequest
+      paymentResponse: printOrderPayment == null ? null : [mPaymentResponse]);
 
   return mOrderDetailList;
 }

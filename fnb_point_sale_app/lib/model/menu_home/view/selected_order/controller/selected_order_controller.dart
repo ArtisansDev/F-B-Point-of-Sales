@@ -7,10 +7,12 @@ import 'package:fnb_point_sale_base/constants/message_constants.dart';
 import 'package:fnb_point_sale_base/constants/web_constants.dart';
 import 'package:fnb_point_sale_base/data/local/database/hold_sale/hold_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/hold_sale/hold_sale_model.dart';
+import 'package:fnb_point_sale_base/data/local/database/offline_place_order/offline_place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_model.dart';
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/data/mode/order_place/process_multiple_orders_request.dart';
+import 'package:fnb_point_sale_base/data/mode/product/get_all_payment_type/get_all_payment_type_response.dart';
 import 'package:fnb_point_sale_base/data/remote/api_call/customer/customer_api.dart';
 import 'package:fnb_point_sale_base/data/remote/api_call/order_place/order_place_api.dart';
 import 'package:fnb_point_sale_base/data/remote/web_response.dart';
@@ -51,6 +53,9 @@ class SelectedOrderController extends HomeBaseController {
   onSelectOrder(CartItem mCartItem) async {
     mOrderPlace.value ??= OrderPlace(cartItem: []);
     mOrderPlace.value?.cartItem?.add(mCartItem);
+    placeOrder.value = true;
+    mOrderPlacePrint.value =
+        OrderPlace.fromJson((mOrderPlace.value ?? OrderPlace()).toJson());
 
     ///getCalculateSubTotal
     getCalculateSubTotal();
@@ -94,7 +99,7 @@ class SelectedOrderController extends HomeBaseController {
       mOrderPlace.value?.subTotalPrice =
           (mOrderPlace.value?.subTotalPrice ?? 0) +
               ((mCartItem.taxPriceAmount ?? 0) * (mCartItem.count));
-      if(mCartItem.placeOrder==false){
+      if (mCartItem.placeOrder == false) {
         placeOrder.value = true;
       }
     }
@@ -135,6 +140,7 @@ class SelectedOrderController extends HomeBaseController {
     }
 
     ///clear data
+    placeOrder.value = false;
     mOrderPlace.value = null;
     mOrderPlace.refresh();
     mDashboardScreenController.onUpdateHoldSale();
@@ -144,11 +150,11 @@ class SelectedOrderController extends HomeBaseController {
   void onPlaceOrder() async {
     ///local data base save
     var mPlaceOrderSaleLocalApi = locator.get<PlaceOrderSaleLocalApi>();
-
     PlaceOrderSaleModel mPlaceOrderSaleModel =
         await mPlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
             PlaceOrderSaleModel();
-    mOrderPlacePrint.value = OrderPlace.fromJson((mOrderPlace.value ?? OrderPlace()).toJson());
+    mOrderPlacePrint.value =
+        OrderPlace.fromJson((mOrderPlace.value ?? OrderPlace()).toJson());
     List<CartItem> mCartItemList = mOrderPlace.value?.cartItem ?? [];
     if (mCartItemList.isNotEmpty) {
       List<CartItem> mSetCartItemList = [];
@@ -159,7 +165,6 @@ class SelectedOrderController extends HomeBaseController {
       mOrderPlace.value?.cartItem?.clear();
       mOrderPlace.value?.cartItem?.addAll(mSetCartItemList);
       mOrderPlace.value?.remarkController = remarkController.value.text;
-
       if ((mPlaceOrderSaleModel.mOrderPlace ?? []).isEmpty) {
         mPlaceOrderSaleModel =
             PlaceOrderSaleModel(mOrderPlace: [mOrderPlace.value!]);
@@ -167,7 +172,6 @@ class SelectedOrderController extends HomeBaseController {
       } else {
         await mPlaceOrderSaleLocalApi.getPlaceOrderSaleEdit(mOrderPlace.value!);
       }
-      mTopBarController.allOrderPlace();
       var holdSaleLocalApi = locator.get<HoldSaleLocalApi>();
       await holdSaleLocalApi
           .getHoldSaleDelete(mOrderPlace.value?.sOrderNo ?? '');
@@ -175,33 +179,80 @@ class SelectedOrderController extends HomeBaseController {
       OrderDetailList mOrderDetailList = await createOrderPlaceRequest(
           remarksController: remarkController.value.text,
           mOrderPlace: mOrderPlace.value);
-      debugPrint("OrderDetail ----- ${jsonEncode(mOrderDetailList)}");
-      // debugPrint("mOrderPlacePrint ----- ${jsonEncode(mOrderPlacePrint.value)}");
-      ///place order print
-      // printPlaceOrder(mOrderDetailList, mOrderPlacePrint.value ?? OrderPlace());
 
-      callSaveOrder(mOrderDetailList);
+      /// debugPrint("OrderDetail ----- ${jsonEncode(mOrderDetailList)}");
+      ///place order print testing
+      /// debugPrint("mOrderPlacePrint ----- ${jsonEncode(mOrderPlacePrint.value)}");
+      /// printPlaceOrder(mOrderDetailList, mOrderPlacePrint.value ?? OrderPlace());
+
+      await callSaveOrder(mOrderDetailList);
 
       ///clear data
+      placeOrder.value = false;
       mOrderPlace.value = null;
       mOrderPlace.refresh();
       mDashboardScreenController.onUpdateHoldSale();
+      mTopBarController.allOrderPlace();
     } else {
       AppAlert.showSnackBar(Get.context!, 'Please add item in the cart');
     }
   }
 
+  ///printPlaceOrder
+  void printPlaceOrder(
+      OrderDetailList mOrderDetailList, OrderPlace mOrderPlace) {
+    final myPrinterService = locator.get<MyPrinterService>();
+    myPrinterService.salePlaceOrder(mOrderDetailList, mOrderPlace);
+  }
+
   ///Payment
   void onPayment() async {
     await AppAlert.showView(
-        Get.context!, PaymentScreen(mOrderPlace.value ?? OrderPlace()),
+        Get.context!,
+        PaymentScreen(
+          mOrderPlace.value ?? OrderPlace(),
+          onPayment: (GetAllPaymentTypeData mSelectPaymentType) async {
+            Get.back();
+
+            ///selectPayment type
+            debugPrint(
+                "mSelectPaymentType ----- ${jsonEncode(mSelectPaymentType)}");
+
+            ///mOrderDetailList
+            OrderDetailList mOrderDetailList = await createOrderPlaceRequest(
+                remarksController: remarkController.value.text,
+                mOrderPlace: mOrderPlace.value,
+                printOrderPayment: mSelectPaymentType);
+            debugPrint("OrderDetail ----- ${jsonEncode(mOrderDetailList)}");
+
+            ///printOrderPayment
+            // await printOrderPayment(
+            //     mOrderDetailList, mOrderPlacePrint.value ?? OrderPlace(),
+            //     placeOrder: placeOrder.value, isPayment: true);
+            //
+            // var mPlaceOrderSaleLocalApi = locator.get<PlaceOrderSaleLocalApi>();
+            // await mPlaceOrderSaleLocalApi
+            //     .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
+
+            await callSaveOrder(mOrderDetailList,isPayment: true);
+            placeOrder.value = false;
+            mOrderPlace.value = null;
+            mOrderPlace.refresh();
+            mDashboardScreenController.onUpdateHoldSale();
+            mTopBarController.allOrderPlace();
+
+            ///
+          },
+        ),
         barrierDismissible: true);
     if (Get.isRegistered<PaymentScreenController>()) {
       Get.delete<PaymentScreenController>();
     }
   }
 
-  void callSaveOrder(OrderDetailList mOrderDetailList) async {
+  ///SaveOrder
+  callSaveOrder(OrderDetailList mOrderDetailList,
+      {bool isPayment = false}) async {
     try {
       ///api product call
       final orderPlaceApi = locator.get<OrderPlaceApi>();
@@ -215,11 +266,46 @@ class SelectedOrderController extends HomeBaseController {
               await orderPlaceApi.postOrderPlace(mProcessMultipleOrdersRequest);
           if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
             ///print....
-            printPlaceOrder(
-                mOrderDetailList, mOrderPlacePrint.value ?? OrderPlace());
+            printOrderPayment(
+                mOrderDetailList, mOrderPlacePrint.value ?? OrderPlace(),
+                placeOrder: placeOrder.value, isPayment: isPayment);
+
+            ///remove from local data base
+            if (isPayment) {
+              var mPlaceOrderSaleLocalApi =
+                  locator.get<PlaceOrderSaleLocalApi>();
+              await mPlaceOrderSaleLocalApi
+                  .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
+            }
             AppAlert.showSnackBar(
                 Get.context!, mWebResponseSuccess.statusMessage ?? '');
           } else {
+            ///off line save
+            if (isPayment) {
+              ///offline save
+              var mOfflinePlaceOrderSaleLocalApi =
+                  locator.get<OfflinePlaceOrderSaleLocalApi>();
+              ProcessMultipleOrdersRequest mProcessMultipleOrders =
+                  await mOfflinePlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
+                      ProcessMultipleOrdersRequest();
+              if ((mProcessMultipleOrders.orderDetailList ?? []).isEmpty) {
+                await mOfflinePlaceOrderSaleLocalApi
+                    .save(mProcessMultipleOrdersRequest);
+              } else {
+                if ((mProcessMultipleOrdersRequest.orderDetailList ?? [])
+                    .isNotEmpty) {
+                  await mOfflinePlaceOrderSaleLocalApi.getPlaceOrderAdd(
+                      (mProcessMultipleOrdersRequest.orderDetailList ?? [])
+                          .first);
+                }
+              }
+
+              ///remove
+              var mPlaceOrderSaleLocalApi =
+                  locator.get<PlaceOrderSaleLocalApi>();
+              await mPlaceOrderSaleLocalApi
+                  .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
+            }
             AppAlert.showSnackBar(
                 Get.context!, mWebResponseSuccess.statusMessage ?? '');
           }
@@ -234,9 +320,14 @@ class SelectedOrderController extends HomeBaseController {
     }
   }
 
-  void printPlaceOrder(
-      OrderDetailList mOrderDetailList, OrderPlace mOrderPlace) {
+  printOrderPayment(OrderDetailList mOrderDetailList, OrderPlace mOrderPlace,
+      {bool placeOrder = false, bool isPayment = false}) async {
     final myPrinterService = locator.get<MyPrinterService>();
-    myPrinterService.salePlaceOrder(mOrderDetailList, mOrderPlace);
+    if (placeOrder) {
+      await myPrinterService.salePlaceOrder(mOrderDetailList, mOrderPlace);
+    }
+    if (isPayment) {
+      await myPrinterService.saleOrderPayment(mOrderDetailList);
+    }
   }
 }

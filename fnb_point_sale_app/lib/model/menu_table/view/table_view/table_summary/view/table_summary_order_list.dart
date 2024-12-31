@@ -144,7 +144,7 @@ class TableSummaryOrderList extends StatelessWidget {
                                         child: Container(
                                             alignment: Alignment.centerRight,
                                             child: Text(
-                                              '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${((mCartItem.taxPriceAmount ?? 0) * (mCartItem.count)).toStringAsFixed(2)}',
+                                              '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${((mCartItem.taxPriceAmount ?? 0) * (mCartItem.count)).toStringAsFixed(2)}',
                                               style: getText500(
                                                   size: 10.5.sp,
                                                   colors: ColorConstants

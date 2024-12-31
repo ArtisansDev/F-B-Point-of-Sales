@@ -21,12 +21,13 @@ import '../controller/payment_screen_controller.dart';
 
 class PaymentScreen extends GetView<PaymentScreenController> {
   final OrderPlace mOrderPlace;
+  final Function onPayment;
 
-  const PaymentScreen(this.mOrderPlace, {super.key});
+  const PaymentScreen(this.mOrderPlace, {super.key,required this.onPayment});
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => PaymentScreenController(mOrderPlace));
+    Get.lazyPut(() => PaymentScreenController(mOrderPlace,onPayment));
     return FocusDetector(
         onVisibilityGained: () {},
         onVisibilityLost: () {},

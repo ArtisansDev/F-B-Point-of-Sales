@@ -13,6 +13,8 @@ mixin MyPrinterService {
 
   Future<bool> salePlaceOrder(OrderDetailList mOrderDetailList, OrderPlace mOrderPlace);
 
+  Future<bool> saleOrderPayment(OrderDetailList mOrderDetailList);
+
   // Future<bool> salePrint(
   //     String? title, Sale sale, bool duplicateCopy, bool voidSale,
   //     {SaleTye saleTye = SaleTye.REGULAR, bool returnOrExchange = false});

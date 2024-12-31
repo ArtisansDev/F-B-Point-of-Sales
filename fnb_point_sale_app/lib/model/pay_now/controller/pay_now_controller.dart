@@ -9,7 +9,8 @@ import '../../payment_screen/controller/payment_screen_controller.dart';
 import '../../payment_screen/view/payment_screen.dart';
 
 class PayNowController extends GetxController {
-  Rxn<DashboardScreenController> mDashboardScreenController = Rxn<DashboardScreenController>();
+  Rxn<DashboardScreenController> mDashboardScreenController =
+      Rxn<DashboardScreenController>();
   Rx<TextEditingController> remarkController = TextEditingController().obs;
 
   PayNowController() {
@@ -20,7 +21,14 @@ class PayNowController extends GetxController {
 
   void onPayment() async {
     Get.back();
-    await AppAlert.showView(Get.context!, PaymentScreen(OrderPlace()),
+    await AppAlert.showView(
+        Get.context!,
+        PaymentScreen(
+          OrderPlace(),
+          onPayment: () {
+            Get.back();
+          },
+        ),
         barrierDismissible: true);
     if (Get.isRegistered<PaymentScreenController>()) {
       Get.delete<PaymentScreenController>();

@@ -50,7 +50,7 @@ class TableSummaryBottomView extends StatelessWidget {
                         size: 11.5.sp, colors: ColorConstants.cAppTaxColour),
                   ),
                   Text(
-                    '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${(controller.mOrderPlace.value?.subTotalPrice ?? 0).toStringAsFixed(2)}',
+                    '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${(controller.mOrderPlace.value?.subTotalPrice ?? 0).toStringAsFixed(2)}',
                     style: getTextRegular(
                         size: 11.5.sp, colors: ColorConstants.cAppTaxColour),
                   ),
@@ -68,11 +68,10 @@ class TableSummaryBottomView extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               padding: EdgeInsets.zero,
               itemCount:
-                  (controller.mDashboardScreenController.value?.taxData ?? []).length,
+                  (controller.mDashboardScreenController.taxData).length,
               itemBuilder: (BuildContext context, int index) {
                 TaxData mTaxData =
-                    (controller.mDashboardScreenController.value?.taxData ??
-                        [])[index];
+                    (controller.mDashboardScreenController.taxData)[index];
                 return Column(
                   children: [
                     Container(
@@ -91,7 +90,7 @@ class TableSummaryBottomView extends StatelessWidget {
                                   colors: ColorConstants.cAppTaxColour),
                             ),
                             Text(
-                              '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${calculatePercentageOf(getDoubleValue(controller.mOrderPlace.value?.subTotalPrice ?? 0), getDoubleValue(mTaxData.taxPercentage)).toStringAsFixed(2)}',
+                              '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${calculatePercentageOf(getDoubleValue(controller.mOrderPlace.value.subTotalPrice), getDoubleValue(mTaxData.taxPercentage)).toStringAsFixed(2)}',
                               style: getTextRegular(
                                   size: 11.5.sp,
                                   colors: ColorConstants.cAppTaxColour),
@@ -123,7 +122,7 @@ class TableSummaryBottomView extends StatelessWidget {
                         size: 12.5.sp, colors: ColorConstants.cAppButtonColour),
                   ),
                   Text(
-                    '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(controller.mOrderPlace.value?.totalPrice ?? 0).toStringAsFixed(2)}',
+                    '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(controller.mOrderPlace.value.totalPrice).toStringAsFixed(2)}',
                     style: getText500(
                         size: 12.5.sp, colors: ColorConstants.cAppButtonColour),
                   ),

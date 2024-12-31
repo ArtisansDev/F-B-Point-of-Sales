@@ -19,6 +19,8 @@ import 'data/local/database/menu_item/menu_item_local_api.dart';
 import 'data/local/database/menu_item/menu_item_local_api_impl.dart';
 import 'data/local/database/modifier/modifier_local_api.dart';
 import 'data/local/database/modifier/modifier_local_api_impl.dart';
+import 'data/local/database/offline_place_order/offline_place_order_sale_local_api.dart';
+import 'data/local/database/offline_place_order/offline_place_order_sale_local_api_impl.dart';
 import 'data/local/database/payment_type/payment_type_local_api.dart';
 import 'data/local/database/payment_type/payment_type_local_api_impl.dart';
 import 'data/local/database/place_order/place_order_sale_local_api.dart';
@@ -59,6 +61,10 @@ void setupLocator() {
   /// PlaceOrder
   locator.registerLazySingleton<PlaceOrderSaleLocalApi>(
       () => PlaceOrderSaleLocalApiImpl());
+
+  /// Offline PlaceOrder
+  locator.registerLazySingleton<OfflinePlaceOrderSaleLocalApi>(
+      () => OfflinePlaceOrderSaleLocalApiImpl());
 
   /// Configuration
   locator.registerLazySingleton<ConfigurationLocalApi>(

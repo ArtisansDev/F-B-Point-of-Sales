@@ -10,21 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38947a7c-9f2f-41ac-986f-38186cf8d673" name="Changes" comment="add printer">
-      <change afterPath="$PROJECT_DIR$/lib/data/mode/order_history/order_history_response.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/.dart_tool/package_config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/dashboard_screen/controller/dashboard_screen_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/dashboard_screen/controller/dashboard_screen_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/dashboard_screen/view/top_bar/controller/top_bar_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/dashboard_screen/view/top_bar/controller/top_bar_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/dashboard_screen/view/top_bar/view/top_bar_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/dashboard_screen/view/top_bar/view/top_bar_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/controller/menu_sales_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/controller/menu_sales_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/view/menu_sales_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/view/menu_sales_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/view/sales_list/sales_list_row_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/view/sales_list/sales_list_row_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/view/sales_list/sales_list_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/view/sales_list/sales_list_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_table/view/table_view/table_row_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_table/view/table_view/table_row_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/mode/order_history/order_history_request.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/mode/order_history/order_history_request.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/remote/api_call/order_place/order_place_api_impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/remote/api_call/order_place/order_place_api_impl.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/tracking_order_id.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/tracking_order_id.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,18 +75,18 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/parthapaul/all_project/macbookpro/android_studio/dev_project/F-B-Point-of-Sales/fnb_point_sale_base/lib/data/remote/api_call&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/parthapaul/all_project/macbookpro/android_studio/dev_project/F-B-Point-of-Sales/fnb_point_sale_base/lib/printer/types&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;dart.settings&quot;,
     &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/printer/types" />
       <recent name="$PROJECT_DIR$/lib/data/remote/api_call" />
       <recent name="$PROJECT_DIR$/lib/data/mode" />
       <recent name="$PROJECT_DIR$/lib/utils" />
       <recent name="$PROJECT_DIR$/lib/data/local/database" />
-      <recent name="$PROJECT_DIR$/lib/common/download_data/jobs" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib/data/mode/product/get_all_modifier" />

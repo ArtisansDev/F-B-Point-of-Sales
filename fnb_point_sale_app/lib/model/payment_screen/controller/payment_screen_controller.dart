@@ -12,10 +12,12 @@ class PaymentScreenController extends GetxController {
       Rxn<DashboardScreenController>();
   Rx<TextEditingController> nameController = TextEditingController().obs;
   Rx<TextEditingController> phoneNumberController = TextEditingController().obs;
+  Rxn<Function> onPaymentClick = Rxn<Function>();
   Rxn<OrderPlace> mOrderPlace = Rxn<OrderPlace>();
   RxString phoneCode = '60'.obs;
 
-  PaymentScreenController(OrderPlace selectOrderPlace) {
+  PaymentScreenController(OrderPlace selectOrderPlace,Function onPayment) {
+    onPaymentClick.value = onPayment;
     mOrderPlace.value = selectOrderPlace;
     if (Get.isRegistered<DashboardScreenController>()) {
       mDashboardScreenController.value = Get.find<DashboardScreenController>();
@@ -53,6 +55,6 @@ class PaymentScreenController extends GetxController {
   }
 
   void onPrint() {
-    Get.back();
+    onPaymentClick.value!(mGetAllPaymentType.value);
   }
 }

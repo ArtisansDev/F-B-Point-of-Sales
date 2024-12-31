@@ -10,6 +10,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
+import '../common/my_separator.dart';
 import '../data/local/database/printer/model/my_printer.dart';
 import '../data/local/database/printer/printer_local_api.dart';
 import '../locator.dart';
@@ -109,6 +110,7 @@ pw.TextStyle getBoldTextStyleBig() {
 pw.TextStyle getNormalTextStyle() {
   return pw.TextStyle(fontWeight: pw.FontWeight.normal, fontSize: 8);
 }
+
 
 pw.TextStyle getSmallTextStyle() {
   return pw.TextStyle(fontWeight: pw.FontWeight.normal, fontSize: 6);
@@ -231,4 +233,11 @@ pw.Widget qrCodeWidget(String value) {
           barcode: Barcode.qrCode(),
           width: 50,
           height: 50));
+}
+
+
+pw.Widget mySeparator() {
+  return pw.Container(
+      child: MySeparator(PdfColor.fromHex("000000"),
+          dashHeight: 0.1, totalWidth: 200));
 }
