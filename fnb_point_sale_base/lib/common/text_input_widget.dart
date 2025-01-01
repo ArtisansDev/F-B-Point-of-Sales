@@ -29,6 +29,7 @@ class TextInputWidget extends StatelessWidget {
   IconData? prefixIcon;
   IconData? suffixIcon;
   Function? onClick;
+  Function? onSubmit;
   Function? onTextChange;
   int maxLines;
   double? topPadding;
@@ -61,6 +62,7 @@ class TextInputWidget extends StatelessWidget {
     this.suffixIcon,
     this.isPhone,
     this.onClick,
+    this.onSubmit,
     this.onTextChange,
     this.sPrefixText,
     this.prefixHeight,
@@ -85,6 +87,11 @@ class TextInputWidget extends StatelessWidget {
         if (onClick != null) {
           onClick!("click");
         }
+      },
+      onSubmitted: (value) {
+          if(onSubmit!=null){
+            onSubmit!();
+          }
       },
       readOnly: isReadOnly ?? false,
       enableSuggestions: false,
@@ -195,6 +202,11 @@ class TextInputWidget extends StatelessWidget {
       onTap: () {
         if (onClick != null) {
           onClick!("click");
+        }
+      },
+      onSubmitted: (value) {
+        if(onSubmit!=null){
+          onSubmit!();
         }
       },
       readOnly: isReadOnly ?? false,

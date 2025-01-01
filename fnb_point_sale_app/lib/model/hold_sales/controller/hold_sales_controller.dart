@@ -44,7 +44,7 @@ class HoldSalesController extends GetxController {
     mHoldSaleModel.value =
         await holdSaleLocalApi.getAllHoldSale() ?? HoldSaleModel();
     mHoldSaleModel.refresh();
-    mDashboardScreenController.onUpdateHoldSale();
+    await mDashboardScreenController.onUpdateHoldSale();
   }
 
   void onEditHoldSale(int index, OrderPlace mOrderPlace) {
@@ -58,6 +58,6 @@ class HoldSalesController extends GetxController {
     mHoldSaleModel.value =
         await holdSaleLocalApi.getAllHoldSale() ?? HoldSaleModel();
     mHoldSaleModel.refresh();
-    mDashboardScreenController.onUpdateHoldSale();
+    await mDashboardScreenController.onUpdateHoldSale();
   }
 }

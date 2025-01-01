@@ -143,7 +143,7 @@ class SelectedOrderController extends HomeBaseController {
     placeOrder.value = false;
     mOrderPlace.value = null;
     mOrderPlace.refresh();
-    mDashboardScreenController.onUpdateHoldSale();
+    await mDashboardScreenController.onUpdateHoldSale();
   }
 
   ///place order
@@ -191,8 +191,8 @@ class SelectedOrderController extends HomeBaseController {
       placeOrder.value = false;
       mOrderPlace.value = null;
       mOrderPlace.refresh();
-      mDashboardScreenController.onUpdateHoldSale();
-      mTopBarController.allOrderPlace();
+      await mDashboardScreenController.onUpdateHoldSale();
+      await mTopBarController.allOrderPlace();
     } else {
       AppAlert.showSnackBar(Get.context!, 'Please add item in the cart');
     }
@@ -238,8 +238,8 @@ class SelectedOrderController extends HomeBaseController {
             placeOrder.value = false;
             mOrderPlace.value = null;
             mOrderPlace.refresh();
-            mDashboardScreenController.onUpdateHoldSale();
-            mTopBarController.allOrderPlace();
+            await mDashboardScreenController.onUpdateHoldSale();
+            await mTopBarController.allOrderPlace();
 
             ///
           },

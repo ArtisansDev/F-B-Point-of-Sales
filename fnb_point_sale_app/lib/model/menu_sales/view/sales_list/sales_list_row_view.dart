@@ -127,8 +127,9 @@ class SalesListRowView extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: 5.5.w,
-                    child: mOrderHistoryData.paymentStatus == 'P' ||
-                            mOrderHistoryData.paymentStatus == 'F'
+                    child: (mOrderHistoryData.paymentStatus == 'P' ||
+                                mOrderHistoryData.paymentStatus == 'F') &&
+                            (mOrderHistoryData.paymentStatus != 'S')
                         ? rectangleCornerButtonText600(
                             sPAY.tr,
                             height: 16.5.sp,
@@ -161,31 +162,36 @@ class SalesListRowView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      // Get.back();
-                    },
-                    child: Container(
-                      height: 16.5.sp,
-                      width: 16.5.sp,
-                      padding: EdgeInsets.all(8.5.sp),
-                      decoration: BoxDecoration(
-                        color: ColorConstants.cAppButtonColour,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8.sp),
-                        ),
-                      ),
-                      child: Image.asset(
-                        ImageAssetsConstants.appPrint,
-                        fit: BoxFit.fitWidth,
-                      ),
-                    ),
-                  )
+                  (mOrderHistoryData.paymentStatus == 'S')
+                      ? GestureDetector(
+                          onTap: () {
+                            controller.onPrint(index);
+                          },
+                          child: Container(
+                            height: 16.5.sp,
+                            width: 16.5.sp,
+                            padding: EdgeInsets.all(8.5.sp),
+                            decoration: BoxDecoration(
+                              color: ColorConstants.cAppButtonColour,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(8.sp),
+                              ),
+                            ),
+                            child: Image.asset(
+                              ImageAssetsConstants.appPrint,
+                              fit: BoxFit.fitWidth,
+                            ),
+                          ),
+                        )
+                      : Container(
+                          height: 16.5.sp,
+                          width: 16.5.sp,
+                          padding: EdgeInsets.all(8.5.sp),
+                        )
                 ],
               )),
         ],
       ),
     );
-    ;
   }
 }

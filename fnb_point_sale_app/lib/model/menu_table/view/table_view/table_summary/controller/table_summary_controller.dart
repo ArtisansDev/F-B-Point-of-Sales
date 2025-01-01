@@ -73,9 +73,9 @@ class TableSummaryController extends GetxController {
             await callSaveOrder(mOrderDetailList,isPayment: true);
 
 
-            mDashboardScreenController.onUpdateHoldSale();
-            mTopBarController.allOrderPlace();
-            mTableController.onUpdateViewTable();
+            await mDashboardScreenController.onUpdateHoldSale();
+            await mTopBarController.allOrderPlace();
+            await mTableController.onUpdateViewTable();
 
             ///TableSummaryController close
             Get.back();

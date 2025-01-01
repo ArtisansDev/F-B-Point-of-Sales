@@ -53,7 +53,7 @@ class SearchDateView extends StatelessWidget {
                         placeHolder: sSearchOrderNo.tr,
                         controller: controller.searchController.value,
                         errorText: null,
-                        textInputType: TextInputType.emailAddress,
+                        textInputType: TextInputType.text,
                         hintText: sSearchOrderNo.tr,
                         showFloatingLabel: false,
                         topPadding: 5.sp,
@@ -61,14 +61,55 @@ class SearchDateView extends StatelessWidget {
                         textSize: 11.5.sp,
                         hintTextColor: ColorConstants.cAppTaxColour,
                         borderSideColor: Colors.transparent,
+                        onSubmit: () {
+                          controller.search.value =
+                              controller.searchController.value.text;
+                          controller.search.refresh();
+                          controller.pageNumber.value = 1;
+                          controller.sLoading.value = 'Loading...';
+                          controller.callOrderHistory();
+                        },
                         onFilteringTextInputFormatter: [
-                          FilteringTextInputFormatter.allow(
-                              RegExp(AppUtilConstants.patternOnlyString)),
+                          FilteringTextInputFormatter.allow(RegExp(
+                              AppUtilConstants.patternStringNumberSpace)),
                         ],
                       )),
+                      Visibility(
+                          visible:  controller.search.value.isNotEmpty,
+                          child: GestureDetector(
+                            onTap: () {
+                              controller.searchController.value.text =
+                              "";
+                              controller.search.value="";
+                              controller.search.refresh();
+                              controller.pageNumber.value = 1;
+                              controller.sLoading.value = 'Loading...';
+                              controller.callOrderHistory();
+                            },
+                            child: Container(
+                                margin:
+                                EdgeInsets.only(left: 8.sp, right: 8.sp),
+                                padding: EdgeInsets.all(8.sp),
+                                decoration: BoxDecoration(
+                                  color: ColorConstants.cAppButtonColour,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(8.sp),
+                                  ),
+                                ),
+                                child: Icon(
+                                  Icons.clear,
+                                  color: ColorConstants.white,
+                                  size: 12.5.sp,
+                                )),
+                          )),
                       GestureDetector(
                         onTap: () {
-                          // Get.back();
+                          controller.search.value =
+                              controller.searchController.value.text;
+                          controller.search.refresh();
+                          controller.pageNumber.value = 1;
+                          controller.sLoading.value = 'Loading...';
+                          controller.callOrderHistory();
                         },
                         child: Container(
                           margin: EdgeInsets.only(right: 5.sp),
@@ -122,6 +163,35 @@ class SearchDateView extends StatelessWidget {
                         hintTextColor: ColorConstants.cAppTaxColour,
                         borderSideColor: Colors.transparent,
                       )),
+                      Visibility(
+                          visible: controller
+                              .sSelectDateRangeController.value.text.isNotEmpty,
+                          child: GestureDetector(
+                            onTap: () {
+                              controller.sSelectDateRangeController.value.text =
+                                  "";
+                              controller.selectedDateRange = null;
+                              controller.sSelectDateRangeController.refresh();
+                              controller.pageNumber.value = 1;
+                              controller.sLoading.value = 'Loading...';
+                              controller.callOrderHistory();
+                            },
+                            child: Container(
+                                margin:
+                                    EdgeInsets.only(left: 8.sp, right: 8.sp),
+                                padding: EdgeInsets.all(8.sp),
+                                decoration: BoxDecoration(
+                                  color: ColorConstants.cAppButtonColour,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(8.sp),
+                                  ),
+                                ),
+                                child: Icon(
+                                  Icons.clear,
+                                  color: ColorConstants.white,
+                                  size: 12.5.sp,
+                                )),
+                          )),
                       CalenderView()
                     ],
                   )),
@@ -148,6 +218,10 @@ class SearchDateView extends StatelessWidget {
                           child: GestureDetector(
                             onTap: () {
                               controller.selectType.value = sAll.tr;
+                              controller.orderType = 0;
+                              controller.pageNumber.value = 1;
+                              controller.sLoading.value = 'Loading...';
+                              controller.callOrderHistory();
                             },
                             child: Container(
                                 height: 21.sp,
@@ -183,6 +257,11 @@ class SearchDateView extends StatelessWidget {
                           child: GestureDetector(
                             onTap: () {
                               controller.selectType.value = sDine_In.tr;
+
+                              controller.orderType = 1;
+                              controller.pageNumber.value = 1;
+                              controller.sLoading.value = 'Loading...';
+                              controller.callOrderHistory();
                             },
                             child: Container(
                                 height: 21.sp,
@@ -215,6 +294,11 @@ class SearchDateView extends StatelessWidget {
                           child: GestureDetector(
                             onTap: () {
                               controller.selectType.value = sTake_Away.tr;
+
+                              controller.orderType = 2;
+                              controller.pageNumber.value = 1;
+                              controller.sLoading.value = 'Loading...';
+                              controller.callOrderHistory();
                             },
                             child: Container(
                                 height: 21.sp,

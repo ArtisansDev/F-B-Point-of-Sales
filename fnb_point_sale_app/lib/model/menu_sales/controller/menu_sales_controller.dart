@@ -1,5 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
 import 'package:fnb_point_sale_base/common/date_range_picker/models.dart';
@@ -9,14 +11,19 @@ import 'package:fnb_point_sale_base/constants/message_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
 import 'package:fnb_point_sale_base/constants/web_constants.dart';
 import 'package:fnb_point_sale_base/data/local/database/configuration/configuration_local_api.dart';
-import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
+import 'package:fnb_point_sale_base/data/local/database/offline_place_order/offline_place_order_sale_local_api.dart';
+import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/data/mode/order_history/order_history_request.dart';
 import 'package:fnb_point_sale_base/data/mode/order_history/order_history_response.dart';
+import 'package:fnb_point_sale_base/data/mode/order_place/process_multiple_orders_request.dart';
+import 'package:fnb_point_sale_base/data/mode/product/get_all_payment_type/get_all_payment_type_response.dart';
 import 'package:fnb_point_sale_base/data/remote/api_call/order_place/order_place_api.dart';
 import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:fnb_point_sale_base/locator.dart';
+import 'package:fnb_point_sale_base/printer/service/my_printer_service.dart';
+import 'package:fnb_point_sale_base/utils/create_order_place_request.dart';
 import 'package:fnb_point_sale_base/utils/date_time_utils.dart';
 import 'package:fnb_point_sale_base/utils/my_log_utils.dart';
 import 'package:fnb_point_sale_base/utils/network_utils.dart';
@@ -25,14 +32,17 @@ import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
-import '../../payment_screen/controller/payment_screen_controller.dart';
-import '../../payment_screen/view/payment_screen.dart';
+import '../../dashboard_screen/view/top_bar/controller/top_bar_controller.dart';
+import '../view/item_payment_screen/controller/item_payment_screen_controller.dart';
+import '../view/item_payment_screen/view/item_payment_screen.dart';
 import '../view/item_summary/controller/item_summary_controller.dart';
 import '../view/item_summary/view/item_summary_order_screen.dart';
 
 class MenuSalesController extends GetxController {
   DashboardScreenController mDashboardScreenController =
       Get.find<DashboardScreenController>();
+  TopBarController mTopBarController = Get.find<TopBarController>();
+
   Rx<TextEditingController> searchController = TextEditingController().obs;
   RxString selectType = sAll.tr.obs;
   Rx<TextEditingController> sSelectDateRangeController =
@@ -118,13 +128,20 @@ class MenuSalesController extends GetxController {
     MyLogUtils.logDebug('fromDate : $fromDate, toDate : $toDate');
     sSelectDateRangeController.value.text =
         '${DateFormat('dd/MM/yyyy').format(fromDate!)} - ${DateFormat('dd/MM/yyyy').format(toDate!)}';
+    sSelectDateRangeController.refresh();
+    ///api call
+    pageNumber.value = 1;
+    sLoading.value = 'Loading...';
+    callOrderHistory();
+    ///
   }
 
+
   void onEdit(int index) async {
-    OrderHistoryData mOrderData =  mOrderHistoryData[index];
+    OrderHistoryData mOrderData = mOrderHistoryData[index];
     await AppAlert.showView(
         Get.context!,
-         Row(
+        Row(
           children: [
             const Expanded(flex: 7, child: SizedBox()),
             Expanded(flex: 3, child: ItemSummaryOrderScreen(mOrderData))
@@ -133,28 +150,6 @@ class MenuSalesController extends GetxController {
         barrierDismissible: true);
     if (Get.isRegistered<ItemSummaryController>()) {
       Get.delete<ItemSummaryController>();
-    }
-  }
-
-  void onPayNow(int index) async {
-    // await AppAlert.showView(
-    //     Get.context!,
-    //     const Row(
-    //       children: [
-    //         Expanded(flex: 7, child: SizedBox()),
-    //         Expanded(flex: 3, child: PayNowOrderScreen())
-    //       ],
-    //     ),
-    //     barrierDismissible: true);
-    // if (Get.isRegistered<PayNowController>()) {
-    //   Get.delete<PayNowController>();
-    // }
-    await AppAlert.showView(Get.context!, PaymentScreen(OrderPlace(),  onPayment: () {
-      Get.back();
-    },),
-        barrierDismissible: true);
-    if (Get.isRegistered<PaymentScreenController>()) {
-      Get.delete<PaymentScreenController>();
     }
   }
 
@@ -171,13 +166,10 @@ class MenuSalesController extends GetxController {
   RxInt totalPageNumber = 0.obs;
   RxList<OrderHistoryData> mOrderHistoryData = <OrderHistoryData>[].obs;
   RxString sLoading = 'Loading...'.obs;
-
-  void callOrderHistory({
-    String search = "",
+  int orderType = 0;
+  RxString search = "".obs;
+  callOrderHistory({
     String trackingOrderID = "",
-    int orderType = 0,
-    DateTime? fromDate,
-    DateTime? toDate,
   }) async {
     try {
       ///api product call
@@ -202,9 +194,9 @@ class MenuSalesController extends GetxController {
                           .first
                           .counterIDP,
               pageNumber: pageNumber.value,
-              searchValue: search,
-              fromDate: fromDate == null ? "" : getUTCValue(fromDate),
-              toDate: toDate == null ? "" : getUTCValue(toDate),
+              searchValue: search.value,
+              fromDate: selectedDateRange == null ? "" : getUTCValue(selectedDateRange?.start??DateTime.now()),
+              toDate: selectedDateRange == null ? "" : getUTCValue(selectedDateRange?.end??DateTime.now()),
               orderType: orderType,
               trackingOrderID: trackingOrderID);
           WebResponseSuccess mWebResponseSuccess =
@@ -241,5 +233,129 @@ class MenuSalesController extends GetxController {
       AppAlert.showSnackBar(
           Get.context!, 'downloadTableList failed with exception $e');
     }
+  }
+
+  ///payment
+  void onPayNow(int index) async {
+    OrderHistoryData mOrderHistory = mOrderHistoryData[index];
+    await AppAlert.showView(
+        Get.context!,
+        ItemPaymentScreen(
+          mOrderHistory,
+          onPayment: (GetAllPaymentTypeData mGetAllPaymentTypeData) {
+            Get.back();
+            orderPayment(mGetAllPaymentTypeData, mOrderHistory);
+          },
+        ),
+        barrierDismissible: true);
+    if (Get.isRegistered<ItemPaymentScreenController>()) {
+      Get.delete<ItemPaymentScreenController>();
+    }
+  }
+
+  ///
+  void orderPayment(GetAllPaymentTypeData mGetAllPaymentTypeData,
+      OrderHistoryData mOrderHistory) async {
+    ///
+    OrderDetailList mOrderDetailList =
+        await createOrderPlaceRequestFromOrderHistory(
+            remarksController: mOrderHistory.additionalNotes ?? '',
+            mOrderPlace: mOrderHistory,
+            printOrderPayment: mGetAllPaymentTypeData);
+    debugPrint("OrderDetail ----- ${jsonEncode(mOrderDetailList)}");
+
+    ///printOrderPayment
+    // await printOrderPayment(mOrderDetailList);
+    //
+    // var mPlaceOrderSaleLocalApi = locator.get<PlaceOrderSaleLocalApi>();
+    // await mPlaceOrderSaleLocalApi
+    //     .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
+
+    await callSaveOrder(mOrderDetailList, isPayment: true);
+
+    ///
+    await mDashboardScreenController.onUpdateHoldSale();
+    await mTopBarController.allOrderPlace();
+    await callOrderHistory();
+  }
+
+  ///SaveOrder
+  callSaveOrder(OrderDetailList mOrderDetailList,
+      {bool isPayment = false}) async {
+    try {
+      ///api product call
+      final orderPlaceApi = locator.get<OrderPlaceApi>();
+      await NetworkUtils()
+          .checkInternetConnection()
+          .then((isInternetAvailable) async {
+        if (isInternetAvailable) {
+          ProcessMultipleOrdersRequest mProcessMultipleOrdersRequest =
+              ProcessMultipleOrdersRequest(orderDetailList: [mOrderDetailList]);
+          WebResponseSuccess mWebResponseSuccess =
+              await orderPlaceApi.postOrderPlace(mProcessMultipleOrdersRequest);
+          if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
+            ///print....
+            printOrderPayment(mOrderDetailList);
+
+            ///remove from local data base
+            if (isPayment) {
+              var mPlaceOrderSaleLocalApi =
+                  locator.get<PlaceOrderSaleLocalApi>();
+              await mPlaceOrderSaleLocalApi
+                  .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
+            }
+            AppAlert.showSnackBar(
+                Get.context!, mWebResponseSuccess.statusMessage ?? '');
+          } else {
+            ///off line save
+            if (isPayment) {
+              ///offline save
+              var mOfflinePlaceOrderSaleLocalApi =
+                  locator.get<OfflinePlaceOrderSaleLocalApi>();
+              ProcessMultipleOrdersRequest mProcessMultipleOrders =
+                  await mOfflinePlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
+                      ProcessMultipleOrdersRequest();
+              if ((mProcessMultipleOrders.orderDetailList ?? []).isEmpty) {
+                await mOfflinePlaceOrderSaleLocalApi
+                    .save(mProcessMultipleOrdersRequest);
+              } else {
+                if ((mProcessMultipleOrdersRequest.orderDetailList ?? [])
+                    .isNotEmpty) {
+                  await mOfflinePlaceOrderSaleLocalApi.getPlaceOrderAdd(
+                      (mProcessMultipleOrdersRequest.orderDetailList ?? [])
+                          .first);
+                }
+              }
+
+              ///remove
+              var mPlaceOrderSaleLocalApi =
+                  locator.get<PlaceOrderSaleLocalApi>();
+              await mPlaceOrderSaleLocalApi
+                  .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
+            }
+            AppAlert.showSnackBar(
+                Get.context!, mWebResponseSuccess.statusMessage ?? '');
+          }
+        } else {
+          AppAlert.showSnackBar(
+              Get.context!, MessageConstants.noInternetConnection);
+        }
+      });
+    } catch (e) {
+      AppAlert.showSnackBar(
+          Get.context!, 'downloadTableList failed with exception $e');
+    }
+  }
+
+  ///print
+  printOrderPayment(OrderDetailList mOrderDetailList) async {
+    final myPrinterService = locator.get<MyPrinterService>();
+    await myPrinterService.saleOrderPayment(mOrderDetailList);
+  }
+
+  void onPrint(int index) async {
+    OrderHistoryData mOrderData = mOrderHistoryData[index];
+    final myPrinterService = locator.get<MyPrinterService>();
+    await myPrinterService.salePayment(mOrderData);
   }
 }

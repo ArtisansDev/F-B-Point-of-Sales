@@ -174,8 +174,8 @@ class OrderHistoryData {
     String? branchIDF,
     String? seatIDF,
     String? orderDate,
-    List<OrderMenu>? orderMenu,
-    List<OrderTax>? orderTax,
+    List<OrderHistoryMenu>? orderMenu,
+    List<OrderHistoryTax>? orderTax,
     int? quantityTotal,
     double? itemTotal,
     double? modifierTotal,
@@ -264,13 +264,13 @@ class OrderHistoryData {
     if (json['OrderMenu'] != null) {
       _orderMenu = [];
       json['OrderMenu'].forEach((v) {
-        _orderMenu?.add(OrderMenu.fromJson(v));
+        _orderMenu?.add(OrderHistoryMenu.fromJson(v));
       });
     }
     if (json['OrderTax'] != null) {
       _orderTax = [];
       json['OrderTax'].forEach((v) {
-        _orderTax?.add(OrderTax.fromJson(v));
+        _orderTax?.add(OrderHistoryTax.fromJson(v));
       });
     }
     _quantityTotal = json['QuantityTotal'];
@@ -314,8 +314,8 @@ class OrderHistoryData {
   String? _branchIDF;
   String? _seatIDF;
   String? _orderDate;
-  List<OrderMenu>? _orderMenu;
-  List<OrderTax>? _orderTax;
+  List<OrderHistoryMenu>? _orderMenu;
+  List<OrderHistoryTax>? _orderTax;
   int? _quantityTotal;
   double? _itemTotal;
   double? _modifierTotal;
@@ -357,8 +357,8 @@ class OrderHistoryData {
   String? get branchIDF => _branchIDF;
   String? get seatIDF => _seatIDF;
   String? get orderDate => _orderDate;
-  List<OrderMenu>? get orderMenu => _orderMenu;
-  List<OrderTax>? get orderTax => _orderTax;
+  List<OrderHistoryMenu>? get orderMenu => _orderMenu;
+  List<OrderHistoryTax>? get orderTax => _orderTax;
   int? get quantityTotal => _quantityTotal;
   double? get itemTotal => _itemTotal;
   double? get modifierTotal => _modifierTotal;
@@ -431,8 +431,8 @@ class OrderHistoryData {
 /// TaxPercentage : 5.0
 /// TaxAmount : 0.09
 
-class OrderTax {
-  OrderTax({
+class OrderHistoryTax {
+  OrderHistoryTax({
     String? taxIDF,
     String? taxName,
     double? taxPercentage,
@@ -443,7 +443,7 @@ class OrderTax {
     _taxAmount = taxAmount;
   }
 
-  OrderTax.fromJson(dynamic json) {
+  OrderHistoryTax.fromJson(dynamic json) {
     _taxIDF = json['TaxIDF'];
     _taxName = json['TaxName'];
     _taxPercentage = json['TaxPercentage'];
@@ -490,8 +490,8 @@ class OrderTax {
 /// ItemDiscountPriceTotal : 1.8
 /// TotalItemAmount : 1.88
 
-class OrderMenu {
-  OrderMenu({
+class OrderHistoryMenu {
+  OrderHistoryMenu({
     String? menuItemIDF,
     String? variantIDF,
     int? quantity,
@@ -532,7 +532,7 @@ class OrderMenu {
     _totalItemAmount = totalItemAmount;
   }
 
-  OrderMenu.fromJson(dynamic json) {
+  OrderHistoryMenu.fromJson(dynamic json) {
     _menuItemIDF = json['MenuItemIDF'];
     _variantIDF = json['VariantIDF'];
     _quantity = json['Quantity'];

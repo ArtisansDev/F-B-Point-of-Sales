@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/image_assets_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
-import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 import 'package:fnb_point_sale_base/data/mode/order_history/order_history_response.dart';
 import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:fnb_point_sale_base/utils/date_time_utils.dart';
@@ -102,50 +101,62 @@ class ItemSummaryOrderScreen extends GetView<ItemSummaryController> {
                           ),
                         ),
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Expanded(
-                                child: Row(
-                              children: [
-                                Text(
-                                  'Order No:',
-                                  style: getText300(
-                                      size: 11.5.sp,
-                                      colors: ColorConstants.black),
-                                ),
-                                SizedBox(
-                                  width: 8.sp,
-                                ),
-                                Text(
-                                  controller
-                                          .mOrderPlace.value.trackingOrderID ??
-                                      '',
-                                  style: getText500(
-                                      size: 11.5.sp,
-                                      colors: ColorConstants.black),
-                                ),
-                              ],
-                            )),
+                              flex: 5,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Order No:',
+                                    style: getText300(
+                                        size: 11.5.sp,
+                                        colors: ColorConstants.black),
+                                  ),
+                                  SizedBox(
+                                    width: 8.sp,
+                                  ),
+                                  Expanded(
+                                      child: Text(
+                                    controller.mOrderPlace.value
+                                            .trackingOrderID ??
+                                        '',
+                                    style: getText500(
+                                        size: 11.5.sp,
+                                        colors: ColorConstants.black),
+                                  )),
+                                ],
+                              ),
+                            ),
+                            SizedBox(width: 10.sp,),
                             Expanded(
+                                flex: 3,
                                 child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  'Table No:',
-                                  style: getText300(
-                                      size: 11.5.sp,
-                                      colors: ColorConstants.black),
-                                ),
-                                SizedBox(
-                                  width: 8.sp,
-                                ),
-                                Text(
-                                  controller.mOrderPlace.value?.tableNo ?? '',
-                                  style: getText500(
-                                      size: 11.5.sp,
-                                      colors: ColorConstants.black),
-                                ),
-                              ],
-                            )),
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      'Table No:',
+                                      style: getText300(
+                                          size: 11.5.sp,
+                                          colors: ColorConstants.black),
+                                    ),
+                                    SizedBox(
+                                      width: 7.sp,
+                                    ),
+                                    Expanded(
+                                        child: Text(
+                                      controller.mOrderPlace.value.tableNo ??
+                                          '',
+                                      style: getText500(
+                                          size: 11.5.sp,
+                                          colors: ColorConstants.black),
+                                    )),
+                                  ],
+                                )),
                           ],
                         ),
                       ),
@@ -211,11 +222,11 @@ class ItemSummaryOrderScreen extends GetView<ItemSummaryController> {
                     ],
                   )),
 
-              // ///OrderList
-              // Expanded(child: ItemSummaryOrderList()),
-              //
-              // ///BottomView
-              // ItemSummaryBottomView()
+              ///OrderList
+              Expanded(child: ItemSummaryOrderList()),
+
+              ///BottomView
+              ItemSummaryBottomView()
             ],
           ),
         ));

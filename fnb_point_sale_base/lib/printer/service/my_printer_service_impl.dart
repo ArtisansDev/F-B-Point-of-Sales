@@ -8,11 +8,13 @@ import 'package:printing/src/printer.dart';
 import '../../data/local/database/printer/model/my_printer.dart';
 import '../../data/local/database/printer/printer_local_api.dart';
 import '../../data/mode/cart_item/order_place.dart';
+import '../../data/mode/order_history/order_history_response.dart';
 import '../../data/mode/order_place/process_multiple_orders_request.dart';
 import '../../locator.dart';
 import '../../utils/my_log_utils.dart';
 import '../types/order_payment_print.dart';
 import '../types/place_order_print.dart';
+import '../types/sale_payment_print.dart';
 import '../types/test_printing.dart';
 
 class MyPrinterServiceImpl with MyPrinterService {
@@ -20,10 +22,17 @@ class MyPrinterServiceImpl with MyPrinterService {
   Future<bool> salePlaceOrder(OrderDetailList mOrderDetailList, OrderPlace mOrderPlace){
       return printPlaceOrder(mOrderDetailList,  mOrderPlace);
   }
+
   @override
   Future<bool> saleOrderPayment(OrderDetailList mOrderDetailList){
       return printOrderPayment(mOrderDetailList);
   }
+
+  @override
+  Future<bool> salePayment(OrderHistoryData mOrderDetailList){
+      return printSalePayment(mOrderDetailList);
+  }
+
   // @override
   // Future<bool> salePrint(
   //     String? title, Sale sale, bool duplicateCopy, bool voidSale,

@@ -1,10 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'package:flutter/widgets.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
-import 'package:fnb_point_sale_base/data/local/database/payment_type/payment_type_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_model.dart';
-import 'package:fnb_point_sale_base/data/local/database/table_list/table_list_local_api.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_tables/get_all_tables_response.dart';
 import 'package:fnb_point_sale_base/locator.dart';
@@ -95,7 +93,7 @@ class TableController extends GetxController {
 
 
 
-  void onUpdateViewTable() async{
+  onUpdateViewTable() async{
     await allOrderPlace();
     mDashboardScreenController.onUpdateViewTable(() {
       setGroupTable();
