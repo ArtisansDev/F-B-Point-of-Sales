@@ -9,22 +9,14 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f183d832-d61e-4cff-a26c-5db2e295bf43" name="Changes" comment="pament order receipt">
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_sales/view/item_payment_screen/controller/item_payment_screen_controller.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_sales/view/item_payment_screen/view/item_payment_order_list.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_sales/view/item_payment_screen/view/item_payment_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/model/menu_sales/view/item_payment_screen/view/item_payment_type_list.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/utils/create_order_place_request.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
+    <list default="true" id="f183d832-d61e-4cff-a26c-5db2e295bf43" name="Changes" comment="sale search, pay ,print,date filter">
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/menu_sales/controller/menu_sales_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_sales/controller/menu_sales_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/menu_sales/view/item_summary/controller/item_summary_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_sales/view/item_summary/controller/item_summary_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/menu_sales/view/item_summary/view/item_summary_bottom_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_sales/view/item_summary/view/item_summary_bottom_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/menu_sales/view/item_summary/view/item_summary_order_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_sales/view/item_summary/view/item_summary_order_list.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/menu_sales/view/item_summary/view/item_summary_order_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_sales/view/item_summary/view/item_summary_order_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/menu_sales/view/sales_list/sales_list_row_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_sales/view/sales_list/sales_list_row_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/data/mode/order_history/order_history_response.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/data/mode/order_history/order_history_response.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/utils/tracking_order_id.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/utils/tracking_order_id.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/dashboard_screen/view/top_bar/controller/top_bar_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/view/top_bar/controller/top_bar_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/dashboard_screen/view/top_bar/view/top_bar_profile_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/view/top_bar/view/top_bar_profile_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/printer/types/order_payment_print.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/printer/types/order_payment_print.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/printer/types/place_order_print.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/printer/types/place_order_print.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/printer/types/sale_aftre_payment_print.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/printer/types/sale_aftre_payment_print.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/printer/types/sale_payment_print.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/printer/types/sale_payment_print.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +81,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/parthapaul/all_project/macbookpro/android_studio/dev_project/F-B-Point-of-Sales/fnb_point_sale_app/lib/model/menu_sales/view&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/parthapaul/all_project/macbookpro/android_studio/dev_project/F-B-Point-of-Sales/fnb_point_sale_base/lib/printer/types&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
@@ -99,11 +91,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../fnb_point_sale_base/lib/printer/types" />
       <recent name="$PROJECT_DIR$/lib/model/menu_sales/view" />
       <recent name="$PROJECT_DIR$/lib/model/menu_customer/add_customer/view" />
       <recent name="$PROJECT_DIR$/lib/model/menu_customer/add_customer" />
       <recent name="$PROJECT_DIR$/assets" />
-      <recent name="$PROJECT_DIR$/lib/model/menu_customer/view" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib/model/menu_home/view/search_order/view/menu_view" />
@@ -425,7 +417,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735639459723</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="sale search, pay ,print,date filter">
+      <option name="closed" value="true" />
+      <created>1735730226495</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1735730226495</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -459,6 +459,7 @@
     <MESSAGE value="table select" />
     <MESSAGE value="place order receipt" />
     <MESSAGE value="pament order receipt" />
-    <option name="LAST_COMMIT_MESSAGE" value="pament order receipt" />
+    <MESSAGE value="sale search, pay ,print,date filter" />
+    <option name="LAST_COMMIT_MESSAGE" value="sale search, pay ,print,date filter" />
   </component>
 </project>

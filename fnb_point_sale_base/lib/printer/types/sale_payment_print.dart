@@ -11,15 +11,27 @@ Future<bool> printSalePayment(
     OrderHistoryData mOrderHistoryData) async {
   CurrencyData mCurrencyData = CurrencyData();
   var configurationLocalApi = locator.get<ConfigurationLocalApi>();
-  mCurrencyData = ((await configurationLocalApi.getConfigurationResponse())
-              ?.configurationData
-              ?.currencyData ??
-          [])
-      .first;
+  ConfigurationResponse mConfigurationResponse =
+      await configurationLocalApi.getConfigurationResponse() ??
+          ConfigurationResponse();
+
+  mCurrencyData =
+      (mConfigurationResponse.configurationData?.currencyData ?? []).first;
+
+  String branchName =
+  (mConfigurationResponse.configurationData?.branchData ?? []).isEmpty
+      ? ""
+      : (mConfigurationResponse.configurationData?.branchData ?? [])
+      .first
+      .branchName ??
+      '';
 
   List<pw.Widget> widgets = List.empty(growable: true);
   widgets.add(
       pw.Center(child: pw.Text('Payment Receipt', style: getBoldTextStyleMedium())));
+  widgets.add(pw.Container(height: 4));
+  widgets.add(
+      pw.Center(child: pw.Text(branchName, style: getBoldTextStyleMedium())));
   widgets.add(pw.Container(height: 4));
   widgets.add(mySeparator());
   widgets.add(pw.Container(height: 4));

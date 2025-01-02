@@ -25,28 +25,28 @@ class TopBarProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 15.w,
-      height: 6.w,
-      alignment: Alignment.center,
-      child: Row(
-        children: [
-          ///profile Image
-          _profileImage(),
-          SizedBox(
-            width: 11.sp,
-          ),
+    return Obx(() => Container(
+          width: 18.w,
+          height: 6.w,
+          alignment: Alignment.center,
+          child: Row(
+            children: [
+              ///profile Image
+              _profileImage(),
+              SizedBox(
+                width: 11.sp,
+              ),
 
-          ///Profile name
-          Expanded(
-            child: _profileNameView(),
-          ),
+              ///Profile name
+              Expanded(
+                child: _profileNameView(),
+              ),
 
-          ///dropdown menu
-          _profilePopUp()
-        ],
-      ),
-    );
+              ///dropdown menu
+              _profilePopUp()
+            ],
+          ),
+        ));
   }
 
   _profileImage() {
@@ -65,11 +65,21 @@ class TopBarProfileView extends StatelessWidget {
       TextSpan(
         children: [
           TextSpan(
-            text: 'Joe Doe  ',
+            text: (controller.mConfigurationResponse.value.configurationData
+                            ?.restaurantData ??
+                        [])
+                    .isEmpty
+                ? ""
+                : (controller.mConfigurationResponse.value.configurationData
+                            ?.restaurantData ??
+                        [])
+                    .first
+                    .restaurantName,
             style: getText600(size: 11.sp),
           ),
           TextSpan(
-            text: '(5206)',
+            text:
+                '\n(${(controller.mConfigurationResponse.value.configurationData?.counterData ?? []).isEmpty ? "" : (controller.mConfigurationResponse.value.configurationData?.counterData ?? []).first.counterName})',
             style: getTextRegular(
                 size: 11.sp, colors: ColorConstants.appEditTextHint),
           ),
@@ -86,45 +96,48 @@ class TopBarProfileView extends StatelessWidget {
             value: 0,
             child: Text(
               'Profile details',
-              style:
-                  getTextRegular(size: 12.5.sp, colors: ColorConstants.cAppColors),
+              style: getTextRegular(
+                  size: 12.5.sp, colors: ColorConstants.cAppColors),
             ),
           ),
           PopupMenuItem(
             value: 1,
             child: Text(
               'Logout',
-              style:
-              getTextRegular(size: 12.5.sp, colors: ColorConstants.cAppColors),
+              style: getTextRegular(
+                  size: 12.5.sp, colors: ColorConstants.cAppColors),
             ),
           ),
           PopupMenuItem(
             value: 2,
             child: Text(
               'Exit',
-              style:
-              getTextRegular(size: 12.5.sp, colors: ColorConstants.cAppColors),
+              style: getTextRegular(
+                  size: 12.5.sp, colors: ColorConstants.cAppColors),
             ),
           ),
           PopupMenuItem(
             value: 3,
             child: Text(
               'Test Manual Print',
-              style: getTextRegular(size: 12.5.sp, colors: ColorConstants.cAppColors),
+              style: getTextRegular(
+                  size: 12.5.sp, colors: ColorConstants.cAppColors),
             ),
           ),
           PopupMenuItem(
             value: 4,
             child: Text(
               'Printer Settings',
-              style: getTextRegular(size: 12.5.sp, colors: ColorConstants.cAppColors),
+              style: getTextRegular(
+                  size: 12.5.sp, colors: ColorConstants.cAppColors),
             ),
           ),
           PopupMenuItem(
             value: 5,
             child: Text(
               'Config Serial Port Devices',
-              style: getTextRegular(size: 12.5.sp, colors: ColorConstants.cAppColors),
+              style: getTextRegular(
+                  size: 12.5.sp, colors: ColorConstants.cAppColors),
             ),
           ),
         ],

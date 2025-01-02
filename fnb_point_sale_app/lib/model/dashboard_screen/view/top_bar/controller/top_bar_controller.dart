@@ -6,10 +6,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_app/common_view/logout_expired.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
+import 'package:fnb_point_sale_base/data/local/database/configuration/configuration_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_model.dart';
 import 'package:fnb_point_sale_base/data/local/database/table_list/table_list_local_api.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
+import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_tables/get_all_tables_response.dart';
 import 'package:fnb_point_sale_base/locator.dart';
 import 'package:fnb_point_sale_base/printer/types/test_printing.dart';
@@ -39,7 +41,7 @@ class TopBarController extends GetxController {
     //     Get.delete<ReservationTableSelectController>();
     //   }
     // } else
-      if (index == 3) {
+    if (index == 3) {
       /// hold sale
       await AppAlert.showView(Get.context!, const HoldSalesScreen(),
           barrierDismissible: true);
@@ -104,12 +106,21 @@ class TopBarController extends GetxController {
     );
   }
 
+  var configurationLocalApi = locator.get<ConfigurationLocalApi>();
+  Rx<ConfigurationResponse> mConfigurationResponse =
+      ConfigurationResponse().obs;
+
   ///sync update
   onHomeUpdate() async {
     await allOrderPlace();
     mDashboardScreenController.onUpdate(() async {
       await loadAllTables();
     });
+
+    mConfigurationResponse.value =
+        await configurationLocalApi.getConfigurationResponse() ??
+            ConfigurationResponse();
+    mConfigurationResponse.refresh();
   }
 
   ///OrderPlace

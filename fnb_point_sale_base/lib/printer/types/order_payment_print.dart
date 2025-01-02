@@ -13,16 +13,28 @@ import '../../locator.dart';
 Future<bool> printOrderPayment(
     OrderDetailList mOrderDetailList, OrderPlace mOrderPlace) async {
   CurrencyData mCurrencyData = CurrencyData();
-  var configurationLocalApi = locator.get<ConfigurationLocalApi>();
-  mCurrencyData = ((await configurationLocalApi.getConfigurationResponse())
-              ?.configurationData
-              ?.currencyData ??
-          [])
-      .first;
 
+  var configurationLocalApi = locator.get<ConfigurationLocalApi>();
+  ConfigurationResponse mConfigurationResponse =
+      await configurationLocalApi.getConfigurationResponse() ??
+          ConfigurationResponse();
+
+  mCurrencyData =
+      (mConfigurationResponse.configurationData?.currencyData ?? []).first;
+
+  String branchName =
+      (mConfigurationResponse.configurationData?.branchData ?? []).isEmpty
+          ? ""
+          : (mConfigurationResponse.configurationData?.branchData ?? [])
+                  .first
+                  .branchName ??
+              '';
   List<pw.Widget> widgets = List.empty(growable: true);
   widgets.add(pw.Center(
       child: pw.Text('Payment Receipt', style: getBoldTextStyleMedium())));
+  widgets.add(pw.Container(height: 4));
+  widgets.add(
+      pw.Center(child: pw.Text(branchName, style: getBoldTextStyleMedium())));
   widgets.add(pw.Container(height: 4));
   widgets.add(mySeparator());
   widgets.add(pw.Container(height: 4));
@@ -189,7 +201,8 @@ pw.Widget getItemRow(OrderMenu mCartItem, String currencyData, CartItem mItem) {
                   pw.Expanded(
                       child: pw.Align(
                           alignment: pw.Alignment.centerRight,
-                          child: pw.Text('$currencyData ${mCartItem.itemTaxPrice}',
+                          child: pw.Text(
+                              '$currencyData ${mCartItem.itemTaxPrice}',
                               style: getNormalTextStyle())))
                 ])),
             pw.Expanded(flex: 1, child: pw.SizedBox()),
