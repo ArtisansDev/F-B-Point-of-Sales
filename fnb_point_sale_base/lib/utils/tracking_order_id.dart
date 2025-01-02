@@ -19,6 +19,7 @@ import '../data/local/shared_prefs/shared_prefs.dart';
 import '../data/mode/cart_item/cart_item.dart';
 import '../data/mode/cart_item/order_place.dart';
 import '../data/mode/configuration/configuration_response.dart';
+import '../data/mode/customer/get_all_customer/get_all_customer_response.dart';
 import '../data/mode/order_place/process_multiple_orders_request.dart';
 import '../data/mode/product/get_all_modifier/get_all_modifier_response.dart';
 import '../data/mode/product/get_all_payment_type/get_all_payment_type_response.dart';
@@ -172,6 +173,7 @@ createOrderPlaceRequest(
     }
   }
 
+
   ///OrderPlaceRequest
   OrderDetailList mOrderDetailList = OrderDetailList(
       trackingOrderID: mOrderPlace?.sOrderNo ?? '',
@@ -234,7 +236,15 @@ createOrderPlaceRequest(
       paymentStatus: printOrderPayment == null ? "P" : "S",
 
       ///orderPlaceGuestInfoRequest
-      paymentResponse: printOrderPayment == null ? null : [mPaymentResponse]);
+      paymentResponse: printOrderPayment == null ? null : [mPaymentResponse],
+
+      ///customer
+      name: mOrderPlace.mSelectCustomer?.name,
+      email: mOrderPlace.mSelectCustomer?.email,
+      phoneCountryCode: mOrderPlace.mSelectCustomer?.phoneCountryCode,
+      phoneNumber: mOrderPlace.mSelectCustomer?.phoneNumber,
+      customerIDF: mOrderPlace.mSelectCustomer?.customerIDP
+  );
 
   return mOrderDetailList;
 }

@@ -71,6 +71,7 @@ class DineInScreen extends StatelessWidget {
               controller: controller.sPhoneNumberController.value,
               showFloatingLabel: false,
               isPhone: true,
+              isReadOnly: true,
               sPrefixText: controller.phoneCode.value,
               placeHolder: sPhoneNumber.tr,
               topPadding: 5.sp,
@@ -97,6 +98,8 @@ class DineInScreen extends StatelessWidget {
                       controller.phoneCode.value = country.phoneCode;
                     },
                   );
+                }else {
+                  controller.getAllCustomer(showCustomer: true);
                 }
               },
               hintText: sPhoneNumber.tr,
@@ -120,6 +123,7 @@ class DineInScreen extends StatelessWidget {
                 placeHolder: sEnterName.tr,
                 controller: controller.enterNameController.value,
                 errorText: null,
+                isReadOnly: (controller.mSelectCustomer.value?.name??'_new_').toString()!='_new_',
                 textInputType: TextInputType.emailAddress,
                 hintText: sEnterName.tr,
                 showFloatingLabel: false,

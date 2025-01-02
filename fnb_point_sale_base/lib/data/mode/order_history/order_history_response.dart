@@ -8,7 +8,8 @@ class OrderHistoryResponse {
     bool? error,
     int? statusCode,
     String? statusMessage,
-    OrderHistoryResponseData? mOrderHistoryResponseData,}){
+    OrderHistoryResponseData? mOrderHistoryResponseData,
+  }) {
     _error = error;
     _statusCode = statusCode;
     _statusMessage = statusMessage;
@@ -19,17 +20,24 @@ class OrderHistoryResponse {
     _error = json['error'];
     _statusCode = json['statusCode'];
     _statusMessage = json['statusMessage'];
-    _mOrderHistoryResponseData = json['data'] != null ? OrderHistoryResponseData.fromJson(json['data']) : null;
+    _mOrderHistoryResponseData = json['data'] != null
+        ? OrderHistoryResponseData.fromJson(json['data'])
+        : null;
   }
+
   bool? _error;
   int? _statusCode;
   String? _statusMessage;
   OrderHistoryResponseData? _mOrderHistoryResponseData;
 
   bool? get error => _error;
+
   int? get statusCode => _statusCode;
+
   String? get statusMessage => _statusMessage;
-  OrderHistoryResponseData? get mOrderHistoryResponseData => _mOrderHistoryResponseData;
+
+  OrderHistoryResponseData? get mOrderHistoryResponseData =>
+      _mOrderHistoryResponseData;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -41,7 +49,6 @@ class OrderHistoryResponse {
     }
     return map;
   }
-
 }
 
 /// TotalRecords : 99
@@ -56,7 +63,8 @@ class OrderHistoryResponseData {
     int? firstRecord,
     int? lastRecord,
     int? totalPage,
-    List<OrderHistoryData>? data,}){
+    List<OrderHistoryData>? data,
+  }) {
     _totalRecords = totalRecords;
     _firstRecord = firstRecord;
     _lastRecord = lastRecord;
@@ -76,6 +84,7 @@ class OrderHistoryResponseData {
       });
     }
   }
+
   int? _totalRecords;
   int? _firstRecord;
   int? _lastRecord;
@@ -83,9 +92,13 @@ class OrderHistoryResponseData {
   List<OrderHistoryData>? _data;
 
   int? get totalRecords => _totalRecords;
+
   int? get firstRecord => _firstRecord;
+
   int? get lastRecord => _lastRecord;
+
   int? get totalPage => _totalPage;
+
   List<OrderHistoryData>? get data => _data;
 
   Map<String, dynamic> toJson() {
@@ -99,7 +112,6 @@ class OrderHistoryResponseData {
     }
     return map;
   }
-
 }
 
 /// OrderIDP : "513c57e6-cabb-41a5-9eff-feec286833c4"
@@ -188,7 +200,8 @@ class OrderHistoryData {
     dynamic guestInfo,
     String? paymentGatewayID,
     String? paymentGatewaySettingID,
-    String? tableNo,}){
+    String? tableNo,
+  }) {
     _orderIDP = orderIDP;
     _formatedOrderDate = formatedOrderDate;
     _grandTotal = grandTotal;
@@ -287,6 +300,7 @@ class OrderHistoryData {
     _paymentGatewaySettingID = json['PaymentGatewaySettingID'];
     _tableNo = json['TableNo'];
   }
+
   String? _orderIDP;
   String? _formatedOrderDate;
   double? _grandTotal;
@@ -331,46 +345,87 @@ class OrderHistoryData {
   String? _tableNo;
 
   String? get orderIDP => _orderIDP;
+
   String? get formatedOrderDate => _formatedOrderDate;
+
   double? get grandTotal => _grandTotal;
+
   String? get address => _address;
+
   String? get pinCode => _pinCode;
+
   String? get stateName => _stateName;
+
   String? get cityName => _cityName;
+
   String? get country => _country;
+
   String? get currencySymbol => _currencySymbol;
+
   String? get currencyCode => _currencyCode;
+
   String? get paymentGatewayName => _paymentGatewayName;
+
   String? get paymentStatus => _paymentStatus;
+
   int? get paymentGatewayNo => _paymentGatewayNo;
+
   String? get paymentGatewaySettingIDF => _paymentGatewaySettingIDF;
+
   String? get paymentGatewayIDF => _paymentGatewayIDF;
+
   String? get name => _name;
+
   String? get email => _email;
+
   String? get phoneCountryCode => _phoneCountryCode;
+
   String? get phoneNumber => _phoneNumber;
+
   String? get trackingOrderID => _trackingOrderID;
+
   String? get userIDF => _userIDF;
+
   int? get orderType => _orderType;
+
   int? get orderSource => _orderSource;
+
   String? get restaurantIDF => _restaurantIDF;
+
   String? get branchIDF => _branchIDF;
+
   String? get seatIDF => _seatIDF;
+
   String? get orderDate => _orderDate;
+
   List<OrderHistoryMenu>? get orderMenu => _orderMenu;
+
   List<OrderHistoryTax>? get orderTax => _orderTax;
+
   int? get quantityTotal => _quantityTotal;
+
   double? get itemTotal => _itemTotal;
+
   double? get modifierTotal => _modifierTotal;
+
   double? get discountTotal => _discountTotal;
+
   double? get itemTaxTotal => _itemTaxTotal;
+
   double? get subTotal => _subTotal;
+
   double? get taxAmountTotal => _taxAmountTotal;
+
   double? get totalAmount => _totalAmount;
+
   String? get additionalNotes => _additionalNotes;
+
   dynamic get guestInfo => _guestInfo;
+
   String? get paymentGatewayID => _paymentGatewayID;
+
   String? get paymentGatewaySettingID => _paymentGatewaySettingID;
+
   String? get tableNo => _tableNo;
 
   Map<String, dynamic> toJson() {
@@ -423,7 +478,6 @@ class OrderHistoryData {
     map['TableNo'] = _tableNo;
     return map;
   }
-
 }
 
 /// TaxIDF : "7aad68ca-7edb-4e36-a893-a191f6702ac2"
@@ -436,7 +490,8 @@ class OrderHistoryTax {
     String? taxIDF,
     String? taxName,
     double? taxPercentage,
-    double? taxAmount,}){
+    double? taxAmount,
+  }) {
     _taxIDF = taxIDF;
     _taxName = taxName;
     _taxPercentage = taxPercentage;
@@ -449,14 +504,18 @@ class OrderHistoryTax {
     _taxPercentage = json['TaxPercentage'];
     _taxAmount = json['TaxAmount'];
   }
+
   String? _taxIDF;
   String? _taxName;
   double? _taxPercentage;
   double? _taxAmount;
 
   String? get taxIDF => _taxIDF;
+
   String? get taxName => _taxName;
+
   double? get taxPercentage => _taxPercentage;
+
   double? get taxAmount => _taxAmount;
 
   Map<String, dynamic> toJson() {
@@ -467,7 +526,6 @@ class OrderHistoryTax {
     map['TaxAmount'] = _taxAmount;
     return map;
   }
-
 }
 
 /// MenuItemIDF : "5ee6184b-2293-43d6-beac-831b05a388c4"
@@ -510,7 +568,9 @@ class OrderHistoryMenu {
     double? itemTotalTaxPrice,
     double? itemModifierTotal,
     double? itemDiscountPriceTotal,
-    double? totalItemAmount,}){
+    double? totalItemAmount,
+    List<ModifierData>? modifierData,
+  }) {
     _menuItemIDF = menuItemIDF;
     _variantIDF = variantIDF;
     _quantity = quantity;
@@ -530,6 +590,7 @@ class OrderHistoryMenu {
     _itemModifierTotal = itemModifierTotal;
     _itemDiscountPriceTotal = itemDiscountPriceTotal;
     _totalItemAmount = totalItemAmount;
+    _modifierData = modifierData;
   }
 
   OrderHistoryMenu.fromJson(dynamic json) {
@@ -552,7 +613,14 @@ class OrderHistoryMenu {
     _itemModifierTotal = json['ItemModifierTotal'];
     _itemDiscountPriceTotal = json['ItemDiscountPriceTotal'];
     _totalItemAmount = json['TotalItemAmount'];
+    if (json['ModifierData'] != null) {
+      _modifierData = [];
+      json['ModifierData'].forEach((v) {
+        _modifierData?.add(ModifierData.fromJson(v));
+      });
+    }
   }
+
   String? _menuItemIDF;
   String? _variantIDF;
   int? _quantity;
@@ -572,26 +640,47 @@ class OrderHistoryMenu {
   double? _itemModifierTotal;
   double? _itemDiscountPriceTotal;
   double? _totalItemAmount;
+  List<ModifierData>? _modifierData;
 
   String? get menuItemIDF => _menuItemIDF;
+
   String? get variantIDF => _variantIDF;
+
   int? get quantity => _quantity;
+
   double? get discountPercentage => _discountPercentage;
+
   String? get itemName => _itemName;
+
   String? get itemVariantName => _itemVariantName;
+
   double? get itemTaxPercent => _itemTaxPercent;
+
   String? get allModifierPrices => _allModifierPrices;
+
   String? get allModifierIDFs => _allModifierIDFs;
+
   double? get variantPrice => _variantPrice;
+
   double? get itemDiscountPrice => _itemDiscountPrice;
+
   double? get discountedItemAmount => _discountedItemAmount;
+
   double? get discountedItemTotalAmount => _discountedItemTotalAmount;
+
   double? get itemTaxPrice => _itemTaxPrice;
+
   double? get itemTotal => _itemTotal;
+
   double? get itemTotalTaxPrice => _itemTotalTaxPrice;
+
   double? get itemModifierTotal => _itemModifierTotal;
+
   double? get itemDiscountPriceTotal => _itemDiscountPriceTotal;
+
   double? get totalItemAmount => _totalItemAmount;
+
+  List<ModifierData>? get modifierData => _modifierData;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -614,6 +703,50 @@ class OrderHistoryMenu {
     map['ItemModifierTotal'] = _itemModifierTotal;
     map['ItemDiscountPriceTotal'] = _itemDiscountPriceTotal;
     map['TotalItemAmount'] = _totalItemAmount;
+    if (_modifierData != null) {
+      map['ModifierData'] = _modifierData?.map((v) => v.toJson()).toList();
+    }
+
+    return map;
+  }
+}
+
+/// ModifierIDP : "2453688d-2b3e-4f8c-b5f8-6b5c7ed9cece"
+/// ModifierName : "Cheese slice (25g)"
+/// Price : 10.0
+
+class ModifierData {
+  ModifierData({
+    String? modifierIDP,
+    String? modifierName,
+    double? price,
+  }) {
+    _modifierIDP = modifierIDP;
+    _modifierName = modifierName;
+    _price = price;
+  }
+
+  ModifierData.fromJson(dynamic json) {
+    _modifierIDP = json['ModifierIDP'];
+    _modifierName = json['ModifierName'];
+    _price = json['Price'];
+  }
+
+  String? _modifierIDP;
+  String? _modifierName;
+  double? _price;
+
+  String? get modifierIDP => _modifierIDP;
+
+  String? get modifierName => _modifierName;
+
+  double? get price => _price;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['ModifierIDP'] = _modifierIDP;
+    map['ModifierName'] = _modifierName;
+    map['Price'] = _price;
     return map;
   }
 }

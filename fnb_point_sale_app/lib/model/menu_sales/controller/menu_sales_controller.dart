@@ -14,6 +14,7 @@ import 'package:fnb_point_sale_base/data/local/database/configuration/configurat
 import 'package:fnb_point_sale_base/data/local/database/offline_place_order/offline_place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
+import 'package:fnb_point_sale_base/data/mode/customer/get_all_customer/get_all_customer_response.dart';
 import 'package:fnb_point_sale_base/data/mode/order_history/order_history_request.dart';
 import 'package:fnb_point_sale_base/data/mode/order_history/order_history_response.dart';
 import 'package:fnb_point_sale_base/data/mode/order_place/process_multiple_orders_request.dart';
@@ -129,13 +130,14 @@ class MenuSalesController extends GetxController {
     sSelectDateRangeController.value.text =
         '${DateFormat('dd/MM/yyyy').format(fromDate!)} - ${DateFormat('dd/MM/yyyy').format(toDate!)}';
     sSelectDateRangeController.refresh();
+
     ///api call
     pageNumber.value = 1;
     sLoading.value = 'Loading...';
     callOrderHistory();
+
     ///
   }
-
 
   void onEdit(int index) async {
     OrderHistoryData mOrderData = mOrderHistoryData[index];
@@ -168,6 +170,7 @@ class MenuSalesController extends GetxController {
   RxString sLoading = 'Loading...'.obs;
   int orderType = 0;
   RxString search = "".obs;
+
   callOrderHistory({
     String trackingOrderID = "",
   }) async {
@@ -195,8 +198,12 @@ class MenuSalesController extends GetxController {
                           .counterIDP,
               pageNumber: pageNumber.value,
               searchValue: search.value,
-              fromDate: selectedDateRange == null ? "" : getUTCValue(selectedDateRange?.start??DateTime.now()),
-              toDate: selectedDateRange == null ? "" : getUTCValue(selectedDateRange?.end??DateTime.now()),
+              fromDate: selectedDateRange == null
+                  ? ""
+                  : getUTCValue(selectedDateRange?.start ?? DateTime.now()),
+              toDate: selectedDateRange == null
+                  ? ""
+                  : getUTCValue(selectedDateRange?.end ?? DateTime.now()),
               orderType: orderType,
               trackingOrderID: trackingOrderID);
           WebResponseSuccess mWebResponseSuccess =
@@ -242,9 +249,11 @@ class MenuSalesController extends GetxController {
         Get.context!,
         ItemPaymentScreen(
           mOrderHistory,
-          onPayment: (GetAllPaymentTypeData mGetAllPaymentTypeData) {
+          onPayment: (GetAllPaymentTypeData mGetAllPaymentTypeData,
+              GetAllCustomerList? mGetAllCustomerList) {
             Get.back();
-            orderPayment(mGetAllPaymentTypeData, mOrderHistory);
+            orderPayment(
+                mGetAllPaymentTypeData, mOrderHistory, mGetAllCustomerList);
           },
         ),
         barrierDismissible: true);
@@ -254,25 +263,28 @@ class MenuSalesController extends GetxController {
   }
 
   ///
-  void orderPayment(GetAllPaymentTypeData mGetAllPaymentTypeData,
-      OrderHistoryData mOrderHistory) async {
+  void orderPayment(
+      GetAllPaymentTypeData mGetAllPaymentTypeData,
+      OrderHistoryData mOrderHistory,
+      GetAllCustomerList? mGetAllCustomerList) async {
     ///
     OrderDetailList mOrderDetailList =
         await createOrderPlaceRequestFromOrderHistory(
-            remarksController: mOrderHistory.additionalNotes ?? '',
-            mOrderPlace: mOrderHistory,
-            printOrderPayment: mGetAllPaymentTypeData);
+      remarksController: mOrderHistory.additionalNotes ?? '',
+      mOrderPlace: mOrderHistory,
+      printOrderPayment: mGetAllPaymentTypeData,
+      mGetAllCustomerList: mGetAllCustomerList,
+    );
     debugPrint("OrderDetail ----- ${jsonEncode(mOrderDetailList)}");
 
     ///printOrderPayment
-    // await printOrderPayment(mOrderDetailList);
-    //
-    // var mPlaceOrderSaleLocalApi = locator.get<PlaceOrderSaleLocalApi>();
-    // await mPlaceOrderSaleLocalApi
-    //     .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
 
-    await callSaveOrder(mOrderDetailList, isPayment: true);
+    /// var mPlaceOrderSaleLocalApi = locator.get<PlaceOrderSaleLocalApi>();
+    /// await mPlaceOrderSaleLocalApi
+    ///     .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
+    ///  await printOrderPayment(mOrderDetailList,mOrderHistory);
 
+    await callSaveOrder(mOrderDetailList,mOrderHistory, isPayment: true);
     ///
     await mDashboardScreenController.onUpdateHoldSale();
     await mTopBarController.allOrderPlace();
@@ -281,6 +293,7 @@ class MenuSalesController extends GetxController {
 
   ///SaveOrder
   callSaveOrder(OrderDetailList mOrderDetailList,
+      OrderHistoryData mOrderHistory,
       {bool isPayment = false}) async {
     try {
       ///api product call
@@ -295,7 +308,7 @@ class MenuSalesController extends GetxController {
               await orderPlaceApi.postOrderPlace(mProcessMultipleOrdersRequest);
           if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
             ///print....
-            printOrderPayment(mOrderDetailList);
+            printOrderPayment(mOrderDetailList,mOrderHistory);
 
             ///remove from local data base
             if (isPayment) {
@@ -348,9 +361,9 @@ class MenuSalesController extends GetxController {
   }
 
   ///print
-  printOrderPayment(OrderDetailList mOrderDetailList) async {
+  printOrderPayment(OrderDetailList mOrderDetailList,OrderHistoryData mOrderHistory,) async {
     final myPrinterService = locator.get<MyPrinterService>();
-    await myPrinterService.saleOrderPayment(mOrderDetailList);
+   await myPrinterService.saleAfterPayment(mOrderDetailList,mOrderHistory);
   }
 
   void onPrint(int index) async {

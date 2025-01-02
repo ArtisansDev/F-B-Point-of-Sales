@@ -4,6 +4,7 @@ import 'package:pdf/widgets.dart' as pw;
 import '../../data/mode/cart_item/cart_item.dart';
 import '../../data/mode/cart_item/order_place.dart';
 import '../../data/mode/order_place/process_multiple_orders_request.dart';
+import '../../data/mode/product/get_all_modifier/get_all_modifier_response.dart';
 
 Future<bool> printPlaceOrder(
     OrderDetailList mOrderDetailList, OrderPlace mOrderPlace) async {
@@ -29,7 +30,7 @@ Future<bool> printPlaceOrder(
   widgets.add(pw.Container(height: 4));
   for (CartItem element in (mOrderPlace.cartItem ?? [])) {
     if (!element.placeOrder) {
-      widgets.add(getItemRow(element));
+    widgets.add(getItemRow(element));
     }
   }
   widgets.add(pw.Container(height: 4));
@@ -39,49 +40,103 @@ Future<bool> printPlaceOrder(
 }
 
 pw.Widget getTableRow(OrderDetailList mOrderDetailList) {
-  return pw.Row(children: [
-    pw.Expanded(
-        flex: 1,
-        child: pw.Container(
-          padding: const pw.EdgeInsets.all(2.0),
-          child: pw.Align(
-            alignment: pw.Alignment.centerLeft,
-            child: pw.Text("Table No:-", style: getNormalTextStyle()),
-          ),
-        )),
-    pw.Expanded(
-        flex: 2,
-        child: pw.Container(
-          padding: const pw.EdgeInsets.all(2.0),
-          child: pw.Align(
-            alignment: pw.Alignment.centerRight,
-            child: pw.Text(mOrderDetailList.tableNo ?? '--',
-                style: getBoldTextStyle()),
-          ),
-        )),
-  ]);
+  return pw.Row(
+    children: [
+      pw.Expanded(
+          flex: 1,
+          child: pw.Container(
+            padding: const pw.EdgeInsets.all(2.0),
+            child: pw.Align(
+              alignment: pw.Alignment.centerLeft,
+              child: pw.Text("Table No:-", style: getNormalTextStyle()),
+            ),
+          )),
+      pw.Expanded(
+          flex: 2,
+          child: pw.Container(
+            padding: const pw.EdgeInsets.all(2.0),
+            child: pw.Align(
+              alignment: pw.Alignment.centerRight,
+              child: pw.Text(mOrderDetailList.tableNo ?? '--',
+                  style: getBoldTextStyle()),
+            ),
+          )),
+    ],
+  );
 }
 
 pw.Widget getItemRow(CartItem mCartItem) {
+  return pw.Column(
+    children: [
+      pw.Row(children: [
+        pw.Expanded(
+            flex: 2,
+            child: pw.Container(
+              padding: const pw.EdgeInsets.all(2.0),
+              child: pw.Align(
+                  alignment: pw.Alignment.centerLeft,
+                  child: pw.Column(
+                      crossAxisAlignment: pw.CrossAxisAlignment.start,
+                      mainAxisAlignment: pw.MainAxisAlignment.start,
+                      children: [
+                        pw.Text(mCartItem.mMenuItemData?.itemName ?? '',
+                            style: getBoldTextStyle()),
+                        pw.Text(
+                            mCartItem.mSelectVariantListData
+                                ?.quantitySpecification ??
+                                '',
+                            style: getNormalTextStyle()),
+                      ])),
+            )),
+        pw.Expanded(
+            flex: 1,
+            child: pw.Container(
+              padding: const pw.EdgeInsets.all(2.0),
+              child: pw.Align(
+                alignment: pw.Alignment.centerRight,
+                child: pw.Text('x${mCartItem.count}', style: getNormalTextStyle()),
+              ),
+            )),
+      ]),
+      (mCartItem.mSelectModifierList ?? []).isNotEmpty
+          ? pw.Row(children: [
+        pw.Expanded(
+            flex: 2,
+            child: getModifier((mCartItem.mSelectModifierList ?? []))),
+        pw.Expanded(
+            flex: 1,
+            child: pw.SizedBox()),
+      ])
+          : pw.SizedBox()
+    ]
+  );
+}
+
+pw.Widget getModifier(List<ModifierList> mModifierList) {
+  List<pw.Widget> widgets = List.empty(growable: true);
+  widgets.add(pw.SizedBox(height: 2));
+  for (ModifierList mModifierList in mModifierList) {
+    widgets.add(addModifierRow(mModifierList));
+  }
+  widgets.add(pw.SizedBox(height: 2));
+  return pw.Column(children: widgets);
+}
+
+pw.Widget addModifierRow(ModifierList mModifierList) {
   return pw.Row(children: [
     pw.Expanded(
         flex: 2,
         child: pw.Container(
-          padding: const pw.EdgeInsets.all(2.0),
           child: pw.Align(
             alignment: pw.Alignment.centerLeft,
-            child: pw.Text(mCartItem.mMenuItemData?.itemName ?? '',
+            child: pw.Text(mModifierList.modifierName ?? '',
                 style: getNormalTextStyle()),
           ),
         )),
     pw.Expanded(
         flex: 1,
         child: pw.Container(
-          padding: const pw.EdgeInsets.all(2.0),
-          child: pw.Align(
-            alignment: pw.Alignment.centerRight,
-            child: pw.Text('x${mCartItem.count}', style: getNormalTextStyle()),
-          ),
+
         )),
   ]);
 }

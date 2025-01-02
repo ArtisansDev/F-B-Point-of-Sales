@@ -1,4 +1,5 @@
 // ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/widgets.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';

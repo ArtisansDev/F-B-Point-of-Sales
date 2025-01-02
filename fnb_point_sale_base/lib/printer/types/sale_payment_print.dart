@@ -104,27 +104,115 @@ pw.Widget getTableRow(OrderHistoryData mOrderHistoryData) {
 
 ///item list
 pw.Widget getItemRow(OrderHistoryMenu mCartItem, String currencyData) {
+  return pw.Column(children: [
+    pw.Row(children: [
+      pw.Expanded(
+          flex: 3,
+          child: pw.Container(
+            padding: const pw.EdgeInsets.all(2.0),
+            child: pw.Align(
+                alignment: pw.Alignment.centerLeft,
+                child: pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    mainAxisAlignment: pw.MainAxisAlignment.start,
+                    children: [
+                      pw.Text(mCartItem.itemName ?? '',
+                          style: getBoldTextStyle()),
+                      pw.Text(
+                          '${mCartItem.itemVariantName ?? ''} ${(mCartItem.discountPercentage ?? 0.0) > 0 ? '(${(mCartItem.discountPercentage ?? 0.0)})%' : ""}',
+                          style: getNormalTextStyle()),
+                      (mCartItem.discountPercentage ?? 0.0) > 0
+                          ? pw.Row(children: [
+                        pw.Text(
+                            '$currencyData ${(mCartItem.variantPrice ?? 0.0).toString()}',
+                            style: getNormalTextStyleLineThrough()),
+                        pw.SizedBox(width: 3),
+                        pw.Text(
+                            '$currencyData  ${(mCartItem.itemDiscountPrice ?? 0.0).toString()}',
+                            style: getBoldTextStyle()),
+                      ])
+                          : pw.SizedBox(
+                        child: pw.Text(
+                            '$currencyData ${(mCartItem.variantPrice ?? 0.0).toString()}',
+                            style: getBoldTextStyle()),
+                      )
+                    ])),
+          )),
+      pw.Expanded(
+          flex: 1,
+          child: pw.Container(
+            padding: const pw.EdgeInsets.all(2.0),
+            child: pw.Align(
+              alignment: pw.Alignment.center,
+              child: pw.Text('x${mCartItem.quantity}',
+                  style: getNormalTextStyle()),
+            ),
+          )),
+      pw.Expanded(
+          flex: 2,
+          child: pw.Container(
+            padding: const pw.EdgeInsets.all(2.0),
+            child: pw.Align(
+              alignment: pw.Alignment.centerRight,
+              child: pw.Text(
+                  '$currencyData ${getDoubleValue(mCartItem.totalItemAmount).toStringAsFixed(2)}',
+                  style: getNormalTextStyle()),
+            ),
+          )),
+    ]),
+    (mCartItem.modifierData ?? []).isNotEmpty
+        ? pw.Row(children: [
+      pw.Expanded(
+          flex: 2,
+          child: getModifier(
+              (mCartItem.modifierData ?? []), currencyData)),
+      pw.Expanded(flex: 1, child: pw.SizedBox()),
+    ])
+        : pw.SizedBox(),
+    (mCartItem.itemTaxPercent ?? 0) > 0
+        ? pw.Row(children: [
+      pw.Expanded(
+          flex: 2,
+          child: pw.Row(children: [
+            pw.Expanded(
+                child: pw.Align(
+                    alignment: pw.Alignment.centerLeft,
+                    child: pw.Text('Tax (${mCartItem.itemTaxPercent}%)',
+                        style: getNormalTextStyle()))),
+            pw.Expanded(
+                child: pw.Align(
+                    alignment: pw.Alignment.centerRight,
+                    child: pw.Text('$currencyData ${mCartItem.itemTaxPrice}',
+                        style: getNormalTextStyle())))
+          ])),
+      pw.Expanded(flex: 1, child: pw.SizedBox()),
+    ])
+        : pw.SizedBox()
+  ]);
+}
+
+pw.Widget getModifier(List<ModifierData> mModifierList, String currencyData) {
+  List<pw.Widget> widgets = List.empty(growable: true);
+  widgets.add(pw.SizedBox(height: 2));
+  for (ModifierData mModifierList in mModifierList) {
+    widgets.add(addModifierRow(mModifierList, currencyData));
+  }
+  widgets.add(pw.SizedBox(height: 2));
+  return pw.Column(children: widgets);
+}
+
+pw.Widget addModifierRow(ModifierData mModifierList, String currencyData) {
   return pw.Row(children: [
     pw.Expanded(
-        flex: 3,
+        flex: 2,
         child: pw.Container(
-          padding: const pw.EdgeInsets.all(2.0),
           child: pw.Align(
             alignment: pw.Alignment.centerLeft,
-            child:
-                pw.Text(mCartItem.itemName ?? '', style: getNormalTextStyle()),
+            child: pw.Text(mModifierList.modifierName ?? '',
+                style: getNormalTextStyle()),
           ),
         )),
-    pw.Expanded(
-        flex: 1,
-        child: pw.Container(
-          padding: const pw.EdgeInsets.all(2.0),
-          child: pw.Align(
-            alignment: pw.Alignment.center,
-            child:
-                pw.Text('x${mCartItem.quantity}', style: getNormalTextStyle()),
-          ),
-        )),
+
     pw.Expanded(
         flex: 2,
         child: pw.Container(
@@ -132,10 +220,10 @@ pw.Widget getItemRow(OrderHistoryMenu mCartItem, String currencyData) {
           child: pw.Align(
             alignment: pw.Alignment.centerRight,
             child: pw.Text(
-                '$currencyData ${getDoubleValue(mCartItem.totalItemAmount).toStringAsFixed(2)}',
+                '$currencyData ${getDoubleValue(mModifierList.price).toStringAsFixed(2)}',
                 style: getNormalTextStyle()),
           ),
-        )),
+        ))
   ]);
 }
 

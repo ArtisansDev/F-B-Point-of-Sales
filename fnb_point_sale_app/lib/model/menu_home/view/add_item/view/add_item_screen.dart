@@ -84,8 +84,8 @@ class AddItemScreen extends GetView<AddItemController> {
                                         height: 5.sp,
                                       ),
                                       Text(
-                                        controller.mCartItem.value
-                                                ?.mMenuItemData?.description ??
+                                        controller.mCartItem.value?.mSelectVariantListData
+                                            ?.quantitySpecification ??
                                             '',
                                         style: getTextRegular(
                                           size: 10.5.sp,
@@ -349,24 +349,27 @@ class AddItemScreen extends GetView<AddItemController> {
                                                         )),
                                                     SizedBox(
                                                       width: 10.sp,
+                                                      height: 4.h,
                                                     ),
-                                                    Expanded(
-                                                        flex: 3,
-                                                        child: incDecView(
-                                                            count: mModifierList
-                                                                .count,
-                                                            priceIncDec:
-                                                                (value) {
-                                                              if (controller
-                                                                  .isSelectModifier(
-                                                                      mModifierList)) {
-                                                                controller
-                                                                    .priceModifierIncDec(
-                                                                        value,
-                                                                        index,
-                                                                        mModifierList);
-                                                              }
-                                                            })),
+                                                    // Expanded(
+                                                    //     flex: 3,
+                                                    //     child:
+                                                    //     incDecView(
+                                                    //         count: mModifierList
+                                                    //             .count,
+                                                    //         priceIncDec:
+                                                    //             (value) {
+                                                    //           if (controller
+                                                    //               .isSelectModifier(
+                                                    //                   mModifierList)) {
+                                                    //             controller
+                                                    //                 .priceModifierIncDec(
+                                                    //                     value,
+                                                    //                     index,
+                                                    //                     mModifierList);
+                                                    //           }
+                                                    //         })
+                                                    // ),
                                                     Expanded(
                                                         flex: 3,
                                                         child: Container(

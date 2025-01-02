@@ -26,7 +26,7 @@ class TableSelectScreen extends GetView<TableSelectController> {
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => TableSelectController());
-    controller.getAllCustomerList();
+    // controller.getAllCustomerList();
     return FocusDetector(
         onVisibilityGained: () {
           controller.setTableNumber(tableNumber);
@@ -40,7 +40,7 @@ class TableSelectScreen extends GetView<TableSelectController> {
                   : Platform.isWindows
                       ? 65.h
                       : 60.h,
-              width: 30.w,
+              width: 40.w,
               alignment: Alignment.topCenter,
               decoration: BoxDecoration(
                 color: ColorConstants.white,

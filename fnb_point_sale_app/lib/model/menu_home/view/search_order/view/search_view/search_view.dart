@@ -52,7 +52,7 @@ class SearchView extends GetView<SearchViewController> {
                   borderSideColor: Colors.transparent,
                   onFilteringTextInputFormatter: [
                     FilteringTextInputFormatter.allow(
-                        RegExp(AppUtilConstants.patternOnlyString)),
+                        RegExp(AppUtilConstants.patternStringAndSpace)),
                   ],
                 )),),
             GestureDetector(

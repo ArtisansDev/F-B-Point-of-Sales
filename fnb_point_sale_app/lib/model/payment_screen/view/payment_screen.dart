@@ -23,11 +23,11 @@ class PaymentScreen extends GetView<PaymentScreenController> {
   final OrderPlace mOrderPlace;
   final Function onPayment;
 
-  const PaymentScreen(this.mOrderPlace, {super.key,required this.onPayment});
+  const PaymentScreen(this.mOrderPlace, {super.key, required this.onPayment});
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => PaymentScreenController(mOrderPlace,onPayment));
+    Get.lazyPut(() => PaymentScreenController(mOrderPlace, onPayment));
     return FocusDetector(
         onVisibilityGained: () {},
         onVisibilityLost: () {},
@@ -95,7 +95,6 @@ class PaymentScreen extends GetView<PaymentScreenController> {
                   height: 20.sp,
                   margin: EdgeInsets.only(
                       left: 13.sp, right: 13.sp, bottom: 10.sp, top: 11.sp),
-
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(35.sp),
@@ -104,7 +103,8 @@ class PaymentScreen extends GetView<PaymentScreenController> {
                         color: Colors.grey.withOpacity(0.22),
                         spreadRadius: 3,
                         blurRadius: 5,
-                        offset: const Offset(0, 0), // changes position of shadow
+                        offset:
+                            const Offset(0, 0), // changes position of shadow
                       ),
                     ], // use instead of BorderRadius.all(Radius.circular(20))
                   ),
@@ -112,33 +112,41 @@ class PaymentScreen extends GetView<PaymentScreenController> {
                     controller: controller.phoneNumberController.value,
                     showFloatingLabel: false,
                     isPhone: true,
+                    isReadOnly: true,
                     sPrefixText: controller.phoneCode.value,
                     placeHolder: sPhoneNumber.tr,
                     topPadding: 5.sp,
-                    prefixPadding:11.sp,
+                    prefixPadding: 11.sp,
                     hintTextSize: 11.sp,
                     textSize: 11.sp,
                     onClick: (value) {
-                      if (value == 'prefixIcon') {
-                        showCountryPicker(
-                          context: Get.context!,
-                          countryListTheme: CountryListThemeData(
-                            backgroundColor: Colors.white,
-                            textStyle:
-                            getText500(colors: ColorConstants.black, size: 12.sp),
-                            bottomSheetHeight: 69.h,
-                            // Optional. Country list modal height
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(8.sp),
-                              topRight: Radius.circular(8.sp),
+                      if ((controller
+                                  .mOrderPlace.value?.mSelectCustomer?.name ??
+                              '')
+                          .isEmpty) {
+                        if (value == 'prefixIcon') {
+                          showCountryPicker(
+                            context: Get.context!,
+                            countryListTheme: CountryListThemeData(
+                              backgroundColor: Colors.white,
+                              textStyle: getText500(
+                                  colors: ColorConstants.black, size: 12.sp),
+                              bottomSheetHeight: 69.h,
+                              // Optional. Country list modal height
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(8.sp),
+                                topRight: Radius.circular(8.sp),
+                              ),
                             ),
-                          ),
-                          showPhoneCode: true,
-                          // optional. Shows phone code before the country name.
-                          onSelect: (Country country) {
-                            controller.phoneCode.value = country.phoneCode;
-                          },
-                        );
+                            showPhoneCode: true,
+                            // optional. Shows phone code before the country name.
+                            onSelect: (Country country) {
+                              controller.phoneCode.value = country.phoneCode;
+                            },
+                          );
+                        } else {
+                          controller.getAllCustomer(showCustomer: true);
+                        }
                       }
                     },
                     hintText: sPhoneNumber.tr,
@@ -161,6 +169,10 @@ class PaymentScreen extends GetView<PaymentScreenController> {
                     child: TextInputWidget(
                       placeHolder: sEnterName.tr,
                       controller: controller.nameController.value,
+                      isReadOnly: (controller
+                                  .mOrderPlace.value?.mSelectCustomer?.name ??
+                              '')
+                          .isNotEmpty,
                       errorText: null,
                       textInputType: TextInputType.emailAddress,
                       hintText: sEnterName.tr,
@@ -174,7 +186,6 @@ class PaymentScreen extends GetView<PaymentScreenController> {
                             RegExp(AppUtilConstants.patternOnlyString)),
                       ],
                     )),
-
 
                 // Container(
                 //     height: 19.5.sp,
@@ -243,11 +254,15 @@ class PaymentScreen extends GetView<PaymentScreenController> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             padding: EdgeInsets.zero,
-                            itemCount:
-                            (controller.mDashboardScreenController.value?.taxData ?? []).length,
+                            itemCount: (controller.mDashboardScreenController
+                                        .value?.taxData ??
+                                    [])
+                                .length,
                             itemBuilder: (BuildContext context, int index) {
-                              TaxData mTaxData =
-                              (controller.mDashboardScreenController.value?.taxData ??
+                              TaxData mTaxData = (controller
+                                      .mDashboardScreenController
+                                      .value
+                                      ?.taxData ??
                                   [])[index];
                               return Column(
                                 children: [
@@ -255,26 +270,25 @@ class PaymentScreen extends GetView<PaymentScreenController> {
                                       // margin: EdgeInsets.all(
                                       //   8.sp,
                                       // ),
-                                      padding: EdgeInsets.only(
-                                          bottom: 5.sp),
+                                      padding: EdgeInsets.only(bottom: 5.sp),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
                                               '${mTaxData.taxName ?? ''}+ (${mTaxData.taxPercentage}%)',
-
                                               style: getText600(
                                                 size: 10.sp,
-                                                colors: ColorConstants.cAppCancelDilogColour,
-                                              )
-                                          ),
+                                                colors: ColorConstants
+                                                    .cAppCancelDilogColour,
+                                              )),
                                           Text(
                                               '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${calculatePercentageOf(getDoubleValue(controller.mOrderPlace.value?.subTotalPrice ?? 0), getDoubleValue(mTaxData.taxPercentage)).toStringAsFixed(2)}',
-                                              style:getText600(
+                                              style: getText600(
                                                 size: 10.sp,
-                                                colors: ColorConstants.cAppCancelDilogColour,
-                                              )
-                                          ),
+                                                colors: ColorConstants
+                                                    .cAppCancelDilogColour,
+                                              )),
                                         ],
                                       )),
                                   // Container(

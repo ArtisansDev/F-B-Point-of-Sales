@@ -73,7 +73,9 @@ class PaymentOrderList extends StatelessWidget {
                                     colors: ColorConstants.black),
                               ),
                               Text(
-                                mCartItem.mMenuItemData?.description ?? '',
+                                mCartItem.mSelectVariantListData
+                                    ?.quantitySpecification ??
+                                    '',
                                 maxLines: 1,
                                 style: getText300(
                                     size: 10.5.sp,

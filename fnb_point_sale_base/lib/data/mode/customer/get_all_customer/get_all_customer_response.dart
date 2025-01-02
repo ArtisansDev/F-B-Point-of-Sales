@@ -171,6 +171,13 @@ class GetAllCustomerList {
 
   String? get address => _address;
 
+  setPhoneCountryCode(String phoneCountryCode){
+    this._phoneCountryCode = phoneCountryCode;
+  }
+  setName(String name){
+    this._name = name;
+  }
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['SrNo'] = _srNo;

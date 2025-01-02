@@ -136,7 +136,7 @@ class TextInputWidget extends StatelessWidget {
               height: prefixHeight ?? 10.h,
               width: 5.w,
               decoration: BoxDecoration(
-                color: ColorConstants.appEditTextHint.withOpacity(0.75),
+                color: Colors.grey.shade300,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(8.sp),
                     bottomLeft: Radius.circular(8.sp)),

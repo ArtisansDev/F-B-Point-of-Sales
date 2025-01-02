@@ -5,15 +5,15 @@
 
 class GetAllModifierResponse {
   GetAllModifierResponse({
-      bool? error, 
-      int? statusCode, 
-      String? statusMessage, 
-      List<ModifierList>? data,}){
+    bool? error,
+    int? statusCode,
+    String? statusMessage,
+    List<ModifierList>? data,}) {
     _error = error;
     _statusCode = statusCode;
     _statusMessage = statusMessage;
     _data = data;
-}
+  }
 
   GetAllModifierResponse.fromJson(dynamic json) {
     _error = json['error'];
@@ -26,14 +26,18 @@ class GetAllModifierResponse {
       });
     }
   }
+
   bool? _error;
   int? _statusCode;
   String? _statusMessage;
   List<ModifierList>? _data;
 
   bool? get error => _error;
+
   int? get statusCode => _statusCode;
+
   String? get statusMessage => _statusMessage;
+
   List<ModifierList>? get data => _data;
 
   Map<String, dynamic> toJson() {
@@ -58,28 +62,30 @@ class GetAllModifierResponse {
 
 class ModifierList {
   ModifierList({
-      String? modifierIDP, 
-      String? modifierName, 
-      double? price, 
-      bool? isActive, 
-      bool? isDeleted, 
-      bool? isUpdated,}){
+    String? modifierIDP,
+    String? modifierName,
+    double? price,
+    bool? isActive,
+    bool? isDeleted,
+    bool? isUpdated,}) {
     _modifierIDP = modifierIDP;
     _modifierName = modifierName;
     _price = price;
     _isActive = isActive;
     _isDeleted = isDeleted;
     _isUpdated = isUpdated;
-}
+  }
 
   ModifierList.fromJson(dynamic json) {
     _modifierIDP = json['ModifierIDP'];
     _modifierName = json['ModifierName'];
+    _count = json['count'];
     _price = json['Price'];
     _isActive = json['IsActive'];
     _isDeleted = json['IsDeleted'];
     _isUpdated = json['IsUpdated'];
   }
+
   String? _modifierIDP;
   String? _modifierName;
   double? _price;
@@ -88,15 +94,22 @@ class ModifierList {
   bool? _isDeleted;
   bool? _isUpdated;
 
-  setCount(int count){
+  setCount(int count) {
     _count = count;
   }
+
   String? get modifierIDP => _modifierIDP;
+
   String? get modifierName => _modifierName;
+
   double? get price => _price;
+
   int? get count => _count;
+
   bool? get isActive => _isActive;
+
   bool? get isDeleted => _isDeleted;
+
   bool? get isUpdated => _isUpdated;
 
   Map<String, dynamic> toJson() {

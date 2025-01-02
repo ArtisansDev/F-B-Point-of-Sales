@@ -111,6 +111,13 @@ pw.TextStyle getNormalTextStyle() {
   return pw.TextStyle(fontWeight: pw.FontWeight.normal, fontSize: 8);
 }
 
+pw.TextStyle getNormalTextStyleLineThrough() {
+  return pw.TextStyle(
+    fontWeight: pw.FontWeight.normal,
+    fontSize: 8,
+    decoration: pw.TextDecoration.lineThrough,
+  );
+}
 
 pw.TextStyle getSmallTextStyle() {
   return pw.TextStyle(fontWeight: pw.FontWeight.normal, fontSize: 6);
@@ -210,7 +217,6 @@ pw.Widget getLeftRightTextBold(String text1, String text2) {
 //   return pwWidgets;
 // }
 
-
 pw.Widget barCodeWidget(String value, {bool? drawText = false}) {
   var shouldDrawText = false;
 
@@ -229,12 +235,8 @@ pw.Widget barCodeWidget(String value, {bool? drawText = false}) {
 pw.Widget qrCodeWidget(String value) {
   return pw.Center(
       child: pw.BarcodeWidget(
-          data: value,
-          barcode: Barcode.qrCode(),
-          width: 50,
-          height: 50));
+          data: value, barcode: Barcode.qrCode(), width: 50, height: 50));
 }
-
 
 pw.Widget mySeparator() {
   return pw.Container(

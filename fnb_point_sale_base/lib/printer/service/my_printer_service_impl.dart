@@ -14,6 +14,7 @@ import '../../locator.dart';
 import '../../utils/my_log_utils.dart';
 import '../types/order_payment_print.dart';
 import '../types/place_order_print.dart';
+import '../types/sale_aftre_payment_print.dart';
 import '../types/sale_payment_print.dart';
 import '../types/test_printing.dart';
 
@@ -24,8 +25,12 @@ class MyPrinterServiceImpl with MyPrinterService {
   }
 
   @override
-  Future<bool> saleOrderPayment(OrderDetailList mOrderDetailList){
-      return printOrderPayment(mOrderDetailList);
+  Future<bool> saleOrderPayment(OrderDetailList mOrderDetailList, OrderPlace mOrderPlace){
+      return printOrderPayment(mOrderDetailList,mOrderPlace);
+  }
+  @override
+  Future<bool> saleAfterPayment(OrderDetailList mOrderDetailList, OrderHistoryData mOrderPlace){
+      return printAftrePayment(mOrderDetailList,mOrderPlace);
   }
 
   @override

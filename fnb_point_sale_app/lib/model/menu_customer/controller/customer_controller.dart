@@ -93,7 +93,6 @@ class CustomerController extends GetxController {
           if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
             GetAllCustomerResponse mGetAllCustomerResponse =
                 mWebResponseSuccess.data;
-            final customerLocalApi = locator.get<CustomerLocalApi>();
             await customerLocalApi.save(mGetAllCustomerResponse);
 
             ///GetAllCustomerResponse

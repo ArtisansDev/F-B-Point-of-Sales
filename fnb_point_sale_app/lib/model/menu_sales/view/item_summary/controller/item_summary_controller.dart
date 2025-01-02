@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
+import 'package:fnb_point_sale_base/data/mode/customer/get_all_customer/get_all_customer_response.dart';
 import 'package:fnb_point_sale_base/data/mode/order_history/order_history_response.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_payment_type/get_all_payment_type_response.dart';
 import 'package:get/get.dart';
@@ -16,8 +17,7 @@ import '../../item_payment_screen/view/item_payment_screen.dart';
 class ItemSummaryController extends GetxController {
   Rxn<DashboardScreenController> mDashboardScreenController =
       Rxn<DashboardScreenController>();
-  MenuSalesController mMenuSalesController =
-  Get.find<MenuSalesController>();
+  MenuSalesController mMenuSalesController = Get.find<MenuSalesController>();
   Rx<TextEditingController> remarkController = TextEditingController().obs;
   Rx<OrderHistoryData> mOrderPlace = OrderHistoryData().obs;
 
@@ -35,9 +35,11 @@ class ItemSummaryController extends GetxController {
         Get.context!,
         ItemPaymentScreen(
           mOrderPlace.value,
-          onPayment: (GetAllPaymentTypeData mGetAllPaymentTypeData) {
+          onPayment: (GetAllPaymentTypeData mGetAllPaymentTypeData,
+              GetAllCustomerList? mGetAllCustomerList) {
             Get.back();
-            mMenuSalesController.orderPayment(mGetAllPaymentTypeData,mOrderPlace.value);
+            mMenuSalesController.orderPayment(
+                mGetAllPaymentTypeData, mOrderPlace.value, mGetAllCustomerList);
           },
         ),
         barrierDismissible: true);

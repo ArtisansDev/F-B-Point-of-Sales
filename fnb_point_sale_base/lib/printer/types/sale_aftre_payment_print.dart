@@ -6,12 +6,13 @@ import '../../data/local/database/configuration/configuration_local_api.dart';
 import '../../data/mode/cart_item/cart_item.dart';
 import '../../data/mode/cart_item/order_place.dart';
 import '../../data/mode/configuration/configuration_response.dart';
+import '../../data/mode/order_history/order_history_response.dart';
 import '../../data/mode/order_place/process_multiple_orders_request.dart';
 import '../../data/mode/product/get_all_modifier/get_all_modifier_response.dart';
 import '../../locator.dart';
 
-Future<bool> printOrderPayment(
-    OrderDetailList mOrderDetailList, OrderPlace mOrderPlace) async {
+Future<bool> printAftrePayment(
+    OrderDetailList mOrderDetailList, OrderHistoryData mOrderPlace) async {
   CurrencyData mCurrencyData = CurrencyData();
   var configurationLocalApi = locator.get<ConfigurationLocalApi>();
   mCurrencyData = ((await configurationLocalApi.getConfigurationResponse())
@@ -44,7 +45,7 @@ Future<bool> printOrderPayment(
   ///menu order
   int value = 0;
   for (OrderMenu element in (mOrderDetailList.orderMenu ?? [])) {
-    CartItem mCartItem = mOrderPlace.cartItem?[value] ?? CartItem();
+    OrderHistoryMenu mCartItem = mOrderPlace.orderMenu?[value] ?? OrderHistoryMenu();
     widgets.add(
         getItemRow(element, mCurrencyData.currencySymbol ?? '', mCartItem));
     value++;
@@ -110,7 +111,7 @@ pw.Widget getTableRow(OrderDetailList mOrderDetailList) {
 }
 
 ///item list
-pw.Widget getItemRow(OrderMenu mCartItem, String currencyData, CartItem mItem) {
+pw.Widget getItemRow(OrderMenu mCartItem, String currencyData, OrderHistoryMenu mItem) {
   return pw.Column(children: [
     pw.Row(children: [
       pw.Expanded(
@@ -167,48 +168,48 @@ pw.Widget getItemRow(OrderMenu mCartItem, String currencyData, CartItem mItem) {
             ),
           )),
     ]),
-    (mItem.mSelectModifierList ?? []).isNotEmpty
+    (mItem.modifierData ?? []).isNotEmpty
         ? pw.Row(children: [
             pw.Expanded(
                 flex: 2,
                 child: getModifier(
-                    (mItem.mSelectModifierList ?? []), currencyData)),
+                    (mItem.modifierData ?? []), currencyData)),
             pw.Expanded(flex: 1, child: pw.SizedBox()),
           ])
         : pw.SizedBox(),
     (mCartItem.itemTaxPercent ?? 0) > 0
         ? pw.Row(children: [
+      pw.Expanded(
+          flex: 2,
+          child: pw.Row(children: [
             pw.Expanded(
-                flex: 2,
-                child: pw.Row(children: [
-                  pw.Expanded(
-                      child: pw.Align(
-                          alignment: pw.Alignment.centerLeft,
-                          child: pw.Text('Tax (${mCartItem.itemTaxPercent}%)',
-                              style: getNormalTextStyle()))),
-                  pw.Expanded(
-                      child: pw.Align(
-                          alignment: pw.Alignment.centerRight,
-                          child: pw.Text('$currencyData ${mCartItem.itemTaxPrice}',
-                              style: getNormalTextStyle())))
-                ])),
-            pw.Expanded(flex: 1, child: pw.SizedBox()),
-          ])
+                child: pw.Align(
+                    alignment: pw.Alignment.centerLeft,
+                    child: pw.Text('Tax (${mCartItem.itemTaxPercent}%)',
+                        style: getNormalTextStyle()))),
+            pw.Expanded(
+                child: pw.Align(
+                    alignment: pw.Alignment.centerRight,
+                    child: pw.Text('$currencyData ${mCartItem.itemTaxPrice}',
+                        style: getNormalTextStyle())))
+          ])),
+      pw.Expanded(flex: 1, child: pw.SizedBox()),
+    ])
         : pw.SizedBox()
   ]);
 }
 
-pw.Widget getModifier(List<ModifierList> mModifierList, String currencyData) {
+pw.Widget getModifier(List<ModifierData> mModifierList, String currencyData) {
   List<pw.Widget> widgets = List.empty(growable: true);
   widgets.add(pw.SizedBox(height: 2));
-  for (ModifierList mModifierList in mModifierList) {
+  for (ModifierData mModifierList in mModifierList) {
     widgets.add(addModifierRow(mModifierList, currencyData));
   }
   widgets.add(pw.SizedBox(height: 2));
   return pw.Column(children: widgets);
 }
 
-pw.Widget addModifierRow(ModifierList mModifierList, String currencyData) {
+pw.Widget addModifierRow(ModifierData mModifierList, String currencyData) {
   return pw.Row(children: [
     pw.Expanded(
         flex: 2,
@@ -219,15 +220,7 @@ pw.Widget addModifierRow(ModifierList mModifierList, String currencyData) {
                 style: getNormalTextStyle()),
           ),
         )),
-    // pw.Expanded(
-    //     flex: 1,
-    //     child: pw.Container(
-    //       child: pw.Align(
-    //         alignment: pw.Alignment.centerRight,
-    //         child:
-    //             pw.Text('x${mModifierList.count}', style: getNormalTextStyle()),
-    //       ),
-    //     )),
+
     pw.Expanded(
         flex: 2,
         child: pw.Container(

@@ -14,7 +14,9 @@ mixin MyPrinterService {
 
   Future<bool> salePlaceOrder(OrderDetailList mOrderDetailList, OrderPlace mOrderPlace);
 
-  Future<bool> saleOrderPayment(OrderDetailList mOrderDetailList);
+  Future<bool> saleOrderPayment(OrderDetailList mOrderDetailList, OrderPlace mOrderPlace);
+
+  Future<bool> saleAfterPayment(OrderDetailList mOrderDetailList, OrderHistoryData mOrderPlace);
 
   Future<bool> salePayment(OrderHistoryData mOrderDetailList);
 

@@ -8,6 +8,7 @@ import 'package:fnb_point_sale_base/constants/web_constants.dart';
 import 'package:fnb_point_sale_base/data/local/database/offline_place_order/offline_place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
+import 'package:fnb_point_sale_base/data/mode/customer/get_all_customer/get_all_customer_response.dart';
 import 'package:fnb_point_sale_base/data/mode/order_place/process_multiple_orders_request.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_payment_type/get_all_payment_type_response.dart';
 import 'package:fnb_point_sale_base/data/remote/api_call/order_place/order_place_api.dart';
@@ -17,6 +18,7 @@ import 'package:fnb_point_sale_base/printer/service/my_printer_service.dart';
 import 'package:fnb_point_sale_base/utils/network_utils.dart';
 import 'package:fnb_point_sale_base/utils/tracking_order_id.dart';
 import 'package:get/get.dart';
+import '../../../../../../common_view/customer_drop_down.dart';
 import '../../../../../dashboard_screen/controller/dashboard_screen_controller.dart';
 import '../../../../../dashboard_screen/view/top_bar/controller/top_bar_controller.dart';
 import '../../../../../payment_screen/controller/payment_screen_controller.dart';
@@ -49,10 +51,13 @@ class TableSummaryController extends GetxController {
         Get.context!,
         PaymentScreen(
           mOrderPlace.value ?? OrderPlace(),
-          onPayment: (GetAllPaymentTypeData mSelectPaymentType) async {
+          onPayment: (GetAllPaymentTypeData mSelectPaymentType,GetAllCustomerList? mSelectCustomer) async {
             ///PaymentScreenController close
             Get.back();
             ///selectPayment type
+            if(mSelectCustomer!=null) {
+              mOrderPlace.value.mSelectCustomer = mSelectCustomer;
+            }
             debugPrint(
                 "mSelectPaymentType ----- ${jsonEncode(mSelectPaymentType)}");
 
@@ -70,7 +75,7 @@ class TableSummaryController extends GetxController {
             // await mPlaceOrderSaleLocalApi
             //     .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
 
-            await callSaveOrder(mOrderDetailList,isPayment: true);
+            await callSaveOrder(mOrderDetailList,mOrderPlace.value,isPayment: true);
 
 
             await mDashboardScreenController.onUpdateHoldSale();
@@ -89,7 +94,7 @@ class TableSummaryController extends GetxController {
   }
 
   ///SaveOrder
-  callSaveOrder(OrderDetailList mOrderDetailList,
+  callSaveOrder(OrderDetailList mOrderDetailList,OrderPlace mOrderPlace,
       {bool isPayment = false}) async {
     try {
       ///api product call
@@ -104,7 +109,7 @@ class TableSummaryController extends GetxController {
           await orderPlaceApi.postOrderPlace(mProcessMultipleOrdersRequest);
           if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
             ///print....
-            printOrderPayment(mOrderDetailList);
+            printOrderPayment(mOrderDetailList,mOrderPlace);
 
             ///remove from local data base
             if (isPayment) {
@@ -156,8 +161,9 @@ class TableSummaryController extends GetxController {
     }
   }
 
-  printOrderPayment(OrderDetailList mOrderDetailList) async {
+  printOrderPayment(OrderDetailList mOrderDetailList,OrderPlace mOrderPlace) async {
     final myPrinterService = locator.get<MyPrinterService>();
-      await myPrinterService.saleOrderPayment(mOrderDetailList);
+      await myPrinterService.saleOrderPayment(mOrderDetailList, mOrderPlace);
   }
+
 }

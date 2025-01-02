@@ -3,26 +3,24 @@
 ///31/12/24
 
 import 'dart:convert';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../data/local/database/configuration/configuration_local_api.dart';
 import '../data/local/shared_prefs/shared_prefs.dart';
-import '../data/mode/cart_item/cart_item.dart';
 import '../data/mode/configuration/configuration_response.dart';
+import '../data/mode/customer/get_all_customer/get_all_customer_response.dart';
 import '../data/mode/order_history/order_history_response.dart';
 import '../data/mode/order_place/process_multiple_orders_request.dart';
-import '../data/mode/product/get_all_modifier/get_all_modifier_response.dart';
 import '../data/mode/product/get_all_payment_type/get_all_payment_type_response.dart';
 import '../locator.dart';
-import 'date_time_utils.dart';
 import 'num_utils.dart';
 
 createOrderPlaceRequestFromOrderHistory(
     {String? remarksController,
     // String? orderDate,
     OrderHistoryData? mOrderPlace,
-    GetAllPaymentTypeData? printOrderPayment}) async {
+    GetAllPaymentTypeData? printOrderPayment,
+    GetAllCustomerList? mGetAllCustomerList}) async {
   var configurationLocalApi = locator.get<ConfigurationLocalApi>();
   ConfigurationResponse mConfigurationResponse =
       await configurationLocalApi.getConfigurationResponse() ??
@@ -106,6 +104,20 @@ createOrderPlaceRequestFromOrderHistory(
     }
   }
 
+  ///customer
+  if (mGetAllCustomerList == null) {
+    mGetAllCustomerList = GetAllCustomerList(
+      name: mOrderPlace?.name,
+      phoneNumber: mOrderPlace?.phoneNumber,
+      address: mOrderPlace?.address,
+      email: mOrderPlace?.email,
+      phoneCountryCode: mOrderPlace?.phoneCountryCode,
+      customerIDP: null,
+    );
+  }
+
+  /// sUserId
+  String sUserId = await SharedPrefs().getUserId();
   ///OrderPlaceRequest
   OrderDetailList mOrderDetailList = OrderDetailList(
       trackingOrderID: mOrderPlace?.trackingOrderID ?? '',
@@ -118,10 +130,10 @@ createOrderPlaceRequestFromOrderHistory(
       orderSource: "2",
       orderType: '1',
       branchIDF: mOrderPlace?.branchIDF,
-      userIDF: mOrderPlace?.userIDF,
-      restaurantIDF:mOrderPlace?.restaurantIDF,
+      userIDF: sUserId,///mOrderPlace?.userIDF,
+      restaurantIDF: mOrderPlace?.restaurantIDF,
       additionalNotes: mOrderPlace?.additionalNotes,
-      orderDate:mOrderPlace?.orderDate,
+      orderDate: mOrderPlace?.orderDate,
 
       ///quantityTotal
       quantityTotal: mOrderPlace?.quantityTotal,
@@ -139,7 +151,7 @@ createOrderPlaceRequestFromOrderHistory(
       grandTotal: mOrderPlace?.grandTotal,
 
       ///table no
-      tableNo: mOrderPlace?.tableNo??'',
+      tableNo: mOrderPlace?.tableNo ?? '',
       seatIDF: mOrderPlace?.seatIDF,
 
       ///orderTax
@@ -155,7 +167,14 @@ createOrderPlaceRequestFromOrderHistory(
       paymentStatus: printOrderPayment == null ? "P" : "S",
 
       ///orderPlaceGuestInfoRequest
-      paymentResponse: printOrderPayment == null ? null : [mPaymentResponse]);
+      paymentResponse: printOrderPayment == null ? null : [mPaymentResponse],
+
+      ///customer
+      name: mGetAllCustomerList.name,
+      email: mGetAllCustomerList.email,
+      phoneCountryCode: mGetAllCustomerList.phoneCountryCode,
+      phoneNumber: mGetAllCustomerList.phoneNumber,
+      customerIDF: mGetAllCustomerList.customerIDP);
 
   return mOrderDetailList;
 }

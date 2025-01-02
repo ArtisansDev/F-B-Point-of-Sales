@@ -117,7 +117,7 @@ class ItemPaymentTypeList extends StatelessWidget {
                                 child: Container(
                                     alignment: Alignment.centerRight,
                                     child: Text(
-                                      '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${(controller.mOrderPlace.value?.totalAmount ?? 0.0).toStringAsFixed(2)}',
+                                      '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${(controller.mOrderPlace.value?.totalAmount ?? 0.0).toStringAsFixed(2)}',
                                       style: getText500(
                                           size: 10.5.sp,
                                           colors: ColorConstants.black),

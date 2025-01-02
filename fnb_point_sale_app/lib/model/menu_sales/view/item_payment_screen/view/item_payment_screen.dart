@@ -113,6 +113,7 @@ class ItemPaymentScreen extends GetView<ItemPaymentScreenController> {
                     controller: controller.phoneNumberController.value,
                     showFloatingLabel: false,
                     isPhone: true,
+                    isReadOnly: true,
                     sPrefixText: controller.phoneCode.value,
                     placeHolder: sPhoneNumber.tr,
                     topPadding: 5.sp,
@@ -121,25 +122,39 @@ class ItemPaymentScreen extends GetView<ItemPaymentScreenController> {
                     textSize: 11.sp,
                     onClick: (value) {
                       if (value == 'prefixIcon') {
-                        showCountryPicker(
-                          context: Get.context!,
-                          countryListTheme: CountryListThemeData(
-                            backgroundColor: Colors.white,
-                            textStyle: getText500(
-                                colors: ColorConstants.black, size: 12.sp),
-                            bottomSheetHeight: 69.h,
-                            // Optional. Country list modal height
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(8.sp),
-                              topRight: Radius.circular(8.sp),
+                        if ((controller.mOrderPlace.value?.phoneCountryCode ??
+                                    '')
+                                .isEmpty &&
+                            (controller.mOrderPlace.value?.name ?? '')
+                                .isEmpty) {
+                          showCountryPicker(
+                            context: Get.context!,
+                            countryListTheme: CountryListThemeData(
+                              backgroundColor: Colors.white,
+                              textStyle: getText500(
+                                  colors: ColorConstants.black, size: 12.sp),
+                              bottomSheetHeight: 69.h,
+                              bottomSheetWidth: 40.w,
+                              // Optional. Country list modal height
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(8.sp),
+                                topRight: Radius.circular(8.sp),
+                              ),
                             ),
-                          ),
-                          showPhoneCode: true,
-                          // optional. Shows phone code before the country name.
-                          onSelect: (Country country) {
-                            controller.phoneCode.value = country.phoneCode;
-                          },
-                        );
+                            showPhoneCode: true,
+                            // optional. Shows phone code before the country name.
+                            onSelect: (Country country) {
+                              controller.phoneCode.value = country.phoneCode;
+                            },
+                          );
+                        }
+                      } else {
+                        if ((controller.mOrderPlace.value?.phoneNumber ?? '')
+                                .isEmpty &&
+                            (controller.mOrderPlace.value?.name ?? '')
+                                .isEmpty) {
+                          controller.getAllCustomer(showCustomer: true);
+                        }
                       }
                     },
                     hintText: sPhoneNumber.tr,
@@ -162,6 +177,8 @@ class ItemPaymentScreen extends GetView<ItemPaymentScreenController> {
                     child: TextInputWidget(
                       placeHolder: sEnterName.tr,
                       controller: controller.nameController.value,
+                      isReadOnly:
+                          (controller.mOrderPlace.value?.name ?? '').isNotEmpty,
                       errorText: null,
                       textInputType: TextInputType.emailAddress,
                       hintText: sEnterName.tr,
@@ -227,7 +244,7 @@ class ItemPaymentScreen extends GetView<ItemPaymentScreenController> {
                                 child: Align(
                               alignment: Alignment.centerRight,
                               child: Text(
-                                '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${(controller.mOrderPlace.value?.subTotal ?? 0).toStringAsFixed(2)}',
+                                '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${(controller.mOrderPlace.value?.subTotal ?? 0).toStringAsFixed(2)}',
                                 style: getText600(
                                   size: 10.sp,
                                   colors: ColorConstants.cAppCancelDilogColour,
@@ -243,16 +260,12 @@ class ItemPaymentScreen extends GetView<ItemPaymentScreenController> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             padding: EdgeInsets.zero,
-                            itemCount: (controller.mDashboardScreenController
-                                        .value?.taxData ??
-                                    [])
-                                .length,
+                            itemCount:
+                                (controller.mDashboardScreenController.taxData)
+                                    .length,
                             itemBuilder: (BuildContext context, int index) {
                               TaxData mTaxData = (controller
-                                      .mDashboardScreenController
-                                      .value
-                                      ?.taxData ??
-                                  [])[index];
+                                  .mDashboardScreenController.taxData)[index];
                               return Column(
                                 children: [
                                   Container(
@@ -272,7 +285,7 @@ class ItemPaymentScreen extends GetView<ItemPaymentScreenController> {
                                                     .cAppCancelDilogColour,
                                               )),
                                           Text(
-                                              '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${calculatePercentageOf(getDoubleValue(controller.mOrderPlace.value?.subTotal ?? 0), getDoubleValue(mTaxData.taxPercentage)).toStringAsFixed(2)}',
+                                              '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${calculatePercentageOf(getDoubleValue(controller.mOrderPlace.value?.subTotal ?? 0), getDoubleValue(mTaxData.taxPercentage)).toStringAsFixed(2)}',
                                               style: getText600(
                                                 size: 10.sp,
                                                 colors: ColorConstants
@@ -308,7 +321,7 @@ class ItemPaymentScreen extends GetView<ItemPaymentScreenController> {
                                 child: Align(
                               alignment: Alignment.centerRight,
                               child: Text(
-                                '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${(controller.mOrderPlace.value?.totalAmount ?? 0.0).toStringAsFixed(2)}',
+                                '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${(controller.mOrderPlace.value?.totalAmount ?? 0.0).toStringAsFixed(2)}',
                                 style: getText600(
                                   size: 10.5.sp,
                                   colors: ColorConstants.cAppCancelDilogColour,
