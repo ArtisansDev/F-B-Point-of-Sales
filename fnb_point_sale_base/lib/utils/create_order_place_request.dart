@@ -65,7 +65,9 @@ createOrderPlaceRequestFromOrderHistory(
         itemTotalTaxPrice: mCartItem.itemTotalTaxPrice,
 
         ///Total
-        totalItemAmount: mCartItem.totalItemAmount);
+        totalItemAmount: mCartItem.totalItemAmount,
+        itemAdditionalNotes: mCartItem.itemAdditionalNotes
+    );
     debugPrint("\nmOrderMenu:   ${jsonEncode(mOrderMenu)}\n");
     orderMenu.add(mOrderMenu);
   }
@@ -117,7 +119,7 @@ createOrderPlaceRequestFromOrderHistory(
   }
 
   /// sUserId
-  String sUserId = await SharedPrefs().getUserId();
+  String sCounterBalanceHistoryIDF = await SharedPrefs().getHistoryID();
   ///OrderPlaceRequest
   OrderDetailList mOrderDetailList = OrderDetailList(
       trackingOrderID: mOrderPlace?.trackingOrderID ?? '',
@@ -127,13 +129,14 @@ createOrderPlaceRequestFromOrderHistory(
               : (mConfigurationResponse.configurationData?.counterData ?? [])
                   .first
                   .counterIDP,
-      orderSource: "2",
-      orderType: '1',
+      orderSource: (mOrderPlace?.orderSource??2).toString(),
+      orderType: (mOrderPlace?.orderType??2).toString(),
       branchIDF: mOrderPlace?.branchIDF,
-      userIDF: sUserId,///mOrderPlace?.userIDF,
+      userIDF: mOrderPlace?.userIDF,///mOrderPlace?.userIDF,
       restaurantIDF: mOrderPlace?.restaurantIDF,
       additionalNotes: mOrderPlace?.additionalNotes,
       orderDate: mOrderPlace?.orderDate,
+      counterBalanceHistoryIDF:sCounterBalanceHistoryIDF,
 
       ///quantityTotal
       quantityTotal: mOrderPlace?.quantityTotal,

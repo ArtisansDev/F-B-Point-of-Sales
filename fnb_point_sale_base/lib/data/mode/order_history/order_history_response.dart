@@ -552,6 +552,7 @@ class OrderHistoryMenu {
   OrderHistoryMenu({
     String? menuItemIDF,
     String? variantIDF,
+    String? itemAdditionalNotes,
     int? quantity,
     double? discountPercentage,
     String? itemName,
@@ -573,6 +574,7 @@ class OrderHistoryMenu {
   }) {
     _menuItemIDF = menuItemIDF;
     _variantIDF = variantIDF;
+    _itemAdditionalNotes = itemAdditionalNotes;
     _quantity = quantity;
     _discountPercentage = discountPercentage;
     _itemName = itemName;
@@ -596,6 +598,7 @@ class OrderHistoryMenu {
   OrderHistoryMenu.fromJson(dynamic json) {
     _menuItemIDF = json['MenuItemIDF'];
     _variantIDF = json['VariantIDF'];
+    _itemAdditionalNotes = json['ItemAdditionalNotes'];
     _quantity = json['Quantity'];
     _discountPercentage = json['DiscountPercentage'];
     _itemName = json['ItemName'];
@@ -623,6 +626,7 @@ class OrderHistoryMenu {
 
   String? _menuItemIDF;
   String? _variantIDF;
+  String? _itemAdditionalNotes;
   int? _quantity;
   double? _discountPercentage;
   String? _itemName;
@@ -645,6 +649,8 @@ class OrderHistoryMenu {
   String? get menuItemIDF => _menuItemIDF;
 
   String? get variantIDF => _variantIDF;
+
+  String? get itemAdditionalNotes => _itemAdditionalNotes;
 
   int? get quantity => _quantity;
 
@@ -686,6 +692,7 @@ class OrderHistoryMenu {
     final map = <String, dynamic>{};
     map['MenuItemIDF'] = _menuItemIDF;
     map['VariantIDF'] = _variantIDF;
+    map['ItemAdditionalNotes'] = _itemAdditionalNotes;
     map['Quantity'] = _quantity;
     map['DiscountPercentage'] = _discountPercentage;
     map['ItemName'] = _itemName;

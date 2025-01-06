@@ -12,6 +12,7 @@ class ShiftDetailsScreen extends GetView<ShiftDetailsController> {
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => ShiftDetailsController());
+    controller.getAllDetails();
     return FocusDetector(
         onVisibilityGained: () {},
         onVisibilityLost: () {},

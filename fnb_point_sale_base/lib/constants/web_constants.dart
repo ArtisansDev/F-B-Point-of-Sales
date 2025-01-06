@@ -68,5 +68,8 @@ class WebConstants {
   /// order place
   static String actionPOSOrder =  "POSOrder/ProcessMultipleOrders";
   static String actionPOSOrderHistory =  "POSOrder/GetOrderHistory";
+  ///Balance
+  static String actionUpdateOpeningBalance =  "Counter/UpdateOpeningBalance";
+  static String actionUpdateClosingBalance =  "Counter/updateClosingBalance";
 
 }

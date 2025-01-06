@@ -431,7 +431,7 @@ class AddItemScreen extends GetView<AddItemController> {
                                   ColorConstants.black.withOpacity(0.80),
                               onFilteringTextInputFormatter: [
                                 FilteringTextInputFormatter.allow(
-                                    RegExp(AppUtilConstants.patternOnlyString)),
+                                    RegExp(AppUtilConstants.patternStringAndSpace)),
                               ],
                             )),
 

@@ -37,6 +37,21 @@ class SharedPrefs {
     return  "";
   }
 
+  /// HistoryID
+  Future<void> setHistoryID(String? sHistoryID) async {
+    /// debugPrint("setToken $bearerToken");
+    sharedPreferences!.setString(PrefConstants.sHistoryID, sHistoryID ?? "");
+  }
+
+  Future<String> getHistoryID() async {
+    String value = sharedPreferences!.getString(PrefConstants.sHistoryID) ?? "";
+    if (value.isNotEmpty) {
+      return value;
+    }
+    return  "";
+  }
+
+
   /// userId
   Future<void> setUserId(String? userId) async {
     /// debugPrint("setToken $bearerToken");

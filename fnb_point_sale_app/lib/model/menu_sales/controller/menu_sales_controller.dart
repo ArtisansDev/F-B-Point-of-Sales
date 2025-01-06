@@ -45,7 +45,15 @@ class MenuSalesController extends GetxController {
   TopBarController mTopBarController = Get.find<TopBarController>();
 
   Rx<TextEditingController> searchController = TextEditingController().obs;
-  RxString selectType = sAll.tr.obs;
+  RxString selectType = 'Select Type'.obs;
+  RxList<String> selectTypeList = <String>[sAll.tr,sDine_In.tr,sTake_Away.tr].obs;
+
+  RxString selectOrderSourceType = 'Select Source'.obs;
+  RxList<String> orderSourceList = <String>[sAll.tr,'Mobile App','From Pos','From Web'].obs;
+
+  RxString selectPaymentStatus = 'Payment Status'.obs;
+  RxList<String> paymentStatusList = <String>[sAll.tr,'Success','Pending','Fail'].obs;
+
   Rx<TextEditingController> sSelectDateRangeController =
       TextEditingController().obs;
   DateRangeModel? selectedDateRange;
@@ -165,11 +173,13 @@ class MenuSalesController extends GetxController {
 
   ///api call
   RxInt pageNumber = 1.obs;
+  RxInt orderSource = 0.obs;
   RxInt totalPageNumber = 0.obs;
   RxList<OrderHistoryData> mOrderHistoryData = <OrderHistoryData>[].obs;
   RxString sLoading = 'Loading...'.obs;
   int orderType = 0;
   RxString search = "".obs;
+  Rxn<String> paymentStatus = Rxn<String>();
 
   callOrderHistory({
     String trackingOrderID = "",
@@ -198,6 +208,8 @@ class MenuSalesController extends GetxController {
                           .counterIDP,
               pageNumber: pageNumber.value,
               searchValue: search.value,
+              orderSource: orderSource.value.toString(),
+              paymentStatus: paymentStatus.value,
               fromDate: selectedDateRange == null
                   ? ""
                   : getUTCValue(selectedDateRange?.start ?? DateTime.now()),

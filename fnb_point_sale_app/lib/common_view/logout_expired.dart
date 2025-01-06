@@ -20,6 +20,8 @@ import 'package:fnb_point_sale_base/data/local/shared_prefs/shared_prefs.dart';
 
 logout() async {
   await SharedPrefs().setUserToken('');
+  await SharedPrefs().setUserId('');
+  await SharedPrefs().setHistoryID('');
   Get.delete<DashboardScreenController>();
   Get.offAllNamed(
     RouteConstants.rLoginScreen,

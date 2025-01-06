@@ -30,6 +30,7 @@ class ProcessMultipleOrdersRequest {
   }
 }
 
+/// CounterBalanceHistoryIDF : "E24C92B9-2D3E-41A3-98A9-6BC509EC12F7"
 /// TrackingOrderID : "E24C92B9-2D3E-41A3-98A9-6BC509EC12F7"
 /// RestaurantIDF : "0D74BFA1-AF7D-4182-835B-B815C2972591"
 /// CounterIDF : "0E75BFA1-AF7D-4182-835B-B815C2972591"
@@ -65,6 +66,7 @@ class ProcessMultipleOrdersRequest {
 
 class OrderDetailList {
   OrderDetailList({
+    String? counterBalanceHistoryIDF,
     String? trackingOrderID,
     String? restaurantIDF,
     String? counterIDF,
@@ -98,6 +100,7 @@ class OrderDetailList {
     String? userIDF,
     String? customerIDF,
   }) {
+    _counterBalanceHistoryIDF = counterBalanceHistoryIDF;
     _trackingOrderID = trackingOrderID;
     _restaurantIDF = restaurantIDF;
     _counterIDF = counterIDF;
@@ -133,6 +136,7 @@ class OrderDetailList {
   }
 
   OrderDetailList.fromJson(dynamic json) {
+    _counterBalanceHistoryIDF = json['CounterBalanceHistoryIDF'];
     _trackingOrderID = json['TrackingOrderID'];
     _restaurantIDF = json['RestaurantIDF'];
     _counterIDF = json['CounterIDF'];
@@ -182,6 +186,7 @@ class OrderDetailList {
     _customerIDF = json['CustomerIDF'];
   }
 
+  String? _counterBalanceHistoryIDF;
   String? _trackingOrderID;
   String? _restaurantIDF;
   String? _counterIDF;
@@ -214,6 +219,8 @@ class OrderDetailList {
   String? _phoneCountryCode;
   String? _userIDF;
   String? _customerIDF;
+
+  String? get counterBalanceHistoryIDF => _counterBalanceHistoryIDF;
 
   String? get trackingOrderID => _trackingOrderID;
 
@@ -281,6 +288,7 @@ class OrderDetailList {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['CounterBalanceHistoryIDF'] = _counterBalanceHistoryIDF;
     map['TrackingOrderID'] = _trackingOrderID;
     map['RestaurantIDF'] = _restaurantIDF;
     map['CounterIDF'] = _counterIDF;
@@ -463,11 +471,13 @@ class OrderTax {
 /// ItemModifierTotal : 60
 /// ItemDiscountPriceTotal : 950
 /// TotalItemAmount : 1036
+/// ItemAdditionalNotes : "crvrvftr"
 
 class OrderMenu {
   OrderMenu({
     String? menuItemIDF,
     String? variantIDF,
+    String? itemAdditionalNotes,
     int? quantity,
     double? discountPercentage,
     String? itemName,
@@ -488,6 +498,7 @@ class OrderMenu {
   }) {
     _menuItemIDF = menuItemIDF;
     _variantIDF = variantIDF;
+    _itemAdditionalNotes = itemAdditionalNotes;
     _quantity = quantity;
     _discountPercentage = discountPercentage;
     _itemName = itemName;
@@ -510,6 +521,7 @@ class OrderMenu {
   OrderMenu.fromJson(dynamic json) {
     _menuItemIDF = json['MenuItemIDF'];
     _variantIDF = json['VariantIDF'];
+    _itemAdditionalNotes = json['ItemAdditionalNotes'];
     _quantity = json['Quantity'];
     _discountPercentage = json['DiscountPercentage'];
     _itemName = json['ItemName'];
@@ -531,6 +543,7 @@ class OrderMenu {
 
   String? _menuItemIDF;
   String? _variantIDF;
+  String? _itemAdditionalNotes;
   int? _quantity;
   double? _discountPercentage;
   String? _itemName;
@@ -552,6 +565,8 @@ class OrderMenu {
   String? get menuItemIDF => _menuItemIDF;
 
   String? get variantIDF => _variantIDF;
+
+  String? get itemAdditionalNotes => _itemAdditionalNotes;
 
   int? get quantity => _quantity;
 
@@ -591,6 +606,7 @@ class OrderMenu {
     final map = <String, dynamic>{};
     map['MenuItemIDF'] = _menuItemIDF;
     map['VariantIDF'] = _variantIDF;
+    map['ItemAdditionalNotes'] = _itemAdditionalNotes;
     map['Quantity'] = _quantity;
     map['DiscountPercentage'] = _discountPercentage;
     map['ItemName'] = _itemName;

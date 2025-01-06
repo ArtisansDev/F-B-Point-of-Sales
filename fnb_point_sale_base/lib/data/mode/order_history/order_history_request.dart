@@ -1,11 +1,13 @@
 /// RowsPerPage : 20
 /// PageNumber : 1
 /// CounterIDF : "0E75BFA1-AF7D-4182-835B-B815C2972591"
-/// OrderType : 0
+/// "OrderType": 0 , //0 for all, 1 for Dine in, 2 for Take away,
 /// TrackingOrderID : ""
 /// SearchValue : ""
 /// FromDate : ""
 /// ToDate : ""
+/// "OrderSource": 0 , //0 for all, 1 App, 2 POS, 3 Web,
+/// "PaymentStatus": null //S - success, P - Pending, F - Fail
 
 class OrderHistoryRequest {
   OrderHistoryRequest({
@@ -16,7 +18,10 @@ class OrderHistoryRequest {
     String? trackingOrderID,
     String? searchValue,
     String? fromDate, //utc
-    String? toDate,}) {
+    String? toDate,
+    String? orderSource,
+    String? paymentStatus,
+  }) {
     _rowsPerPage = rowsPerPage;
     _pageNumber = pageNumber;
     _counterIDF = counterIDF;
@@ -25,6 +30,8 @@ class OrderHistoryRequest {
     _searchValue = searchValue;
     _fromDate = fromDate;
     _toDate = toDate;
+    _orderSource = orderSource;
+    _paymentStatus = paymentStatus;
   }
 
   OrderHistoryRequest.fromJson(dynamic json) {
@@ -36,6 +43,8 @@ class OrderHistoryRequest {
     _searchValue = json['SearchValue'];
     _fromDate = json['FromDate'];
     _toDate = json['ToDate'];
+    _orderSource = json['OrderSource'];
+    _paymentStatus = json['PaymentStatus'];
   }
 
   int? _rowsPerPage;
@@ -46,6 +55,8 @@ class OrderHistoryRequest {
   String? _searchValue;
   String? _fromDate;
   String? _toDate;
+  String? _orderSource;
+  String? _paymentStatus;
 
   int? get rowsPerPage => _rowsPerPage;
 
@@ -63,12 +74,18 @@ class OrderHistoryRequest {
 
   String? get toDate => _toDate;
 
+  String? get orderSource => _orderSource;
+
+  String? get paymentStatus => _paymentStatus;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['RowsPerPage'] = _rowsPerPage;
     map['PageNumber'] = _pageNumber;
     map['CounterIDF'] = _counterIDF;
     map['OrderType'] = _orderType;
+    map['OrderSource'] = _orderSource;
+    map['PaymentStatus'] = _paymentStatus;
     if ((_trackingOrderID ?? "").isEmpty) {
       map['TrackingOrderID'] = null;
     } else {

@@ -10,15 +10,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38947a7c-9f2f-41ac-986f-38186cf8d673" name="Changes" comment="add printer">
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/profile/controller/profile_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/profile/view/profile_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/dashboard_screen/view/top_bar/controller/top_bar_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/dashboard_screen/view/top_bar/controller/top_bar_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/dashboard_screen/view/top_bar/view/top_bar_profile_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/dashboard_screen/view/top_bar/view/top_bar_profile_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/dashboard_screen/view/top_bar/view/top_bar_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/dashboard_screen/view/top_bar/view/top_bar_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_home/view/selected_order/controller/selected_order_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_home/view/selected_order/controller/selected_order_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_home/view/selected_order/view/selected_order_bottom_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_home/view/selected_order/view/selected_order_bottom_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/controller/menu_sales_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/controller/menu_sales_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/view/item_summary/view/item_summary_bottom_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/view/item_summary/view/item_summary_bottom_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/view/top_search_view/search_date_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/view/top_search_view/search_date_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/controller/shift_details_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/controller/shift_details_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/view/details/controller/details_screen_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/view/details/controller/details_screen_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/view/details/view/user_info_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/view/details/view/user_info_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/view/shift_details_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/view/shift_details_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_table/view/table_view/table_summary/view/table_summary_bottom_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_table/view/table_view/table_summary/view/table_summary_bottom_view.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/data/mode/order_history/order_history_request.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/mode/order_history/order_history_request.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/data/mode/order_history/order_history_response.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/mode/order_history/order_history_response.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/data/mode/order_place/process_multiple_orders_request.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/mode/order_place/process_multiple_orders_request.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/printer/types/order_payment_print.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/printer/types/order_payment_print.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/printer/types/place_order_print.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/printer/types/place_order_print.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/printer/types/sale_aftre_payment_print.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/printer/types/sale_aftre_payment_print.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/printer/types/sale_payment_print.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/printer/types/sale_payment_print.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/create_order_place_request.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/create_order_place_request.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/tracking_order_id.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/tracking_order_id.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

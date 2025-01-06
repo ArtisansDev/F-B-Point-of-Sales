@@ -33,7 +33,7 @@ class SelectedOrderBottomView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Visibility(
-        visible: controller.mOrderPlace.value != null,
+        visible: (controller.mOrderPlace.value?.cartItem??[]).isNotEmpty,
         child: Column(children: [
           ///Sub Total
           Container(
@@ -141,10 +141,11 @@ class SelectedOrderBottomView extends StatelessWidget {
               margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
               height: 19.5.sp,
               child: TextInputWidget(
-                isReadOnly: controller.remarkController.value.text.isNotEmpty,
-                textColor: controller.remarkController.value.text.isEmpty
-                    ? Colors.black
-                    : Colors.grey,
+               // isReadOnly: controller.remarkController.value.text.isNotEmpty,
+                textColor:Colors.black,
+                // controller.remarkController.value.text.isEmpty
+                //     ? Colors.black
+                //     : Colors.grey,
                 placeHolder: sRemark.tr,
                 controller: controller.remarkController.value,
                 errorText: null,
@@ -157,7 +158,7 @@ class SelectedOrderBottomView extends StatelessWidget {
                 textSize: 11.5.sp,
                 onFilteringTextInputFormatter: [
                   FilteringTextInputFormatter.allow(
-                      RegExp(AppUtilConstants.patternOnlyString)),
+                      RegExp(AppUtilConstants.patternStringAndSpace)),
                 ],
               )),
 

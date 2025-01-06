@@ -52,6 +52,7 @@ const String sReserveNow = "Reserve Now";
 const String sAddItem = "Add Item";
 const String sCreateOrder = "Create Order";
 const String sPrintInvoice = "Print Invoice";
+const String sShiftClose = "Shift Close";
 const String sPayInvoice = "PAY & PRINT INVOICE";
 const String sSelectOrder = "Select Order";
 const String sOrderDetails = "Order Details";

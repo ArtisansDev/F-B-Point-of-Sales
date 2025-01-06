@@ -35,6 +35,8 @@ import 'data/local/database/table_list/table_list_local_api.dart';
 import 'data/local/database/table_list/table_list_local_api_impl.dart';
 import 'data/local/database/variant/variant_local_api.dart';
 import 'data/local/database/variant/variant_local_api_impl.dart';
+import 'data/remote/api_call/balance/balance_api.dart';
+import 'data/remote/api_call/balance/balance_api_impl.dart';
 import 'data/remote/api_call/customer/customer_api.dart';
 import 'data/remote/api_call/customer/customer_api_impl.dart';
 import 'data/remote/api_call/login/login_api.dart';
@@ -107,6 +109,7 @@ void setupLocator() {
   locator.registerLazySingleton<ProductApi>(() => ProductApiImpl());
   locator.registerLazySingleton<CustomerApi>(() => CustomerApiImpl());
   locator.registerLazySingleton<OrderPlaceApi>(() => OrderPlaceApiImpl());
+  locator.registerLazySingleton<BalanceApi>(() => BalanceApiImpl());
 
   /// Services
   locator.registerLazySingleton<MyPrinterService>(() => MyPrinterServiceImpl());

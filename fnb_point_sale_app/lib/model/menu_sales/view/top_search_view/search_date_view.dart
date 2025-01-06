@@ -10,6 +10,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fnb_point_sale_base/common/dropdown_button_view/dropdown_button2.dart';
 import 'package:fnb_point_sale_base/common/text_input_widget.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/image_assets_constants.dart';
@@ -34,7 +35,7 @@ class SearchDateView extends StatelessWidget {
           children: [
             ///search
             Expanded(
-              flex: 10,
+              flex: 9,
               child: Container(
                   height: 22.sp,
                   margin:
@@ -75,12 +76,11 @@ class SearchDateView extends StatelessWidget {
                         ],
                       )),
                       Visibility(
-                          visible:  controller.search.value.isNotEmpty,
+                          visible: controller.search.value.isNotEmpty,
                           child: GestureDetector(
                             onTap: () {
-                              controller.searchController.value.text =
-                              "";
-                              controller.search.value="";
+                              controller.searchController.value.text = "";
+                              controller.search.value = "";
                               controller.search.refresh();
                               controller.pageNumber.value = 1;
                               controller.sLoading.value = 'Loading...';
@@ -88,7 +88,7 @@ class SearchDateView extends StatelessWidget {
                             },
                             child: Container(
                                 margin:
-                                EdgeInsets.only(left: 8.sp, right: 8.sp),
+                                    EdgeInsets.only(left: 8.sp, right: 8.sp),
                                 padding: EdgeInsets.all(8.sp),
                                 decoration: BoxDecoration(
                                   color: ColorConstants.cAppButtonColour,
@@ -134,7 +134,7 @@ class SearchDateView extends StatelessWidget {
 
             ///calendar
             Expanded(
-              flex: 10,
+              flex: 7,
               child: Container(
                   height: 22.sp,
                   margin: EdgeInsets.only(
@@ -158,6 +158,7 @@ class SearchDateView extends StatelessWidget {
                         hintText: sSelectDateRange.tr,
                         showFloatingLabel: false,
                         topPadding: 5.sp,
+                        leftPadding: 13.sp,
                         hintTextSize: 11.sp,
                         textSize: 11.5.sp,
                         hintTextColor: ColorConstants.cAppTaxColour,
@@ -178,7 +179,7 @@ class SearchDateView extends StatelessWidget {
                             },
                             child: Container(
                                 margin:
-                                    EdgeInsets.only(left: 8.sp, right: 8.sp),
+                                    EdgeInsets.only( right: 8.sp),
                                 padding: EdgeInsets.all(8.sp),
                                 decoration: BoxDecoration(
                                   color: ColorConstants.cAppButtonColour,
@@ -197,14 +198,13 @@ class SearchDateView extends StatelessWidget {
                   )),
             ),
 
-            ///select Type
+            ///orderSource
             Expanded(
-              flex: 8,
-              child: Obx(
-                () => Container(
+                flex: 4,
+                child: Obx(() => Container(
+                    height: 22.sp,
                     margin:
-                        EdgeInsets.only(top: 11.sp, right: 11.sp, bottom: 8.sp),
-                    padding: EdgeInsets.all(5.sp),
+                        EdgeInsets.only(top: 11.sp, right: 8.sp, bottom: 8.sp),
                     decoration: BoxDecoration(
                       color: ColorConstants.white,
                       borderRadius: BorderRadius.all(
@@ -212,125 +212,254 @@ class SearchDateView extends StatelessWidget {
                       ),
                     ),
                     alignment: Alignment.center,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              controller.selectType.value = sAll.tr;
-                              controller.orderType = 0;
-                              controller.pageNumber.value = 1;
-                              controller.sLoading.value = 'Loading...';
-                              controller.callOrderHistory();
-                            },
-                            child: Container(
-                                height: 21.sp,
-                                width: 21.sp,
-                                padding: EdgeInsets.all(9.5.sp),
-                                decoration: BoxDecoration(
-                                  color: controller.selectType.value == sAll.tr
-                                      ? ColorConstants.cAppButtonColour
-                                      : ColorConstants.primaryBackgroundColor,
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(8.sp),
-                                    bottomLeft: Radius.circular(8.sp),
-                                  ),
-                                ),
-                                alignment: Alignment.center,
-                                child: Text(
-                                  sAll.tr,
-                                  style: getText500(
-                                      size: 11.sp,
-                                      colors:
-                                          controller.selectType.value == sAll.tr
-                                              ? ColorConstants.white
-                                              : ColorConstants.cAppTaxColour),
-                                )),
-                          ),
-                        ),
-                        Container(
-                          width: 5.sp,
-                          height: 21.sp,
-                          color: ColorConstants.appEditTextHint,
-                        ),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              controller.selectType.value = sDine_In.tr;
+                    child: orderSource()))),
 
-                              controller.orderType = 1;
-                              controller.pageNumber.value = 1;
-                              controller.sLoading.value = 'Loading...';
-                              controller.callOrderHistory();
-                            },
-                            child: Container(
-                                height: 21.sp,
-                                width: 21.sp,
-                                padding: EdgeInsets.all(9.5.sp),
-                                decoration: BoxDecoration(
-                                  color: controller.selectType.value ==
-                                          sDine_In.tr
-                                      ? ColorConstants.cAppButtonColour
-                                      : ColorConstants.primaryBackgroundColor,
-                                ),
-                                alignment: Alignment.center,
-                                child: Text(
-                                  sDine_In.tr,
-                                  style: getText500(
-                                      size: 11.sp,
-                                      colors: controller.selectType.value ==
-                                              sDine_In.tr
-                                          ? ColorConstants.white
-                                          : ColorConstants.cAppTaxColour),
-                                )),
-                          ),
-                        ),
-                        Container(
-                          width: 5.sp,
-                          height: 21.sp,
-                          color: ColorConstants.appEditTextHint,
-                        ),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              controller.selectType.value = sTake_Away.tr;
+            ///paymentStatus
+            Expanded(
+                flex: 4,
+                child: Obx(() => Container(
+                    height: 22.sp,
+                    margin:
+                        EdgeInsets.only(top: 11.sp, right: 8.sp, bottom: 8.sp),
+                    decoration: BoxDecoration(
+                      color: ColorConstants.white,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8.sp),
+                      ),
+                    ),
+                    alignment: Alignment.center,
+                    child: paymentStatus()))),
 
-                              controller.orderType = 2;
-                              controller.pageNumber.value = 1;
-                              controller.sLoading.value = 'Loading...';
-                              controller.callOrderHistory();
-                            },
-                            child: Container(
-                                height: 21.sp,
-                                width: 21.sp,
-                                padding: EdgeInsets.all(9.5.sp),
-                                decoration: BoxDecoration(
-                                  color: controller.selectType.value ==
-                                          sTake_Away.tr
-                                      ? ColorConstants.cAppButtonColour
-                                      : ColorConstants.primaryBackgroundColor,
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(8.sp),
-                                    bottomRight: Radius.circular(8.sp),
-                                  ),
-                                ),
-                                alignment: Alignment.center,
-                                child: Text(
-                                  sTake_Away.tr,
-                                  style: getText500(
-                                      size: 11.sp,
-                                      colors: controller.selectType.value ==
-                                              sTake_Away.tr
-                                          ? ColorConstants.white
-                                          : ColorConstants.cAppTaxColour),
-                                )),
-                          ),
-                        ),
-                      ],
-                    )),
-              ),
-            ),
+            /// select Type
+            Expanded(
+                flex: 4,
+                child: Obx(() => Container(
+                    height: 22.sp,
+                    margin:
+                        EdgeInsets.only(top: 11.sp, right: 10.sp, bottom: 8.sp),
+                    decoration: BoxDecoration(
+                      color: ColorConstants.white,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8.sp),
+                      ),
+                    ),
+                    alignment: Alignment.center,
+                    child: selectType()))),
           ],
         ));
   }
+
+  Widget selectType() => DropdownButton2(
+        barrierColor: Colors.transparent,
+        focusColor: Colors.white,
+        hint: Text(
+          controller.selectType.value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: getTextRegular(size: 11.sp, colors: Colors.black),
+        ),
+        isExpanded: true,
+        items: controller.selectTypeList
+            .map((item) => DropdownMenuItem<String>(
+                  value: item,
+                  child: Text(
+                    item,
+                    style: getTextRegular(
+                        size: 11.sp, colors: ColorConstants.appTextSalesHader),
+                  ),
+                ))
+            .toList(),
+        onChanged: (value) {
+          controller.selectType.value = value.toString();
+          if (controller.selectType.value == sAll.tr) {
+            controller.orderType = 0;
+          } else if (controller.selectType.value == sDine_In.tr) {
+            controller.orderType = 1;
+          } else if (controller.selectType.value == sTake_Away.tr) {
+            controller.orderType = 2;
+          }
+          controller.pageNumber.value = 1;
+          controller.sLoading.value = 'Loading...';
+          controller.callOrderHistory();
+        },
+        dropdownDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.sp),
+          color: Colors.white,
+        ),
+        dropdownPadding: const EdgeInsets.symmetric(vertical: 6),
+        buttonPadding: const EdgeInsets.symmetric(horizontal: 16),
+        icon: Row(
+          children: [
+            // if (selectedSaleStatus == null)
+            //   const SizedBox()
+            // else
+            //   GestureDetector(
+            //     onTap: () {
+            //       setState(() {
+            //         selectedSaleStatus = null;
+            //         pageNo = 1;
+            //         _getSales();
+            //       });
+            //     },
+            //     child: Icon(
+            //       Icons.clear,
+            //       size: 13.sp,
+            //       color: ColorConstants.cAppButtonTextBlue,
+            //     ),
+            //   ),
+            Icon(
+              Icons.arrow_drop_down,
+              size: 15.sp,
+              // Custom dropdown icon
+              color: ColorConstants.cAppButtonColour,
+            )
+          ],
+        ),
+        offset: const Offset(0, -10),
+        underline: const SizedBox(),
+      );
+
+  Widget orderSource() => DropdownButton2(
+        barrierColor: Colors.transparent,
+        focusColor: Colors.white,
+        hint: Text(
+          controller.selectOrderSourceType.value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: getTextRegular(size: 11.sp, colors: Colors.black),
+        ),
+        isExpanded: true,
+        items: controller.orderSourceList
+            .map((item) => DropdownMenuItem<String>(
+                  value: item,
+                  child: Text(
+                    item,
+                    style: getTextRegular(
+                        size: 11.sp, colors: ColorConstants.appTextSalesHader),
+                  ),
+                ))
+            .toList(),
+        onChanged: (value) {
+          controller.selectOrderSourceType.value = value.toString();
+          if (controller.selectOrderSourceType.value == sAll.tr) {
+            controller.orderSource.value = 0;
+          } else if (controller.selectOrderSourceType.value == 'Mobile App') {
+            controller.orderSource.value = 1;
+          } else if (controller.selectOrderSourceType.value == 'From Pos') {
+            controller.orderSource.value = 2;
+          } else if (controller.selectOrderSourceType.value == 'From Web') {
+            controller.orderSource.value = 3;
+          }
+          controller.pageNumber.value = 1;
+          controller.sLoading.value = 'Loading...';
+          controller.callOrderHistory();
+        },
+        dropdownDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.sp),
+          color: Colors.white,
+        ),
+        dropdownPadding: const EdgeInsets.symmetric(vertical: 6),
+        buttonPadding: const EdgeInsets.symmetric(horizontal: 16),
+        icon: Row(
+          children: [
+            // if (selectedSaleStatus == null)
+            //   const SizedBox()
+            // else
+            //   GestureDetector(
+            //     onTap: () {
+            //       setState(() {
+            //         selectedSaleStatus = null;
+            //         pageNo = 1;
+            //         _getSales();
+            //       });
+            //     },
+            //     child: Icon(
+            //       Icons.clear,
+            //       size: 13.sp,
+            //       color: ColorConstants.cAppButtonTextBlue,
+            //     ),
+            //   ),
+            Icon(
+              Icons.arrow_drop_down,
+              size: 15.sp,
+              // Custom dropdown icon
+              color: ColorConstants.cAppButtonColour,
+            )
+          ],
+        ),
+        offset: const Offset(0, -10),
+        underline: const SizedBox(),
+      );
+
+  Widget paymentStatus() => DropdownButton2(
+        barrierColor: Colors.transparent,
+        focusColor: Colors.white,
+        hint: Text(
+          controller.selectPaymentStatus.value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: getTextRegular(size: 11.sp, colors: Colors.black),
+        ),
+        isExpanded: true,
+        items: controller.paymentStatusList
+            .map((item) => DropdownMenuItem<String>(
+                  value: item,
+                  child: Text(
+                    item,
+                    style: getTextRegular(
+                        size: 11.sp, colors: ColorConstants.appTextSalesHader),
+                  ),
+                ))
+            .toList(),
+        onChanged: (value) {
+          controller.selectPaymentStatus.value = value.toString();
+          if (controller.selectPaymentStatus.value == sAll.tr) {
+            controller.paymentStatus.value = null;
+          } else if (controller.selectPaymentStatus.value == 'Success') {
+            controller.paymentStatus.value = 'S';
+          } else if (controller.selectPaymentStatus.value == 'Pending') {
+            controller.paymentStatus.value = 'P';
+          } else if (controller.selectPaymentStatus.value == 'Fail') {
+            controller.paymentStatus.value = 'F';
+          }
+          controller.pageNumber.value = 1;
+          controller.sLoading.value = 'Loading...';
+          controller.callOrderHistory();
+        },
+        dropdownDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.sp),
+          color: Colors.white,
+        ),
+        dropdownPadding: const EdgeInsets.symmetric(vertical: 6),
+        buttonPadding: const EdgeInsets.symmetric(horizontal: 16),
+        icon: Row(
+          children: [
+            // if (selectedSaleStatus == null)
+            //   const SizedBox()
+            // else
+            //   GestureDetector(
+            //     onTap: () {
+            //       setState(() {
+            //         selectedSaleStatus = null;
+            //         pageNo = 1;
+            //         _getSales();
+            //       });
+            //     },
+            //     child: Icon(
+            //       Icons.clear,
+            //       size: 13.sp,
+            //       color: ColorConstants.cAppButtonTextBlue,
+            //     ),
+            //   ),
+            Icon(
+              Icons.arrow_drop_down,
+              size: 15.sp,
+              // Custom dropdown icon
+              color: ColorConstants.cAppButtonColour,
+            )
+          ],
+        ),
+        offset: const Offset(0, -10),
+        underline: const SizedBox(),
+      );
 }

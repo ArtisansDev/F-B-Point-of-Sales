@@ -94,6 +94,15 @@ Future<bool> printAftrePayment(
   widgets.add(pw.Container(height: 4));
   widgets.add(mySeparator());
   widgets.add(pw.Container(height: 4));
+  ///remark
+  widgets.add(
+      pw.Center(child: pw.Text('Order Remark', style: getBoldTextStyle())));
+  widgets.add(pw.Center(
+      child: pw.Text('${mOrderDetailList.additionalNotes}',
+          style: getNormalTextStyle())));
+  widgets.add(pw.Container(height: 4));
+  widgets.add(mySeparator());
+  widgets.add(pw.Container(height: 4));
   return printWidgets(widgets, true, false);
 }
 

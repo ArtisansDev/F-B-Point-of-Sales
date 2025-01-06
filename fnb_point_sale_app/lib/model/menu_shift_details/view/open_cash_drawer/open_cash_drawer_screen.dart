@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_app/model/menu_shift_details/view/open_cash_drawer/view/total_cash_screen.dart';
+import 'package:fnb_point_sale_base/common/button_constants.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
+import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
+import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -30,11 +33,27 @@ class OpenCashDrawerScreen extends GetView<OpenCashDrawerScreenController> {
             ),
           ),
           alignment: Alignment.center,
-          child:Column(
+          child: Column(
             children: [
               CashDrawerScreen(),
               CashCalculateScreen(),
               TotalCashScreen(),
+              const Expanded(child: SizedBox()),
+              Container(
+                  margin: EdgeInsets.only(left: 8.sp, right: 8.sp, top: 8.sp),
+                  child: rectangleCornerButtonText600(
+                    height: 19.5.sp,
+                    textSize: 11.5.sp,
+                    sShiftClose.tr,
+                    () {
+                      controller.mShiftDetailsController.closeBalanceApiCall(
+                          getDoubleValue(controller.totalCashCollected.value)
+                              .toStringAsFixed(2));
+                    },
+                  )),
+              SizedBox(
+                height: 8.sp,
+              )
             ],
           ),
         ));

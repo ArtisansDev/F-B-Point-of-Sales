@@ -4,27 +4,18 @@ import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:get/get.dart';
 
 import '../../../../dashboard_screen/controller/dashboard_screen_controller.dart';
+import '../../../controller/shift_details_controller.dart';
 import 'cash_model/cash_model.dart';
 
 class OpenCashDrawerScreenController extends GetxController {
-  Rxn<DashboardScreenController> mDashboardScreenController =
-      Rxn<DashboardScreenController>();
+  ShiftDetailsController mShiftDetailsController = Get.find<ShiftDetailsController>();
   Rx<TextEditingController> nameController = TextEditingController().obs;
   Rx<TextEditingController> phoneNumberController = TextEditingController().obs;
-
-  OpenCashDrawerScreenController() {
-    if (Get.isRegistered<DashboardScreenController>()) {
-      mDashboardScreenController.value = Get.find<DashboardScreenController>();
-    }
-
-    // addAmount();
-  }
-
   RxDouble totalCashCollected = 0.00.obs;
   RxList<CashModel> mCashModelList = <CashModel>[].obs;
 
   void addAmount() {
-    mCashModelList.value.clear();
+    mCashModelList.clear();
     mCashModelList.add(CashModel(amount: 0.05, qty: 0, totalAmount: 0.0));
     mCashModelList.add(CashModel(amount: 0.10, qty: 0, totalAmount: 0.0));
     mCashModelList.add(CashModel(amount: 0.20, qty: 0, totalAmount: 0.0));

@@ -55,8 +55,10 @@ class SelectedOrderController extends HomeBaseController {
     mOrderPlace.value ??= OrderPlace(cartItem: []);
     mOrderPlace.value?.cartItem?.add(mCartItem);
     placeOrder.value = true;
+
     ///
-    debugPrint("mOrderPlace add ${jsonEncode(mOrderPlace.value ?? OrderPlace())}");
+    debugPrint(
+        "mOrderPlace add ${jsonEncode(mOrderPlace.value ?? OrderPlace())}");
     mOrderPlacePrint.value =
         OrderPlace.fromJson((mOrderPlace.value ?? OrderPlace()).toJson());
 
@@ -125,6 +127,11 @@ class SelectedOrderController extends HomeBaseController {
   void onCancelSale() async {
     await AppAlert.showView(Get.context!, CancelOrderScreen(this),
         barrierDismissible: true);
+    if (mDashboardScreenController.mOrderPlace.value == null ||
+        (mDashboardScreenController.mOrderPlace.value?.sOrderNo ?? '')
+            .isEmpty) {
+      remarkController.value.text = "";
+    }
   }
 
   ///hold sale
@@ -196,17 +203,18 @@ class SelectedOrderController extends HomeBaseController {
       mOrderPlace.refresh();
       await mDashboardScreenController.onUpdateHoldSale();
       await mTopBarController.allOrderPlace();
+      remarkController.value.text = "";
     } else {
       AppAlert.showSnackBar(Get.context!, 'Please add item in the cart');
     }
   }
 
   ///printPlaceOrder
-  void printPlaceOrder(
-      OrderDetailList mOrderDetailList, OrderPlace mOrderPlace) {
-    final myPrinterService = locator.get<MyPrinterService>();
-    myPrinterService.salePlaceOrder(mOrderDetailList, mOrderPlace);
-  }
+  // void printPlaceOrder(
+  //     OrderDetailList mOrderDetailList, OrderPlace mOrderPlace) async {
+  //   final myPrinterService = locator.get<MyPrinterService>();
+  //   await myPrinterService.salePlaceOrder(mOrderDetailList, mOrderPlace);
+  // }
 
   ///Payment
   void onPayment() async {
@@ -214,11 +222,13 @@ class SelectedOrderController extends HomeBaseController {
         Get.context!,
         PaymentScreen(
           mOrderPlace.value ?? OrderPlace(),
-          onPayment: (GetAllPaymentTypeData mSelectPaymentType,GetAllCustomerList? mSelectCustomer) async {
+          onPayment: (GetAllPaymentTypeData mSelectPaymentType,
+              GetAllCustomerList? mSelectCustomer) async {
             Get.back();
-            if(mSelectCustomer!=null) {
+            if (mSelectCustomer != null) {
               mOrderPlace.value?.mSelectCustomer = mSelectCustomer;
             }
+
             ///selectPayment type
             debugPrint(
                 "mSelectPaymentType ----- ${jsonEncode(mSelectPaymentType)}");
@@ -239,13 +249,13 @@ class SelectedOrderController extends HomeBaseController {
             /// await mPlaceOrderSaleLocalApi
             ///     .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
 
-            await callSaveOrder(mOrderDetailList,isPayment: true);
+            await callSaveOrder(mOrderDetailList, isPayment: true);
             placeOrder.value = false;
             mOrderPlace.value = null;
             mOrderPlace.refresh();
             await mDashboardScreenController.onUpdateHoldSale();
             await mTopBarController.allOrderPlace();
-
+            remarkController.value.text = "";
             ///
           },
         ),
@@ -271,7 +281,7 @@ class SelectedOrderController extends HomeBaseController {
               await orderPlaceApi.postOrderPlace(mProcessMultipleOrdersRequest);
           if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
             ///print....
-            printOrderPayment(
+            await printOrderPayment(
                 mOrderDetailList, mOrderPlacePrint.value ?? OrderPlace(),
                 placeOrder: placeOrder.value, isPayment: isPayment);
 
@@ -332,7 +342,7 @@ class SelectedOrderController extends HomeBaseController {
       await myPrinterService.salePlaceOrder(mOrderDetailList, mOrderPlace);
     }
     if (isPayment) {
-      await myPrinterService.saleOrderPayment(mOrderDetailList,mOrderPlace);
+      await myPrinterService.saleOrderPayment(mOrderDetailList, mOrderPlace);
     }
   }
 }

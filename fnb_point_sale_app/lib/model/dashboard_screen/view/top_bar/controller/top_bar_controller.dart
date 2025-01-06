@@ -22,6 +22,8 @@ import 'package:get/get.dart';
 import '../../../../hold_sales/controller/hold_sales_controller.dart';
 import '../../../../hold_sales/view/hold_sales_screen.dart';
 import '../../../../menu_home/view/selected_order/controller/selected_order_controller.dart';
+import '../../../../profile/controller/profile_controller.dart';
+import '../../../../profile/view/profile_screen.dart';
 import '../../../../reservation_table_select/controller/reservation_table_select_controller.dart';
 import '../../../../reservation_table_select/view/reservation_table_select_screen.dart';
 import '../../../controller/dashboard_screen_controller.dart';
@@ -65,9 +67,15 @@ class TopBarController extends GetxController {
     }
   }
 
-  void onSelectedProfileMenu(int value) {
+  void onSelectedProfileMenu(int value) async{
     switch (value) {
       case 0:
+        ///profile
+        await AppAlert.showView(Get.context!,
+            const ProfileScreen());
+        if (Get.isRegistered<ProfileController>()) {
+          Get.delete<ProfileController>();
+        }
         break;
       case 1:
         AppAlert.showCustomDialogYesNoLogout(

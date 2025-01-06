@@ -130,7 +130,9 @@ createOrderPlaceRequest(
         ///Total
         totalItemAmount:
             ((subTotalAmount + subTotalTax) * (mCartItem.count ?? 0)) +
-                subModifierTotal);
+                subModifierTotal,
+    ///ItemAdditionalNotes
+        itemAdditionalNotes:mCartItem.textRemarks);
     debugPrint("\nmOrderMenu:   ${jsonEncode(mOrderMenu)}\n");
     orderMenu.add(mOrderMenu);
   }
@@ -173,10 +175,12 @@ createOrderPlaceRequest(
     }
   }
 
+  String sCounterBalanceHistoryIDF = await SharedPrefs().getHistoryID();
 
   ///OrderPlaceRequest
   OrderDetailList mOrderDetailList = OrderDetailList(
       trackingOrderID: mOrderPlace?.sOrderNo ?? '',
+      counterBalanceHistoryIDF:sCounterBalanceHistoryIDF,
       counterIDF:
           (mConfigurationResponse.configurationData?.counterData ?? []).isEmpty
               ? ""

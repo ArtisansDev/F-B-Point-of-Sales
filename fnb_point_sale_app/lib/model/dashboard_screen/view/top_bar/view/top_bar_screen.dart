@@ -54,7 +54,7 @@ class TopBarScreen extends GetView<TopBarController> {
                     width: 10.sp,
                   ),
                   Expanded(
-                      flex: 8,
+                      flex: 9,
                       child: SizedBox(
                         height: 20.sp,
                         child: ListView.builder(

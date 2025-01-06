@@ -153,7 +153,7 @@ class TableSummaryBottomView extends StatelessWidget {
                 textSize: 11.5.sp,
                 onFilteringTextInputFormatter: [
                   FilteringTextInputFormatter.allow(
-                      RegExp(AppUtilConstants.patternOnlyString)),
+                      RegExp(AppUtilConstants.patternStringAndSpace)),
                 ],
               )),
 
