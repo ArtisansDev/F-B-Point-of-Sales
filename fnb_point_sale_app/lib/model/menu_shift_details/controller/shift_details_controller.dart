@@ -24,7 +24,6 @@ import '../view/open_cash_drawer/controller/open_cash_drawer_screen_controller.d
 
 class ShiftDetailsController extends GetxController {
   DashboardScreenController mDashboardScreenController = Get.find<DashboardScreenController>();
-  ShiftDetailsController mShiftDetailsController = Get.find<ShiftDetailsController>();
 
   @override
   void onClose() {
