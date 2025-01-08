@@ -152,7 +152,8 @@ createOrderPlaceRequestFromOrderHistory(
       taxAmountTotal: mOrderPlace?.taxAmountTotal,
       totalAmount: mOrderPlace?.totalAmount,
       grandTotal: mOrderPlace?.grandTotal,
-
+      adjustedAmount: getDoubleValue(
+          roundToNearestPossible(getDoubleValue(mOrderPlace?.grandTotal))),
       ///table no
       tableNo: mOrderPlace?.tableNo ?? '',
       seatIDF: mOrderPlace?.seatIDF,

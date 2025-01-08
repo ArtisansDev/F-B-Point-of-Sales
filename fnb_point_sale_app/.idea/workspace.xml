@@ -433,7 +433,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736154076340</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="sale search, pay ,print,date filter">
+      <option name="closed" value="true" />
+      <created>1736157963595</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1736157963595</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

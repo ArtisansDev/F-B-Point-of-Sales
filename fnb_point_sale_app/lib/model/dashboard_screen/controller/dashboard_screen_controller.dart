@@ -333,9 +333,11 @@ class DashboardScreenController extends GetxController {
   }
 
   Rxn<Function> onUpdateDate = Rxn<Function>();
+  Rxn<Function> onUpdateHold = Rxn<Function>();
 
-  onUpdate(Function update) {
+  onUpdate(Function update,{Function? updateHoldSale}) {
     onUpdateDate.value = update;
+    onUpdateHold.value = updateHoldSale;
   }
 
   onUpdateHoldSale() async {

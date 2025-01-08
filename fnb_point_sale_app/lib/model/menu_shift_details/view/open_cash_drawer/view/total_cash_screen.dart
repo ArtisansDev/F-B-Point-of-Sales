@@ -35,7 +35,7 @@ class TotalCashScreen extends StatelessWidget {
               getText500(size: 11.sp, colors: ColorConstants.black),
             ),
             Text(
-              'RM ${getDoubleValue(controller.totalCashCollected.value).toStringAsFixed(2)}',
+              'RM ${getDoubleValue(controller.mShiftDetailsController.totalCashCollected.value).toStringAsFixed(2)}',
               style: getText500(
                   size: 11.sp, colors: ColorConstants.cAppButtonColour),
             )

@@ -35,7 +35,7 @@ class WebConstants {
   ///API_VERSION
   static String apiVersion = "";
 
-  /// Base URL
+  /// Base URL https://aura.artisanscloud.com/
   static String baseUrlLive = "http://staging.artisanssolutions.com/";
   static String baseUrlDev = "http://staging.artisanssolutions.com/";
   static String baseURL =
@@ -71,5 +71,6 @@ class WebConstants {
   ///Balance
   static String actionUpdateOpeningBalance =  "Counter/UpdateOpeningBalance";
   static String actionUpdateClosingBalance =  "Counter/updateClosingBalance";
+  static String actionGetShiftDetails =  "Counter/GetShiftDetails";
 
 }

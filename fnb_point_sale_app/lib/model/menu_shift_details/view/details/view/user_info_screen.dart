@@ -5,6 +5,7 @@ import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/image_assets_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
 import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
+import 'package:fnb_point_sale_base/utils/date_time_utils.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -72,14 +73,8 @@ class UserInfoScreen extends StatelessWidget {
                         height: 8.sp,
                       ),
                       Text(
-                        controller
-                                .mShiftDetailsController
-                                .mConfigurationResponse
-                                .value
-                                .configurationData
-                                ?.counterData
-                                ?.first
-                                .counterName ??
+                        controller.mShiftDetailsController.mShiftDetailsResponse
+                                .value.data?.counterName ??
                             '',
                         style: getText300(
                             size: 11.sp, colors: ColorConstants.black),
@@ -112,7 +107,9 @@ class UserInfoScreen extends StatelessWidget {
                         height: 8.sp,
                       ),
                       Text(
-                        'FB-Cashier 01',
+                        controller.mShiftDetailsController.mShiftDetailsResponse
+                                .value.data?.fullName ??
+                            '',
                         style: getText300(
                             size: 11.sp, colors: ColorConstants.black),
                       ),
@@ -144,7 +141,9 @@ class UserInfoScreen extends StatelessWidget {
                         height: 8.sp,
                       ),
                       Text(
-                        '2024-11-18  10:13:51',
+                        getUTCToLocalDateOrderHistory(controller.mShiftDetailsController.mShiftDetailsResponse
+                            .value.data?.openingBalanceDateTime ??
+                            ''),
                         style: getText300(
                             size: 11.sp, colors: ColorConstants.black),
                       ),

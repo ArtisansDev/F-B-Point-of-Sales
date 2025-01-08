@@ -6,13 +6,15 @@ import '../../../../alert/app_alert.dart';
 import '../../../../constants/web_constants.dart';
 import '../../../mode/customer/get_all_customer/get_all_customer_response.dart';
 import '../../../mode/update_balance/opening_balance/opening_balance_response.dart';
+import '../../../mode/update_balance/shift_details/shift_details_response.dart';
 import '../../web_response_failed.dart';
 import 'balance_api.dart';
 
 class BalanceApiImpl extends AllApiImpl with BalanceApi {
   ///post UpdateOpeningBalance
   @override
-  Future<WebResponseSuccess> postUpdateOpeningBalance(exhibitorsListRequest) async {
+  Future<WebResponseSuccess> postUpdateOpeningBalance(
+      exhibitorsListRequest) async {
     AppAlert.showProgressDialog(Get.context!);
     WebConstants.auth = true;
     final cases = await mWebProvider.postWithRequest(
@@ -20,7 +22,7 @@ class BalanceApiImpl extends AllApiImpl with BalanceApi {
     AppAlert.hideLoadingDialog(Get.context!);
     if (cases.statusCode == WebConstants.statusCode200) {
       OpeningBalanceResponse mOpeningBalanceResponse =
-      OpeningBalanceResponse.fromJson(processResponseToJson(cases));
+          OpeningBalanceResponse.fromJson(processResponseToJson(cases));
       mWebResponseSuccess = WebResponseSuccess(
         statusCode: cases.statusCode,
         data: mOpeningBalanceResponse,
@@ -51,7 +53,8 @@ class BalanceApiImpl extends AllApiImpl with BalanceApi {
 
   ///post UpdateClosingBalance
   @override
-  Future<WebResponseSuccess> postUpdateClosingBalance(exhibitorsListRequest) async {
+  Future<WebResponseSuccess> postUpdateClosingBalance(
+      exhibitorsListRequest) async {
     AppAlert.showProgressDialog(Get.context!);
     WebConstants.auth = true;
     final cases = await mWebProvider.postWithRequest(
@@ -66,6 +69,45 @@ class BalanceApiImpl extends AllApiImpl with BalanceApi {
       //   statusMessage: "Get all menu item downloaded successfully",
       //   error: false,
       // );
+    } else if (cases.statusCode == WebConstants.statusCode409) {
+      mWebResponseFailed =
+          WebResponseFailed.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        // data: mLoginFailedResponse,
+        statusMessage: mWebResponseFailed.statusMessage,
+        error: false,
+      );
+    } else {
+      mWebResponseFailed =
+          WebResponseFailed.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        // data: mWebResponseFailed,
+        statusMessage: mWebResponseFailed.statusMessage,
+        error: true,
+      );
+    }
+    return mWebResponseSuccess;
+  }
+
+  ///post postShiftDetails
+  @override
+  Future<WebResponseSuccess> postShiftDetails(exhibitorsListRequest) async {
+    // AppAlert.showProgressDialog(Get.context!);
+    WebConstants.auth = true;
+    final cases = await mWebProvider.postWithRequest(
+        WebConstants.actionGetShiftDetails, exhibitorsListRequest);
+    // AppAlert.hideLoadingDialog(Get.context!);
+    if (cases.statusCode == WebConstants.statusCode200) {
+      ShiftDetailsResponse mShiftDetailsResponse =
+          ShiftDetailsResponse.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        data: mShiftDetailsResponse,
+        statusMessage: "Get all category downloaded successfully",
+        error: false,
+      );
     } else if (cases.statusCode == WebConstants.statusCode409) {
       mWebResponseFailed =
           WebResponseFailed.fromJson(processResponseToJson(cases));

@@ -24,8 +24,6 @@ import '../../../../hold_sales/view/hold_sales_screen.dart';
 import '../../../../menu_home/view/selected_order/controller/selected_order_controller.dart';
 import '../../../../profile/controller/profile_controller.dart';
 import '../../../../profile/view/profile_screen.dart';
-import '../../../../reservation_table_select/controller/reservation_table_select_controller.dart';
-import '../../../../reservation_table_select/view/reservation_table_select_screen.dart';
 import '../../../controller/dashboard_screen_controller.dart';
 
 class TopBarController extends GetxController {
@@ -47,6 +45,7 @@ class TopBarController extends GetxController {
       /// hold sale
       await AppAlert.showView(Get.context!, const HoldSalesScreen(),
           barrierDismissible: true);
+
       if (Get.isRegistered<HoldSalesController>()) {
         Get.delete<HoldSalesController>();
       }
@@ -62,24 +61,29 @@ class TopBarController extends GetxController {
           mSelectedOrderController.onOrderPlaceAnotherPage();
         }
       }
+      if (mDashboardScreenController.onUpdateHold.value != null) {
+        mDashboardScreenController.onUpdateHold.value!();
+      }
     } else {
       mDashboardScreenController.setTopBarValue(index, 0);
     }
   }
 
-  void onSelectedProfileMenu(int value) async{
+  void onSelectedProfileMenu(int value) async {
     switch (value) {
       case 0:
+
         ///profile
-        await AppAlert.showView(Get.context!,
-            const ProfileScreen());
+        await AppAlert.showView(Get.context!, const ProfileScreen());
         if (Get.isRegistered<ProfileController>()) {
           Get.delete<ProfileController>();
         }
         break;
       case 1:
+        ///mDashboardScreenController.selectMenu.value = 5;
         AppAlert.showCustomDialogYesNoLogout(
             Get.context!, 'Logout!', 'Do you want to log out?', () {
+
           logout();
         });
         break;

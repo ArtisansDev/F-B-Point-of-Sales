@@ -173,7 +173,7 @@ class TableRowView extends StatelessWidget {
                                 Expanded(
                                   flex: 2,
                                   child: Text(
-                                    '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(mOrderPlace.totalPrice ?? 0).toStringAsFixed(2)}',
+                                    '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(mOrderPlace.rounOffPrice ?? 0).toStringAsFixed(2)}',
                                     style: getText500(
                                         size: 11.5.sp,
                                         colors: ColorConstants.cAppTaxColour),

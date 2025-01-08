@@ -120,14 +120,50 @@ class ItemSummaryBottomView extends StatelessWidget {
                 children: [
                   Text(
                     sTotal.tr,
-                    style: getText500(
-                        size: 12.5.sp, colors: ColorConstants.cAppButtonColour),
+                    style: getTextRegular(
+                        size: 11.5.sp, colors: ColorConstants.cAppButtonColour),
                   ),
                   Text(
                     '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(controller.mOrderPlace.value.totalAmount ?? 0).toStringAsFixed(2)}',
+                    style: getTextRegular(
+                        size: 11.5.sp, colors: ColorConstants.cAppButtonColour),
+                  ),
+                ],
+              )),
+          Container(
+            height: 3.sp,
+            margin: EdgeInsets.only(left: 8.sp, right: 8.sp, bottom: 8.sp),
+            color: Colors.grey.shade300,
+          ),
+
+          ///total pay
+          Container(
+              margin: EdgeInsets.all(
+                8.sp,
+              ),
+              padding: EdgeInsets.only(
+                  left: 8.sp, right: 8.sp, top: 3.sp, bottom: 3.sp),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    sTotalPay.tr,
                     style: getText500(
                         size: 12.5.sp, colors: ColorConstants.cAppButtonColour),
                   ),
+                  (controller.mOrderPlace.value.paymentStatus != 'S')
+                      ? Text(
+                          '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(roundToNearestPossible(getDoubleValue(controller.mOrderPlace.value.totalAmount ?? 0))).toStringAsFixed(2)}',
+                          style: getText500(
+                              size: 12.5.sp,
+                              colors: ColorConstants.cAppButtonColour),
+                        )
+                      : Text(
+                          '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(controller.mOrderPlace.value.adjustedAmount ?? 0) > 0 ? getDoubleValue(controller.mOrderPlace.value.adjustedAmount ?? 0).toStringAsFixed(2) : getDoubleValue(controller.mOrderPlace.value.grandTotal ?? 0).toStringAsFixed(2)}',
+                          style: getText500(
+                              size: 12.5.sp,
+                              colors: ColorConstants.cAppButtonColour),
+                        ),
                 ],
               )),
           Container(

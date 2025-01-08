@@ -267,9 +267,6 @@ class PaymentScreen extends GetView<PaymentScreenController> {
                               return Column(
                                 children: [
                                   Container(
-                                      // margin: EdgeInsets.all(
-                                      //   8.sp,
-                                      // ),
                                       padding: EdgeInsets.only(bottom: 5.sp),
                                       child: Row(
                                         mainAxisAlignment:
@@ -300,7 +297,7 @@ class PaymentScreen extends GetView<PaymentScreenController> {
                               );
                             }),
                         Container(
-                          margin: EdgeInsets.only(top: 10.sp, bottom: 10.sp),
+                          margin: EdgeInsets.only(top: 5.sp, bottom: 7.sp),
                           width: double.infinity,
                           height: 3.sp,
                           color: ColorConstants.cAppCancelDilogDeviderColour,
@@ -320,6 +317,35 @@ class PaymentScreen extends GetView<PaymentScreenController> {
                               alignment: Alignment.centerRight,
                               child: Text(
                                 '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${controller.mOrderPlace.value?.totalPrice.toStringAsFixed(2)}',
+                                style: getText600(
+                                  size: 10.5.sp,
+                                  colors: ColorConstants.cAppCancelDilogColour,
+                                ),
+                              ),
+                            ))
+                          ],
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 7.sp, bottom: 7.sp),
+                          width: double.infinity,
+                          height: 3.sp,
+                          color: ColorConstants.cAppCancelDilogDeviderColour,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                                child: Text(
+                              'Total Pay',
+                              style: getText600(
+                                size: 10.5.sp,
+                                colors: ColorConstants.cAppCancelDilogColour,
+                              ),
+                            )),
+                            Expanded(
+                                child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(roundToNearestPossible(getDoubleValue(controller.mOrderPlace.value?.totalPrice.toStringAsFixed(2)))).toStringAsFixed(2)}',
                                 style: getText600(
                                   size: 10.5.sp,
                                   colors: ColorConstants.cAppCancelDilogColour,

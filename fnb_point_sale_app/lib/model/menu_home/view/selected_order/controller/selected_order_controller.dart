@@ -120,7 +120,9 @@ class SelectedOrderController extends HomeBaseController {
     ///TotalPrice
     mOrderPlace.value?.totalPrice = (mOrderPlace.value?.taxAmount ?? 0) +
         (mOrderPlace.value?.subTotalPrice ?? 0);
+    mOrderPlace.value?.rounOffPrice = getDoubleValue(roundToNearestPossible(getDoubleValue(mOrderPlace.value?.totalPrice)));
     mOrderPlace.refresh();
+
   }
 
   ///cancel sale
@@ -274,9 +276,9 @@ class SelectedOrderController extends HomeBaseController {
       await NetworkUtils()
           .checkInternetConnection()
           .then((isInternetAvailable) async {
+        ProcessMultipleOrdersRequest mProcessMultipleOrdersRequest =
+        ProcessMultipleOrdersRequest(orderDetailList: [mOrderDetailList]);
         if (isInternetAvailable) {
-          ProcessMultipleOrdersRequest mProcessMultipleOrdersRequest =
-              ProcessMultipleOrdersRequest(orderDetailList: [mOrderDetailList]);
           WebResponseSuccess mWebResponseSuccess =
               await orderPlaceApi.postOrderPlace(mProcessMultipleOrdersRequest);
           if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
@@ -295,8 +297,7 @@ class SelectedOrderController extends HomeBaseController {
             AppAlert.showSnackBar(
                 Get.context!, mWebResponseSuccess.statusMessage ?? '');
           } else {
-            ///off line save
-            if (isPayment) {
+
               ///offline save
               var mOfflinePlaceOrderSaleLocalApi =
                   locator.get<OfflinePlaceOrderSaleLocalApi>();
@@ -314,7 +315,7 @@ class SelectedOrderController extends HomeBaseController {
                           .first);
                 }
               }
-
+              if (isPayment) {
               ///remove
               var mPlaceOrderSaleLocalApi =
                   locator.get<PlaceOrderSaleLocalApi>();
@@ -325,6 +326,30 @@ class SelectedOrderController extends HomeBaseController {
                 Get.context!, mWebResponseSuccess.statusMessage ?? '');
           }
         } else {
+          ///offline save
+          var mOfflinePlaceOrderSaleLocalApi =
+          locator.get<OfflinePlaceOrderSaleLocalApi>();
+          ProcessMultipleOrdersRequest mProcessMultipleOrders =
+              await mOfflinePlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
+                  ProcessMultipleOrdersRequest();
+          if ((mProcessMultipleOrders.orderDetailList ?? []).isEmpty) {
+            await mOfflinePlaceOrderSaleLocalApi
+                .save(mProcessMultipleOrdersRequest);
+          } else {
+            if ((mProcessMultipleOrdersRequest.orderDetailList ?? [])
+                .isNotEmpty) {
+              await mOfflinePlaceOrderSaleLocalApi.getPlaceOrderAdd(
+                  (mProcessMultipleOrdersRequest.orderDetailList ?? [])
+                      .first);
+            }
+          }
+          if (isPayment) {
+            ///remove
+            var mPlaceOrderSaleLocalApi =
+            locator.get<PlaceOrderSaleLocalApi>();
+            await mPlaceOrderSaleLocalApi
+                .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
+          }
           AppAlert.showSnackBar(
               Get.context!, MessageConstants.noInternetConnection);
         }

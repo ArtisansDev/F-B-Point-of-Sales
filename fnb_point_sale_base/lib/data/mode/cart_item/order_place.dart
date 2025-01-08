@@ -19,6 +19,7 @@ class OrderPlace {
   GetAllCustomerList? mSelectCustomer;
   double subTotalPrice = 0.0;
   double totalPrice = 0.0;
+  double rounOffPrice = 0.0;
   double taxAmount = 0.0;
   List<CartItem>? cartItem;
 
@@ -35,8 +36,9 @@ class OrderPlace {
     tableNo = json['tableNo'];
     dateTime = json['dateTime'];
     sOrderNo = json['sOrderNo'];
-    subTotalPrice = json['subTotalPrice'];
-    totalPrice = json['totalPrice'];
+    subTotalPrice = getDoubleValue(json['subTotalPrice']);
+    totalPrice = getDoubleValue(json['totalPrice']);
+    rounOffPrice = getDoubleValue(json['rounOffPrice']);
     taxAmount = json['taxAmount'];
     mSelectCustomer = json['mSelectCustomer'] != null
             ? GetAllCustomerList.fromJson(json['mSelectCustomer'])
@@ -60,6 +62,7 @@ class OrderPlace {
     map['sOrderNo'] = sOrderNo;
     map['subTotalPrice'] = subTotalPrice;
     map['totalPrice'] = totalPrice;
+    map['rounOffPrice'] = rounOffPrice;
     map['taxAmount'] = taxAmount;
     if (mSelectCustomer != null) {
       map['mSelectCustomer'] = mSelectCustomer?.toJson();

@@ -33,7 +33,7 @@ class SelectedOrderBottomView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Visibility(
-        visible: (controller.mOrderPlace.value?.cartItem??[]).isNotEmpty,
+        visible: (controller.mOrderPlace.value?.cartItem ?? []).isNotEmpty,
         child: Column(children: [
           ///Sub Total
           Container(
@@ -48,12 +48,12 @@ class SelectedOrderBottomView extends StatelessWidget {
                   Text(
                     sSubTotal.tr,
                     style: getTextRegular(
-                        size: 11.5.sp, colors: ColorConstants.cAppTaxColour),
+                        size: 11.sp, colors: ColorConstants.cAppTaxColour),
                   ),
                   Text(
                     '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${(controller.mOrderPlace.value?.subTotalPrice ?? 0).toStringAsFixed(2)}',
                     style: getTextRegular(
-                        size: 11.5.sp, colors: ColorConstants.cAppTaxColour),
+                        size: 11.sp, colors: ColorConstants.cAppTaxColour),
                   ),
                 ],
               )),
@@ -88,13 +88,13 @@ class SelectedOrderBottomView extends StatelessWidget {
                             Text(
                               '${mTaxData.taxName ?? ''}+ (${mTaxData.taxPercentage}%)',
                               style: getTextRegular(
-                                  size: 11.5.sp,
+                                  size: 11.sp,
                                   colors: ColorConstants.cAppTaxColour),
                             ),
                             Text(
                               '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${calculatePercentageOf(getDoubleValue(controller.mOrderPlace.value?.subTotalPrice ?? 0), getDoubleValue(mTaxData.taxPercentage)).toStringAsFixed(2)}',
                               style: getTextRegular(
-                                  size: 11.5.sp,
+                                  size: 11.sp,
                                   colors: ColorConstants.cAppTaxColour),
                             ),
                           ],
@@ -120,11 +120,40 @@ class SelectedOrderBottomView extends StatelessWidget {
                 children: [
                   Text(
                     sTotal.tr,
+                    style: getTextRegular(
+                        size: 11.5.sp, colors: ColorConstants.cAppButtonColour),
+                  ),
+                  Text(
+                    '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(controller.mOrderPlace.value?.totalPrice ?? 0).toStringAsFixed(2)}',
+                    style: getTextRegular(
+                        size: 11.5.sp, colors: ColorConstants.cAppButtonColour),
+                  ),
+                ],
+              )),
+          Container(
+            height: 3.sp,
+            margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
+            color: Colors.grey.shade300,
+          ),
+
+
+          ///total pay
+          Container(
+              margin: EdgeInsets.all(
+                8.sp,
+              ),
+              padding: EdgeInsets.only(
+                  left: 8.sp, right: 8.sp, top: 3.sp, bottom: 3.sp),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    sTotalPay.tr,
                     style: getText500(
                         size: 12.5.sp, colors: ColorConstants.cAppButtonColour),
                   ),
                   Text(
-                    '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(controller.mOrderPlace.value?.totalPrice ?? 0).toStringAsFixed(2)}',
+                    '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(controller.mOrderPlace.value?.rounOffPrice ?? 0).toStringAsFixed(2)}',
                     style: getText500(
                         size: 12.5.sp, colors: ColorConstants.cAppButtonColour),
                   ),
@@ -141,8 +170,8 @@ class SelectedOrderBottomView extends StatelessWidget {
               margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
               height: 19.5.sp,
               child: TextInputWidget(
-               // isReadOnly: controller.remarkController.value.text.isNotEmpty,
-                textColor:Colors.black,
+                // isReadOnly: controller.remarkController.value.text.isNotEmpty,
+                textColor: Colors.black,
                 // controller.remarkController.value.text.isEmpty
                 //     ? Colors.black
                 //     : Colors.grey,

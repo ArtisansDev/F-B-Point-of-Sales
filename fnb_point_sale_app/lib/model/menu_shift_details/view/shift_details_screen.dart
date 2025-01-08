@@ -14,7 +14,10 @@ class ShiftDetailsScreen extends GetView<ShiftDetailsController> {
     Get.lazyPut(() => ShiftDetailsController());
     controller.getAllDetails();
     return FocusDetector(
-        onVisibilityGained: () {},
+        onVisibilityGained: () {
+          controller.onDeleteHoldSale();
+          controller.postShiftDetailsApiCall();
+        },
         onVisibilityLost: () {},
         child: const Row(
           children: [

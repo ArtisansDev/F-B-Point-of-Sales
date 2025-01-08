@@ -67,7 +67,8 @@ class TransactionInfoScreen extends StatelessWidget {
                       ),
                       alignment: Alignment.center,
                       child: Text(
-                        '1',
+                        (controller.mShiftDetailsController.mShiftDetailsResponse
+                            .value.data?.salesCount ??0).toString(),
                         style:
                         getText500(size: 11.5.sp, colors: ColorConstants.black),
                       ),
@@ -111,7 +112,8 @@ class TransactionInfoScreen extends StatelessWidget {
                       ),
                       alignment: Alignment.center,
                       child: Text(
-                        '2',
+                        (controller.mShiftDetailsController.mShiftDetailsResponse
+                            .value.data?.refundCount ??0).toString(),
                         style:
                         getText500(size: 11.5.sp, colors: ColorConstants.black),
                       ),
@@ -155,7 +157,8 @@ class TransactionInfoScreen extends StatelessWidget {
                       ),
                       alignment: Alignment.center,
                       child: Text(
-                        '3',
+                        (controller.mShiftDetailsController.mShiftDetailsResponse
+                            .value.data?.voucherGenerateCount ??0).toString(),
                         style:
                         getText500(size: 11.5.sp, colors: ColorConstants.black),
                       ),

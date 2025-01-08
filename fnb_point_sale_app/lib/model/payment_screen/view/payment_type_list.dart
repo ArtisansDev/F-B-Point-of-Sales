@@ -13,6 +13,7 @@ import 'package:fnb_point_sale_base/common/check_box_create/coustom_check_box.da
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_payment_type/get_all_payment_type_response.dart';
+import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -117,7 +118,7 @@ class PaymentTypeList extends StatelessWidget {
                                 child: Container(
                                     alignment: Alignment.centerRight,
                                     child: Text(
-                                      '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${controller.mOrderPlace.value?.totalPrice.toStringAsFixed(2)}',
+                                      '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(roundToNearestPossible(getDoubleValue(controller.mOrderPlace.value?.totalPrice.toStringAsFixed(2)))).toStringAsFixed(2)}',
                                       style: getText500(
                                           size: 10.5.sp,
                                           colors: ColorConstants.black),

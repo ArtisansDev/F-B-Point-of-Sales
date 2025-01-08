@@ -179,7 +179,7 @@ class TableSummaryOrderList extends StatelessWidget {
                 ),
                 Text(
                   sAddMoreItems.tr,
-                  style: getText600(
+                  style: getText500(
                       size: 12.sp, colors: ColorConstants.cAppButtonColour),
                 ),
               ],

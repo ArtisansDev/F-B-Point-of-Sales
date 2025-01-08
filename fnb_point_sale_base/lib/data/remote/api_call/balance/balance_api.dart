@@ -6,4 +6,5 @@ import '../../web_response.dart';
 mixin BalanceApi {
   Future<WebResponseSuccess> postUpdateOpeningBalance(dynamic exhibitorsListRequest);
   Future<WebResponseSuccess> postUpdateClosingBalance(dynamic exhibitorsListRequest);
+  Future<WebResponseSuccess> postShiftDetails(dynamic exhibitorsListRequest);
 }

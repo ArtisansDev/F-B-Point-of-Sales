@@ -226,3 +226,76 @@ double calculatePercentageOf(double total, double percent) {
   return getDoubleValue(((total * percent )/ 100).toStringAsFixed(2));
 }
 
+///RoundOffConfiguration
+class RoundOffConfiguration {
+  RoundOffConfiguration({
+    String? decimalPlace,
+    String? value,
+  }) {
+    _decimalPlace = decimalPlace;
+    _value = value;
+  }
+
+  RoundOffConfiguration.fromJson(dynamic json) {
+    _decimalPlace = json['decimal_place'];
+    _value = json['value'];
+  }
+
+  String? _decimalPlace;
+  String? _value;
+
+  RoundOffConfiguration copyWith({
+    String? decimalPlace,
+    String? value,
+  }) =>
+      RoundOffConfiguration(
+        decimalPlace: decimalPlace ?? _decimalPlace,
+        value: value ?? _value,
+      );
+
+  String? get decimalPlace => _decimalPlace;
+
+  String? get value => _value;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['decimal_place'] = _decimalPlace;
+    map['value'] = _value;
+    return map;
+  }
+}
+
+double roundToNearestPossible(double value) {
+  List<RoundOffConfiguration> configs = List.empty(growable: true);
+  configs.add(RoundOffConfiguration(decimalPlace: ".01", value: '-0.01'));
+  configs.add(RoundOffConfiguration(decimalPlace: ".02", value: '-0.02'));
+  configs.add(RoundOffConfiguration(decimalPlace: ".03", value: '0.02'));
+  configs.add(RoundOffConfiguration(decimalPlace: ".04", value: '0.01'));
+  configs.add(RoundOffConfiguration(decimalPlace: ".05", value: '0.00'));
+  configs.add(RoundOffConfiguration(decimalPlace: ".06", value: '-0.01'));
+  configs.add(RoundOffConfiguration(decimalPlace: ".07", value: '-0.02'));
+  configs.add(RoundOffConfiguration(decimalPlace: ".08", value: '0.02'));
+  configs.add(RoundOffConfiguration(decimalPlace: ".09", value: '0.01'));
+  configs.add(RoundOffConfiguration(decimalPlace: ".00", value: '0.00'));
+
+  double roundOffValue = 0.0;
+  String totalAmount = '${getRoundedDoubleValue(value)}';
+  if (totalAmount.contains(".")) {
+    List<String> values = totalAmount.split(".");
+    String decimalValue = values[1];
+    String? lastCharacter = decimalValue.substring(1);
+
+    if (lastCharacter.isNotEmpty) {
+      lastCharacter = ".0$lastCharacter";
+
+      for (var element in configs) {
+        if (element.decimalPlace == lastCharacter) {
+          roundOffValue = getDoubleValue(element.value);
+        }
+      }
+    }
+  }
+
+  return value + roundOffValue;
+}
+

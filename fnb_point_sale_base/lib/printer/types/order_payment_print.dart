@@ -10,8 +10,8 @@ import '../../data/mode/order_place/process_multiple_orders_request.dart';
 import '../../data/mode/product/get_all_modifier/get_all_modifier_response.dart';
 import '../../locator.dart';
 
-Future<bool> printOrderPayment(
-    OrderDetailList mOrderDetailList, OrderPlace mOrderPlace) async {
+Future<bool> printOrderPayment(OrderDetailList mOrderDetailList,
+    OrderPlace mOrderPlace) async {
   CurrencyData mCurrencyData = CurrencyData();
 
   var configurationLocalApi = locator.get<ConfigurationLocalApi>();
@@ -23,12 +23,12 @@ Future<bool> printOrderPayment(
       (mConfigurationResponse.configurationData?.currencyData ?? []).first;
 
   String branchName =
-      (mConfigurationResponse.configurationData?.branchData ?? []).isEmpty
-          ? ""
-          : (mConfigurationResponse.configurationData?.branchData ?? [])
-                  .first
-                  .branchName ??
-              '';
+  (mConfigurationResponse.configurationData?.branchData ?? []).isEmpty
+      ? ""
+      : (mConfigurationResponse.configurationData?.branchData ?? [])
+      .first
+      .branchName ??
+      '';
   List<pw.Widget> widgets = List.empty(growable: true);
   widgets.add(pw.Center(
       child: pw.Text('Payment Receipt', style: getBoldTextStyleMedium())));
@@ -79,6 +79,11 @@ Future<bool> printOrderPayment(
   ///Total
   widgets
       .add(getTotalRow(mOrderDetailList, mCurrencyData.currencySymbol ?? ''));
+
+  ///Total Pay
+  widgets
+      .add(
+      getTotalPayRow(mOrderDetailList, mCurrencyData.currencySymbol ?? ''));
   widgets.add(pw.Container(height: 4));
   widgets.add(mySeparator());
   widgets.add(pw.Container(height: 4));
@@ -93,15 +98,18 @@ Future<bool> printOrderPayment(
   widgets.add(pw.Container(height: 4));
   widgets.add(mySeparator());
   widgets.add(pw.Container(height: 4));
+
   ///remark
-  widgets.add(
-      pw.Center(child: pw.Text('Order Remark', style: getBoldTextStyle())));
-  widgets.add(pw.Center(
-      child: pw.Text('${mOrderDetailList.additionalNotes}',
-          style: getNormalTextStyle())));
-  widgets.add(pw.Container(height: 4));
-  widgets.add(mySeparator());
-  widgets.add(pw.Container(height: 4));
+  if((mOrderDetailList.additionalNotes??"").isNotEmpty){
+    widgets.add(
+        pw.Center(child: pw.Text('Order Remark', style: getBoldTextStyle())));
+    widgets.add(pw.Center(
+        child: pw.Text('${mOrderDetailList.additionalNotes}',
+            style: getNormalTextStyle())));
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
+  }
   return printWidgets(widgets, true, false);
 }
 
@@ -147,23 +155,28 @@ pw.Widget getItemRow(OrderMenu mCartItem, String currencyData, CartItem mItem) {
                       pw.Text(mCartItem.itemName ?? '',
                           style: getBoldTextStyle()),
                       pw.Text(
-                          '${mCartItem.itemVariantName ?? ''} ${(mCartItem.discountPercentage ?? 0.0) > 0 ? '(${(mCartItem.discountPercentage ?? 0.0)})%' : ""}',
+                          '${mCartItem.itemVariantName ?? ''} ${(mCartItem
+                              .discountPercentage ?? 0.0) > 0 ? '(${(mCartItem
+                              .discountPercentage ?? 0.0)})%' : ""}',
                           style: getNormalTextStyle()),
                       (mCartItem.discountPercentage ?? 0.0) > 0
                           ? pw.Row(children: [
-                              pw.Text(
-                                  '$currencyData ${(mCartItem.variantPrice ?? 0.0).toString()}',
-                                  style: getNormalTextStyleLineThrough()),
-                              pw.SizedBox(width: 3),
-                              pw.Text(
-                                  '$currencyData  ${(mCartItem.itemDiscountPrice ?? 0.0).toString()}',
-                                  style: getBoldTextStyle()),
-                            ])
+                        pw.Text(
+                            '$currencyData ${(mCartItem.variantPrice ?? 0.0)
+                                .toString()}',
+                            style: getNormalTextStyleLineThrough()),
+                        pw.SizedBox(width: 3),
+                        pw.Text(
+                            '$currencyData  ${(mCartItem.itemDiscountPrice ??
+                                0.0).toString()}',
+                            style: getBoldTextStyle()),
+                      ])
                           : pw.SizedBox(
-                              child: pw.Text(
-                                  '$currencyData ${(mCartItem.variantPrice ?? 0.0).toString()}',
-                                  style: getBoldTextStyle()),
-                            )
+                        child: pw.Text(
+                            '$currencyData ${(mCartItem.variantPrice ?? 0.0)
+                                .toString()}',
+                            style: getBoldTextStyle()),
+                      )
                     ])),
           )),
       pw.Expanded(
@@ -183,39 +196,40 @@ pw.Widget getItemRow(OrderMenu mCartItem, String currencyData, CartItem mItem) {
             child: pw.Align(
               alignment: pw.Alignment.centerRight,
               child: pw.Text(
-                  '$currencyData ${getDoubleValue(mCartItem.totalItemAmount).toStringAsFixed(2)}',
+                  '$currencyData ${getDoubleValue(mCartItem.totalItemAmount)
+                      .toStringAsFixed(2)}',
                   style: getNormalTextStyle()),
             ),
           )),
     ]),
     (mItem.mSelectModifierList ?? []).isNotEmpty
         ? pw.Row(children: [
-            pw.Expanded(
-                flex: 2,
-                child: getModifier(
-                    (mItem.mSelectModifierList ?? []), currencyData)),
-            pw.Expanded(flex: 1, child: pw.SizedBox()),
-          ])
+      pw.Expanded(
+          flex: 2,
+          child: getModifier(
+              (mItem.mSelectModifierList ?? []), currencyData)),
+      pw.Expanded(flex: 1, child: pw.SizedBox()),
+    ])
         : pw.SizedBox(),
     (mCartItem.itemTaxPercent ?? 0) > 0
         ? pw.Row(children: [
+      pw.Expanded(
+          flex: 2,
+          child: pw.Row(children: [
             pw.Expanded(
-                flex: 2,
-                child: pw.Row(children: [
-                  pw.Expanded(
-                      child: pw.Align(
-                          alignment: pw.Alignment.centerLeft,
-                          child: pw.Text('Tax (${mCartItem.itemTaxPercent}%)',
-                              style: getNormalTextStyle()))),
-                  pw.Expanded(
-                      child: pw.Align(
-                          alignment: pw.Alignment.centerRight,
-                          child: pw.Text(
-                              '$currencyData ${mCartItem.itemTaxPrice}',
-                              style: getNormalTextStyle())))
-                ])),
-            pw.Expanded(flex: 1, child: pw.SizedBox()),
-          ])
+                child: pw.Align(
+                    alignment: pw.Alignment.centerLeft,
+                    child: pw.Text('Tax (${mCartItem.itemTaxPercent}%)',
+                        style: getNormalTextStyle()))),
+            pw.Expanded(
+                child: pw.Align(
+                    alignment: pw.Alignment.centerRight,
+                    child: pw.Text(
+                        '$currencyData ${mCartItem.itemTaxPrice}',
+                        style: getNormalTextStyle())))
+          ])),
+      pw.Expanded(flex: 1, child: pw.SizedBox()),
+    ])
         : pw.SizedBox()
   ]);
 }
@@ -257,7 +271,8 @@ pw.Widget addModifierRow(ModifierList mModifierList, String currencyData) {
           child: pw.Align(
             alignment: pw.Alignment.centerRight,
             child: pw.Text(
-                '$currencyData ${getDoubleValue(mModifierList.price).toStringAsFixed(2)}',
+                '$currencyData ${getDoubleValue(mModifierList.price)
+                    .toStringAsFixed(2)}',
                 style: getNormalTextStyle()),
           ),
         ))
@@ -265,8 +280,8 @@ pw.Widget addModifierRow(ModifierList mModifierList, String currencyData) {
 }
 
 /// subTotal
-pw.Widget getSubTotalRow(
-    OrderDetailList mOrderDetailList, String currencyData) {
+pw.Widget getSubTotalRow(OrderDetailList mOrderDetailList,
+    String currencyData) {
   return pw.Row(children: [
     pw.Expanded(
         flex: 2,
@@ -284,7 +299,8 @@ pw.Widget getSubTotalRow(
           child: pw.Align(
             alignment: pw.Alignment.centerRight,
             child: pw.Text(
-                '$currencyData ${getDoubleValue(mOrderDetailList.subTotal).toStringAsFixed(2)}',
+                '$currencyData ${getDoubleValue(mOrderDetailList.subTotal)
+                    .toStringAsFixed(2)}',
                 style: getBoldTextStyle()),
           ),
         )),
@@ -310,7 +326,7 @@ pw.Widget getTax(OrderTax tax, String currencyData) {
           child: pw.Align(
             alignment: pw.Alignment.center,
             child:
-                pw.Text('${tax.taxPercentage}%', style: getNormalTextStyle()),
+            pw.Text('${tax.taxPercentage}%', style: getNormalTextStyle()),
           ),
         )),
     pw.Expanded(
@@ -320,7 +336,8 @@ pw.Widget getTax(OrderTax tax, String currencyData) {
           child: pw.Align(
             alignment: pw.Alignment.centerRight,
             child: pw.Text(
-                '$currencyData ${getDoubleValue(tax.taxAmount).toStringAsFixed(2)}',
+                '$currencyData ${getDoubleValue(tax.taxAmount).toStringAsFixed(
+                    2)}',
                 style: getNormalTextStyle()),
           ),
         )),
@@ -346,7 +363,37 @@ pw.Widget getTotalRow(OrderDetailList mOrderDetailList, String currencyData) {
           child: pw.Align(
             alignment: pw.Alignment.centerRight,
             child: pw.Text(
-                '$currencyData ${getDoubleValue(mOrderDetailList.totalAmount).toStringAsFixed(2)}',
+                '$currencyData ${getDoubleValue(mOrderDetailList.totalAmount)
+                    .toStringAsFixed(2)}',
+                style: getBoldTextStyle()),
+          ),
+        )),
+  ]);
+}
+
+/// Total pay
+pw.Widget getTotalPayRow(OrderDetailList mOrderDetailList,
+    String currencyData) {
+  return pw.Row(children: [
+    pw.Expanded(
+        flex: 2,
+        child: pw.Container(
+          padding: const pw.EdgeInsets.all(2.0),
+          child: pw.Align(
+            alignment: pw.Alignment.centerLeft,
+            child: pw.Text("Total Pay", style: getBoldTextStyle()),
+          ),
+        )),
+    pw.Expanded(
+        flex: 1,
+        child: pw.Container(
+          padding: const pw.EdgeInsets.all(2.0),
+          child: pw.Align(
+            alignment: pw.Alignment.centerRight,
+            child: pw.Text(
+                '$currencyData ${getDoubleValue(roundToNearestPossible(
+                    getDoubleValue(getDoubleValue(mOrderDetailList.totalAmount)
+                        .toStringAsFixed(2)))).toStringAsFixed(2)}',
                 style: getBoldTextStyle()),
           ),
         )),
@@ -364,8 +411,8 @@ pw.Widget getPaymentRow(OrderDetailList mOrderDetailList, String currencyData) {
             alignment: pw.Alignment.centerLeft,
             child: pw.Text(
                 mOrderDetailList.paymentResponse?.first.paymentGatewayNo
-                            .toString() ==
-                        "0"
+                    .toString() ==
+                    "0"
                     ? 'Cash'
                     : '--',
                 style: getBoldTextStyle()),
@@ -378,7 +425,9 @@ pw.Widget getPaymentRow(OrderDetailList mOrderDetailList, String currencyData) {
           child: pw.Align(
             alignment: pw.Alignment.centerRight,
             child: pw.Text(
-                '$currencyData ${getDoubleValue(mOrderDetailList.totalAmount).toStringAsFixed(2)}',
+                '$currencyData ${getDoubleValue(roundToNearestPossible(
+                    getDoubleValue(getDoubleValue(mOrderDetailList.totalAmount)
+                        .toStringAsFixed(2)))).toStringAsFixed(2)}',
                 style: getBoldTextStyle()),
           ),
         )),

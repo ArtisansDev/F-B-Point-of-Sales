@@ -114,7 +114,7 @@ class SalesListRowView extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${(mOrderHistoryData.totalAmount ?? 0.0).toStringAsFixed(2)}',
+                  '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${(mOrderHistoryData.adjustedAmount ?? 0.0) > 0 ? (mOrderHistoryData.adjustedAmount ?? 0.0).toStringAsFixed(2) : (mOrderHistoryData.totalAmount ?? 0.0).toStringAsFixed(2)}',
                   style: getTextRegular(
                       colors: ColorConstants.appTextSalesHader, size: 11.sp),
                 ),

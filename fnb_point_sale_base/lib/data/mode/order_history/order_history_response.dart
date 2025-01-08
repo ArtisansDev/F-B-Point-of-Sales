@@ -151,6 +151,7 @@ class OrderHistoryResponseData {
 /// SubTotal : 0.0
 /// TaxAmountTotal : 0.0
 /// TotalAmount : 2.16
+/// AdjustedAmount : 2.16
 /// AdditionalNotes : ""
 /// GuestInfo : null
 /// PaymentGatewayID : "00000000-0000-0000-0000-000000000000"
@@ -196,6 +197,7 @@ class OrderHistoryData {
     double? subTotal,
     double? taxAmountTotal,
     double? totalAmount,
+    double? adjustedAmount,
     String? additionalNotes,
     dynamic guestInfo,
     String? paymentGatewayID,
@@ -205,6 +207,7 @@ class OrderHistoryData {
     _orderIDP = orderIDP;
     _formatedOrderDate = formatedOrderDate;
     _grandTotal = grandTotal;
+    _adjustedAmount = adjustedAmount;
     _address = address;
     _pinCode = pinCode;
     _stateName = stateName;
@@ -250,6 +253,7 @@ class OrderHistoryData {
     _orderIDP = json['OrderIDP'];
     _formatedOrderDate = json['FormatedOrderDate'];
     _grandTotal = json['GrandTotal'];
+    _adjustedAmount = json['AdjustedAmount'];
     _address = json['Address'];
     _pinCode = json['PinCode'];
     _stateName = json['StateName'];
@@ -304,6 +308,7 @@ class OrderHistoryData {
   String? _orderIDP;
   String? _formatedOrderDate;
   double? _grandTotal;
+  double? _adjustedAmount;
   String? _address;
   String? _pinCode;
   String? _stateName;
@@ -349,6 +354,8 @@ class OrderHistoryData {
   String? get formatedOrderDate => _formatedOrderDate;
 
   double? get grandTotal => _grandTotal;
+
+  double? get adjustedAmount => _adjustedAmount;
 
   String? get address => _address;
 
@@ -433,6 +440,7 @@ class OrderHistoryData {
     map['OrderIDP'] = _orderIDP;
     map['FormatedOrderDate'] = _formatedOrderDate;
     map['GrandTotal'] = _grandTotal;
+    map['AdjustedAmount'] = _adjustedAmount;
     map['Address'] = _address;
     map['PinCode'] = _pinCode;
     map['StateName'] = _stateName;

@@ -21,10 +21,7 @@ class DetailsScreen extends GetView<DetailsScreenController> {
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => DetailsScreenController());
-    return FocusDetector(
-        onVisibilityGained: () {},
-        onVisibilityLost: () {},
-        child: Column(
+    return Obx(() => Column(
           children: [
             Expanded(
                 child: Container(
@@ -36,19 +33,25 @@ class DetailsScreen extends GetView<DetailsScreenController> {
                 ),
               ),
               alignment: Alignment.center,
-              child: Column(
-                children: [
-                  UserInfoScreen(),
-                  SizedBox(
-                    height: 10.sp,
-                  ),
-                  TransactionInfoScreen(),
-                  SizedBox(
-                    height: 10.sp,
-                  ),
-                  PaymentDeclarationScreen()
-                ],
-              ),
+              child: controller.mShiftDetailsController.sLoading.isNotEmpty
+                  ? Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                          '${controller.mShiftDetailsController.sLoading}'),
+                    )
+                  : Column(
+                      children: [
+                        UserInfoScreen(),
+                        SizedBox(
+                          height: 10.sp,
+                        ),
+                        TransactionInfoScreen(),
+                        SizedBox(
+                          height: 10.sp,
+                        ),
+                        PaymentDeclarationScreen()
+                      ],
+                    ),
             )),
             const ButtonView()
           ],

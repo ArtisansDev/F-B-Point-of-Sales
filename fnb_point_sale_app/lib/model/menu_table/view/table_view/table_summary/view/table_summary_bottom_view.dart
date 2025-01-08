@@ -47,12 +47,12 @@ class TableSummaryBottomView extends StatelessWidget {
                   Text(
                     sSubTotal.tr,
                     style: getTextRegular(
-                        size: 11.5.sp, colors: ColorConstants.cAppTaxColour),
+                        size: 11.sp, colors: ColorConstants.cAppTaxColour),
                   ),
                   Text(
                     '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${(controller.mOrderPlace.value?.subTotalPrice ?? 0).toStringAsFixed(2)}',
                     style: getTextRegular(
-                        size: 11.5.sp, colors: ColorConstants.cAppTaxColour),
+                        size: 11.sp, colors: ColorConstants.cAppTaxColour),
                   ),
                 ],
               )),
@@ -86,13 +86,13 @@ class TableSummaryBottomView extends StatelessWidget {
                             Text(
                               '${mTaxData.taxName ?? ''}+ (${mTaxData.taxPercentage}%)',
                               style: getTextRegular(
-                                  size: 11.5.sp,
+                                  size: 11.sp,
                                   colors: ColorConstants.cAppTaxColour),
                             ),
                             Text(
                               '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${calculatePercentageOf(getDoubleValue(controller.mOrderPlace.value.subTotalPrice), getDoubleValue(mTaxData.taxPercentage)).toStringAsFixed(2)}',
                               style: getTextRegular(
-                                  size: 11.5.sp,
+                                  size: 11.sp,
                                   colors: ColorConstants.cAppTaxColour),
                             ),
                           ],
@@ -118,13 +118,42 @@ class TableSummaryBottomView extends StatelessWidget {
                 children: [
                   Text(
                     sTotal.tr,
-                    style: getText500(
-                        size: 12.5.sp, colors: ColorConstants.cAppButtonColour),
+                    style: getTextRegular(
+                        size: 11.sp, colors: ColorConstants.cAppButtonColour),
                   ),
                   Text(
                     '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(controller.mOrderPlace.value.totalPrice).toStringAsFixed(2)}',
+                    style: getTextRegular(
+                        size: 11.sp, colors: ColorConstants.cAppButtonColour),
+                  ),
+                ],
+              )),
+          Container(
+            height: 3.sp,
+            margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
+            color: Colors.grey.shade300,
+          ),
+
+
+          ///total pay
+          Container(
+              margin: EdgeInsets.all(
+                8.sp,
+              ),
+              padding: EdgeInsets.only(
+                  left: 8.sp, right: 8.sp, top: 3.sp, bottom: 3.sp),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    sTotalPay.tr,
                     style: getText500(
-                        size: 12.5.sp, colors: ColorConstants.cAppButtonColour),
+                        size: 12.sp, colors: ColorConstants.cAppButtonColour),
+                  ),
+                  Text(
+                    '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(controller.mOrderPlace.value.rounOffPrice ?? 0).toStringAsFixed(2)}',
+                    style: getText500(
+                        size: 12.sp, colors: ColorConstants.cAppButtonColour),
                   ),
                 ],
               )),
@@ -134,13 +163,14 @@ class TableSummaryBottomView extends StatelessWidget {
             color: Colors.grey.shade300,
           ),
 
+
           ///remark
           Container(
               margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
               height: 19.5.sp,
               child: TextInputWidget(
                 placeHolder: sRemark.tr,
-                isReadOnly: true,
+                // isReadOnly: true,
                 textColor: Colors.grey,
                 controller: controller.remarkController.value,
                 errorText: null,
