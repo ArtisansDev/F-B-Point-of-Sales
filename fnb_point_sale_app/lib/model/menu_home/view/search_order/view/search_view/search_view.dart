@@ -9,14 +9,14 @@ import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../home_base_controller/home_base_controller.dart';
-import 'controller/search_view_controller.dart';
 
-class SearchView extends GetView<SearchViewController> {
-  const SearchView({super.key});
-
+class SearchView extends StatelessWidget {
+  late HomeBaseController controller;
+  SearchView({super.key}) {
+    controller = Get.find<HomeBaseController>();
+  }
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => SearchViewController());
     return Container(
         width: double.infinity,
         margin: EdgeInsets.only(top: 8.sp, bottom: 8.sp),

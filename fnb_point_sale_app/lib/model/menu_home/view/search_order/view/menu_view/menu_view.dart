@@ -7,17 +7,19 @@ import 'package:fnb_point_sale_base/data/mode/product/get_all_category/get_all_c
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
+import '../../../../home_base_controller/home_base_controller.dart';
 import 'category_row_view.dart';
-import 'controller/menu_view_controller.dart';
 import 'menu_row_view.dart';
 
-class MenuView extends GetView<MenuViewController> {
-  const MenuView({super.key});
+class MenuView extends StatelessWidget {
+  late HomeBaseController controller;
+
+  MenuView({super.key}) {
+    controller = Get.find<HomeBaseController>();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => MenuViewController());
-    controller.onHomeUpdate();
     controller.getAllCategoryList();
     return Obx(
       () {
@@ -53,13 +55,8 @@ class MenuView extends GetView<MenuViewController> {
                           }),
 
                       ///no sub Category
-                      if ((controller.mSelectMenuViewController.value
-                                      ?.selectGetAllCategory ??
-                                  [])
-                              .isEmpty ||
-                          (controller.mSelectMenuViewController.value
-                                      ?.selectGetAllCategory ??
-                                  [])
+                      if ((controller.selectGetAllCategory ?? []).isEmpty ||
+                          (controller.selectGetAllCategory ?? [])
                               .last
                               ?.subCategories
                               .isNotEmpty)
@@ -69,9 +66,7 @@ class MenuView extends GetView<MenuViewController> {
                           alignment: Alignment.centerLeft,
                           margin: EdgeInsets.only(top: 11.sp, left: 13.sp),
                           child: Visibility(
-                              visible: (controller.mSelectMenuViewController
-                                          .value?.selectGetAllCategory ??
-                                      [])
+                              visible: (controller.selectGetAllCategory ?? [])
                                   .last
                                   ?.subCategories
                                   .isEmpty,
@@ -84,10 +79,7 @@ class MenuView extends GetView<MenuViewController> {
                         ),
 
                       ///mMenuItemData
-                      (controller.mSelectMenuViewController.value
-                                      ?.selectGetAllCategory ??
-                                  [])
-                              .isEmpty
+                      (controller.selectGetAllCategory ?? []).isEmpty
                           ? controller.mMenuItemData.isEmpty
                               ? const SizedBox()
                               : Container(
@@ -105,16 +97,12 @@ class MenuView extends GetView<MenuViewController> {
                               margin: EdgeInsets.only(
                                   top: 11.sp, bottom: 11.sp, left: 13.sp),
                               child: Visibility(
-                                  visible:
-                                      controller.mMenuItemData.isNotEmpty &&
-                                          (controller
-                                                      .mSelectMenuViewController
-                                                      .value
-                                                      ?.selectGetAllCategory ??
-                                                  [])
-                                              .isNotEmpty,
+                                  visible: controller
+                                          .mMenuItemData.isNotEmpty &&
+                                      (controller.selectGetAllCategory ?? [])
+                                          .isNotEmpty,
                                   child: Text(
-                                    '${(controller.mSelectMenuViewController.value?.selectGetAllCategory.last ?? GetAllCategoryData()).categoryName} Menu Items',
+                                    '${(controller.selectGetAllCategory.last ?? GetAllCategoryData()).categoryName} Menu Items',
                                     style: getText600(
                                         colors: ColorConstants.cAppColors,
                                         size: 12.sp),

@@ -9,21 +9,18 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:fnb_point_sale_base/common/dynamic_height_grid_view.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
-import 'package:fnb_point_sale_base/data/mode/button_bar/button_bar_model.dart';
-import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'controller/menu_view_controller.dart';
+import '../../../../home_base_controller/home_base_controller.dart';
 
 class MenuRowView extends StatelessWidget {
-  late MenuViewController controller;
+  late HomeBaseController controller;
   final int index;
 
   MenuRowView({super.key, required this.index}) {
-    controller = Get.find<MenuViewController>();
+    controller = Get.find<HomeBaseController>();
   }
 
   @override

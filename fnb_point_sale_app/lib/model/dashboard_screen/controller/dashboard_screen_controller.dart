@@ -31,7 +31,6 @@ import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 
 import '../../menu_customer/controller/customer_controller.dart';
 import '../../menu_customer/view/customer_screen.dart';
-import '../../menu_home/controller/home_controller.dart';
 import '../../menu_home/view/home_screen.dart';
 import '../../menu_sales/controller/menu_sales_controller.dart';
 import '../../menu_settings/controller/settings_controller.dart';
@@ -57,20 +56,20 @@ class DashboardScreenController extends GetxController {
 
   ///set Top Bar value
   RxInt topBarIndex = 0.obs;
+
   setTopBarValue(int index, int value) {
-    if(index<3){
+    if (index < 3) {
       topBarIndex.value = index;
       topBarIndex.refresh();
       if (Get.isRegistered<TableController>()) {
-        if(onUpdateTable.value!=null){
-        onUpdateTable.value!();
+        if (onUpdateTable.value != null) {
+          onUpdateTable.value!();
         }
-      }else {
+      } else {
         selectMenu.value = 1;
         selectMenu.refresh();
       }
     }
-
   }
 
   ///set APP VERSION
@@ -99,6 +98,7 @@ class DashboardScreenController extends GetxController {
   deleteController() {
     switch (selectMenu.value) {
       case 0:
+
         ///home
         if (Get.isRegistered<ShiftDetailsController>()) {
           Get.find<ShiftDetailsController>().onClose();
@@ -122,14 +122,14 @@ class DashboardScreenController extends GetxController {
         }
         break;
       case 1:
+
         ///MenuTable
         if (Get.isRegistered<ShiftDetailsController>()) {
           Get.find<ShiftDetailsController>().onClose();
           Get.delete<ShiftDetailsController>();
         }
-        if (Get.isRegistered<HomeController>()) {
-          Get.find<HomeController>().onClose();
-          Get.delete<HomeController>();
+        if (Get.isRegistered<HomeBaseController>()) {
+          Get.find<HomeBaseController>().onClose();
           Get.delete<HomeBaseController>();
         }
         if (Get.isRegistered<MenuSalesController>()) {
@@ -146,14 +146,14 @@ class DashboardScreenController extends GetxController {
         }
         return;
       case 2:
-      ///MenuSales
+
+        ///MenuSales
         if (Get.isRegistered<ShiftDetailsController>()) {
           Get.find<ShiftDetailsController>().onClose();
           Get.delete<ShiftDetailsController>();
         }
-        if (Get.isRegistered<HomeController>()) {
-          Get.find<HomeController>().onClose();
-          Get.delete<HomeController>();
+        if (Get.isRegistered<HomeBaseController>()) {
+          Get.find<HomeBaseController>().onClose();
           Get.delete<HomeBaseController>();
         }
         if (Get.isRegistered<SettingsMenuController>()) {
@@ -176,9 +176,8 @@ class DashboardScreenController extends GetxController {
           Get.find<ShiftDetailsController>().onClose();
           Get.delete<ShiftDetailsController>();
         }
-        if (Get.isRegistered<HomeController>()) {
-          Get.find<HomeController>().onClose();
-          Get.delete<HomeController>();
+        if (Get.isRegistered<HomeBaseController>()) {
+          Get.find<HomeBaseController>().onClose();
           Get.delete<HomeBaseController>();
         }
         if (Get.isRegistered<MenuSalesController>()) {
@@ -195,10 +194,10 @@ class DashboardScreenController extends GetxController {
         }
         break;
       case 4:
-      ///CustomerController
-        if (Get.isRegistered<HomeController>()) {
-          Get.find<HomeController>().onClose();
-          Get.delete<HomeController>();
+
+        ///CustomerController
+        if (Get.isRegistered<HomeBaseController>()) {
+          Get.find<HomeBaseController>().onClose();
           Get.delete<HomeBaseController>();
         }
         if (Get.isRegistered<MenuSalesController>()) {
@@ -219,10 +218,10 @@ class DashboardScreenController extends GetxController {
         }
         break;
       case 5:
+
         ///ShiftDetails
-        if (Get.isRegistered<HomeController>()) {
-          Get.find<HomeController>().onClose();
-          Get.delete<HomeController>();
+        if (Get.isRegistered<HomeBaseController>()) {
+          Get.find<HomeBaseController>().onClose();
           Get.delete<HomeBaseController>();
         }
         if (Get.isRegistered<MenuSalesController>()) {
@@ -284,7 +283,7 @@ class DashboardScreenController extends GetxController {
         await configurationLocalApi.getConfigurationResponse() ??
             ConfigurationResponse();
     taxData.clear();
-    taxData.addAll(mConfigurationResponse.configurationData?.taxData??[]);
+    taxData.addAll(mConfigurationResponse.configurationData?.taxData ?? []);
   }
 
   ///onSync
@@ -298,7 +297,12 @@ class DashboardScreenController extends GetxController {
       }, () {
         sDownloadText.value = '';
         sDownloadText.refresh();
-        onUpdateDate.value!();
+        if (onUpdateDate.value != null) {
+          onUpdateDate.value!();
+        }
+        if (updateHomeMenu.value != null) {
+          updateHomeMenu.value!();
+        }
       }, (value) {
         sDownloadText.value = '';
         sDownloadText.refresh();
@@ -324,7 +328,12 @@ class DashboardScreenController extends GetxController {
               onCompleted: () {
                 sDownloadText.value = '';
                 sDownloadText.refresh();
-                onUpdateDate.value!();
+                if (onUpdateDate.value != null) {
+                  onUpdateDate.value!();
+                }
+                if (updateHomeMenu.value != null) {
+                  updateHomeMenu.value!();
+                }
               },
               onCancel: () {
                 Get.back();
@@ -335,9 +344,19 @@ class DashboardScreenController extends GetxController {
   Rxn<Function> onUpdateDate = Rxn<Function>();
   Rxn<Function> onUpdateHold = Rxn<Function>();
 
-  onUpdate(Function update,{Function? updateHoldSale}) {
+  onUpdate(Function update, {Function? updateHoldSale}) {
     onUpdateDate.value = update;
-    onUpdateHold.value = updateHoldSale;
+    if (updateHoldSale != null) {
+      onUpdateHold.value = updateHoldSale;
+    }
+  }
+
+  Rxn<Function> updateHomeMenu = Rxn<Function>();
+
+  onHomeUpdate({Function? updateHome}) {
+    if (updateHome != null) {
+      updateHomeMenu.value = updateHome;
+    }
   }
 
   onUpdateHoldSale() async {
@@ -349,17 +368,19 @@ class DashboardScreenController extends GetxController {
         (mHoldSaleModel.mOrderPlace ?? []).length.toString();
     mTobBarModel.refresh();
   }
+
   Rxn<Function> onUpdateTable = Rxn<Function>();
 
   onUpdateViewTable(Function update) {
     onUpdateTable.value = update;
   }
 
-
   ///customer
   final customerLocalApi = locator.get<CustomerLocalApi>();
   Rxn<GetAllCustomerData> mGetAllCustomerData = Rxn<GetAllCustomerData>();
-  Rxn<List<GetAllCustomerList>> mAllCustomerList = Rxn<List<GetAllCustomerList>>();
+  Rxn<List<GetAllCustomerList>> mAllCustomerList =
+      Rxn<List<GetAllCustomerList>>();
+
   getAllCustomerList() async {
     GetAllCustomerResponse mGetAllCustomerResponse =
         await customerLocalApi.getAllCustomerResponse() ??
@@ -377,7 +398,7 @@ class DashboardScreenController extends GetxController {
     }
   }
 
-   callGetAllCustomer() async {
+  callGetAllCustomer() async {
     try {
       ///api product call
       final customerApi = locator.get<CustomerApi>();
@@ -393,16 +414,16 @@ class DashboardScreenController extends GetxController {
               pageNumber: 1,
               rowsPerPage: 0,
               restaurantIDF: (mConfigurationResponse
-                  .configurationData?.restaurantData ??
-                  [])
-                  .isEmpty
+                              .configurationData?.restaurantData ??
+                          [])
+                      .isEmpty
                   ? ""
                   : (mConfigurationResponse.configurationData?.restaurantData ??
-                  [])
-                  .first
-                  .restaurantIDP);
+                          [])
+                      .first
+                      .restaurantIDP);
           WebResponseSuccess mWebResponseSuccess =
-          await customerApi.postGetAllCustomer(mGetAllCustomerRequest);
+              await customerApi.postGetAllCustomer(mGetAllCustomerRequest);
 
           if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
             GetAllCustomerResponse mGetAllCustomerResponse =

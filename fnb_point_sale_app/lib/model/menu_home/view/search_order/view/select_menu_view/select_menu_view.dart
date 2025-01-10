@@ -5,14 +5,15 @@ import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import 'controller/select_menu_view_controller.dart';
+import '../../../../home_base_controller/home_base_controller.dart';
 
-class SelectMenuView extends GetView<SelectMenuViewController> {
-  const SelectMenuView({super.key});
-
+class SelectMenuView extends StatelessWidget {
+  late HomeBaseController controller;
+  SelectMenuView({super.key}) {
+    controller = Get.find<HomeBaseController>();
+  }
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => SelectMenuViewController());
     return Obx(
       () {
         return Container(

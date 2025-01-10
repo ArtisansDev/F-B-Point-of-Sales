@@ -10,6 +10,8 @@
 
 import 'package:fnb_point_sale_base/data/local/database/configuration/configuration_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/hold_sale/hold_sale_local_api.dart';
+import 'package:fnb_point_sale_base/data/local/database/menu_item/menu_item_local_api.dart';
+import 'package:fnb_point_sale_base/data/local/database/modifier/modifier_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/product/all_category/all_category_local_api.dart';
 import 'package:fnb_point_sale_base/locator.dart';
 import 'package:get/get.dart';
@@ -30,6 +32,13 @@ logout() async {
   await SharedPrefs().setUserToken('');
   await SharedPrefs().setUserId('');
   await SharedPrefs().setHistoryID('');
+
+  await locator.get<AllCategoryLocalApi>().deleteAllCategory();
+  await locator.get<ModifierLocalApi>().deleteAllModifier();
+  await locator.get<MenuItemLocalApi>().deleteAllMenuItem();
+  await locator.get<HoldSaleLocalApi>().deleteAllHoldSale();
+
+
   Get.delete<DashboardScreenController>();
   Get.offAllNamed(
     RouteConstants.rLoginScreen,
@@ -38,6 +47,9 @@ logout() async {
 
 clearConfiguration() async {
   await locator.get<AllCategoryLocalApi>().deleteAllCategory();
+  await locator.get<ModifierLocalApi>().deleteAllModifier();
+  await locator.get<MenuItemLocalApi>().deleteAllMenuItem();
+
   await locator.get<ConfigurationLocalApi>().deleteAllConfiguration();
   await locator.get<HoldSaleLocalApi>().deleteAllHoldSale();
   await SharedPrefs().setUserToken('');

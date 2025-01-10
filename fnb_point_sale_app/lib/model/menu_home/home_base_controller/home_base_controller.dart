@@ -19,109 +19,59 @@ import 'package:get/get.dart';
 
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
 import '../../dashboard_screen/view/top_bar/controller/top_bar_controller.dart';
-import '../controller/home_controller.dart';
 import '../view/add_item/controller/add_item_controller.dart';
 import '../view/add_item/view/add_item_screen.dart';
-import '../view/search_order/controller/search_order_controller.dart';
-import '../view/search_order/view/menu_view/controller/menu_view_controller.dart';
-import '../view/search_order/view/search_view/controller/search_view_controller.dart';
-import '../view/search_order/view/select_menu_view/controller/select_menu_view_controller.dart';
 import '../view/selected_order/controller/selected_order_controller.dart';
 
 class HomeBaseController extends GetxController {
   ///Dashboard
   DashboardScreenController mDashboardScreenController =
       Get.find<DashboardScreenController>();
-  TopBarController mTopBarController =
-  Get.find<TopBarController>();
-  static Rx<TextEditingController> searchController = TextEditingController().obs;
-  ///Home
-  Rxn<HomeController> mHomeController = Rxn<HomeController>();
-
-  ///SearchOrder
-  Rxn<SearchOrderController> mSearchOrderController =
-      Rxn<SearchOrderController>();
+  TopBarController mTopBarController = Get.find<TopBarController>();
+  static Rx<TextEditingController> searchController =
+      TextEditingController().obs;
 
   ///SelectedOrder
   Rxn<SelectedOrderController> mSelectedOrderController =
       Rxn<SelectedOrderController>();
 
-  ///Search
-  Rxn<SearchViewController> mSearchViewController = Rxn<SearchViewController>();
-
-  ///Select
-  Rxn<SelectMenuViewController> mSelectMenuViewController =
-      Rxn<SelectMenuViewController>();
-
-  ///Menu
-  Rxn<MenuViewController> mMenuViewController = Rxn<MenuViewController>();
-
   ///SelectMenuView
   RxList<GetAllCategoryData> selectGetAllCategory = <GetAllCategoryData>[].obs;
 
   void onClickHome() {
-    ///
-    if (mMenuViewController.value == null) {
-      createController();
-    }
-    mMenuViewController.value!.getAllCategoryList();
+    getAllCategoryList();
   }
 
   onSearchText(value) async {
-    if (mMenuViewController.value == null) {
-      createController();
-    }
-
     ///Category
     var localAllCategoryApi = locator.get<AllCategoryLocalApi>();
-    mMenuViewController.value!.mGetAllCategoryData.clear();
-    mMenuViewController.value!.mGetAllCategoryView.clear();
-    mMenuViewController.value!.mGetAllCategoryData.addAll(
-        await localAllCategoryApi
-                .getCategoryListSearch(value.toString().toLowerCase()) ??
-            []);
-    mMenuViewController.value!.mGetAllCategoryView
-        .addAll(mMenuViewController.value!.mGetAllCategoryData.toList());
-    mMenuViewController.value!.mGetAllCategoryData.refresh();
-    mMenuViewController.value!.mGetAllCategoryView.refresh();
-    mSelectMenuViewController.value?.selectGetAllCategory.clear();
-    mSelectMenuViewController.value?.selectGetAllCategory.refresh();
+    mGetAllCategoryData.clear();
+    mGetAllCategoryView.clear();
+    mGetAllCategoryData.addAll(await localAllCategoryApi
+            .getCategoryListSearch(value.toString().toLowerCase()) ??
+        []);
+    mGetAllCategoryView.addAll(mGetAllCategoryData.toList());
+    mGetAllCategoryData.refresh();
+    mGetAllCategoryView.refresh();
+    selectGetAllCategory.clear();
+    selectGetAllCategory.refresh();
 
     ///menu
     var localMenuItemApi = locator.get<MenuItemLocalApi>();
-    mMenuViewController.value!.mMenuItemSelected.value = null;
-    mMenuViewController.value!.mMenuItemData.clear();
-    mMenuViewController.value!.mMenuItemData.addAll(await localMenuItemApi
+    mMenuItemSelected.value = null;
+    mMenuItemData.clear();
+    mMenuItemData.addAll(await localMenuItemApi
             .getMenuItemDataSearch(value.toString().toLowerCase()) ??
         []);
-    mMenuViewController.value!.mMenuItemData.refresh();
+    mMenuItemData.refresh();
   }
 
   ///sync update
   onHomeUpdate() {
-    mDashboardScreenController.onUpdate(() async {
+    mDashboardScreenController.onHomeUpdate(updateHome: () async {
       await getAllCategoryList();
+      await getMenuItems(GetAllCategoryData());
     });
-  }
-
-  createController() {
-    ///Home
-    mHomeController.value = Get.find<HomeController>();
-
-    ///SearchOrder
-    mSearchOrderController.value = Get.find<SearchOrderController>();
-
-    ///SelectedOrder
-    mSelectedOrderController.value = Get.find<SelectedOrderController>();
-
-    ///Search
-    mSearchViewController.value = Get.find<SearchViewController>();
-
-    ///Select
-    mSelectMenuViewController.value = Get.find<SelectMenuViewController>();
-
-    ///Menu
-    mMenuViewController.value = Get.find<MenuViewController>();
   }
 
   ///Category data
@@ -135,7 +85,7 @@ class HomeBaseController extends GetxController {
             GetAllCategoryResponse();
 
     if ((mGetAllCategoryResponse.mGetAllCategoryData ?? []).isNotEmpty) {
-      ///MenuItemD
+      // ///MenuItemD
       mMenuItemData.clear();
       mMenuItemData.refresh();
 
@@ -149,22 +99,12 @@ class HomeBaseController extends GetxController {
       mGetAllCategoryView.refresh();
     }
 
-    if (mSelectMenuViewController.value == null) {
-      createController();
-    }
-    mSelectMenuViewController.value?.selectGetAllCategory.clear();
-    mSelectMenuViewController.value?.selectGetAllCategory.refresh();
+    selectGetAllCategory.clear();
+    selectGetAllCategory.refresh();
     searchController.value.text = "";
   }
 
   void onCategorySelect(int index) async {
-    ///
-    if (mSelectMenuViewController.value == null) {
-      createController();
-    }
-
-    ///
-    // if ((mGetAllCategoryView[index].subCategories ?? []).isNotEmpty) {
     ///selectCategory
     selectCategory(index);
 
@@ -177,37 +117,28 @@ class HomeBaseController extends GetxController {
     ///GetAllCategory
     mGetAllCategoryData.clear();
     mGetAllCategoryData.addAll(mGetAllCategoryView.toList());
-    // } else {
-    //   selectCategory(index);
-    // }
   }
 
   ///selectCategory
   void selectCategory(int index) {
-    if (mSelectMenuViewController.value!.selectGetAllCategory.isNotEmpty &&
-        (mSelectMenuViewController
-                    .value!.selectGetAllCategory.last.subCategories ??
-                [])
-            .isEmpty) {
-      mSelectMenuViewController.value?.selectGetAllCategory.removeLast();
-      mSelectMenuViewController.value?.selectGetAllCategory
-          .add(mGetAllCategoryView[index]);
-      mSelectMenuViewController.value?.selectGetAllCategory.refresh();
+    if (selectGetAllCategory.isNotEmpty &&
+        (selectGetAllCategory.last.subCategories ?? []).isEmpty) {
+      selectGetAllCategory.removeLast();
+      selectGetAllCategory.add(mGetAllCategoryView[index]);
+      selectGetAllCategory.refresh();
     } else {
-      mSelectMenuViewController.value?.selectGetAllCategory
-          .add(mGetAllCategoryView[index]);
-      mSelectMenuViewController.value?.selectGetAllCategory.refresh();
+      selectGetAllCategory.add(mGetAllCategoryView[index]);
+      selectGetAllCategory.refresh();
     }
 
-    getMenuItems(mSelectMenuViewController.value?.selectGetAllCategory.last ??
-        GetAllCategoryData());
+    getMenuItems(selectGetAllCategory.last ?? GetAllCategoryData());
   }
 
   isSelectedCategory(GetAllCategoryData mGetAllCategoryData) {
     // if (mSelectMenuViewController.value == null) {
     //   return false;
     // }
-    // if (mSelectMenuViewController.value!.selectGetAllCategory.isNotEmpty &&
+    // if (selectGetAllCategory.isNotEmpty &&
     //     (mSelectMenuViewController
     //                     .value!.selectGetAllCategory.value.last.categoryIDP ??
     //                 '')
@@ -297,9 +228,7 @@ class HomeBaseController extends GetxController {
   onAddValue(CartItem mCartItem) {
     MyLogUtils.logDebug("##### mModifierListData ${mCartItem.totalPrice}");
     getAllCategoryList();
-    if (mSelectedOrderController.value == null) {
-      createController();
-    }
+    mSelectedOrderController.value ??= Get.find<SelectedOrderController>();
     mSelectedOrderController.value?.onSelectOrder(mCartItem);
   }
 }

@@ -14,14 +14,14 @@ import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import 'controller/menu_view_controller.dart';
+import '../../../../home_base_controller/home_base_controller.dart';
 
 class CategoryRowView extends StatelessWidget {
-  late MenuViewController controller;
+  late HomeBaseController controller;
   final int index;
 
   CategoryRowView({super.key, required this.index}) {
-    controller = Get.find<MenuViewController>();
+    controller = Get.find<HomeBaseController>();
   }
 
   @override

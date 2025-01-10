@@ -25,7 +25,6 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
 
     return FocusDetector(
         onVisibilityGained: () {
-          controller.createController();
           controller.onOrderPlaceAnotherPage();
         },
         onVisibilityLost: () {},
