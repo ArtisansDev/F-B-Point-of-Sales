@@ -89,11 +89,18 @@ class LoginScreenController extends GetxController {
               Get.context!, mWebResponseSuccess.statusMessage ?? '');
           WebConstants.isFastTimeLogin = true;
           if (mLoginResponse.data?.isAlreadyLoggedIn ?? false) {
-            await SharedPrefs().setHistoryID(
-                mLoginResponse.data?.activeCounterHistoryId ?? '');
-            Get.offNamed(
-              RouteConstants.rDashboardScreen,
-            );
+            if( (mLoginResponse.data?.activeCounterHistoryId ?? '').isNotEmpty){
+              await SharedPrefs().setHistoryID(
+                  mLoginResponse.data?.activeCounterHistoryId ?? '');
+              Get.offNamed(
+                RouteConstants.rDashboardScreen,
+              );
+            }else {
+              await SharedPrefs().setHistoryID('');
+              Get.offNamed(
+                RouteConstants.rOpenCounterScreen,
+              );
+            }
           } else {
             await SharedPrefs().setHistoryID('');
             Get.offNamed(
