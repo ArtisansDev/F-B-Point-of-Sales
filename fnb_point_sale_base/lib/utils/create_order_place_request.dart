@@ -15,12 +15,11 @@ import '../data/mode/product/get_all_payment_type/get_all_payment_type_response.
 import '../locator.dart';
 import 'num_utils.dart';
 
-createOrderPlaceRequestFromOrderHistory(
-    {String? remarksController,
-    // String? orderDate,
-    OrderHistoryData? mOrderPlace,
-    GetAllPaymentTypeData? printOrderPayment,
-    GetAllCustomerList? mGetAllCustomerList}) async {
+createOrderPlaceRequestFromOrderHistory({String? remarksController,
+  // String? orderDate,
+  OrderHistoryData? mOrderPlace,
+  GetAllPaymentTypeData? printOrderPayment,
+  GetAllCustomerList? mGetAllCustomerList}) async {
   var configurationLocalApi = locator.get<ConfigurationLocalApi>();
   ConfigurationResponse mConfigurationResponse =
       await configurationLocalApi.getConfigurationResponse() ??
@@ -120,65 +119,74 @@ createOrderPlaceRequestFromOrderHistory(
 
   /// sUserId
   String sCounterBalanceHistoryIDF = await SharedPrefs().getHistoryID();
+
   ///OrderPlaceRequest
   OrderDetailList mOrderDetailList = OrderDetailList(
-      trackingOrderID: mOrderPlace?.trackingOrderID ?? '',
-      counterIDF:
-          (mConfigurationResponse.configurationData?.counterData ?? []).isEmpty
-              ? ""
-              : (mConfigurationResponse.configurationData?.counterData ?? [])
-                  .first
-                  .counterIDP,
-      orderSource: (mOrderPlace?.orderSource??2).toString(),
-      orderType: (mOrderPlace?.orderType??2).toString(),
-      branchIDF: mOrderPlace?.branchIDF,
-      userIDF: mOrderPlace?.userIDF,///mOrderPlace?.userIDF,
-      restaurantIDF: mOrderPlace?.restaurantIDF,
-      additionalNotes: mOrderPlace?.additionalNotes,
-      orderDate: mOrderPlace?.orderDate,
-      counterBalanceHistoryIDF:sCounterBalanceHistoryIDF,
+    trackingOrderID: mOrderPlace?.trackingOrderID ?? '',
+    counterIDF:
+    (mConfigurationResponse.configurationData?.counterData ?? []).isEmpty
+        ? ""
+        : (mConfigurationResponse.configurationData?.counterData ?? [])
+        .first
+        .counterIDP,
+    orderSource: (mOrderPlace?.orderSource ?? 2).toString(),
+    orderType: (mOrderPlace?.orderType ?? 2).toString(),
+    branchIDF: mOrderPlace?.branchIDF,
+    userIDF: mOrderPlace?.userIDF,
 
-      ///quantityTotal
-      quantityTotal: mOrderPlace?.quantityTotal,
+    ///mOrderPlace?.userIDF,
+    restaurantIDF: mOrderPlace?.restaurantIDF,
+    additionalNotes: mOrderPlace?.additionalNotes,
+    orderDate: mOrderPlace?.orderDate,
+    counterBalanceHistoryIDF: sCounterBalanceHistoryIDF,
 
-      ///subTotal
-      itemTotal: mOrderPlace?.itemTotal,
-      modifierTotal: mOrderPlace?.modifierTotal,
-      itemTaxTotal: mOrderPlace?.itemTaxTotal,
-      discountTotal: mOrderPlace?.discountTotal,
-      subTotal: mOrderPlace?.subTotal,
+    ///quantityTotal
+    quantityTotal: mOrderPlace?.quantityTotal,
 
-      ///grandTotal
-      taxAmountTotal: mOrderPlace?.taxAmountTotal,
-      totalAmount: mOrderPlace?.totalAmount,
-      grandTotal: mOrderPlace?.grandTotal,
-      adjustedAmount: getDoubleValue(
-          roundToNearestPossible(getDoubleValue(mOrderPlace?.grandTotal))),
-      ///table no
-      tableNo: mOrderPlace?.tableNo ?? '',
-      seatIDF: mOrderPlace?.seatIDF,
+    ///subTotal
+    itemTotal: mOrderPlace?.itemTotal,
+    modifierTotal: mOrderPlace?.modifierTotal,
+    itemTaxTotal: mOrderPlace?.itemTaxTotal,
+    discountTotal: mOrderPlace?.discountTotal,
+    subTotal: mOrderPlace?.subTotal,
 
-      ///orderTax
-      orderTax: orderTaxList,
+    ///grandTotal
+    taxAmountTotal: mOrderPlace?.taxAmountTotal,
+    totalAmount: mOrderPlace?.totalAmount,
+    grandTotal: mOrderPlace?.grandTotal,
+    adjustedAmount: getDoubleValue(
+        roundToNearestPossible(getDoubleValue(mOrderPlace?.grandTotal))),
 
-      ///orderMenu
-      orderMenu: orderMenu,
+    ///table no
+    tableNo: mOrderPlace?.tableNo ?? '',
+    seatIDF: mOrderPlace?.seatIDF,
 
-      ///payment_service
-      paymentGatewayIDF: printOrderPayment?.paymentGatewayIDP ?? '',
-      paymentGatewaySettingIDF:
-          printOrderPayment?.paymentGatewaySettingIDP ?? '',
-      paymentStatus: printOrderPayment == null ? "P" : "S",
+    ///orderTax
+    orderTax: orderTaxList,
 
-      ///orderPlaceGuestInfoRequest
-      paymentResponse: printOrderPayment == null ? null : [mPaymentResponse],
+    ///orderMenu
+    orderMenu: orderMenu,
 
-      ///customer
-      name: mGetAllCustomerList.name,
-      email: mGetAllCustomerList.email,
-      phoneCountryCode: mGetAllCustomerList.phoneCountryCode,
-      phoneNumber: mGetAllCustomerList.phoneNumber,
-      customerIDF: mGetAllCustomerList.customerIDP);
+    ///payment_service
+    paymentGatewayIDF: printOrderPayment?.paymentGatewayIDP ?? '',
+    paymentGatewaySettingIDF:
+    printOrderPayment?.paymentGatewaySettingIDP ?? '',
+    paymentStatus: printOrderPayment == null ? "P" : "S",
+
+    ///orderPlaceGuestInfoRequest
+    paymentResponse: printOrderPayment == null ? null : [mPaymentResponse],
+
+    ///customer
+    name: mGetAllCustomerList.name,
+    email: mGetAllCustomerList.email,
+    phoneCountryCode: mGetAllCustomerList.phoneCountryCode,
+    phoneNumber: mGetAllCustomerList.phoneNumber,
+    customerIDF: mGetAllCustomerList.customerIDP,
+
+    ///
+    environmentType: mOrderPlace?.environmentType,
+    packagingName: mOrderPlace?.packagingName,
+  );
 
   return mOrderDetailList;
 }

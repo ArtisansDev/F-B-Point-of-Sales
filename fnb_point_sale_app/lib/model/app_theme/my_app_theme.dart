@@ -9,6 +9,7 @@ import '../../routes/route_constants.dart';
 import '../configuration_screen/view/configuration_screen.dart';
 import '../dashboard_screen/view/dashboard_screen.dart';
 import '../login_screen/view/login_screen.dart';
+import '../open_counter_screen/view/open_counter_screen.dart';
 import '../splash_screen/view/splash_screen.dart';
 import '../verification_screen/view/verification_screen.dart';
 import 'theme/my_theme.dart';
@@ -43,6 +44,9 @@ class MyAppTheme extends StatelessWidget {
             GetPage(
                 name: RouteConstants.rLoginScreen,
                 page: () => const LoginScreen()),
+            GetPage(
+                name: RouteConstants.rOpenCounterScreen,
+                page: () => const OpenCounterScreen()),
             GetPage(
                 name: RouteConstants.rVerificationScreen,
                 page: () => const VerificationScreen()),

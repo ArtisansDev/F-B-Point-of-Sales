@@ -9,7 +9,27 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f183d832-d61e-4cff-a26c-5db2e295bf43" name="Changes" comment="sale search, pay ,print,date filter" />
+    <list default="true" id="f183d832-d61e-4cff-a26c-5db2e295bf43" name="Changes" comment="sale search, pay ,print,date filter">
+      <change afterPath="$PROJECT_DIR$/lib/model/open_counter_screen/controller/open_counter_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/open_counter_screen/view/open_counter_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/common_view/logout_expired.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/common_view/logout_expired.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/app_theme/my_app_theme.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/app_theme/my_app_theme.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/login_screen/controller/login_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/login_screen/controller/login_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/menu_home/view/selected_order/controller/selected_order_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_home/view/selected_order/controller/selected_order_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/menu_home/view/selected_order/view/selected_order_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_home/view/selected_order/view/selected_order_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/menu_shift_details/controller/shift_details_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_shift_details/controller/shift_details_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/splash_screen/controller/splash_screen_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/splash_screen/controller/splash_screen_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/routes/route_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routes/route_constants.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/data/mode/login/login_response.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/data/mode/login/login_response.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/data/mode/order_history/order_history_response.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/data/mode/order_history/order_history_response.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/data/mode/order_place/process_multiple_orders_request.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/data/mode/order_place/process_multiple_orders_request.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/data/mode/update_balance/shift_details/shift_details_response.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/data/mode/update_balance/shift_details/shift_details_response.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/lang/translation_service_key.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/lang/translation_service_key.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/utils/create_order_place_request.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/utils/create_order_place_request.dart" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -441,7 +461,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736157963595</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="sale search, pay ,print,date filter">
+      <option name="closed" value="true" />
+      <created>1736308455024</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1736308455024</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -477,5 +505,16 @@
     <MESSAGE value="pament order receipt" />
     <MESSAGE value="sale search, pay ,print,date filter" />
     <option name="LAST_COMMIT_MESSAGE" value="sale search, pay ,print,date filter" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/../fnb_point_sale_base/lib/printer/types/order_payment_print.dart</url>
+          <line>347</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -25,16 +25,12 @@ import 'package:fnb_point_sale_base/utils/network_utils.dart';
 
 import '../../../routes/route_constants.dart';
 
-class LoginScreenController extends GetxController {
-  Rx<TextEditingController> userNameController = TextEditingController().obs;
-  Rx<TextEditingController> passwordController = TextEditingController().obs;
-  RxBool isLogin = true.obs;
+class OpenCounterController extends GetxController {
+  Rx<TextEditingController> openCounterController = TextEditingController().obs;
 
-  LoginScreenController() {
+  OpenCounterController() {
+    openCounterController.value.text = "";
     getPackageInfo();
-    // userNameController.value.text = 'balajikanna456@gmail.com';
-    // passwordController.value.text = 'Password123';
-    //getToken();
   }
 
   RxString version = ''.obs;
@@ -43,25 +39,22 @@ class LoginScreenController extends GetxController {
     version.value = dotenv.env['APP_VERSION'] ?? '';
   }
 
-  isLoginCheck() {
-    if (userNameController.value.text.trim().isEmpty) {
-      AppAlert.showSnackBar(Get.context!, 'Please enter the UserName');
-    } else if (passwordController.value.text.trim().isEmpty) {
-      AppAlert.showSnackBar(Get.context!, 'Please enter the password');
-    } else {
-      loginApiCall();
-    }
+  isOpenStore() {
+    openingBalanceApiCall();
   }
 
-  void loginApiCall() {
-    NetworkUtils().checkInternetConnection().then((isInternetAvailable) async {
+  openingBalanceApiCall() async {
+    await NetworkUtils()
+        .checkInternetConnection()
+        .then((isInternetAvailable) async {
       if (isInternetAvailable) {
         var configurationLocalApi = locator.get<ConfigurationLocalApi>();
         ConfigurationResponse mConfigurationResponse =
             await configurationLocalApi.getConfigurationResponse() ??
                 ConfigurationResponse();
-        final localApi = locator.get<LoginApi>();
-        LoginRequest mLoginRequest = LoginRequest(
+        String sUserId = await SharedPrefs().getUserId();
+        final localApi = locator.get<BalanceApi>();
+        OpeningBalanceRequest mOpeningBalanceRequest = OpeningBalanceRequest(
             branchID: (mConfigurationResponse.configurationData?.branchData ??
                         [])
                     .isEmpty
@@ -76,31 +69,20 @@ class LoginScreenController extends GetxController {
                 : (mConfigurationResponse.configurationData?.counterData ?? [])
                     .first
                     .counterIDP,
-            email: userNameController.value.text.trim(),
-            password: passwordController.value.text.trim());
+            userID: sUserId,
+            openingBalance: getDoubleValue(openCounterController.value.text),
+            openingBalanceDateTime: getUTCValue(DateTime.now()));
         WebResponseSuccess mWebResponseSuccess =
-            await localApi.postLogin(mLoginRequest);
+            await localApi.postUpdateOpeningBalance(mOpeningBalanceRequest);
         if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
-          LoginResponse mLoginResponse = mWebResponseSuccess.data;
+          OpeningBalanceResponse mOpeningBalanceResponse =
+              mWebResponseSuccess.data;
           await SharedPrefs()
-              .setUserToken(mLoginResponse.data?.accessToken ?? '');
-          await SharedPrefs().setUserId(mLoginResponse.data?.userId ?? '');
-          AppAlert.showSnackBar(
-              Get.context!, mWebResponseSuccess.statusMessage ?? '');
-          WebConstants.isFastTimeLogin = true;
-          if (mLoginResponse.data?.isAlreadyLoggedIn ?? false) {
-            await SharedPrefs().setHistoryID(
-                mLoginResponse.data?.activeCounterHistoryId ?? '');
-            Get.offNamed(
-              RouteConstants.rDashboardScreen,
-            );
-          } else {
-            await SharedPrefs().setHistoryID('');
-            Get.offNamed(
-              RouteConstants.rOpenCounterScreen,
-            );
-          }
-          // await openingBalanceApiCall();
+              .setHistoryID(mOpeningBalanceResponse.data?.historyID ?? '');
+          WebConstants.isFastTimeLogin = false;
+          Get.offNamed(
+            RouteConstants.rDashboardScreen,
+          );
         } else {
           AppAlert.showSnackBar(
               Get.context!, mWebResponseSuccess.statusMessage ?? '');

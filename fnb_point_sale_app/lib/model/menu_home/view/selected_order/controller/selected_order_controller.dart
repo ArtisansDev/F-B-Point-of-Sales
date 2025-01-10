@@ -47,6 +47,7 @@ class SelectedOrderController extends HomeBaseController {
       mOrderPlace.value = mDashboardScreenController.mOrderPlace.value;
       remarkController.value.text = mOrderPlace.value?.remarkController ?? '';
       mOrderPlace.refresh();
+      getCalculateSubTotal();
       mDashboardScreenController.mOrderPlace.value = null;
     }
   }
@@ -234,7 +235,10 @@ class SelectedOrderController extends HomeBaseController {
             ///selectPayment type
             debugPrint(
                 "mSelectPaymentType ----- ${jsonEncode(mSelectPaymentType)}");
-
+            ///remove hold sale
+            var holdSaleLocalApi = locator.get<HoldSaleLocalApi>();
+            await holdSaleLocalApi
+                .getHoldSaleDelete(mOrderPlace.value?.sOrderNo ?? '');
             ///mOrderDetailList
             OrderDetailList mOrderDetailList = await createOrderPlaceRequest(
                 remarksController: remarkController.value.text,
@@ -251,6 +255,7 @@ class SelectedOrderController extends HomeBaseController {
             /// await mPlaceOrderSaleLocalApi
             ///     .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
 
+
             await callSaveOrder(mOrderDetailList, isPayment: true);
             placeOrder.value = false;
             mOrderPlace.value = null;
@@ -258,6 +263,8 @@ class SelectedOrderController extends HomeBaseController {
             await mDashboardScreenController.onUpdateHoldSale();
             await mTopBarController.allOrderPlace();
             remarkController.value.text = "";
+
+
             ///
           },
         ),

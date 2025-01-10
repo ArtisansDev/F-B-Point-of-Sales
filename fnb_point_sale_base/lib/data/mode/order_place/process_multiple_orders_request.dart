@@ -99,6 +99,8 @@ class OrderDetailList {
     String? phoneCountryCode,
     String? userIDF,
     String? customerIDF,
+    String? packagingName,
+    String? environmentType,
   }) {
     _counterBalanceHistoryIDF = counterBalanceHistoryIDF;
     _trackingOrderID = trackingOrderID;
@@ -133,6 +135,8 @@ class OrderDetailList {
     _phoneCountryCode = phoneCountryCode;
     _userIDF = userIDF;
     _customerIDF = customerIDF;
+    _packagingName = packagingName;
+    _environmentType = environmentType;
   }
 
   OrderDetailList.fromJson(dynamic json) {
@@ -184,6 +188,8 @@ class OrderDetailList {
     _phoneCountryCode = json['PhoneCountryCode'];
     _userIDF = json['UserIDF'];
     _customerIDF = json['CustomerIDF'];
+    _packagingName = json['PackagingName'];
+    _environmentType = json['EnvironmentType'];
   }
 
   String? _counterBalanceHistoryIDF;
@@ -219,6 +225,8 @@ class OrderDetailList {
   String? _phoneCountryCode;
   String? _userIDF;
   String? _customerIDF;
+  String? _packagingName;
+  String? _environmentType;
 
   String? get counterBalanceHistoryIDF => _counterBalanceHistoryIDF;
 
@@ -286,6 +294,10 @@ class OrderDetailList {
 
   String? get customerIDF => _customerIDF;
 
+  String? get packagingName => _packagingName;
+
+  String? get environmentType => _environmentType;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['CounterBalanceHistoryIDF'] = _counterBalanceHistoryIDF;
@@ -328,6 +340,8 @@ class OrderDetailList {
     map['PhoneCountryCode'] = _phoneCountryCode;
     map['UserIDF'] = _userIDF;
     map['CustomerIDF'] = _customerIDF;
+    map['PackagingName'] = _packagingName;
+    map['EnvironmentType'] = _environmentType;
     return map;
   }
 }

@@ -157,6 +157,8 @@ class OrderHistoryResponseData {
 /// PaymentGatewayID : "00000000-0000-0000-0000-000000000000"
 /// PaymentGatewaySettingID : "00000000-0000-0000-0000-000000000000"
 /// TableNo : "Table-541"
+/// EnvironmentType : 0 or 1
+/// PackagingName : ""
 
 class OrderHistoryData {
   OrderHistoryData({
@@ -203,6 +205,8 @@ class OrderHistoryData {
     String? paymentGatewayID,
     String? paymentGatewaySettingID,
     String? tableNo,
+    String? packagingName,
+    String? environmentType,
   }) {
     _orderIDP = orderIDP;
     _formatedOrderDate = formatedOrderDate;
@@ -247,6 +251,8 @@ class OrderHistoryData {
     _paymentGatewayID = paymentGatewayID;
     _paymentGatewaySettingID = paymentGatewaySettingID;
     _tableNo = tableNo;
+    _packagingName = packagingName;
+    _environmentType = environmentType;
   }
 
   OrderHistoryData.fromJson(dynamic json) {
@@ -303,6 +309,8 @@ class OrderHistoryData {
     _paymentGatewayID = json['PaymentGatewayID'];
     _paymentGatewaySettingID = json['PaymentGatewaySettingID'];
     _tableNo = json['TableNo'];
+    _packagingName = json['PackagingName'];
+    _environmentType = (json['EnvironmentType']??0).toString();
   }
 
   String? _orderIDP;
@@ -348,6 +356,8 @@ class OrderHistoryData {
   String? _paymentGatewayID;
   String? _paymentGatewaySettingID;
   String? _tableNo;
+  String? _packagingName;
+  String? _environmentType;
 
   String? get orderIDP => _orderIDP;
 
@@ -435,6 +445,10 @@ class OrderHistoryData {
 
   String? get tableNo => _tableNo;
 
+  String? get packagingName => _packagingName;
+
+  String? get environmentType => _environmentType;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['OrderIDP'] = _orderIDP;
@@ -484,6 +498,8 @@ class OrderHistoryData {
     map['PaymentGatewayID'] = _paymentGatewayID;
     map['PaymentGatewaySettingID'] = _paymentGatewaySettingID;
     map['TableNo'] = _tableNo;
+    map['PackagingName'] = _packagingName;
+    map['EnvironmentType'] = _environmentType;
     return map;
   }
 }

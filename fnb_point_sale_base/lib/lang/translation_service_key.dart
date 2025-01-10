@@ -2,6 +2,7 @@
 const String sLanguage = "language";
 
 const String sUsername = "Username";
+const String sEnterOpenAmount = "Enter open amount";
 const String sConfiguration = "Configuration";
 const String sConfigurationKey = "Configuration Key";
 const String sEnterName = "Enter Name";
@@ -28,6 +29,7 @@ const String sPassword = "password";
 const String sPasswordHint = "password hint";
 
 const String sLogin = "Login";
+const String sOpenStore = "Open Store";
 const String sPAY = "PAY";
 const String sAll = "All";
 const String sDine_In = "Dine In";

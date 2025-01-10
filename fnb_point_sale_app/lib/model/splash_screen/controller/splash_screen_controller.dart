@@ -25,9 +25,16 @@ class SplashScreenController extends GetxController {
         String sLoginStatus = await SharedPrefs().getUserToken();
         await Future.delayed(const Duration(seconds: 1));
         if (sLoginStatus.trim().isNotEmpty) {
-          Get.offNamed(
-            RouteConstants.rDashboardScreen,
-          );
+          String sHistoryID = await SharedPrefs().getHistoryID();
+          if(sHistoryID.isEmpty){
+            Get.offNamed(
+              RouteConstants.rOpenCounterScreen,
+            );
+          }else {
+            Get.offNamed(
+              RouteConstants.rDashboardScreen,
+            );
+          }
         } else {
           var configurationLocalApi = locator.get<ConfigurationLocalApi>();
           ConfigurationResponse mConfigurationResponse =

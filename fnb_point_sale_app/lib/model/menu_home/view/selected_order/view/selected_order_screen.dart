@@ -75,7 +75,8 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
                         Visibility(
                           visible: controller.mOrderPlace.value != null &&
                               (controller.mOrderPlace.value?.cartItem ?? [])
-                                  .isNotEmpty,
+                                  .isNotEmpty &&
+                              controller.placeOrder.value,
                           child: GestureDetector(
                             onTap: () {
                               controller.onHoldSale();
@@ -88,7 +89,7 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
                                 decoration: BoxDecoration(
                                   color: ColorConstants.cAppButtonColour,
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(7.sp)),
+                                      BorderRadius.all(Radius.circular(7.sp)),
                                 ),
                                 child: Text(
                                   'HOLD',

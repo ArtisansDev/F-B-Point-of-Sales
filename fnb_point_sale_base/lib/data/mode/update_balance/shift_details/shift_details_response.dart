@@ -59,6 +59,7 @@ class ShiftDetailsResponse {
 /// RefundCount : 0
 /// VoucherGenerateCount : 0
 /// CashPayment : 323.08
+/// OpeningBalance : 323.08
 /// ErrorMessage : ""
 /// HasPendingPayments : true
 
@@ -72,6 +73,7 @@ class ShiftDetailsData {
     int? refundCount,
     int? voucherGenerateCount,
     double? cashPayment,
+    double? openingBalance,
     String? errorMessage,
     bool? hasPendingPayments,
   }) {
@@ -83,6 +85,7 @@ class ShiftDetailsData {
     _refundCount = refundCount;
     _voucherGenerateCount = voucherGenerateCount;
     _cashPayment = cashPayment;
+    _openingBalance = openingBalance;
     _errorMessage = errorMessage;
     _hasPendingPayments = hasPendingPayments;
   }
@@ -96,6 +99,7 @@ class ShiftDetailsData {
     _refundCount = getInValue(json['RefundCount']);
     _voucherGenerateCount = getInValue(json['VoucherGenerateCount']);
     _cashPayment = getDoubleValue(json['CashPayment']);
+    _openingBalance = getDoubleValue(json['OpeningBalance']);
     _errorMessage = json['ErrorMessage'] ?? '';
     _hasPendingPayments = json['HasPendingPayments'] ?? false;
   }
@@ -108,6 +112,7 @@ class ShiftDetailsData {
   int? _refundCount;
   int? _voucherGenerateCount;
   double? _cashPayment;
+  double? _openingBalance;
   String? _errorMessage;
   bool? _hasPendingPayments;
 
@@ -127,6 +132,8 @@ class ShiftDetailsData {
 
   double? get cashPayment => _cashPayment;
 
+  double? get openingBalance => _openingBalance;
+
   String? get errorMessage => _errorMessage;
 
   bool? get hasPendingPayments => _hasPendingPayments;
@@ -141,6 +148,7 @@ class ShiftDetailsData {
     map['RefundCount'] = _refundCount;
     map['VoucherGenerateCount'] = _voucherGenerateCount;
     map['CashPayment'] = _cashPayment;
+    map['OpeningBalance'] = _openingBalance;
     map['ErrorMessage'] = _errorMessage;
     map['HasPendingPayments'] = _hasPendingPayments;
     return map;

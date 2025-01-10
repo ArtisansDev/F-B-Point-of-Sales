@@ -255,7 +255,8 @@ class ShiftDetailsController extends GetxController {
         if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
           AppAlert.showSnackBar(
               Get.context!, mWebResponseSuccess.statusMessage ?? '');
-          logout();
+          ///
+          openCounter();
         } else {
           AppAlert.showSnackBar(
               Get.context!, mWebResponseSuccess.statusMessage ?? '');
