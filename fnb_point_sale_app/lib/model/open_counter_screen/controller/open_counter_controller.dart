@@ -79,7 +79,7 @@ class OpenCounterController extends GetxController {
               mWebResponseSuccess.data;
           await SharedPrefs()
               .setHistoryID(mOpeningBalanceResponse.data?.historyID ?? '');
-          WebConstants.isFastTimeLogin = false;
+          WebConstants.isFastTimeLogin = true;
           Get.offNamed(
             RouteConstants.rDashboardScreen,
           );

@@ -14,7 +14,6 @@ import 'package:fnb_point_sale_base/data/mode/configuration/configuration_respon
 import 'package:fnb_point_sale_base/data/mode/customer/get_all_customer/get_all_customer_response.dart';
 import 'package:fnb_point_sale_base/data/mode/order_place/process_multiple_orders_request.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_payment_type/get_all_payment_type_response.dart';
-import 'package:fnb_point_sale_base/data/remote/api_call/customer/customer_api.dart';
 import 'package:fnb_point_sale_base/data/remote/api_call/order_place/order_place_api.dart';
 import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/locator.dart';
@@ -25,7 +24,6 @@ import 'package:fnb_point_sale_base/utils/tracking_order_id.dart';
 import 'package:get/get.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/cart_item.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
-import '../../../../cancel_order/controller/cancel_order_controller.dart';
 import '../../../../cancel_order/view/cancel_order_screen.dart';
 import '../../../../payment_screen/controller/payment_screen_controller.dart';
 import '../../../../payment_screen/view/payment_screen.dart';

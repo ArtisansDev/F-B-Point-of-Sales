@@ -10,15 +10,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38947a7c-9f2f-41ac-986f-38186cf8d673" name="Changes" comment="add printer">
-      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/open_counter_screen/controller/open_counter_controller.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/open_counter_screen/view/open_counter_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/service/message_service.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/service/notification_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/.dart_tool/package_config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/common_view/logout_expired.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/common_view/logout_expired.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/app_theme/my_app_theme.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/app_theme/my_app_theme.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/controller/shift_details_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/controller/shift_details_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/splash_screen/controller/splash_screen_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/splash_screen/controller/splash_screen_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/routes/route_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/routes/route_constants.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/lang/translation_service_key.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/lang/translation_service_key.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_home/view/selected_order/controller/selected_order_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_home/view/selected_order/controller/selected_order_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/open_counter_screen/controller/open_counter_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/open_counter_screen/controller/open_counter_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
