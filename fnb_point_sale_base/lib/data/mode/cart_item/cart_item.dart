@@ -33,6 +33,14 @@ class CartItem {
       this.mVariantListData,
       this.mSelectVariantListData});
 
+  getModifierString(){
+    String value = '';
+    for(ModifierList mModifierList in mSelectModifierList??[]){
+      value =  value + (mModifierList?.modifierIDP??'').toString();
+    }
+    return value;
+  }
+
   CartItem.fromJson(dynamic json) {
     mMenuItemData = json['menu_item_data'] != null
         ? MenuItemData.fromJson(json['menu_item_data'])

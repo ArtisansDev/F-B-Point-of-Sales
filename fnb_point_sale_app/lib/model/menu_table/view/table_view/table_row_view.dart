@@ -15,6 +15,7 @@ import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
 import 'package:fnb_point_sale_base/data/mode/button_bar/button_bar_model.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_tables/get_all_tables_response.dart';
+import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
@@ -69,7 +70,7 @@ class TableRowView extends StatelessWidget {
                 children: [
                   Expanded(
                       child: Text(
-                    'Table No ${mGetAllTablesResponseData.seatNumber ?? ''}',
+                    '${sSeatingNo.tr} ${mGetAllTablesResponseData.seatNumber ?? ''}',
                     style: getText500(
                         size: 11.6.sp,
                         colors: (mOrderPlace.cartItem ?? []).isNotEmpty

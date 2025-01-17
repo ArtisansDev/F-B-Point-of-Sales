@@ -80,10 +80,10 @@ class TopBarController extends GetxController {
         }
         break;
       case 1:
+
         ///mDashboardScreenController.selectMenu.value = 5;
         AppAlert.showCustomDialogYesNoLogout(
             Get.context!, 'Logout!', 'Do you want to log out?', () {
-
           logout();
         });
         break;
@@ -125,10 +125,15 @@ class TopBarController extends GetxController {
   ///sync update
   onHomeUpdate() async {
     await allOrderPlace();
-    mDashboardScreenController.onUpdate(() async {
+    mDashboardScreenController.onTopBarUpdate(fUpdateTopBar: () async {
+      await updateDetails();
       await loadAllTables();
     });
 
+    await updateDetails();
+  }
+
+  updateDetails() async {
     mConfigurationResponse.value =
         await configurationLocalApi.getConfigurationResponse() ??
             ConfigurationResponse();

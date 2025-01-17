@@ -135,7 +135,7 @@ class TableSummaryOrderScreen extends GetView<TableSummaryController> {
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       Text(
-                                        'Table No:',
+                                        '${sSeatingNo.tr}:',
                                         style: getText300(
                                             size: 11.5.sp,
                                             colors: ColorConstants.black),

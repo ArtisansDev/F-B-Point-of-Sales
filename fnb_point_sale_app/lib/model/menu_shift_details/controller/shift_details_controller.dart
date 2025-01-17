@@ -101,13 +101,13 @@ class ShiftDetailsController extends GetxController {
           if (isShiftClose.value) {
             sMessage.value =
                 "Please complete your sale then you can go for shift close";
-          }else if(getInValue(mDashboardScreenController.mTobBarModel[2].value)>0){
+          } else if(getInValue(mDashboardScreenController.mTobBarModel[2].value)>0){
             sMessage.value =
             "Please complete your sale then you can go for shift close";
-          }else if(getInValue(mDashboardScreenController.mTobBarModel[3].value)>0){
+          } else if(getInValue(mDashboardScreenController.mTobBarModel[3].value)>0){
             sMessage.value =
             "Please clear all hold sale then you can go for shift close";
-          }else {
+          } else {
             sMessage.value = "";
             sMessage.refresh();
           }

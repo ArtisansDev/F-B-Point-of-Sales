@@ -26,12 +26,14 @@ import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/locator.dart';
 import 'package:fnb_point_sale_base/utils/my_log_utils.dart';
 import 'package:fnb_point_sale_base/utils/network_utils.dart';
+import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:get/get.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 
 import '../../menu_customer/controller/customer_controller.dart';
 import '../../menu_customer/view/customer_screen.dart';
 import '../../menu_home/view/home_screen.dart';
+import '../../menu_home/view/selected_order/controller/selected_order_controller.dart';
 import '../../menu_sales/controller/menu_sales_controller.dart';
 import '../../menu_settings/controller/settings_controller.dart';
 import '../../menu_shift_details/controller/shift_details_controller.dart';
@@ -303,6 +305,9 @@ class DashboardScreenController extends GetxController {
         if (updateHomeMenu.value != null) {
           updateHomeMenu.value!();
         }
+        if (updateTopBar.value != null) {
+          updateTopBar.value!();
+        }
       }, (value) {
         sDownloadText.value = '';
         sDownloadText.refresh();
@@ -313,32 +318,57 @@ class DashboardScreenController extends GetxController {
   RxString sDownloadText = ''.obs;
 
   onSync() async {
-    await showDialog(
-        context: Get.context!,
-        barrierDismissible: false,
-        builder: (context) => DownloadDataMenuWidget(
-              onError: (value) {
-                sDownloadText.value = '';
-                sDownloadText.refresh();
-              },
-              updateMessage: (value) {
-                sDownloadText.value = value;
-                sDownloadText.refresh();
-              },
-              onCompleted: () {
-                sDownloadText.value = '';
-                sDownloadText.refresh();
-                if (onUpdateDate.value != null) {
-                  onUpdateDate.value!();
-                }
-                if (updateHomeMenu.value != null) {
-                  updateHomeMenu.value!();
-                }
-              },
-              onCancel: () {
-                Get.back();
-              },
-            ));
+    if (Get.isRegistered<SelectedOrderController>()) {
+      SelectedOrderController mSelectedOrderController =
+          Get.find<SelectedOrderController>();
+      if ((mSelectedOrderController.mOrderPlace.value?.cartItem ?? [])
+          .isNotEmpty) {
+        AppAlert.showSnackBar(Get.context!,
+            'Ensure the cart is cleared before initiating the sync process.');
+        return;
+      }
+    }
+
+    if (getInValue(mTobBarModel[2].value) > 0) {
+      AppAlert.showSnackBar(Get.context!,
+          'Ensure the cart is cleared before initiating the sync process.');
+      return;
+    } else if (getInValue(mTobBarModel[3].value) > 0) {
+      AppAlert.showSnackBar(Get.context!,
+          'Ensure the hold sale is cleared before initiating the sync process.');
+      return;
+    } else {
+      await showDialog(
+          context: Get.context!,
+          barrierDismissible: false,
+          builder: (context) => DownloadDataMenuWidget(
+                onError: (value) {
+                  sDownloadText.value = '';
+                  sDownloadText.refresh();
+                },
+                updateMessage: (value) {
+                  sDownloadText.value = value;
+                  sDownloadText.refresh();
+                },
+                onCompleted: () {
+                  sDownloadText.value = '';
+                  sDownloadText.refresh();
+                  getTexList();
+                  if (onUpdateDate.value != null) {
+                    onUpdateDate.value!();
+                  }
+                  if (updateHomeMenu.value != null) {
+                    updateHomeMenu.value!();
+                  }
+                  if (updateTopBar.value != null) {
+                    updateTopBar.value!();
+                  }
+                },
+                onCancel: () {
+                  Get.back();
+                },
+              ));
+    }
   }
 
   Rxn<Function> onUpdateDate = Rxn<Function>();
@@ -356,6 +386,14 @@ class DashboardScreenController extends GetxController {
   onHomeUpdate({Function? updateHome}) {
     if (updateHome != null) {
       updateHomeMenu.value = updateHome;
+    }
+  }
+
+  Rxn<Function> updateTopBar = Rxn<Function>();
+
+  onTopBarUpdate({Function? fUpdateTopBar}) {
+    if (fUpdateTopBar != null) {
+      updateTopBar.value = fUpdateTopBar;
     }
   }
 

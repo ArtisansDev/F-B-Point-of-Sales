@@ -71,6 +71,8 @@ class HomeBaseController extends GetxController {
     mDashboardScreenController.onHomeUpdate(updateHome: () async {
       await getAllCategoryList();
       await getMenuItems(GetAllCategoryData());
+      mSelectedOrderController.value ??= Get.find<SelectedOrderController>();
+      mSelectedOrderController.value?.getCalculateSubTotal();
     });
   }
 

@@ -1,4 +1,6 @@
+import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:fnb_point_sale_base/printer/printer_helper.dart';
+import 'package:get/get.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../../data/local/database/configuration/configuration_local_api.dart';
@@ -65,7 +67,7 @@ pw.Widget getTableRow(OrderDetailList mOrderDetailList) {
             padding: const pw.EdgeInsets.all(2.0),
             child: pw.Align(
               alignment: pw.Alignment.centerLeft,
-              child: pw.Text("Table No:-", style: getNormalTextStyle()),
+              child: pw.Text("${sSeatingNo.tr}:-", style: getNormalTextStyle()),
             ),
           )),
       pw.Expanded(

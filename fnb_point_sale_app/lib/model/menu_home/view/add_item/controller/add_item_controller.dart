@@ -1,6 +1,9 @@
 // ignore_for_file: depend_on_referenced_packages
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/cart_item.dart';
+import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_menu_item/menu_item_response.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_modifier/get_all_modifier_response.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_variant/get_all_variant_response.dart';
@@ -9,6 +12,7 @@ import 'package:get/get.dart';
 
 import '../../../../dashboard_screen/controller/dashboard_screen_controller.dart';
 import '../../../home_base_controller/home_base_controller.dart';
+import '../../selected_order/controller/selected_order_controller.dart';
 
 class AddItemController extends GetxController {
   Rxn<DashboardScreenController> mDashboardScreenController =
@@ -112,9 +116,11 @@ class AddItemController extends GetxController {
 
     ///tax
     mCartItem.value?.taxAmount = 0.0;
-    if((mCartItem.value?.mMenuItemData?.itemTaxPercent??0)>0){
-      mCartItem.value?.taxAmount = calculatePercentageOf(mCartItem.value?.price ?? 0,
-                      getDoubleValue((mCartItem.value?.mMenuItemData?.itemTaxPercent??0)));
+    if ((mCartItem.value?.mMenuItemData?.itemTaxPercent ?? 0) > 0) {
+      mCartItem.value?.taxAmount = calculatePercentageOf(
+          mCartItem.value?.price ?? 0,
+          getDoubleValue(
+              (mCartItem.value?.mMenuItemData?.itemTaxPercent ?? 0)));
     }
 
     ///Modifier
@@ -129,7 +135,8 @@ class AddItemController extends GetxController {
     mCartItem.value?.price =
         (mCartItem.value?.price ?? 0) + (mCartItem.value?.priceModifier ?? 0.0);
 
-    mCartItem.value?.taxPriceAmount =  (mCartItem.value?.price ?? 0) + (mCartItem.value?.taxAmount ?? 0);
+    mCartItem.value?.taxPriceAmount =
+        (mCartItem.value?.price ?? 0) + (mCartItem.value?.taxAmount ?? 0);
 
     ///total price
     mCartItem.value?.totalPrice = getDoubleValue((mCartItem.value?.count ?? 1) *
@@ -142,7 +149,51 @@ class AddItemController extends GetxController {
   void onAddItem() {
     if (mCartItem.value != null) {
       mCartItem.value?.textRemarks = remarkController.value.text;
-      mHomeBaseController.value?.onAddValue(mCartItem.value!);
+      bool value = true;
+
+      ///
+      if (Get.isRegistered<SelectedOrderController>()) {
+        SelectedOrderController mSelectedOrderController =
+            Get.find<SelectedOrderController>();
+        OrderPlace mOrderPlace =
+            mSelectedOrderController.mOrderPlace.value ?? OrderPlace();
+        debugPrint("mOrderPlace add ${jsonEncode(mOrderPlace)}");
+
+        if ((mOrderPlace.cartItem ?? []).isNotEmpty) {
+          int index = -1;
+          for (CartItem mMenuCartItem in mOrderPlace.cartItem ?? []) {
+            index++;
+            if (!mMenuCartItem.placeOrder) {
+              if (mMenuCartItem.textRemarks.toString() ==
+                  remarkController.value.text.toString()) {
+                if (mMenuCartItem.mSelectVariantListData?.quantitySpecification
+                        .toString() ==
+                    mCartItem
+                        .value?.mSelectVariantListData?.quantitySpecification
+                        .toString()) {
+                  if (mMenuCartItem.getModifierString() ==
+                      mCartItem.value?.getModifierString()) {
+                    value = false;
+                    break;
+                  }
+                }
+              }
+            }
+          }
+
+          ///add
+          if (value) {
+            mHomeBaseController.value?.onAddValue(mCartItem.value!);
+          } else {
+            mSelectedOrderController.onCalculateTotalPricePerItem(
+                ((mOrderPlace.cartItem?[index].count ?? 0) + 1),
+                index,
+                mOrderPlace.cartItem![index]);
+          }
+        }else {
+          mHomeBaseController.value?.onAddValue(mCartItem.value!);
+        }
+      }
     }
     Get.back();
   }

@@ -264,37 +264,40 @@ class PaymentScreen extends GetView<PaymentScreenController> {
                                       .value
                                       ?.taxData ??
                                   [])[index];
-                              return Column(
-                                children: [
-                                  Container(
-                                      padding: EdgeInsets.only(bottom: 5.sp),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                              '${mTaxData.taxName ?? ''}+ (${mTaxData.taxPercentage}%)',
-                                              style: getText600(
-                                                size: 10.sp,
-                                                colors: ColorConstants
-                                                    .cAppCancelDilogColour,
-                                              )),
-                                          Text(
-                                              '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${calculatePercentageOf(getDoubleValue(controller.mOrderPlace.value?.subTotalPrice ?? 0), getDoubleValue(mTaxData.taxPercentage)).toStringAsFixed(2)}',
-                                              style: getText600(
-                                                size: 10.sp,
-                                                colors: ColorConstants
-                                                    .cAppCancelDilogColour,
-                                              )),
-                                        ],
-                                      )),
-                                  // Container(
-                                  //   height: 3.sp,
-                                  //   margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
-                                  //   color: Colors.grey.shade300,
-                                  // ),
-                                ],
-                              );
+                              return Visibility(
+                                  visible: (mTaxData.taxPercentage ?? 0) > 0,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                          padding:
+                                              EdgeInsets.only(bottom: 5.sp),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                  '${mTaxData.taxName ?? ''} (${mTaxData.taxPercentage}%)',
+                                                  style: getText600(
+                                                    size: 10.sp,
+                                                    colors: ColorConstants
+                                                        .cAppCancelDilogColour,
+                                                  )),
+                                              Text(
+                                                  '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${calculatePercentageOf(getDoubleValue(controller.mOrderPlace.value?.subTotalPrice ?? 0), getDoubleValue(mTaxData.taxPercentage)).toStringAsFixed(2)}',
+                                                  style: getText600(
+                                                    size: 10.sp,
+                                                    colors: ColorConstants
+                                                        .cAppCancelDilogColour,
+                                                  )),
+                                            ],
+                                          )),
+                                      // Container(
+                                      //   height: 3.sp,
+                                      //   margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
+                                      //   color: Colors.grey.shade300,
+                                      // ),
+                                    ],
+                                  ));
                             }),
                         Container(
                           margin: EdgeInsets.only(top: 5.sp, bottom: 7.sp),
@@ -335,7 +338,36 @@ class PaymentScreen extends GetView<PaymentScreenController> {
                           children: [
                             Expanded(
                                 child: Text(
-                              'Total Pay',
+                              sRounding.tr,
+                              style: getText600(
+                                size: 10.5.sp,
+                                colors: ColorConstants.cAppCancelDilogColour,
+                              ),
+                            )),
+                            Expanded(
+                                child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${(getDoubleValue(roundToNearestPossible(getDoubleValue(controller.mOrderPlace.value?.totalPrice.toStringAsFixed(2)))) - getDoubleValue(controller.mOrderPlace.value?.totalPrice)).toStringAsFixed(2)}',
+                                style: getText600(
+                                  size: 10.5.sp,
+                                  colors: ColorConstants.cAppCancelDilogColour,
+                                ),
+                              ),
+                            ))
+                          ],
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 7.sp, bottom: 7.sp),
+                          width: double.infinity,
+                          height: 3.sp,
+                          color: ColorConstants.cAppCancelDilogDeviderColour,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                                child: Text(
+                              'PayableAmount',
                               style: getText600(
                                 size: 10.5.sp,
                                 colors: ColorConstants.cAppCancelDilogColour,

@@ -92,14 +92,17 @@ class TableController extends GetxController {
   RxMap<String, List<GetAllTablesResponseData>> groupedByDepartment =
       <String, List<GetAllTablesResponseData>>{}.obs;
 
-
+RxString valueLoading = 'Loading..'.obs;
 
   onUpdateViewTable() async{
+    valueLoading.value = 'Loading..';
     await allOrderPlace();
     mDashboardScreenController.onUpdateViewTable(() {
       setGroupTable();
     });
     setGroupTable();
+    valueLoading.refresh();
+
   }
 
   setGroupTable() {
@@ -108,6 +111,8 @@ class TableController extends GetxController {
     selectGetAllTablesResponseData.clear();
     selectGetAllTablesResponseData.addAll(mTopBarController.mGetAllTablesList.toList());
     ///
+    valueLoading.value = 'Loading..';
+    valueLoading.refresh();
     groupedByDepartment.clear();
     groupedByDepartment.refresh();
     ///
@@ -151,6 +156,12 @@ class TableController extends GetxController {
       groupedByDepartment.putIfAbsent(mTable.locationType ?? '', () => []);
       groupedByDepartment[mTable.locationType]!.add(mTable);
     }
+    if(groupedByDepartment.isEmpty){
+      valueLoading.value = 'No Table found';
+    }else {
+      valueLoading.value = '';
+    }
+    valueLoading.refresh();
     groupedByDepartment.refresh();
   }
 }

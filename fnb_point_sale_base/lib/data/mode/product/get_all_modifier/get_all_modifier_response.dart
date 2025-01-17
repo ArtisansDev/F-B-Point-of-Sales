@@ -1,3 +1,5 @@
+import '../../../../utils/num_utils.dart';
+
 /// error : false
 /// statusCode : 200
 /// statusMessage : "Data Retrieved Successfully"
@@ -79,8 +81,8 @@ class ModifierList {
   ModifierList.fromJson(dynamic json) {
     _modifierIDP = json['ModifierIDP'];
     _modifierName = json['ModifierName'];
-    _count = json['count'];
-    _price = json['Price'];
+    _count = json['count']??1;
+    _price = (json['Price']);
     _isActive = json['IsActive'];
     _isDeleted = json['IsDeleted'];
     _isUpdated = json['IsUpdated'];

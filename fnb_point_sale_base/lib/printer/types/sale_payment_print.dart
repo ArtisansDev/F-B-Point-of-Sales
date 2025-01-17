@@ -1,10 +1,12 @@
 import 'package:fnb_point_sale_base/printer/printer_helper.dart';
 import 'package:fnb_point_sale_base/utils/num_utils.dart';
+import 'package:get/get.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../../data/local/database/configuration/configuration_local_api.dart';
 import '../../data/mode/configuration/configuration_response.dart';
 import '../../data/mode/order_history/order_history_response.dart';
+import '../../lang/translation_service_key.dart';
 import '../../locator.dart';
 
 Future<bool> printSalePayment(OrderHistoryData mOrderHistoryData) async {
@@ -72,6 +74,10 @@ Future<bool> printSalePayment(OrderHistoryData mOrderHistoryData) async {
   widgets
       .add(getTotalRow(mOrderHistoryData, mCurrencyData.currencySymbol ?? ''));
 
+  ///Rounding
+  widgets
+      .add(getRoundingRow(mOrderHistoryData, mCurrencyData.currencySymbol ?? ''));
+
   ///Total Pay
   widgets.add(
       getTotalPayRow(mOrderHistoryData, mCurrencyData.currencySymbol ?? ''));
@@ -113,7 +119,7 @@ pw.Widget getTableRow(OrderHistoryData mOrderHistoryData) {
           padding: const pw.EdgeInsets.all(2.0),
           child: pw.Align(
             alignment: pw.Alignment.centerLeft,
-            child: pw.Text("Table No:-", style: getNormalTextStyle()),
+            child: pw.Text("${sSeatingNo.tr}:-", style: getNormalTextStyle()),
           ),
         )),
     pw.Expanded(
@@ -343,6 +349,33 @@ pw.Widget getTotalRow(OrderHistoryData mOrderHistoryData, String currencyData) {
   ]);
 }
 
+/// Rounding
+pw.Widget getRoundingRow(
+    OrderHistoryData mOrderHistoryData, String currencyData) {
+  return pw.Row(children: [
+    pw.Expanded(
+        flex: 2,
+        child: pw.Container(
+          padding: const pw.EdgeInsets.all(2.0),
+          child: pw.Align(
+            alignment: pw.Alignment.centerLeft,
+            child: pw.Text("Rounding", style: getNormalTextStyle()),
+          ),
+        )),
+    pw.Expanded(
+        flex: 1,
+        child: pw.Container(
+          padding: const pw.EdgeInsets.all(2.0),
+          child: pw.Align(
+            alignment: pw.Alignment.centerRight,
+            child: pw.Text(
+                '$currencyData ${(getDoubleValue(mOrderHistoryData.totalAmount) - getDoubleValue((mOrderHistoryData.adjustedAmount ?? 0) > 0 ? mOrderHistoryData.adjustedAmount : mOrderHistoryData.totalAmount)).toStringAsFixed(2)}',
+                style: getNormalTextStyle()),
+          ),
+        )),
+  ]);
+}
+
 /// Total pay
 pw.Widget getTotalPayRow(
     OrderHistoryData mOrderHistoryData, String currencyData) {
@@ -353,7 +386,7 @@ pw.Widget getTotalPayRow(
           padding: const pw.EdgeInsets.all(2.0),
           child: pw.Align(
             alignment: pw.Alignment.centerLeft,
-            child: pw.Text("Total Pay", style: getBoldTextStyle()),
+            child: pw.Text("Payable Amount", style: getBoldTextStyle()),
           ),
         )),
     pw.Expanded(

@@ -19,7 +19,12 @@ class TableView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => controller.groupedByDepartment.isEmpty
+      () => controller.valueLoading.isNotEmpty?
+          Container(
+            alignment: Alignment.center,
+            child: Text(controller.valueLoading.value),
+          ):
+      controller.groupedByDepartment.isEmpty
           ? Center(
               child: Container(
                   decoration: const BoxDecoration(

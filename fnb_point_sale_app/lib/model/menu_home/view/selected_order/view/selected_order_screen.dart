@@ -27,7 +27,11 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
         onVisibilityGained: () {
           controller.onOrderPlaceAnotherPage();
         },
-        onVisibilityLost: () {},
+        onVisibilityLost: () {
+          if (Get.isRegistered<SelectedOrderController>()) {
+            Get.delete<SelectedOrderController>();
+          }
+        },
         child: Obx(
           () => Container(
             height: 100.h,
@@ -171,7 +175,7 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text(
-                                    'Table No:',
+                                    '${sSeatingNo.tr}',
                                     style: getText300(
                                         size: 11.5.sp,
                                         colors: ColorConstants.black),

@@ -74,38 +74,43 @@ class SelectedOrderBottomView extends StatelessWidget {
                 TaxData mTaxData =
                     (controller.mDashboardScreenController.taxData ??
                         [])[index];
-                return Column(
-                  children: [
-                    Container(
-                        margin: EdgeInsets.all(
-                          8.sp,
+                return Visibility(
+                    visible: (mTaxData.taxPercentage ?? 0) > 0,
+                    child: Column(
+                      children: [
+                        Container(
+                            margin: EdgeInsets.all(
+                              8.sp,
+                            ),
+                            padding: EdgeInsets.only(
+                                left: 8.sp,
+                                right: 8.sp,
+                                top: 5.sp,
+                                bottom: 5.sp),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  '${mTaxData.taxName ?? ''} (${mTaxData.taxPercentage}%)',
+                                  style: getTextRegular(
+                                      size: 11.sp,
+                                      colors: ColorConstants.cAppTaxColour),
+                                ),
+                                Text(
+                                  '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${calculatePercentageOf(getDoubleValue(controller.mOrderPlace.value?.subTotalPrice ?? 0), getDoubleValue(mTaxData.taxPercentage)).toStringAsFixed(2)}',
+                                  style: getTextRegular(
+                                      size: 11.sp,
+                                      colors: ColorConstants.cAppTaxColour),
+                                ),
+                              ],
+                            )),
+                        Container(
+                          height: 3.sp,
+                          margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
+                          color: Colors.grey.shade300,
                         ),
-                        padding: EdgeInsets.only(
-                            left: 8.sp, right: 8.sp, top: 5.sp, bottom: 5.sp),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              '${mTaxData.taxName ?? ''}+ (${mTaxData.taxPercentage}%)',
-                              style: getTextRegular(
-                                  size: 11.sp,
-                                  colors: ColorConstants.cAppTaxColour),
-                            ),
-                            Text(
-                              '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${calculatePercentageOf(getDoubleValue(controller.mOrderPlace.value?.subTotalPrice ?? 0), getDoubleValue(mTaxData.taxPercentage)).toStringAsFixed(2)}',
-                              style: getTextRegular(
-                                  size: 11.sp,
-                                  colors: ColorConstants.cAppTaxColour),
-                            ),
-                          ],
-                        )),
-                    Container(
-                      height: 3.sp,
-                      margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
-                      color: Colors.grey.shade300,
-                    ),
-                  ],
-                );
+                      ],
+                    ));
               }),
 
           ///total
@@ -136,6 +141,33 @@ class SelectedOrderBottomView extends StatelessWidget {
             color: Colors.grey.shade300,
           ),
 
+          ///Rounding
+          Container(
+              margin: EdgeInsets.all(
+                8.sp,
+              ),
+              padding: EdgeInsets.only(
+                  left: 8.sp, right: 8.sp, top: 3.sp, bottom: 3.sp),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    sRounding.tr,
+                    style: getTextRegular(
+                        size: 11.5.sp, colors: ColorConstants.cAppTaxColour),
+                  ),
+                  Text(
+                    '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${(getDoubleValue(controller.mOrderPlace.value?.rounOffPrice ?? 0) - getDoubleValue(controller.mOrderPlace.value?.totalPrice ?? 0)).toStringAsFixed(2)}',
+                    style: getTextRegular(
+                        size: 11.5.sp, colors: ColorConstants.cAppTaxColour),
+                  ),
+                ],
+              )),
+          Container(
+            height: 3.sp,
+            margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
+            color: Colors.grey.shade300,
+          ),
 
           ///total pay
           Container(
@@ -148,7 +180,7 @@ class SelectedOrderBottomView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    sTotalPay.tr,
+                    sPayableAmount.tr,
                     style: getText500(
                         size: 12.5.sp, colors: ColorConstants.cAppButtonColour),
                   ),

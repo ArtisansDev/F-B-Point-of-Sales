@@ -19,7 +19,7 @@ class DownloadDataMenu {
   static String sModifierList = 'Modifier';
   static String sMenuItems = 'Menu Items';
   static String sVariantList = 'Variant';
-  static String sTable = 'Table\'s';
+  static String sTable = 'Seating';
   static String sPaymentType = 'Payment Type';
   static String sConfiguration = 'Configuration';
   static String sCustomer = 'Customer';
@@ -67,7 +67,7 @@ class DownloadDataViewModel {
         }
 
         if (selectedDownloadOptions.contains(DownloadDataMenu.sTable)) {
-          callBack('Downloading Table configuration...');
+          callBack('Downloading Seating configuration...');
           await Future.delayed(const Duration(microseconds: 500));
           await downloadTableList(onError);
         }

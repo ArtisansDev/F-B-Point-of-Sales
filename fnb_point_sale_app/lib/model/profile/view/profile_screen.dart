@@ -24,7 +24,7 @@ class ProfileScreen extends GetView<ProfileController> {
         onVisibilityGained: () {},
         onVisibilityLost: () {},
         child: Obx(() => Container(
-              height: 40.h,
+              height: 51.h,
               width: 35.w,
               alignment: Alignment.topCenter,
               decoration: BoxDecoration(
@@ -56,12 +56,184 @@ class ProfileScreen extends GetView<ProfileController> {
                         ),
                       )),
 
-                  ///profile details
+                  ///UserDetails
                   Container(
                       width: 40.w,
                       alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.only(
-                          top: 11.sp, left: 14.sp, right: 14.sp),
+                      padding:
+                          EdgeInsets.only(top: 8.sp, left: 14.sp, right: 14.sp),
+                      child: Text(
+                        'User Details',
+                        style: getText600(
+                          size: 11.8.sp,
+                          colors: ColorConstants.cAppButtonColour,
+                        ),
+                      )),
+                  Container(
+                      width: 40.w,
+                      alignment: Alignment.centerLeft,
+                      padding:
+                          EdgeInsets.only(top: 5.sp, left: 14.sp, right: 14.sp),
+                      child: Text(
+                        (controller
+                                        .mConfigurationResponse
+                                        .value
+                                        .configurationData
+                                        ?.loggedInUserDetails ??
+                                    [])
+                                .isEmpty
+                            ? ""
+                            : controller
+                                    .mConfigurationResponse
+                                    .value
+                                    .configurationData
+                                    ?.loggedInUserDetails
+                                    ?.first
+                                    .name ??
+                                '',
+                        style: getText500(
+                          size: 11.8.sp,
+                          colors: ColorConstants.appTextSalesHader,
+                        ),
+                      )),
+                  Container(
+                      width: 40.w,
+                      alignment: Alignment.centerLeft,
+                      padding:
+                          EdgeInsets.only(top: 5.sp, left: 14.sp, right: 14.sp),
+                      child: Text(
+                        (controller
+                                        .mConfigurationResponse
+                                        .value
+                                        .configurationData
+                                        ?.loggedInUserDetails ??
+                                    [])
+                                .isEmpty
+                            ? ""
+                            : controller
+                                    .mConfigurationResponse
+                                    .value
+                                    .configurationData
+                                    ?.loggedInUserDetails
+                                    ?.first
+                                    .email ??
+                                '',
+                        style: getText500(
+                          size: 11.8.sp,
+                          colors: ColorConstants.appTextSalesHader,
+                        ),
+                      )),
+
+                  ///Restaurant
+                  Container(
+                      width: 40.w,
+                      alignment: Alignment.centerLeft,
+                      padding:
+                          EdgeInsets.only(top: 8.sp, left: 14.sp, right: 14.sp),
+                      child: Text(
+                        'Restaurant Details',
+                        style: getText600(
+                          size: 11.8.sp,
+                          colors: ColorConstants.cAppButtonColour,
+                        ),
+                      )),
+
+                  Container(
+                      width: 40.w,
+                      alignment: Alignment.centerLeft,
+                      padding:
+                          EdgeInsets.only(top: 5.sp, left: 14.sp, right: 14.sp),
+                      child: Text(
+                        controller
+                                .mConfigurationResponse
+                                .value
+                                .configurationData
+                                ?.restaurantData
+                                ?.first
+                                .restaurantName ??
+                            '',
+                        style: getText500(
+                          size: 11.8.sp,
+                          colors: ColorConstants.appTextSalesHader,
+                        ),
+                      )),
+                  Container(
+                      width: 40.w,
+                      alignment: Alignment.centerLeft,
+                      padding:
+                          EdgeInsets.only(top: 5.sp, left: 14.sp, right: 14.sp),
+                      child: Text(
+                        controller
+                                .mConfigurationResponse
+                                .value
+                                .configurationData
+                                ?.restaurantData
+                                ?.first
+                                .contactEmail ??
+                            '',
+                        style: getText500(
+                          size: 11.8.sp,
+                          colors: ColorConstants.appTextSalesHader,
+                        ),
+                      )),
+                  Container(
+                      width: 40.w,
+                      alignment: Alignment.centerLeft,
+                      padding:
+                          EdgeInsets.only(top: 5.sp, left: 14.sp, right: 14.sp),
+                      child: Text(
+                        controller
+                                .mConfigurationResponse
+                                .value
+                                .configurationData
+                                ?.restaurantData
+                                ?.first
+                                .contactNumber ??
+                            '',
+                        style: getText500(
+                          size: 11.8.sp,
+                          colors: ColorConstants.appTextSalesHader,
+                        ),
+                      )),
+                  Container(
+                      width: 40.w,
+                      alignment: Alignment.centerLeft,
+                      padding:
+                          EdgeInsets.only(top: 5.sp, left: 14.sp, right: 14.sp),
+                      child: Text(
+                        controller
+                                .mConfigurationResponse
+                                .value
+                                .configurationData
+                                ?.restaurantData
+                                ?.first
+                                .address ??
+                            '',
+                        style: getText500(
+                          size: 11.8.sp,
+                          colors: ColorConstants.appTextSalesHader,
+                        ),
+                      )),
+
+                  ///branch
+                  Container(
+                      width: 40.w,
+                      alignment: Alignment.centerLeft,
+                      padding:
+                          EdgeInsets.only(top: 8.sp, left: 14.sp, right: 14.sp),
+                      child: Text(
+                        'Branch Details',
+                        style: getText600(
+                          size: 11.8.sp,
+                          colors: ColorConstants.cAppButtonColour,
+                        ),
+                      )),
+
+                  Container(
+                      width: 40.w,
+                      alignment: Alignment.centerLeft,
+                      padding:
+                          EdgeInsets.only(top: 5.sp, left: 14.sp, right: 14.sp),
                       child: Text(
                         controller
                                 .mConfigurationResponse
@@ -71,7 +243,7 @@ class ProfileScreen extends GetView<ProfileController> {
                                 ?.first
                                 .branchName ??
                             '',
-                        style: getText600(
+                        style: getText500(
                           size: 11.8.sp,
                           colors: ColorConstants.appTextSalesHader,
                         ),
@@ -79,8 +251,8 @@ class ProfileScreen extends GetView<ProfileController> {
                   Container(
                       width: 40.w,
                       alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.only(
-                          top: 11.sp, left: 14.sp, right: 14.sp),
+                      padding:
+                          EdgeInsets.only(top: 5.sp, left: 14.sp, right: 14.sp),
                       child: Text(
                         controller
                                 .mConfigurationResponse
@@ -90,87 +262,12 @@ class ProfileScreen extends GetView<ProfileController> {
                                 ?.first
                                 .counterName ??
                             '',
-                        style: getText600(
+                        style: getText500(
                           size: 11.8.sp,
                           colors: ColorConstants.appTextSalesHader,
                         ),
                       )),
-                  Container(
-                      width: 40.w,
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.only(
-                          top: 11.sp, left: 14.sp, right: 14.sp),
-                      child: Text(
-                        controller
-                            .mConfigurationResponse
-                            .value
-                            .configurationData
-                            ?.restaurantData
-                            ?.first
-                            .restaurantName ??
-                            '',
-                        style: getText600(
-                          size: 11.8.sp,
-                          colors: ColorConstants.appTextSalesHader,
-                        ),
-                      )),
-                  Container(
-                      width: 40.w,
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.only(
-                          top: 11.sp, left: 14.sp, right: 14.sp),
-                      child: Text(
-                        controller
-                            .mConfigurationResponse
-                            .value
-                            .configurationData
-                            ?.restaurantData
-                            ?.first
-                            .contactEmail ??
-                            '',
-                        style: getText600(
-                          size: 11.8.sp,
-                          colors: ColorConstants.appTextSalesHader,
-                        ),
-                      )),
-                  Container(
-                      width: 40.w,
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.only(
-                          top: 11.sp, left: 14.sp, right: 14.sp),
-                      child: Text(
-                        controller
-                            .mConfigurationResponse
-                            .value
-                            .configurationData
-                            ?.restaurantData
-                            ?.first
-                            .contactNumber ??
-                            '',
-                        style: getText600(
-                          size: 11.8.sp,
-                          colors: ColorConstants.appTextSalesHader,
-                        ),
-                      )),
-                  Container(
-                      width: 40.w,
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.only(
-                          top: 11.sp, left: 14.sp, right: 14.sp),
-                      child: Text(
-                        controller
-                            .mConfigurationResponse
-                            .value
-                            .configurationData
-                            ?.restaurantData
-                            ?.first
-                            .address ??
-                            '',
-                        style: getText600(
-                          size: 11.8.sp,
-                          colors: ColorConstants.appTextSalesHader,
-                        ),
-                      )),
+
                   const Expanded(child: SizedBox()),
 
                   ///button

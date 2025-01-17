@@ -89,9 +89,9 @@ class TextInputWidget extends StatelessWidget {
         }
       },
       onSubmitted: (value) {
-          if(onSubmit!=null){
-            onSubmit!();
-          }
+        if (onSubmit != null) {
+          onSubmit!();
+        }
       },
       readOnly: isReadOnly ?? false,
       enableSuggestions: false,
@@ -132,7 +132,7 @@ class TextInputWidget extends StatelessWidget {
           },
           child: Container(
               alignment: Alignment.center,
-              margin: EdgeInsets.only(right: prefixPadding??8.sp),
+              margin: EdgeInsets.only(right: prefixPadding ?? 8.sp),
               height: prefixHeight ?? 10.h,
               width: 5.w,
               decoration: BoxDecoration(
@@ -205,7 +205,7 @@ class TextInputWidget extends StatelessWidget {
         }
       },
       onSubmitted: (value) {
-        if(onSubmit!=null){
+        if (onSubmit != null) {
           onSubmit!();
         }
       },
@@ -246,7 +246,9 @@ class TextInputWidget extends StatelessWidget {
         // labelStyle: getText500(
         //     colors: hintTextColor ?? ColorConstants.appEditTextHint,
         //     size: hintTextSize ?? 12.sp),
-        prefixIcon: prefixIcon == null
+        prefixIcon:
+        sPrefixText == null
+            ? prefixIcon == null
             ? null
             : GestureDetector(
             onTap: () {
@@ -260,7 +262,31 @@ class TextInputWidget extends StatelessWidget {
                 prefixIcon,
                 size: prefixHeight ?? 15.sp,
               ), // icon is 48px widget.
-            )),
+            ))
+            : GestureDetector(
+          onTap: () {
+            if (onClick != null) {
+              onClick!("prefixIcon");
+            }
+          },
+          child: Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(right: prefixPadding ?? 8.sp),
+              height: prefixHeight ?? 10.h,
+              width: 5.w,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8.sp),
+                    bottomLeft: Radius.circular(8.sp)),
+              ),
+              child: Text(
+                '$sPrefixText',
+                maxLines: 1,
+                style: getText500(
+                    colors: ColorConstants.black, size: 11.5.sp),
+              )),
+        ),
         prefixIconColor: ColorConstants.cAppColorsMaterial.shade400,
         suffixIcon: suffixIcon == null
             ? null

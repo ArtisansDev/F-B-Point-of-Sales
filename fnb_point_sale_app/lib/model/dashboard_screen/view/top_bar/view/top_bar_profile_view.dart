@@ -66,15 +66,15 @@ class TopBarProfileView extends StatelessWidget {
         children: [
           TextSpan(
             text: (controller.mConfigurationResponse.value.configurationData
-                            ?.restaurantData ??
+                            ?.loggedInUserDetails ??
                         [])
                     .isEmpty
                 ? ""
                 : (controller.mConfigurationResponse.value.configurationData
-                            ?.restaurantData ??
+                            ?.loggedInUserDetails ??
                         [])
                     .first
-                    .restaurantName,
+                    .name,
             style: getText600(size: 11.sp),
           ),
           TextSpan(

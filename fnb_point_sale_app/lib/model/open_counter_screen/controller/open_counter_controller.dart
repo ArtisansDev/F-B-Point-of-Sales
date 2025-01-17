@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fnb_point_sale_base/data/local/database/configuration/configuration_local_api.dart';
+import 'package:fnb_point_sale_base/data/mode/configuration/configuration_request.dart';
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/data/mode/update_balance/opening_balance/opening_balance_request.dart';
 import 'package:fnb_point_sale_base/data/mode/update_balance/opening_balance/opening_balance_response.dart';
@@ -43,32 +44,52 @@ class OpenCounterController extends GetxController {
     openingBalanceApiCall();
   }
 
+  Rxn<ConfigurationResponse> mConfigurationResponse =
+      Rxn<ConfigurationResponse>();
+  Rxn<CurrencyData> mCurrencyData = Rxn<CurrencyData>();
+
+  getConfiguration() async {
+    var configurationLocalApi = locator.get<ConfigurationLocalApi>();
+    mConfigurationResponse.value =
+        await configurationLocalApi.getConfigurationResponse() ??
+            ConfigurationResponse();
+    mCurrencyData.value =
+        (mConfigurationResponse.value?.configurationData?.currencyData ?? [])
+                .isEmpty
+            ? CurrencyData()
+            : (mConfigurationResponse.value?.configurationData?.currencyData ??
+                    [])
+                .first;
+  }
+
   openingBalanceApiCall() async {
     await NetworkUtils()
         .checkInternetConnection()
         .then((isInternetAvailable) async {
       if (isInternetAvailable) {
-        var configurationLocalApi = locator.get<ConfigurationLocalApi>();
-        ConfigurationResponse mConfigurationResponse =
-            await configurationLocalApi.getConfigurationResponse() ??
-                ConfigurationResponse();
         String sUserId = await SharedPrefs().getUserId();
         final localApi = locator.get<BalanceApi>();
         OpeningBalanceRequest mOpeningBalanceRequest = OpeningBalanceRequest(
-            branchID: (mConfigurationResponse.configurationData?.branchData ??
-                        [])
-                    .isEmpty
-                ? ""
-                : (mConfigurationResponse.configurationData?.branchData ?? [])
-                    .first
-                    .branchIDP,
-            counterID: (mConfigurationResponse.configurationData?.counterData ??
-                        [])
-                    .isEmpty
-                ? ""
-                : (mConfigurationResponse.configurationData?.counterData ?? [])
-                    .first
-                    .counterIDP,
+            branchID:
+                (mConfigurationResponse.value?.configurationData?.branchData ??
+                            [])
+                        .isEmpty
+                    ? ""
+                    : (mConfigurationResponse
+                                .value?.configurationData?.branchData ??
+                            [])
+                        .first
+                        .branchIDP,
+            counterID:
+                (mConfigurationResponse.value?.configurationData?.counterData ??
+                            [])
+                        .isEmpty
+                    ? ""
+                    : (mConfigurationResponse
+                                .value?.configurationData?.counterData ??
+                            [])
+                        .first
+                        .counterIDP,
             userID: sUserId,
             openingBalance: getDoubleValue(openCounterController.value.text),
             openingBalanceDateTime: getUTCValue(DateTime.now()));

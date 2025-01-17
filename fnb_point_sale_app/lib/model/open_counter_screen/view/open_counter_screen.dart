@@ -30,7 +30,7 @@ class OpenCounterScreen extends GetView<OpenCounterController> {
   openCounterView() {
     return FocusDetector(
         onVisibilityGained: () {
-          // controller.getPackageInfo();
+          controller.getConfiguration();
         },
         onVisibilityLost: () {},
         child: Stack(
@@ -132,6 +132,7 @@ class OpenCounterScreen extends GetView<OpenCounterController> {
                                     height: 18.sp,
                                   ),
                                   Container(
+                                    height: 21.sp,
                                     decoration: BoxDecoration(
                                       color: ColorConstants.white,
                                       borderRadius: BorderRadius.circular(8.sp),
@@ -157,7 +158,7 @@ class OpenCounterScreen extends GetView<OpenCounterController> {
                                       textInputType: TextInputType.emailAddress,
                                       hintText: sEnterOpenAmount.tr,
                                       showFloatingLabel: false,
-                                      prefixIcon: Icons.attach_money,
+                                      sPrefixText: controller.mCurrencyData.value?.currencySymbol??'',
                                       topPadding: 5.sp,
                                       onFilteringTextInputFormatter: [
                                         FilteringTextInputFormatter.allow(

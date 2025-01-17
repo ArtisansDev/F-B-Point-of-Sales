@@ -74,38 +74,43 @@ class ItemSummaryBottomView extends StatelessWidget {
                 TaxData mTaxData =
                     (controller.mDashboardScreenController.value?.taxData ??
                         [])[index];
-                return Column(
-                  children: [
-                    Container(
-                        margin: EdgeInsets.all(
-                          8.sp,
+                return Visibility(
+                    visible: (mTaxData.taxPercentage ?? 0) > 0,
+                    child: Column(
+                      children: [
+                        Container(
+                            margin: EdgeInsets.all(
+                              8.sp,
+                            ),
+                            padding: EdgeInsets.only(
+                                left: 8.sp,
+                                right: 8.sp,
+                                top: 5.sp,
+                                bottom: 5.sp),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  '${mTaxData.taxName ?? ''} (${mTaxData.taxPercentage}%)',
+                                  style: getTextRegular(
+                                      size: 11.5.sp,
+                                      colors: ColorConstants.cAppTaxColour),
+                                ),
+                                Text(
+                                  '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${calculatePercentageOf(getDoubleValue(controller.mOrderPlace.value.subTotal ?? 0), getDoubleValue(mTaxData.taxPercentage)).toStringAsFixed(2)}',
+                                  style: getTextRegular(
+                                      size: 11.5.sp,
+                                      colors: ColorConstants.cAppTaxColour),
+                                ),
+                              ],
+                            )),
+                        Container(
+                          height: 3.sp,
+                          margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
+                          color: Colors.grey.shade300,
                         ),
-                        padding: EdgeInsets.only(
-                            left: 8.sp, right: 8.sp, top: 5.sp, bottom: 5.sp),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              '${mTaxData.taxName ?? ''}+ (${mTaxData.taxPercentage}%)',
-                              style: getTextRegular(
-                                  size: 11.5.sp,
-                                  colors: ColorConstants.cAppTaxColour),
-                            ),
-                            Text(
-                              '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${calculatePercentageOf(getDoubleValue(controller.mOrderPlace.value.subTotal ?? 0), getDoubleValue(mTaxData.taxPercentage)).toStringAsFixed(2)}',
-                              style: getTextRegular(
-                                  size: 11.5.sp,
-                                  colors: ColorConstants.cAppTaxColour),
-                            ),
-                          ],
-                        )),
-                    Container(
-                      height: 3.sp,
-                      margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
-                      color: Colors.grey.shade300,
-                    ),
-                  ],
-                );
+                      ],
+                    ));
               }),
 
           ///total
@@ -136,6 +141,46 @@ class ItemSummaryBottomView extends StatelessWidget {
             color: Colors.grey.shade300,
           ),
 
+          ///Rounding
+          Container(
+              margin: EdgeInsets.only(
+                  left: 8.sp, right: 8.sp, top: 3.sp, bottom: 8.sp),
+              padding: EdgeInsets.only(
+                  left: 8.sp, right: 8.sp, top: 0.sp, bottom: 3.sp),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    sRounding.tr,
+                    style: getTextRegular(
+                        size: 11.5.sp, colors: ColorConstants.cAppTaxColour),
+                  ),
+                  (controller.mOrderPlace.value.paymentStatus != 'S')
+                      ? Text(
+                          '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${(getDoubleValue(roundToNearestPossible(getDoubleValue(controller.mOrderPlace.value.totalAmount ?? 0)))-getDoubleValue(controller.mOrderPlace.value.totalAmount ?? 0)).toStringAsFixed(2)}',
+                          style: getTextRegular(
+                              size: 11.5.sp,
+                              colors: ColorConstants.cAppTaxColour),
+                        )
+                      : Text(
+                          '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(controller.mOrderPlace.value.adjustedAmount ?? 0) > 0 ? (getDoubleValue(controller.mOrderPlace.value.adjustedAmount ?? 0)-getDoubleValue(controller.mOrderPlace.value.totalAmount ?? 0)).toStringAsFixed(2) : (getDoubleValue(controller.mOrderPlace.value.grandTotal ?? 0)- getDoubleValue(controller.mOrderPlace.value.totalAmount ?? 0)).toStringAsFixed(2)}',
+                          style: getTextRegular(
+                              size: 11.5.sp,
+                              colors: ColorConstants.cAppTaxColour),
+                        ),
+                  // Text(
+                  //   '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${(getDoubleValue(controller.mOrderPlace.value.totalAmount ?? 0) - getDoubleValue(controller.mOrderPlace.value?.rounOffPrice ?? 0)).toStringAsFixed(2)}',
+                  //   style: getTextRegular(
+                  //       size: 11.5.sp, colors: ColorConstants.cAppTaxColour),
+                  // ),
+                ],
+              )),
+          Container(
+            height: 3.sp,
+            margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
+            color: Colors.grey.shade300,
+          ),
+
           ///total pay
           Container(
               margin: EdgeInsets.all(
@@ -147,7 +192,7 @@ class ItemSummaryBottomView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    sTotalPay.tr,
+                    sPayableAmount.tr,
                     style: getText500(
                         size: 12.5.sp, colors: ColorConstants.cAppButtonColour),
                   ),
@@ -173,27 +218,31 @@ class ItemSummaryBottomView extends StatelessWidget {
           ),
 
           ///remark
-          Container(
-              margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
-              height: 19.5.sp,
-              child: TextInputWidget(
-                placeHolder: sRemark.tr,
-                isReadOnly: true,
-                textColor: Colors.grey,
-                controller: controller.remarkController.value,
-                errorText: null,
-                textInputType: TextInputType.emailAddress,
-                hintText: sRemark.tr,
-                showFloatingLabel: false,
-                topPadding: 5.sp,
-                hintTextColor: ColorConstants.black.withOpacity(0.50),
-                hintTextSize: 11.sp,
-                textSize: 11.5.sp,
-                onFilteringTextInputFormatter: [
-                  FilteringTextInputFormatter.allow(
-                      RegExp(AppUtilConstants.patternStringAndSpace)),
-                ],
-              )),
+          Visibility(
+              visible: (controller.mOrderPlace.value.paymentStatus == 'P' ||
+                      controller.mOrderPlace.value.paymentStatus == 'F') &&
+                  (controller.mOrderPlace.value.paymentStatus != 'S'),
+              child: Container(
+                  margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
+                  height: 19.5.sp,
+                  child: TextInputWidget(
+                    placeHolder: sRemark.tr,
+                    isReadOnly: true,
+                    textColor: Colors.grey,
+                    controller: controller.remarkController.value,
+                    errorText: null,
+                    textInputType: TextInputType.emailAddress,
+                    hintText: sRemark.tr,
+                    showFloatingLabel: false,
+                    topPadding: 5.sp,
+                    hintTextColor: ColorConstants.black.withOpacity(0.50),
+                    hintTextSize: 11.sp,
+                    textSize: 11.5.sp,
+                    onFilteringTextInputFormatter: [
+                      FilteringTextInputFormatter.allow(
+                          RegExp(AppUtilConstants.patternStringAndSpace)),
+                    ],
+                  ))),
 
           ///button Place Order
           // Container(

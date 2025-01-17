@@ -54,6 +54,7 @@ class ConfigurationResponse {
 /// CurrencyData : [{"CurrencyIDP":"28ae5e45-12c6-42e0-933c-68bb9fce97ff","CurrencyCode":"MYR","CurrencySymbol":"RM"}]
 /// TaxData : [{"TaxPercentage":5.00,"TaxName":"SST","TaxIDP":"7aad68ca-7edb-4e36-a893-a191f6702ac2"},{"TaxPercentage":10.00,"TaxName":"Service Tax","TaxIDP":"d327b6d4-85a9-4feb-b7a9-e23dd802e8e7"}]
 /// CounterData : [{"CounterIDP":"0ac73a88-8f99-4a4e-931b-9351f29df177","CounterName":"Sarkhej Counter -2"}]
+/// LoggedInUserDetails : [ { "Id": "bdbb6d98-068a-4b96-8c55-63ecf3c554d9", "Email": "prashanttestingoperator@gmail.com", "Name": "Prashant Chauhan" } ]
 
 class ConfigurationData {
   ConfigurationData({
@@ -61,12 +62,14 @@ class ConfigurationData {
     List<BranchData>? branchData,
     List<CurrencyData>? currencyData,
     List<TaxData>? taxData,
+    List<LoggedInUserDetails>? loggedInUserDetails,
     List<CounterData>? counterData,}) {
     _restaurantData = restaurantData;
     _branchData = branchData;
     _currencyData = currencyData;
     _taxData = taxData;
     _counterData = counterData;
+    _loggedInUserDetails = loggedInUserDetails;
   }
 
   ConfigurationData.fromJson(dynamic json) {
@@ -94,6 +97,12 @@ class ConfigurationData {
         _taxData?.add(TaxData.fromJson(v));
       });
     }
+    if (json['LoggedInUserDetails'] != null) {
+      _loggedInUserDetails = [];
+      json['LoggedInUserDetails'].forEach((v) {
+        _loggedInUserDetails?.add(LoggedInUserDetails.fromJson(v));
+      });
+    }
     if (json['CounterData'] != null) {
       _counterData = [];
       json['CounterData'].forEach((v) {
@@ -107,6 +116,7 @@ class ConfigurationData {
   List<CurrencyData>? _currencyData;
   List<TaxData>? _taxData;
   List<CounterData>? _counterData;
+  List<LoggedInUserDetails>? _loggedInUserDetails;
 
   List<RestaurantData>? get restaurantData => _restaurantData;
 
@@ -115,6 +125,8 @@ class ConfigurationData {
   List<CurrencyData>? get currencyData => _currencyData;
 
   List<TaxData>? get taxData => _taxData;
+
+  List<LoggedInUserDetails>? get loggedInUserDetails => _loggedInUserDetails;
 
   List<CounterData>? get counterData => _counterData;
 
@@ -131,6 +143,9 @@ class ConfigurationData {
     }
     if (_taxData != null) {
       map['TaxData'] = _taxData?.map((v) => v.toJson()).toList();
+    }
+    if (_loggedInUserDetails != null) {
+      map['LoggedInUserDetails'] = _loggedInUserDetails?.map((v) => v.toJson()).toList();
     }
     if (_counterData != null) {
       map['CounterData'] = _counterData?.map((v) => v.toJson()).toList();
@@ -279,6 +294,47 @@ class BranchData {
     final map = <String, dynamic>{};
     map['BranchIDP'] = _branchIDP;
     map['BranchName'] = _branchName;
+    return map;
+  }
+
+}
+
+///"Id": "bdbb6d98-068a-4b96-8c55-63ecf3c554d9",
+///"Email": "prashanttestingoperator@gmail.com",
+///"Name": "Prashant Chauhan"
+
+class LoggedInUserDetails {
+  LoggedInUserDetails({
+    String? id,
+    String? name,
+    String? email,
+  }) {
+    _id = id;
+    _email = email;
+    _name = name;
+  }
+
+  LoggedInUserDetails.fromJson(dynamic json) {
+    _id = json['Id'];
+    _email = json['Email'];
+    _name = json['Name'];
+  }
+
+  String? _id;
+  String? _email;
+  String? _name;
+
+  String? get id => _id;
+
+  String? get email => _email;
+
+  String? get name => _name;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['Id'] = _id;
+    map['Email'] = _email;
+    map['Name'] = _name;
     return map;
   }
 
