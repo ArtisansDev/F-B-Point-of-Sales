@@ -76,8 +76,10 @@ Future<bool> printAftrePayment(
 
   ///tax
   for (OrderTax element in (mOrderDetailList.orderTax ?? [])) {
-    widgets.add(getTax(element, mCurrencyData.currencySymbol ?? ''));
-    widgets.add(pw.Container(height: 2));
+    if ((element.taxPercentage ?? 0) > 0) {
+      widgets.add(getTax(element, mCurrencyData.currencySymbol ?? ''));
+      widgets.add(pw.Container(height: 2));
+    }
   }
 
   ///Total

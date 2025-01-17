@@ -6,6 +6,7 @@ import 'package:fnb_point_sale_base/common/text_input_widget.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/pattern_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
+import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:focus_detector/focus_detector.dart';
@@ -166,31 +167,58 @@ class CancelOrderScreen extends GetView<CancelOrderController> {
                                   SizedBox(
                                     height: 5.sp,
                                   ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                          child: Text(
-                                        'Tax 0%',
-                                        style: getText600(
-                                          size: 11.sp,
-                                          colors: ColorConstants
-                                              .cAppCancelDilogColour,
-                                        ),
-                                      )),
-                                      Expanded(
-                                          child: Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Text(
-                                          '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${controller.mOrderPlace.value?.taxAmount}',
-                                          style: getText600(
-                                            size: 11.sp,
-                                            colors: ColorConstants
-                                                .cAppCancelDilogColour,
-                                          ),
-                                        ),
-                                      ))
-                                    ],
-                                  ),
+                                  ///Tax
+                                  ListView.builder(
+                                      shrinkWrap: true,
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      padding: EdgeInsets.zero,
+                                      itemCount:
+                                      (controller.mDashboardScreenController.value?.taxData ?? []).length,
+                                      itemBuilder: (BuildContext context, int index) {
+                                        TaxData mTaxData =
+                                        (controller.mDashboardScreenController.value?.taxData ??
+                                            [])[index];
+                                        return Visibility(
+                                            visible: (mTaxData.taxPercentage ?? 0) > 0,
+                                            child: Column(
+                                              children: [
+                                                Container(
+                                                    // margin: EdgeInsets.all(
+                                                    //   8.sp,
+                                                    // ),
+                                                    padding: EdgeInsets.only(
+                                                        // left: 8.sp,
+                                                        // right: 8.sp,
+                                                        top: 7.sp,
+                                                        // bottom: 5.sp
+                                                    ),
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          '${mTaxData.taxName ?? ''} (${mTaxData.taxPercentage}%)',
+                                                          style: getTextRegular(
+                                                              size: 11.sp,
+                                                              colors: ColorConstants.cAppTaxColour),
+                                                        ),
+                                                        Text(
+                                                          '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${calculatePercentageOf(getDoubleValue(controller.mOrderPlace.value?.subTotalPrice ?? 0), getDoubleValue(mTaxData.taxPercentage)).toStringAsFixed(2)}',
+                                                          style: getTextRegular(
+                                                              size: 11.sp,
+                                                              colors: ColorConstants.cAppTaxColour),
+                                                        ),
+                                                      ],
+                                                    )),
+                                                // Container(
+                                                //   height: 3.sp,
+                                                //   margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
+                                                //   color: Colors.grey.shade300,
+                                                // ),
+                                              ],
+                                            ));
+                                      }),
+
+                                  ///
                                   Container(
                                     margin: EdgeInsets.only(
                                         top: 10.sp, bottom: 10.sp),
@@ -222,6 +250,66 @@ class CancelOrderScreen extends GetView<CancelOrderController> {
                                           ),
                                         ),
                                       ))
+                                    ],
+                                  ),
+                                  Container(
+                                    // margin: EdgeInsets.only(
+                                    //     top: 8.sp, bottom: 10.sp),
+                                    // width: double.infinity,
+                                    height: 7.sp,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                          child: Text(
+                                            'Rounding',
+                                            style: getTextRegular(
+                                                size: 11.sp,
+                                                colors: ColorConstants.cAppTaxColour),
+                                          )),
+                                      Expanded(
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Text(
+                                              '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${(getDoubleValue(controller.mOrderPlace.value?.rounOffPrice)-getDoubleValue(controller.mOrderPlace.value?.totalPrice)).toStringAsFixed(2)}',
+                                              style: getTextRegular(
+                                                  size: 11.sp,
+                                                  colors: ColorConstants.cAppTaxColour),
+                                            ),
+                                          ))
+                                    ],
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                        top: 10.sp, bottom: 10.sp),
+                                    width: double.infinity,
+                                    height: 3.sp,
+                                    color: ColorConstants
+                                        .cAppCancelDilogDeviderColour,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                          child: Text(
+                                            'Payable Amount',
+                                            style: getText600(
+                                              size: 11.5.sp,
+                                              colors: ColorConstants
+                                                  .cAppCancelDilogColour,
+                                            ),
+                                          )),
+                                      Expanded(
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Text(
+                                              '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(controller.mOrderPlace.value?.rounOffPrice).toStringAsFixed(2)}',
+                                              style: getText600(
+                                                size: 11.5.sp,
+                                                colors: ColorConstants
+                                                    .cAppCancelDilogColour,
+                                              ),
+                                            ),
+                                          ))
                                     ],
                                   ),
                                 ],

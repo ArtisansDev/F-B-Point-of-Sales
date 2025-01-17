@@ -66,8 +66,10 @@ Future<bool> printSalePayment(OrderHistoryData mOrderHistoryData) async {
 
   ///tax
   for (OrderHistoryTax element in (mOrderHistoryData.orderTax ?? [])) {
-    widgets.add(getTax(element, mCurrencyData.currencySymbol ?? ''));
-    widgets.add(pw.Container(height: 2));
+    if ((element.taxPercentage ?? 0) > 0) {
+      widgets.add(getTax(element, mCurrencyData.currencySymbol ?? ''));
+      widgets.add(pw.Container(height: 2));
+    }
   }
 
   ///Total
@@ -75,8 +77,8 @@ Future<bool> printSalePayment(OrderHistoryData mOrderHistoryData) async {
       .add(getTotalRow(mOrderHistoryData, mCurrencyData.currencySymbol ?? ''));
 
   ///Rounding
-  widgets
-      .add(getRoundingRow(mOrderHistoryData, mCurrencyData.currencySymbol ?? ''));
+  widgets.add(
+      getRoundingRow(mOrderHistoryData, mCurrencyData.currencySymbol ?? ''));
 
   ///Total Pay
   widgets.add(

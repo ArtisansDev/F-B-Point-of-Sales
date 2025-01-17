@@ -269,31 +269,64 @@ class CurrencyData {
 
 /// BranchIDP : "8281f828-2f99-457e-ac27-06914abbe720"
 /// BranchName : "Apple Cinema - Sarkhej, Ahmedabad"
+/// Email : "ashishgohel005@gmail.com"
+/// CustomerSupportNumber : ""
+/// MobileNumber : "+60 8668886888"
+/// DineIn : true
+/// Takeaway : true
 
 class BranchData {
   BranchData({
     String? branchIDP,
-    String? branchName,}) {
+    String? branchName,
+    String? email,
+    String? customerSupportNumber,
+    String? mobileNumber,
+    bool? dineIn,
+    bool? takeaway,}){
     _branchIDP = branchIDP;
     _branchName = branchName;
+    _email = email;
+    _customerSupportNumber = customerSupportNumber;
+    _mobileNumber = mobileNumber;
+    _dineIn = dineIn;
+    _takeaway = takeaway;
   }
 
   BranchData.fromJson(dynamic json) {
     _branchIDP = json['BranchIDP'];
     _branchName = json['BranchName'];
+    _email = json['Email'];
+    _customerSupportNumber = json['CustomerSupportNumber'];
+    _mobileNumber = json['MobileNumber'];
+    _dineIn = json['DineIn'];
+    _takeaway = json['Takeaway'];
   }
-
   String? _branchIDP;
   String? _branchName;
+  String? _email;
+  String? _customerSupportNumber;
+  String? _mobileNumber;
+  bool? _dineIn;
+  bool? _takeaway;
 
   String? get branchIDP => _branchIDP;
-
   String? get branchName => _branchName;
+  String? get email => _email;
+  String? get customerSupportNumber => _customerSupportNumber;
+  String? get mobileNumber => _mobileNumber;
+  bool? get dineIn => _dineIn;
+  bool? get takeaway => _takeaway;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['BranchIDP'] = _branchIDP;
     map['BranchName'] = _branchName;
+    map['Email'] = _email;
+    map['CustomerSupportNumber'] = _customerSupportNumber;
+    map['MobileNumber'] = _mobileNumber;
+    map['DineIn'] = _dineIn;
+    map['Takeaway'] = _takeaway;
     return map;
   }
 
