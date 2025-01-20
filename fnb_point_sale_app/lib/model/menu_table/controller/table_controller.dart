@@ -28,7 +28,7 @@ class TableController extends GetxController {
     OrderPlace mOrderPlace =
         getOrderPlace(mGetAllTablesResponseData.seatIDP ?? '');
     if ((mOrderPlace.cartItem ?? []).isNotEmpty) {
-      await AppAlert.showView(
+      await AppAlert.showViewWithoutBlur(
           Get.context!,
           Row(
             children: [
@@ -45,7 +45,7 @@ class TableController extends GetxController {
           (mGetAllTablesResponseData.isActive ?? false));
       if (value) {
         bool isCreateOrder = false;
-        await AppAlert.showView(Get.context!,
+        await AppAlert.showViewWithoutBlur(Get.context!,
             TableSelectScreen(tableNumber: mGetAllTablesResponseData),
             barrierDismissible: true);
         if (Get.isRegistered<TableSelectController>()) {

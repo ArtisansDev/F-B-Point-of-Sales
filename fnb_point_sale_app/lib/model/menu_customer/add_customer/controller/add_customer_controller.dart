@@ -9,6 +9,7 @@ import 'package:fnb_point_sale_base/constants/web_constants.dart';
 import 'package:fnb_point_sale_base/data/local/database/configuration/configuration_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/shared_prefs/shared_prefs.dart';
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
+import 'package:fnb_point_sale_base/data/mode/customer/get_all_customer/get_all_customer_response.dart';
 import 'package:fnb_point_sale_base/data/mode/customer/save/customer_save_request.dart';
 import 'package:fnb_point_sale_base/data/remote/api_call/customer/customer_api.dart';
 import 'package:fnb_point_sale_base/data/remote/web_response.dart';
@@ -54,11 +55,29 @@ class AddCustomerController extends GetxController {
     }
   }
 
+  ///edit Customer
+ Rxn<GetAllCustomerList> mEditCustomer =  Rxn<GetAllCustomerList>();
+  AddCustomerController(GetAllCustomerList mCustomer){
+    if(mCustomer.customerIDP!=null){
+      mEditCustomer.value = mCustomer;
+      sPhoneNumberController.value.text = mCustomer.phoneNumber??'';
+      enterNameController.value.text = mCustomer.name??'';
+      enterEmailController.value.text = mCustomer.email??'';
+      enterAddressController.value.text = mCustomer.address??'';
+      // enterDobController.value.text = mCustomer.address??'';
+      phoneCode.value = (mCustomer.phoneCountryCode??'').substring(1, (mCustomer.phoneCountryCode??'').length);
+    }
+    mEditCustomer.refresh();
+  }
+
+
   void onSubmit() {
     if (sPhoneNumberController.value.text.trim().isEmpty) {
       AppAlert.showSnackBar(Get.context!, sPleaseEnterMobileNumber.tr);
     } else if (sPhoneNumberController.value.text.trim().length < 9) {
       AppAlert.showSnackBar(Get.context!, sPleaseEnterValidMobileNumber.tr);
+    } else if (enterNameController.value.text.trim().isEmpty) {
+      AppAlert.showSnackBar(Get.context!, sPleaseEnterName.tr);
     } else {
       callSaveCustomer();
     }
@@ -88,6 +107,7 @@ class AddCustomerController extends GetxController {
               address: enterAddressController.value.text,
               userIDF: await SharedPrefs()
                   .getUserId(),
+              customerIDP: mEditCustomer.value?.customerIDP,
               restaurantIDF: (mConfigurationResponse
                               .configurationData?.restaurantData ??
                           [])

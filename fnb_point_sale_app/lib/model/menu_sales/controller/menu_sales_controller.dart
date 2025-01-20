@@ -149,7 +149,7 @@ class MenuSalesController extends GetxController {
 
   void onEdit(int index) async {
     OrderHistoryData mOrderData = mOrderHistoryData[index];
-    await AppAlert.showView(
+    await AppAlert.showViewWithoutBlur(
         Get.context!,
         Row(
           children: [
@@ -257,7 +257,7 @@ class MenuSalesController extends GetxController {
   ///payment
   void onPayNow(int index) async {
     OrderHistoryData mOrderHistory = mOrderHistoryData[index];
-    await AppAlert.showView(
+    await AppAlert.showViewWithoutBlur(
         Get.context!,
         ItemPaymentScreen(
           mOrderHistory,

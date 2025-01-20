@@ -127,7 +127,9 @@ class CustomerController extends GetxController {
 
   ///addCustomer
   addCustomer() async {
-    await AppAlert.showViewWithoutBlur(Get.context!, const AddCustomerScreen(),
+    await AppAlert.showViewWithoutBlur(Get.context!,  AddCustomerScreen(
+      mCustomer: GetAllCustomerList(),
+    ),
         barrierDismissible: true);
     bool isAddMember = false;
     if (Get.isRegistered<AddCustomerController>()) {
@@ -206,4 +208,24 @@ class CustomerController extends GetxController {
       selectPage();
     }
   }
+
+  ///edit
+  void onEdit(int index, GetAllCustomerList mCustomer) async {
+    await AppAlert.showViewWithoutBlur(
+        Get.context!, AddCustomerScreen(mCustomer: mCustomer),
+        barrierDismissible: true);
+    bool isAddMember = false;
+    if (Get.isRegistered<AddCustomerController>()) {
+      AddCustomerController mAddCustomerController =
+          Get.find<AddCustomerController>();
+      isAddMember = mAddCustomerController.isAddMember;
+      Get.delete<AddCustomerController>();
+    }
+
+    if (isAddMember) {
+      callGetAllCustomer();
+    }
+  }
+
+
 }

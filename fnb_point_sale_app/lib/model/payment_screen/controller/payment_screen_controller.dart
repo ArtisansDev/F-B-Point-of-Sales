@@ -10,6 +10,7 @@ import 'package:fnb_point_sale_base/locator.dart';
 import 'package:get/get.dart';
 import '../../../common_view/customer_drop_down.dart';
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
+import '../../menu_customer/customer_utils/add_customer.dart';
 
 class PaymentScreenController extends GetxController {
   Rxn<DashboardScreenController> mDashboardScreenController =
@@ -75,14 +76,25 @@ class PaymentScreenController extends GetxController {
     isSelectPayment.refresh();
   }
 
-  void onPrint() {
+  void onPrint() async{
     if(mSelectCustomer.value!=null){
       if(mSelectCustomer.value?.name.toString()=='_new_') {
-        mSelectCustomer.value?.setPhoneCountryCode(phoneCode.value) ;
-        mSelectCustomer.value?.setName(nameController.value.text) ;
+        AddCustomer mAddCustomer = AddCustomer(
+            name: nameController.value.text,
+            phoneCode: phoneCode.value,
+            phone: phoneNumberController.value.text,
+            onSelectCustomer: (GetAllCustomerList mGetAllCustomerList) {
+              mSelectCustomer.value = mGetAllCustomerList;
+              onPaymentClick.value!(
+                  mGetAllPaymentType.value, mSelectCustomer.value);
+            });
+        await mAddCustomer.onSubmit();
+      }else {
+        onPaymentClick.value!(mGetAllPaymentType.value, mSelectCustomer.value);
       }
+    }else {
+      onPaymentClick.value!(mGetAllPaymentType.value, mSelectCustomer.value);
     }
-    onPaymentClick.value!(mGetAllPaymentType.value,mSelectCustomer.value);
   }
 
 

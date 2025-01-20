@@ -113,6 +113,10 @@ class CustomerListView extends StatelessWidget {
                                   size: 11.sp),
                             ),
                           )),
+                      const Expanded(
+                        flex: 2,
+                        child: SizedBox(),
+                      )
                     ],
                   ),
                 ),
@@ -153,7 +157,6 @@ class CustomerListView extends StatelessWidget {
                           width: 35.w,
                           child: NumberPagination(
                             onPageChanged: (int pageNumber) {
-
                               controller.pageNumber.value = pageNumber;
                               controller.page.value = pageNumber;
                               controller.selectPage();

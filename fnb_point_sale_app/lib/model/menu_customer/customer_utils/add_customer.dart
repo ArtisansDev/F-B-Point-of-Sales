@@ -1,7 +1,3 @@
-// ignore_for_file: depend_on_referenced_packages
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
 import 'package:fnb_point_sale_base/constants/message_constants.dart';
 import 'package:fnb_point_sale_base/constants/web_constants.dart';
@@ -12,127 +8,37 @@ import 'package:fnb_point_sale_base/data/mode/configuration/configuration_respon
 import 'package:fnb_point_sale_base/data/mode/customer/get_all_customer/get_all_customer_request.dart';
 import 'package:fnb_point_sale_base/data/mode/customer/get_all_customer/get_all_customer_response.dart';
 import 'package:fnb_point_sale_base/data/mode/customer/save/customer_save_request.dart';
-import 'package:fnb_point_sale_base/data/mode/product/get_all_tables/get_all_tables_response.dart';
 import 'package:fnb_point_sale_base/data/remote/api_call/customer/customer_api.dart';
 import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:fnb_point_sale_base/locator.dart';
 import 'package:fnb_point_sale_base/utils/my_log_utils.dart';
 import 'package:fnb_point_sale_base/utils/network_utils.dart';
-import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:get/get.dart';
-import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
-import '../../../common_view/customer_drop_down.dart';
-import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
-import '../../menu_customer/customer_utils/add_customer.dart';
 
-class TableSelectController extends GetxController {
-  Rxn<DashboardScreenController> mDashboardScreenController =
-      Rxn<DashboardScreenController>();
-  Rx<TextEditingController> enterNameController = TextEditingController().obs;
-  Rx<TextEditingController> sPhoneNumberController =
-      TextEditingController().obs;
-  RxString phoneCode = '60'.obs;
-  Rx<TextEditingController> sTableNoController = TextEditingController().obs;
-  Rx<TextEditingController> scheduleController = TextEditingController().obs;
-  Rx<TextEditingController> notesController = TextEditingController().obs;
-  RxBool isDineIn = true.obs;
-  RxString orderNumber = '1234567890'.obs;
-  RxBool isCreateOrder = false.obs;
+///partha paul
+///add_customer
+///20/01/25
 
-  TableSelectController() {
-    if (Get.isRegistered<DashboardScreenController>()) {
-      mDashboardScreenController.value = Get.find<DashboardScreenController>();
-    }
-    isCreateOrder.value = false;
-    orderNumber.value = getRandomNumber();
-  }
+class AddCustomer {
+  final Function onSelectCustomer;
+  String name;
+  String phoneCode;
+  String phone;
 
-  void onCreateOrder() async {
-    isCreateOrder.value = true;
-
-    if (mSelectCustomer.value != null) {
-      if (mSelectCustomer.value?.name.toString() == '_new_') {
-        AddCustomer mAddCustomer = AddCustomer(
-            name: enterNameController.value.text,
-            phoneCode: phoneCode.value,
-            phone: sPhoneNumberController.value.text,
-            onSelectCustomer: (GetAllCustomerList mGetAllCustomerList) {
-              mSelectCustomer.value = mGetAllCustomerList;
-              createOrder();
-            });
-        await mAddCustomer.onSubmit();
-      } else {
-        createOrder();
-      }
-    } else {
-      createOrder();
-    }
-  }
-
-  createOrder() {
-    mDashboardScreenController.value?.mOrderPlace.value =
-        OrderPlace(cartItem: []);
-    mDashboardScreenController.value?.mOrderPlace.value?.seatIDP =
-        sTablesData.value?.seatIDP ?? '--';
-    mDashboardScreenController.value?.mOrderPlace.value?.tableNo =
-        sTableNumber.value ?? '--';
-    mDashboardScreenController.value?.mOrderPlace.value?.userName =
-        enterNameController.value.text;
-    mDashboardScreenController.value?.mOrderPlace.value?.userPhone =
-        sPhoneNumberController.value.text;
-    mDashboardScreenController.value?.mOrderPlace.value?.sOrderNo =
-        orderNumber.value;
-    mDashboardScreenController.value?.mOrderPlace.value?.mSelectCustomer =
-        mSelectCustomer.value ?? GetAllCustomerList();
-
-    Get.back();
-  }
-
-  Rxn<String> sTableNumber = Rxn<String>();
-  Rxn<GetAllTablesResponseData> sTablesData = Rxn<GetAllTablesResponseData>();
-
-  void setTableNumber(GetAllTablesResponseData? mGetAllTablesResponseData) {
-    sTablesData.value = mGetAllTablesResponseData ?? GetAllTablesResponseData();
-    sTableNumber.value = mGetAllTablesResponseData?.seatNumber ?? '';
-    if (sTableNumber.value != null) {
-      sTableNoController.value.text = sTableNumber.value ?? '';
-      sTableNoController.refresh();
-    }
-  }
-
-  ///customer
-  Rxn<GetAllCustomerList> mSelectCustomer = Rxn<GetAllCustomerList>();
-
-  getAllCustomer({bool showCustomer = false}) async {
-    List<GetAllCustomerList> allCustomerList = [];
-    await mDashboardScreenController.value?.getAllCustomerList();
-    allCustomerList.clear();
-    allCustomerList.addAll(
-        (mDashboardScreenController.value?.mAllCustomerList.value ?? []));
-
-    if (showCustomer) {
-      showCustomerBottomSheet(allCustomerList,
-          (GetAllCustomerList mGetAllCustomerList) {
-        debugPrint('Selected: ${jsonEncode(mGetAllCustomerList)}');
-        mSelectCustomer.value = mGetAllCustomerList;
-        sPhoneNumberController.value.text =
-            mGetAllCustomerList.phoneNumber ?? '';
-        enterNameController.value.text = "";
-        if (mGetAllCustomerList.name != "_new_") {
-          enterNameController.value.text = mGetAllCustomerList.name ?? '';
-        }
-      });
-    }
-  }
+  AddCustomer(
+      {required this.onSelectCustomer,
+      required this.name,
+      required this.phoneCode,
+      required this.phone});
 
   ///add new customer
   onSubmit() async {
-    if (sPhoneNumberController.value.text.trim().isEmpty) {
+    if (phone.trim().isEmpty) {
       AppAlert.showSnackBar(Get.context!, sPleaseEnterMobileNumber.tr);
-    } else if (sPhoneNumberController.value.text.trim().length < 9) {
+    } else if (phone.trim().length < 9) {
       AppAlert.showSnackBar(Get.context!, sPleaseEnterValidMobileNumber.tr);
-    } else if (enterNameController.value.text.trim().isEmpty) {
+    } else if (name.trim().isEmpty) {
       AppAlert.showSnackBar(Get.context!, sPleaseEnterName.tr);
     } else {
       await callSaveCustomer();
@@ -152,9 +58,9 @@ class TableSelectController extends GetxController {
       if (isInternetAvailable) {
         CustomerSaveRequest mCustomerSaveRequest = CustomerSaveRequest(
             email: '',
-            name: enterNameController.value.text,
+            name: name,
             phoneCountryCode: '+$phoneCode',
-            phoneNumber: sPhoneNumberController.value.text,
+            phoneNumber: phone,
             dateOfBirth: '',
             address: '',
             userIDF: await SharedPrefs().getUserId(),
@@ -223,10 +129,15 @@ class TableSelectController extends GetxController {
                         .getAllCustomerData?.getAllCustomerList ??
                     [])
                 .isNotEmpty) {
-              mSelectCustomer.value = (mGetAllCustomerResponse
+              GetAllCustomerList mSelectCustomer = (mGetAllCustomerResponse
                           .getAllCustomerData?.getAllCustomerList ??
                       [])
                   .first;
+              onSelectCustomer(mSelectCustomer);
+              // mSelectCustomer.value = (mGetAllCustomerResponse
+              //             .getAllCustomerData?.getAllCustomerList ??
+              //         [])
+              //     .first;
             }
             // mGetAllCustomerData.value =
             //     mGetAllCustomerResponse.getAllCustomerData ??

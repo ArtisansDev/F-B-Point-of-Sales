@@ -47,7 +47,7 @@ class TableSummaryController extends GetxController {
 
   ///Payment
   void onPayment() async {
-    await AppAlert.showView(
+    await AppAlert.showViewWithoutBlur(
         Get.context!,
         PaymentScreen(
           mOrderPlace.value ?? OrderPlace(),

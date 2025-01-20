@@ -76,6 +76,7 @@ const String sDineIn = "Dine-In";
 const String sOrder = "Order#";
 const String sSrNo = "SrNo#";
 const String sAddCustomer = "Add Customer";
+const String sEditCustomer = "Edit Customer";
 const String sCustomerName = "Customer Name";
 const String sTime  = "Time";
 const String sType  = "Type";
@@ -86,8 +87,10 @@ const String sTotalBill  = "Total Bill";
 const String sHoldSale  = "Hold sale";
 const String sDeleteAll = "Delete All";
 const String sSubmit = "Submit";
+const String sUpdate = "Update";
 
 const String sPleaseEnterMobileNumber = "Please enter your mobile number";
+const String sPleaseEnterName = "Please enter your name";
 const String sPleaseEnterValidMobileNumber =
     "Please enter your valid mobile number";
 

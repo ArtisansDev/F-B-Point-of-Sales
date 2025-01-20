@@ -31,7 +31,7 @@ class ItemSummaryController extends GetxController {
 
   void onPayment() async {
     Get.back();
-    await AppAlert.showView(
+    await AppAlert.showViewWithoutBlur(
         Get.context!,
         ItemPaymentScreen(
           mOrderPlace.value,

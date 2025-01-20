@@ -18,6 +18,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../../common_view/customer_drop_down.dart';
 import '../../../../dashboard_screen/controller/dashboard_screen_controller.dart';
+import '../../../../menu_customer/customer_utils/add_customer.dart';
 
 class ItemPaymentScreenController extends GetxController {
   DashboardScreenController mDashboardScreenController =
@@ -33,10 +34,11 @@ class ItemPaymentScreenController extends GetxController {
       OrderHistoryData selectOrderPlace, Function onPayment) {
     onPaymentClick.value = onPayment;
     mOrderPlace.value = selectOrderPlace;
-    nameController.value.text = mOrderPlace.value?.name??'';
-    phoneNumberController.value.text = mOrderPlace.value?.phoneNumber??'';
-    if((mOrderPlace.value?.phoneCountryCode??'').isNotEmpty) {
-      phoneCode.value = (mOrderPlace.value?.phoneCountryCode ?? '').substring(1,(mOrderPlace.value?.phoneCountryCode ?? '').length);
+    nameController.value.text = mOrderPlace.value?.name ?? '';
+    phoneNumberController.value.text = mOrderPlace.value?.phoneNumber ?? '';
+    if ((mOrderPlace.value?.phoneCountryCode ?? '').isNotEmpty) {
+      phoneCode.value = (mOrderPlace.value?.phoneCountryCode ?? '')
+          .substring(1, (mOrderPlace.value?.phoneCountryCode ?? '').length);
     }
     mOrderPlace.refresh();
     loadPaymentType();
@@ -73,35 +75,46 @@ class ItemPaymentScreenController extends GetxController {
     isSelectPayment.refresh();
   }
 
-  void onPrint() {
-    if(mSelectCustomer.value!=null){
-      if(mSelectCustomer.value?.name.toString()=='_new_') {
-        mSelectCustomer.value?.setPhoneCountryCode(phoneCode.value) ;
-        mSelectCustomer.value?.setName(nameController.value.text) ;
+  void onPrint() async {
+    if (mSelectCustomer.value != null) {
+      if (mSelectCustomer.value?.name.toString() == '_new_') {
+        AddCustomer mAddCustomer = AddCustomer(
+            name: nameController.value.text,
+            phoneCode: phoneCode.value,
+            phone: phoneNumberController.value.text,
+            onSelectCustomer: (GetAllCustomerList mGetAllCustomerList) {
+              mSelectCustomer.value = mGetAllCustomerList;
+              onPaymentClick.value!(
+                  mGetAllPaymentType.value, mSelectCustomer.value);
+            });
+        await mAddCustomer.onSubmit();
+      } else {
+        onPaymentClick.value!(mGetAllPaymentType.value, mSelectCustomer.value);
       }
+    } else {
+      onPaymentClick.value!(mGetAllPaymentType.value, mSelectCustomer.value);
     }
-    onPaymentClick.value!(mGetAllPaymentType.value,mSelectCustomer.value);
   }
 
   ///
 
   getAllCustomer({bool showCustomer = false}) async {
     List<GetAllCustomerList> allCustomerList = [];
-      await mDashboardScreenController.getAllCustomerList();
-      allCustomerList.clear();
-      allCustomerList
-          .addAll((mDashboardScreenController.mAllCustomerList.value ?? []));
+    await mDashboardScreenController.getAllCustomerList();
+    allCustomerList.clear();
+    allCustomerList
+        .addAll((mDashboardScreenController.mAllCustomerList.value ?? []));
 
     if (showCustomer) {
       showCustomerBottomSheet(allCustomerList,
           (GetAllCustomerList mGetAllCustomerList) {
         debugPrint('Selected: ${jsonEncode(mGetAllCustomerList)}');
         mSelectCustomer.value = mGetAllCustomerList;
-        phoneNumberController.value.text = mGetAllCustomerList.phoneNumber??'';
+        phoneNumberController.value.text =
+            mGetAllCustomerList.phoneNumber ?? '';
         nameController.value.text = "";
-        if(mGetAllCustomerList.name!="_new_"){
-          nameController.value.text = mGetAllCustomerList.name??'';
-
+        if (mGetAllCustomerList.name != "_new_") {
+          nameController.value.text = mGetAllCustomerList.name ?? '';
         }
       });
     }

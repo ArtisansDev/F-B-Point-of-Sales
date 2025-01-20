@@ -219,7 +219,7 @@ class SelectedOrderController extends HomeBaseController {
 
   ///Payment
   void onPayment() async {
-    await AppAlert.showView(
+    await AppAlert.showViewWithoutBlur(
         Get.context!,
         PaymentScreen(
           mOrderPlace.value ?? OrderPlace(),

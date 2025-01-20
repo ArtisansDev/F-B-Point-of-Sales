@@ -1,14 +1,12 @@
 import 'package:country_picker/country_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fnb_point_sale_app/model/menu_customer/view/sales_list/customer_list_view.dart';
-import 'package:fnb_point_sale_app/model/menu_customer/view/top_search_view/customer_search_view.dart';
 import 'package:fnb_point_sale_base/common/button_constants.dart';
 import 'package:fnb_point_sale_base/common/text_input_widget.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/pattern_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
+import 'package:fnb_point_sale_base/data/mode/customer/get_all_customer/get_all_customer_response.dart';
 import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
@@ -16,11 +14,13 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import '../controller/add_customer_controller.dart';
 
 class AddCustomerScreen extends GetView<AddCustomerController> {
-  const AddCustomerScreen({super.key});
+  final GetAllCustomerList mCustomer;
+
+  const AddCustomerScreen({super.key, required this.mCustomer});
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => AddCustomerController());
+    Get.lazyPut(() => AddCustomerController(mCustomer));
     return FocusDetector(
         onVisibilityGained: () {},
         onVisibilityLost: () {},
@@ -54,7 +54,9 @@ class AddCustomerScreen extends GetView<AddCustomerController> {
                       ),
                       Expanded(
                           child: Text(
-                        sAddCustomer.tr,
+                        controller.mEditCustomer.value == null
+                            ? sAddCustomer.tr
+                            : sEditCustomer.tr,
                         style: getText600(
                             colors: ColorConstants.appTextSalesHader,
                             size: 12.sp),
@@ -107,6 +109,8 @@ class AddCustomerScreen extends GetView<AddCustomerController> {
                     controller: controller.sPhoneNumberController.value,
                     showFloatingLabel: false,
                     isPhone: true,
+                    isReadOnly:
+                        controller.mEditCustomer.value?.phoneNumber != null,
                     sPrefixText: controller.phoneCode.value,
                     placeHolder: sPhoneNumber.tr,
                     topPadding: 5.sp,
@@ -114,25 +118,28 @@ class AddCustomerScreen extends GetView<AddCustomerController> {
                     textSize: 11.sp,
                     onClick: (value) {
                       if (value == 'prefixIcon') {
-                        showCountryPicker(
-                          context: Get.context!,
-                          countryListTheme: CountryListThemeData(
-                            backgroundColor: Colors.white,
-                            textStyle: getText500(
-                                colors: ColorConstants.black, size: 12.sp),
-                            bottomSheetHeight: 69.h,
-                            // Optional. Country list modal height
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(11.sp),
-                              topRight: Radius.circular(11.sp),
+                        if (controller.mEditCustomer.value?.customerIDP ==
+                            null) {
+                          showCountryPicker(
+                            context: Get.context!,
+                            countryListTheme: CountryListThemeData(
+                              backgroundColor: Colors.white,
+                              textStyle: getText500(
+                                  colors: ColorConstants.black, size: 12.sp),
+                              bottomSheetHeight: 69.h,
+                              // Optional. Country list modal height
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(11.sp),
+                                topRight: Radius.circular(11.sp),
+                              ),
                             ),
-                          ),
-                          showPhoneCode: true,
-                          // optional. Shows phone code before the country name.
-                          onSelect: (Country country) {
-                            controller.phoneCode.value = country.phoneCode;
-                          },
-                        );
+                            showPhoneCode: true,
+                            // optional. Shows phone code before the country name.
+                            onSelect: (Country country) {
+                              controller.phoneCode.value = country.phoneCode;
+                            },
+                          );
+                        }
                       }
                     },
                     hintText: sPhoneNumber.tr,
@@ -157,7 +164,7 @@ class AddCustomerScreen extends GetView<AddCustomerController> {
                       placeHolder: sEnterName.tr,
                       controller: controller.enterNameController.value,
                       errorText: null,
-                      textInputType: TextInputType.emailAddress,
+                      textInputType: TextInputType.name,
                       hintText: sEnterName.tr,
                       showFloatingLabel: false,
                       topPadding: 5.sp,
@@ -168,7 +175,7 @@ class AddCustomerScreen extends GetView<AddCustomerController> {
                       prefixHeight: 13.sp,
                       onFilteringTextInputFormatter: [
                         FilteringTextInputFormatter.allow(
-                            RegExp(AppUtilConstants.patternOnlyString)),
+                            RegExp(AppUtilConstants.patternStringAndSpace)),
                       ],
                     )),
 
@@ -196,32 +203,32 @@ class AddCustomerScreen extends GetView<AddCustomerController> {
                       ],
                     )),
 
-                ///dob Name
-                Container(
-                    height: 20.sp,
-                    margin:
-                        EdgeInsets.only(left: 13.sp, right: 13.sp, top: 10.sp),
-                    child: TextInputWidget(
-                      placeHolder: sEnterDob.tr,
-                      controller: controller.enterDobController.value,
-                      errorText: null,
-                      onClick: (value){
-                        controller.selectDate(context);
-                      },
-                      hintText: sEnterDob.tr,
-                      showFloatingLabel: false,
-                      isReadOnly: true,
-                      topPadding: 5.sp,
-                      hintTextSize: 11.sp,
-                      textSize: 11.sp,
-                      hintTextColor: ColorConstants.black.withOpacity(0.80),
-                      prefixIcon: Icons.date_range,
-                      prefixHeight: 13.sp,
-                      onFilteringTextInputFormatter: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp(AppUtilConstants.patternEmailStringAtDot)),
-                      ],
-                    )),
+                // ///dob Name
+                // Container(
+                //     height: 20.sp,
+                //     margin:
+                //         EdgeInsets.only(left: 13.sp, right: 13.sp, top: 10.sp),
+                //     child: TextInputWidget(
+                //       placeHolder: sEnterDob.tr,
+                //       controller: controller.enterDobController.value,
+                //       errorText: null,
+                //       onClick: (value) {
+                //         controller.selectDate(context);
+                //       },
+                //       hintText: sEnterDob.tr,
+                //       showFloatingLabel: false,
+                //       isReadOnly: true,
+                //       topPadding: 5.sp,
+                //       hintTextSize: 11.sp,
+                //       textSize: 11.sp,
+                //       hintTextColor: ColorConstants.black.withOpacity(0.80),
+                //       prefixIcon: Icons.date_range,
+                //       prefixHeight: 13.sp,
+                //       onFilteringTextInputFormatter: [
+                //         FilteringTextInputFormatter.allow(
+                //             RegExp(AppUtilConstants.patternEmailStringAtDot)),
+                //       ],
+                //     )),
 
                 ///address
                 Container(
@@ -241,7 +248,7 @@ class AddCustomerScreen extends GetView<AddCustomerController> {
                       hintTextColor: ColorConstants.black.withOpacity(0.80),
                       onFilteringTextInputFormatter: [
                         FilteringTextInputFormatter.allow(
-                            RegExp(AppUtilConstants.patternOnlyString)),
+                            RegExp(AppUtilConstants.patternStringAndSpace)),
                       ],
                     )),
 
@@ -254,7 +261,9 @@ class AddCustomerScreen extends GetView<AddCustomerController> {
                     child: rectangleCornerButtonText600(
                       height: 19.5.sp,
                       textSize: 11.7.sp,
-                      sSubmit.tr,
+                      controller.mEditCustomer.value == null
+                          ? sSubmit.tr
+                          : sUpdate.tr,
                       () {
                         controller.onSubmit();
                       },

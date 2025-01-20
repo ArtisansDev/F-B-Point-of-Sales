@@ -183,7 +183,7 @@ class PaymentScreen extends GetView<PaymentScreenController> {
                       textSize: 10.5.sp,
                       onFilteringTextInputFormatter: [
                         FilteringTextInputFormatter.allow(
-                            RegExp(AppUtilConstants.patternOnlyString)),
+                            RegExp(AppUtilConstants.patternStringAndSpace)),
                       ],
                     )),
 

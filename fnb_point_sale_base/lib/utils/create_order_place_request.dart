@@ -15,11 +15,12 @@ import '../data/mode/product/get_all_payment_type/get_all_payment_type_response.
 import '../locator.dart';
 import 'num_utils.dart';
 
-createOrderPlaceRequestFromOrderHistory({String? remarksController,
-  // String? orderDate,
-  OrderHistoryData? mOrderPlace,
-  GetAllPaymentTypeData? printOrderPayment,
-  GetAllCustomerList? mGetAllCustomerList}) async {
+createOrderPlaceRequestFromOrderHistory(
+    {String? remarksController,
+    // String? orderDate,
+    OrderHistoryData? mOrderPlace,
+    GetAllPaymentTypeData? printOrderPayment,
+    GetAllCustomerList? mGetAllCustomerList}) async {
   var configurationLocalApi = locator.get<ConfigurationLocalApi>();
   ConfigurationResponse mConfigurationResponse =
       await configurationLocalApi.getConfigurationResponse() ??
@@ -65,8 +66,7 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
 
         ///Total
         totalItemAmount: mCartItem.totalItemAmount,
-        itemAdditionalNotes: mCartItem.itemAdditionalNotes
-    );
+        itemAdditionalNotes: mCartItem.itemAdditionalNotes);
     debugPrint("\nmOrderMenu:   ${jsonEncode(mOrderMenu)}\n");
     orderMenu.add(mOrderMenu);
   }
@@ -119,16 +119,20 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
 
   /// sUserId
   String sCounterBalanceHistoryIDF = await SharedPrefs().getHistoryID();
+  double grandTotal = (mOrderPlace?.grandTotal ?? 0) > 0
+      ? getDoubleValue(mOrderPlace?.grandTotal)
+      : getDoubleValue(mOrderPlace?.totalAmount);
+  double adjustedAmount = getDoubleValue(roundToNearestPossible(grandTotal));
 
   ///OrderPlaceRequest
   OrderDetailList mOrderDetailList = OrderDetailList(
     trackingOrderID: mOrderPlace?.trackingOrderID ?? '',
     counterIDF:
-    (mConfigurationResponse.configurationData?.counterData ?? []).isEmpty
-        ? ""
-        : (mConfigurationResponse.configurationData?.counterData ?? [])
-        .first
-        .counterIDP,
+        (mConfigurationResponse.configurationData?.counterData ?? []).isEmpty
+            ? ""
+            : (mConfigurationResponse.configurationData?.counterData ?? [])
+                .first
+                .counterIDP,
     orderSource: (mOrderPlace?.orderSource ?? 2).toString(),
     orderType: (mOrderPlace?.orderType ?? 2).toString(),
     branchIDF: mOrderPlace?.branchIDF,
@@ -154,8 +158,10 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
     taxAmountTotal: mOrderPlace?.taxAmountTotal,
     totalAmount: mOrderPlace?.totalAmount,
     grandTotal: mOrderPlace?.grandTotal,
-    adjustedAmount: getDoubleValue(
-        roundToNearestPossible(getDoubleValue(mOrderPlace?.grandTotal))),
+    adjustedAmount: grandTotal == adjustedAmount
+        ? null
+        : getDoubleValue(
+            roundToNearestPossible(getDoubleValue(mOrderPlace?.grandTotal))),
 
     ///table no
     tableNo: mOrderPlace?.tableNo ?? '',
@@ -169,8 +175,7 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
 
     ///payment_service
     paymentGatewayIDF: printOrderPayment?.paymentGatewayIDP ?? '',
-    paymentGatewaySettingIDF:
-    printOrderPayment?.paymentGatewaySettingIDP ?? '',
+    paymentGatewaySettingIDF: printOrderPayment?.paymentGatewaySettingIDP ?? '',
     paymentStatus: printOrderPayment == null ? "P" : "S",
 
     ///orderPlaceGuestInfoRequest
