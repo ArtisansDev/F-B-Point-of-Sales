@@ -328,7 +328,7 @@ class ProfileScreen extends GetView<ProfileController> {
                       child: rectangleCornerButtonText600(
                         height: 19.5.sp,
                         textSize: 11.7.sp,
-                        sCancel.tr,
+                        sClose.tr,
                         () {
                           Get.back();
                         },

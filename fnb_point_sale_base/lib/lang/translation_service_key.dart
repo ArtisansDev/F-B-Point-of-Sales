@@ -51,6 +51,7 @@ const String sCashCollected = "Cash Collected";
 const String sPlaceOrder = "PLACE ORDER";
 const String sCancelOrder = "Cancel Order";
 const String sCancel = "Cancel";
+const String sClose = "Close";
 const String sReserveNow = "Reserve Now";
 const String sAddItem = "Add Item";
 const String sCreateOrder = "Create Order";

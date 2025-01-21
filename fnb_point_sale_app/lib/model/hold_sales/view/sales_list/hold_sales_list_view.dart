@@ -199,7 +199,7 @@ class HoldSalesListView extends StatelessWidget {
             margin: EdgeInsets.only(left: 10.sp),
             width: 7.5.w,
             child: rectangleCornerButtonText500(
-              sCancel.tr,
+              sClose.tr,
               height: 17.5.sp,
               textSize: 10.5.sp,
               () {

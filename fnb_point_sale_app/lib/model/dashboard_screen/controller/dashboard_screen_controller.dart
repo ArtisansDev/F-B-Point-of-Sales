@@ -323,19 +323,23 @@ class DashboardScreenController extends GetxController {
           Get.find<SelectedOrderController>();
       if ((mSelectedOrderController.mOrderPlace.value?.cartItem ?? [])
           .isNotEmpty) {
-        AppAlert.showSnackBar(Get.context!,
-            'Ensure the cart is cleared before initiating the sync process.');
+        AppAlert.showCustomDialogOk(Get.context!,'Alert','Ensure the cart is cleared before initiating the sync process.');
+        // AppAlert.showSnackBar(Get.context!,
+        //     'Ensure the cart is cleared before initiating the sync process.');
         return;
       }
     }
 
     if (getInValue(mTobBarModel[2].value) > 0) {
-      AppAlert.showSnackBar(Get.context!,
-          'Ensure the cart is cleared before initiating the sync process.');
+      AppAlert.showCustomDialogOk(Get.context!,'Alert','Ensure the cart is cleared before initiating the sync process.');
+      // AppAlert.showSnackBar(Get.context!,
+      //     'Ensure the cart is cleared before initiating the sync process.');
       return;
     } else if (getInValue(mTobBarModel[3].value) > 0) {
-      AppAlert.showSnackBar(Get.context!,
-          'Ensure the hold sale is cleared before initiating the sync process.');
+      AppAlert.showCustomDialogOk(Get.context!,'Alert','Ensure the hold sale is cleared before initiating the sync process.');
+
+      // AppAlert.showSnackBar(Get.context!,
+      //     'Ensure the hold sale is cleared before initiating the sync process.');
       return;
     } else {
       await showDialog(

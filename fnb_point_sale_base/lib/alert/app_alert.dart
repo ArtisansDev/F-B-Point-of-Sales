@@ -163,6 +163,104 @@ class AppAlert {
         });
   }
 
+  static Future<void> showCustomDialogOk(BuildContext context,
+      String title,
+      String message,
+      {
+        bool? barrierDismissible,
+        // String? leftText,
+        // String? rightText,
+      }) async {
+    await showDialog(
+        context: context,
+        barrierDismissible: barrierDismissible ?? false,
+        builder: (BuildContext context) {
+          return Stack(
+            children: [
+              // Blur effect
+              BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
+                child: Container(
+                    color: Colors.black
+                        .withOpacity(0.2)), // Optional: Add overlay color
+              ),
+              // Dialog
+              Dialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6.sp),
+                ),
+                elevation: 0,
+                backgroundColor: Colors.transparent,
+                child: Container(
+                  width: 23.w,
+                  padding: EdgeInsets.all(10.sp),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    color: ColorConstants.white,
+                    borderRadius: BorderRadius.circular(8.sp),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(8.sp),
+                        child: Text(
+                          title,
+                          style: getText600(
+                            colors: ColorConstants.cAppColors,
+                            size: 12.sp,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: 8.sp, right: 8.sp, bottom: 12.sp),
+                        child: Text(message,
+                            style: getText500(
+                              colors: ColorConstants.cAppButtonColour,
+                              size: 11.5.sp,
+                            )),
+                      ),
+                      Padding(
+                          padding: EdgeInsets.all(8.sp),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 26.sp,
+                              ),
+                              Expanded(
+                                  child: Container(
+                                      height: 19.5.sp,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                        BorderRadius.circular(12.sp),
+                                      ),
+                                      child: rectangleCornerButtonText600(
+                                          'Close', () {
+                                        Navigator.pop(context);
+                                      },
+                                          bgColor: ColorConstants.cAppButtonColour,
+                                          textSize: 11.5.sp,
+                                          boderColor: ColorConstants.cAppButtonColour,
+                                          textColor: ColorConstants
+                                              .white))),
+                              SizedBox(
+                                width: 26.sp,
+                              ),
+                            ],
+                          ))
+                    ],
+                  ),
+                ),
+              )
+            ],
+          );
+        });
+  }
+
   static Future<void> showView(BuildContext context,
       Widget showWidget, {
         bool? barrierDismissible,

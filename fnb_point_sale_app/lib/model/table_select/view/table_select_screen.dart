@@ -52,9 +52,8 @@ class TableSelectScreen extends GetView<TableSelectController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                      width: 25.w,
                       padding: EdgeInsets.only(
-                          top: 11.sp, bottom: 11.sp, left: 14.sp, right: 14.sp),
+                          top: 11.sp, bottom: 11.sp, left: 14.sp, right: 12.sp),
                       decoration: BoxDecoration(
                         color: ColorConstants.cAppButtonLightColour,
                         borderRadius: BorderRadius.only(
@@ -62,13 +61,37 @@ class TableSelectScreen extends GetView<TableSelectController> {
                           topRight: Radius.circular(11.sp),
                         ),
                       ),
-                      child: Text(
-                        'Order #: ${controller.orderNumber.value}',
-                        style: getText600(
-                          size: 11.8.sp,
-                          colors: ColorConstants.cAppButtonColour,
-                        ),
-                      )),
+                      child:Row(
+                        children: [
+                          Expanded(child: Text(
+                            'Order #: ${controller.orderNumber.value}',
+                            style: getText600(
+                              size: 11.8.sp,
+                              colors: ColorConstants.cAppButtonColour,
+                            ),
+                          )),
+                          GestureDetector(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                                padding: EdgeInsets.all(8.sp),
+                                decoration: BoxDecoration(
+                                  color: ColorConstants.cAppButtonColour,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(8.sp),
+                                  ),
+                                ),
+                                child: Icon(
+                                  Icons.clear,
+                                  color: ColorConstants.white,
+                                  size: 12.5.sp,
+                                )),
+                          )
+
+                        ],
+                      )
+                     ),
 
                   ///select Dine-In or Take Away
                   Container(

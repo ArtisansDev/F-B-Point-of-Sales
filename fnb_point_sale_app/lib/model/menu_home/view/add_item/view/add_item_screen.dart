@@ -84,8 +84,11 @@ class AddItemScreen extends GetView<AddItemController> {
                                         height: 5.sp,
                                       ),
                                       Text(
-                                        controller.mCartItem.value?.mSelectVariantListData
-                                            ?.quantitySpecification ??
+                                        controller
+                                                .mCartItem
+                                                .value
+                                                ?.mSelectVariantListData
+                                                ?.quantitySpecification ??
                                             '',
                                         style: getTextRegular(
                                           size: 10.5.sp,
@@ -205,7 +208,7 @@ class AddItemScreen extends GetView<AddItemController> {
                                                       child: Row(
                                                         children: [
                                                           Text(
-                                                            '(${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${(mVariantListData.price??0).toStringAsFixed(2)})',
+                                                            '(${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${(mVariantListData.price ?? 0).toStringAsFixed(2)})',
                                                             style:
                                                                 getTextRegularLineThrough(
                                                               size: 10.5.sp,
@@ -218,7 +221,7 @@ class AddItemScreen extends GetView<AddItemController> {
                                                             width: 5.sp,
                                                           ),
                                                           Text(
-                                                            '(${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${(mVariantListData.discountedPrice??0).toStringAsFixed(2)})',
+                                                            '(${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${(mVariantListData.discountedPrice ?? 0).toStringAsFixed(2)})',
                                                             style:
                                                                 getTextRegular(
                                                               size: 10.5.sp,
@@ -234,7 +237,7 @@ class AddItemScreen extends GetView<AddItemController> {
                                                     alignment:
                                                         Alignment.centerRight,
                                                     child: Text(
-                                                      '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${(mVariantListData.discountedPrice??0).toStringAsFixed(2)}',
+                                                      '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${(mVariantListData.discountedPrice ?? 0).toStringAsFixed(2)}',
                                                       style: getText500(
                                                           colors: ColorConstants
                                                               .black,
@@ -337,7 +340,7 @@ class AddItemScreen extends GetView<AddItemController> {
                                                             SizedBox(
                                                                 width: 8.sp),
                                                             Text(
-                                                              '(${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${(mModifierList.price??0).toStringAsFixed(2)})',
+                                                              '(${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${(mModifierList.price ?? 0).toStringAsFixed(2)})',
                                                               style:
                                                                   getTextRegular(
                                                                 size: 10.5.sp,
@@ -430,8 +433,8 @@ class AddItemScreen extends GetView<AddItemController> {
                               hintTextColor:
                                   ColorConstants.black.withOpacity(0.80),
                               onFilteringTextInputFormatter: [
-                                FilteringTextInputFormatter.allow(
-                                    RegExp(AppUtilConstants.patternStringAndSpace)),
+                                FilteringTextInputFormatter.allow(RegExp(
+                                    AppUtilConstants.patternStringAndSpace)),
                               ],
                             )),
 
@@ -476,23 +479,40 @@ class AddItemScreen extends GetView<AddItemController> {
 
                         ///button
                         Align(
-                          alignment: Alignment.centerRight,
-                          child: Container(
-                              width: 13.w,
-                              margin: EdgeInsets.only(
-                                  left: 13.sp,
-                                  right: 13.sp,
-                                  top: 11.sp,
-                                  bottom: 13.sp),
-                              child: rectangleCornerButtonText600(
-                                height: 19.5.sp,
-                                textSize: 11.5.sp,
-                                sAddItem.tr,
-                                () {
-                                  controller.onAddItem();
-                                },
-                              )),
-                        )
+                            alignment: Alignment.center,
+                            child: Wrap(
+                              children: [
+                                Container(
+                                    width: 13.w,
+                                    margin: EdgeInsets.only(
+                                        left: 13.sp,
+                                        right: 13.sp,
+                                        top: 11.sp,
+                                        bottom: 13.sp),
+                                    child: rectangleCornerButtonText600(
+                                      height: 19.5.sp,
+                                      textSize: 11.5.sp,
+                                      sAddItem.tr,
+                                      () {
+                                        controller.onAddItem();
+                                      },
+                                    )),
+                                Container(
+                                    width: 13.w,
+                                    margin: EdgeInsets.only(
+                                        right: 13.sp,
+                                        top: 11.sp,
+                                        bottom: 13.sp),
+                                    child: rectangleCornerButtonText600(
+                                      height: 19.5.sp,
+                                      textSize: 11.7.sp,
+                                      sClose.tr,
+                                      () {
+                                        Get.back();
+                                      },
+                                    )),
+                              ],
+                            ))
                       ],
                     );
             },
