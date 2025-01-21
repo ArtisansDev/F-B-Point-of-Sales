@@ -35,11 +35,17 @@ class AddCustomer {
   ///add new customer
   onSubmit() async {
     if (phone.trim().isEmpty) {
-      AppAlert.showSnackBar(Get.context!, sPleaseEnterMobileNumber.tr);
+      await AppAlert.showCustomDialogOk(
+          Get.context!, 'Alert', sPleaseEnterMobileNumber.tr);
+      // AppAlert.showSnackBar(Get.context!, sPleaseEnterMobileNumber.tr);
     } else if (phone.trim().length < 9) {
-      AppAlert.showSnackBar(Get.context!, sPleaseEnterValidMobileNumber.tr);
+      await AppAlert.showCustomDialogOk(
+          Get.context!, 'Alert', sPleaseEnterValidMobileNumber.tr);
+      // AppAlert.showSnackBar(Get.context!, sPleaseEnterValidMobileNumber.tr);
     } else if (name.trim().isEmpty) {
-      AppAlert.showSnackBar(Get.context!, sPleaseEnterName.tr);
+      // AppAlert.showSnackBar(Get.context!, sPleaseEnterName.tr);
+      await AppAlert.showCustomDialogOk(
+          Get.context!, 'Alert', sPleaseEnterName.tr);
     } else {
       await callSaveCustomer();
     }

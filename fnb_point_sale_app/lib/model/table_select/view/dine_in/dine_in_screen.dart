@@ -135,7 +135,7 @@ class DineInScreen extends StatelessWidget {
                 prefixHeight: 13.sp,
                 onFilteringTextInputFormatter: [
                   FilteringTextInputFormatter.allow(
-                      RegExp(AppUtilConstants.patternOnlyString)),
+                      RegExp(AppUtilConstants.patternStringAndSpace)),
                 ],
               )),
 

@@ -49,8 +49,6 @@ class TableSelectController extends GetxController {
   }
 
   void onCreateOrder() async {
-    isCreateOrder.value = true;
-
     if (mSelectCustomer.value != null) {
       if (mSelectCustomer.value?.name.toString() == '_new_') {
         AddCustomer mAddCustomer = AddCustomer(
@@ -71,6 +69,7 @@ class TableSelectController extends GetxController {
   }
 
   createOrder() {
+    isCreateOrder.value = true;
     mDashboardScreenController.value?.mOrderPlace.value =
         OrderPlace(cartItem: []);
     mDashboardScreenController.value?.mOrderPlace.value?.seatIDP =
@@ -93,6 +92,7 @@ class TableSelectController extends GetxController {
   Rxn<GetAllTablesResponseData> sTablesData = Rxn<GetAllTablesResponseData>();
 
   void setTableNumber(GetAllTablesResponseData? mGetAllTablesResponseData) {
+    isCreateOrder.value = false;
     sTablesData.value = mGetAllTablesResponseData ?? GetAllTablesResponseData();
     sTableNumber.value = mGetAllTablesResponseData?.seatNumber ?? '';
     if (sTableNumber.value != null) {

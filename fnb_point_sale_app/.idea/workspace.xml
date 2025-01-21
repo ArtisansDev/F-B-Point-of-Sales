@@ -9,20 +9,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f183d832-d61e-4cff-a26c-5db2e295bf43" name="Changes" comment="1. new customer add when we are going for payment &#10;2. new table select that time new customer add &#10;3. update customer  &#10;4. AdjustedAmount">
+    <list default="true" id="f183d832-d61e-4cff-a26c-5db2e295bf43" name="Changes" comment="close button done">
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/dashboard_screen/controller/dashboard_screen_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/dashboard_screen/controller/dashboard_screen_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/hold_sales/controller/hold_sales_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/hold_sales/controller/hold_sales_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/hold_sales/view/sales_list/hold_sales_list_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/hold_sales/view/sales_list/hold_sales_list_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/menu_home/view/add_item/view/add_item_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_home/view/add_item/view/add_item_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/pay_now/controller/pay_now_controller.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/pay_now/view/pay_now_order_list.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/pay_now/view/pay_now_order_screen.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/profile/view/profile_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/profile/view/profile_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/menu_customer/customer_utils/add_customer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/menu_customer/customer_utils/add_customer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/table_select/controller/table_select_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/table_select/controller/table_select_controller.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/model/table_select/view/table_select_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/table_select/view/table_select_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/alert/app_alert.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/alert/app_alert.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_base/lib/lang/translation_service_key.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_base/lib/lang/translation_service_key.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -343,14 +335,6 @@
       <option name="project" value="LOCAL" />
       <updated>1732763191133</updated>
     </task>
-    <task id="LOCAL-00036" summary="hold sale">
-      <option name="closed" value="true" />
-      <created>1735030859262</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1735030859262</updated>
-    </task>
     <task id="LOCAL-00037" summary="search controller done">
       <option name="closed" value="true" />
       <created>1735184288454</created>
@@ -487,7 +471,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737356382760</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="close button done">
+      <option name="closed" value="true" />
+      <created>1737443968431</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1737443968432</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -524,7 +516,8 @@
     <MESSAGE value="sale search, pay ,print,date filter" />
     <MESSAGE value="issue fex" />
     <MESSAGE value="1. new customer add when we are going for payment &#10;2. new table select that time new customer add &#10;3. update customer  &#10;4. AdjustedAmount" />
-    <option name="LAST_COMMIT_MESSAGE" value="1. new customer add when we are going for payment &#10;2. new table select that time new customer add &#10;3. update customer  &#10;4. AdjustedAmount" />
+    <MESSAGE value="close button done" />
+    <option name="LAST_COMMIT_MESSAGE" value="close button done" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

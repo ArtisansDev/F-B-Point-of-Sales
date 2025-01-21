@@ -42,7 +42,7 @@ class TakeAwayScreen extends StatelessWidget {
                 hintTextColor: ColorConstants.black.withOpacity(0.80),
                 onFilteringTextInputFormatter: [
                   FilteringTextInputFormatter.allow(
-                      RegExp(AppUtilConstants.patternOnlyString)),
+                      RegExp(AppUtilConstants.patternStringAndSpace)),
                 ],
               )),
 

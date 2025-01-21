@@ -21,7 +21,8 @@ import 'dine_in/dine_in_screen.dart';
 
 class TableSelectScreen extends GetView<TableSelectController> {
   final GetAllTablesResponseData? tableNumber;
-  const TableSelectScreen({super.key,required this.tableNumber});
+
+  const TableSelectScreen({super.key, required this.tableNumber});
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +62,10 @@ class TableSelectScreen extends GetView<TableSelectController> {
                           topRight: Radius.circular(11.sp),
                         ),
                       ),
-                      child:Row(
+                      child: Row(
                         children: [
-                          Expanded(child: Text(
+                          Expanded(
+                              child: Text(
                             'Order #: ${controller.orderNumber.value}',
                             style: getText600(
                               size: 11.8.sp,
@@ -72,6 +74,7 @@ class TableSelectScreen extends GetView<TableSelectController> {
                           )),
                           GestureDetector(
                             onTap: () {
+                              controller.isCreateOrder.value = false;
                               Get.back();
                             },
                             child: Container(
@@ -88,10 +91,8 @@ class TableSelectScreen extends GetView<TableSelectController> {
                                   size: 12.5.sp,
                                 )),
                           )
-
                         ],
-                      )
-                     ),
+                      )),
 
                   ///select Dine-In or Take Away
                   Container(
