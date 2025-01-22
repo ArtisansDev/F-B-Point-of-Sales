@@ -16,7 +16,7 @@ import '../../selected_order/controller/selected_order_controller.dart';
 
 class AddItemController extends GetxController {
   Rxn<DashboardScreenController> mDashboardScreenController =
-      Rxn<DashboardScreenController>();
+  Rxn<DashboardScreenController>();
   Rxn<HomeBaseController> mHomeBaseController = Rxn<HomeBaseController>();
   Rx<TextEditingController> remarkController = TextEditingController().obs;
   Rxn<CartItem> mCartItem = Rxn<CartItem>();
@@ -82,7 +82,7 @@ class AddItemController extends GetxController {
     (mCartItem.value?.mModifierList ?? [])[index].setCount(value);
     if (isSelectModifier(mModifierList)) {
       int? index = mCartItem.value?.mSelectModifierList?.indexWhere(
-          (element) => element.modifierIDP == mModifierList.modifierIDP);
+              (element) => element.modifierIDP == mModifierList.modifierIDP);
       if (index != null) {
         mCartItem.value?.mSelectModifierList?[index].setCount(value);
       }
@@ -92,7 +92,7 @@ class AddItemController extends GetxController {
 
   isSelectModifier(ModifierList mModifierList) {
     int? index = mCartItem.value?.mSelectModifierList?.indexWhere(
-        (element) => element.modifierIDP == mModifierList.modifierIDP);
+            (element) => element.modifierIDP == mModifierList.modifierIDP);
     if (index == null || index == -1) {
       return false;
     } else {
@@ -102,7 +102,7 @@ class AddItemController extends GetxController {
 
   void removeModifier(ModifierList mModifierList) {
     mCartItem.value?.mSelectModifierList?.removeWhere(
-      (element) => element.modifierIDP == mModifierList.modifierIDP,
+          (element) => element.modifierIDP == mModifierList.modifierIDP,
     );
   }
 
@@ -110,9 +110,9 @@ class AddItemController extends GetxController {
   onCalculateTotal() {
     ///Variant
     mCartItem.value?.price =
-        (mCartItem.value?.mSelectVariantListData?.discountPercentage ?? 0.0) > 0
-            ? mCartItem.value?.mSelectVariantListData?.discountedPrice ?? 0.0
-            : mCartItem.value?.mSelectVariantListData?.price ?? 0.0;
+    (mCartItem.value?.mSelectVariantListData?.discountPercentage ?? 0.0) > 0
+        ? mCartItem.value?.mSelectVariantListData?.discountedPrice ?? 0.0
+        : mCartItem.value?.mSelectVariantListData?.price ?? 0.0;
 
     ///tax
     mCartItem.value?.taxAmount = 0.0;
@@ -126,7 +126,7 @@ class AddItemController extends GetxController {
     ///Modifier
     mCartItem.value?.priceModifier = 0.0;
     for (ModifierList mModifierList
-        in mCartItem.value?.mSelectModifierList ?? []) {
+    in mCartItem.value?.mSelectModifierList ?? []) {
       mCartItem.value?.priceModifier = (mCartItem.value?.priceModifier ?? 0) +
           ((mModifierList.price ?? 0) * (mModifierList.count ?? 1));
     }
@@ -154,7 +154,7 @@ class AddItemController extends GetxController {
       ///
       if (Get.isRegistered<SelectedOrderController>()) {
         SelectedOrderController mSelectedOrderController =
-            Get.find<SelectedOrderController>();
+        Get.find<SelectedOrderController>();
         OrderPlace mOrderPlace =
             mSelectedOrderController.mOrderPlace.value ?? OrderPlace();
         debugPrint("mOrderPlace add ${jsonEncode(mOrderPlace)}");
@@ -166,11 +166,21 @@ class AddItemController extends GetxController {
             if (!mMenuCartItem.placeOrder) {
               if (mMenuCartItem.textRemarks.toString() ==
                   remarkController.value.text.toString()) {
-                if (mMenuCartItem.mSelectVariantListData?.quantitySpecification
-                        .toString() ==
-                    mCartItem
-                        .value?.mSelectVariantListData?.quantitySpecification
-                        .toString()) {
+                String sSelectVariant = (mMenuCartItem
+                    .mSelectVariantListData?.quantitySpecification ??
+                    '')
+                    .toString();
+                sSelectVariant = sSelectVariant +
+                    (mMenuCartItem.mSelectVariantListData?.variantIDP ?? '')
+                        .toString();
+                String sCartItemVariant = (mCartItem
+                    .value?.mSelectVariantListData?.quantitySpecification ?? '')
+                    .toString();
+                sCartItemVariant = sCartItemVariant+(mCartItem
+                    .value?.mSelectVariantListData?.variantIDP ?? '')
+                    .toString();
+                if (sSelectVariant ==
+                    sCartItemVariant) {
                   if (mMenuCartItem.getModifierString() ==
                       mCartItem.value?.getModifierString()) {
                     value = false;
@@ -190,7 +200,7 @@ class AddItemController extends GetxController {
                 index,
                 mOrderPlace.cartItem![index]);
           }
-        }else {
+        } else {
           mHomeBaseController.value?.onAddValue(mCartItem.value!);
         }
       }

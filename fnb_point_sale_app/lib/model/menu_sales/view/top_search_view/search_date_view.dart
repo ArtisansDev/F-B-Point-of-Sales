@@ -235,8 +235,7 @@ class SearchDateView extends StatelessWidget {
                 flex: 4,
                 child: Obx(() => Container(
                     height: 22.sp,
-                    margin:
-                        EdgeInsets.only(top: 11.sp, right: 10.sp, bottom: 8.sp),
+                    margin:EdgeInsets.only(top: 11.sp, right: 8.sp, bottom: 8.sp),
                     decoration: BoxDecoration(
                       color: ColorConstants.white,
                       borderRadius: BorderRadius.all(
@@ -245,6 +244,48 @@ class SearchDateView extends StatelessWidget {
                     ),
                     alignment: Alignment.center,
                     child: selectType()))),
+
+            ///ref
+            GestureDetector(
+              onTap: () {
+                controller.searchController.value.text = "";
+                controller.search.value = "";
+
+                controller.orderType = 0;
+                controller.selectType.value = 'Select Type';
+
+                controller.orderSource.value = 0;
+                controller.selectOrderSourceType.value = 'Select Source';
+
+                controller.paymentStatus.value = null;
+                controller.selectPaymentStatus.value = 'Payment Status';
+
+                controller.selectedDateRange = null;
+                controller.sSelectDateRangeController.value.text = "";
+
+                controller.search.refresh();
+
+
+                controller.pageNumber.value = 1;
+                controller.sLoading.value = 'Loading...';
+                controller.callOrderHistory();
+              },
+              child: Container(
+                  margin:
+                  EdgeInsets.only(top: 11.sp, right: 10.sp, bottom: 8.sp),
+                  padding: EdgeInsets.all(10.sp),
+                  decoration: BoxDecoration(
+                    color: ColorConstants.cAppButtonColour,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(8.sp),
+                    ),
+                  ),
+                  child: Icon(
+                    Icons.refresh,
+                    color: ColorConstants.white,
+                    size: 13.5.sp,
+                  )),
+            )
           ],
         ));
   }
