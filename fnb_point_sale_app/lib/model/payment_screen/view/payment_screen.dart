@@ -97,12 +97,12 @@ class PaymentScreen extends GetView<PaymentScreenController> {
                       left: 13.sp, right: 13.sp, bottom: 10.sp, top: 11.sp),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(35.sp),
+                    borderRadius: BorderRadius.circular(8.sp),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.22),
-                        spreadRadius: 3,
-                        blurRadius: 5,
+                        spreadRadius: 1,
+                        blurRadius: 3,
                         offset:
                             const Offset(0, 0), // changes position of shadow
                       ),
@@ -393,21 +393,26 @@ class PaymentScreen extends GetView<PaymentScreenController> {
                 Expanded(child: PaymentTypeList()),
 
                 ///Print Invoice button
-                Container(
-                    margin: EdgeInsets.only(
-                        left: 25.sp, right: 25.sp, top: 12.sp, bottom: 13.sp),
-                    child: controller.isSelectPayment.value
-                        ? rectangleCornerButtonText600(
-                            height: 19.5.sp,
-                            textSize: 11.7.sp,
-                            sPrintInvoice.tr,
-                            () {
-                              controller.onPrint();
-                            },
-                          )
-                        : const SizedBox(
-                            height: 42.5,
-                          )),
+                Visibility(
+                    visible: controller.isSelectPayment.value,
+                    child: Container(
+                        margin: EdgeInsets.only(
+                            left: 25.sp,
+                            right: 25.sp,
+                            top: 12.sp,
+                            bottom: 13.sp),
+                        child: controller.isSelectPayment.value
+                            ? rectangleCornerButtonText600(
+                                height: 19.5.sp,
+                                textSize: 11.7.sp,
+                                sPrintInvoice.tr,
+                                () {
+                                  controller.onPrint();
+                                },
+                              )
+                            : const SizedBox(
+                                height: 42.5,
+                              ))),
               ],
             ),
           ),

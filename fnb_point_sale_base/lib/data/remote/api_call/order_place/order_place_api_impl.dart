@@ -11,7 +11,7 @@ import '../../web_response_failed.dart';
 import 'order_place_api.dart';
 
 class OrderPlaceApiImpl extends AllApiImpl with OrderPlaceApi {
-  ///post postOrderPlace
+  ///post post Order Place
   @override
   Future<WebResponseSuccess> postOrderPlace(exhibitorsListRequest) async {
     AppAlert.showProgressDialog(Get.context!);
@@ -44,7 +44,7 @@ class OrderPlaceApiImpl extends AllApiImpl with OrderPlaceApi {
     return mWebResponseSuccess;
   }
 
-  ///post postOrderHistory
+  ///post post Order History
   @override
   Future<WebResponseSuccess> postOrderHistory(exhibitorsListRequest) async {
     AppAlert.showProgressDialog(Get.context!);
@@ -64,6 +64,54 @@ class OrderPlaceApiImpl extends AllApiImpl with OrderPlaceApi {
     } else if (cases.statusCode == WebConstants.statusCode400) {
       // LoginFailedResponse mLoginFailedResponse =
       //     LoginFailedResponse.fromJson(json.decode(jsonEncode(cases.body)));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        // data: mLoginFailedResponse,
+        statusMessage: '',
+        error: false,
+      );
+    } else {
+      mWebResponseFailed =
+          WebResponseFailed.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        // data: mWebResponseFailed,
+        statusMessage: mWebResponseFailed.statusMessage,
+        error: true,
+      );
+    }
+    return mWebResponseSuccess;
+  }
+
+ ///post post Table Status
+  @override
+  Future<WebResponseSuccess> postTableStatus(exhibitorsListRequest) async {
+    AppAlert.showProgressDialog(Get.context!);
+    WebConstants.auth = true;
+    final cases = await mWebProvider.postWithRequest(
+        WebConstants.actionUpdateTableStatus, exhibitorsListRequest);
+    AppAlert.hideLoadingDialog(Get.context!);
+    if (cases.statusCode == WebConstants.statusCode200) {
+      WebResponseSuccess mWebResponseSuccess =
+      WebResponseSuccess.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        data: mWebResponseSuccess,
+        statusMessage: '',
+        error: false,
+      );
+    } else if (cases.statusCode == WebConstants.statusCode401) {
+      mWebResponseFailed =
+          WebResponseFailed.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        // data: mLoginFailedResponse,
+        statusMessage:mWebResponseFailed.statusMessage,
+        error: false,
+      );
+    } else if (cases.statusCode == WebConstants.statusCode400) {
+      mWebResponseFailed =
+          WebResponseFailed.fromJson(processResponseToJson(cases));
       mWebResponseSuccess = WebResponseSuccess(
         statusCode: cases.statusCode,
         // data: mLoginFailedResponse,

@@ -157,13 +157,13 @@ class ItemSummaryBottomView extends StatelessWidget {
                   ),
                   (controller.mOrderPlace.value.paymentStatus != 'S')
                       ? Text(
-                          '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${(getDoubleValue(roundToNearestPossible(getDoubleValue(controller.mOrderPlace.value.totalAmount ?? 0)))-getDoubleValue(controller.mOrderPlace.value.totalAmount ?? 0)).toStringAsFixed(2)}',
+                          '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${(getDoubleValue(roundToNearestPossible(getDoubleValue(controller.mOrderPlace.value.totalAmount ?? 0))) - getDoubleValue(controller.mOrderPlace.value.totalAmount ?? 0)).toStringAsFixed(2)}',
                           style: getTextRegular(
                               size: 11.5.sp,
                               colors: ColorConstants.cAppTaxColour),
                         )
                       : Text(
-                          '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(controller.mOrderPlace.value.adjustedAmount ?? 0) > 0 ? (getDoubleValue(controller.mOrderPlace.value.adjustedAmount ?? 0)-getDoubleValue(controller.mOrderPlace.value.totalAmount ?? 0)).toStringAsFixed(2) : (getDoubleValue(controller.mOrderPlace.value.grandTotal ?? 0)- getDoubleValue(controller.mOrderPlace.value.totalAmount ?? 0)).toStringAsFixed(2)}',
+                          '${controller.mDashboardScreenController.value?.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(controller.mOrderPlace.value.adjustedAmount ?? 0) > 0 ? (getDoubleValue(controller.mOrderPlace.value.adjustedAmount ?? 0) - getDoubleValue(controller.mOrderPlace.value.totalAmount ?? 0)).toStringAsFixed(2) : (getDoubleValue(controller.mOrderPlace.value.grandTotal ?? 0) - getDoubleValue(controller.mOrderPlace.value.totalAmount ?? 0)).toStringAsFixed(2)}',
                           style: getTextRegular(
                               size: 11.5.sp,
                               colors: ColorConstants.cAppTaxColour),
@@ -245,16 +245,28 @@ class ItemSummaryBottomView extends StatelessWidget {
                   ))),
 
           ///button Place Order
-          // Container(
-          //     margin: EdgeInsets.only(left: 8.sp, right: 8.sp, top: 8.sp),
-          //     child: rectangleCornerButtonText600(
-          //       height: 19.5.sp,
-          //       textSize: 11.5.sp,
-          //       sPlaceOrder.tr,
-          //       () {
-          //         // controller.onPlaceOrder();
-          //       },
-          //     )),
+          Visibility(
+              visible: (controller.mOrderPlace.value.paymentStatus != 'C'),
+              child: Container(
+                  margin: EdgeInsets.only(left: 8.sp, right: 8.sp, top: 8.sp),
+                  child: rectangleCornerButtonText600(
+                    height: 19.5.sp,
+                    textSize: 11.5.sp,
+                    sPlaceOrder.tr,
+                    () {
+                      controller.mMenuSalesController
+                          .onPrintKot(controller.index.value);
+                    },
+                  ))),
+          Visibility(
+              visible: (controller.mOrderPlace.value.paymentStatus == 'P' ||
+                      controller.mOrderPlace.value.paymentStatus == 'F') &&
+                  (controller.mOrderPlace.value.paymentStatus != 'S') &&
+                  (controller.mOrderPlace.value.paymentGatewayNo == 1 ||
+                      controller.mOrderPlace.value.paymentGatewayNo == 2),
+              child: Container(
+                  margin: EdgeInsets.only(left: 8.sp, right: 8.sp, top: 8.sp),
+                  child: Text('You can able to change the payment type'))),
 
           ///button Pay and Invoice
           Visibility(

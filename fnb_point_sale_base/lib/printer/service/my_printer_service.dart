@@ -20,6 +20,8 @@ mixin MyPrinterService {
 
   Future<bool> salePayment(OrderHistoryData mOrderDetailList);
 
+  Future<bool> salePaymentKot(OrderHistoryData mOrderDetailList,{bool duplicate = false});
+
   // Future<bool> salePrint(
   //     String? title, Sale sale, bool duplicateCopy, bool voidSale,
   //     {SaleTye saleTye = SaleTye.REGULAR, bool returnOrExchange = false});

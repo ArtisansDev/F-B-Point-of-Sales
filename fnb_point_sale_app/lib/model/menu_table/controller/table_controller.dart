@@ -2,11 +2,18 @@
 
 import 'package:flutter/widgets.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
+import 'package:fnb_point_sale_base/constants/message_constants.dart';
+import 'package:fnb_point_sale_base/constants/web_constants.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_model.dart';
+import 'package:fnb_point_sale_base/data/local/shared_prefs/shared_prefs.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_tables/get_all_tables_response.dart';
+import 'package:fnb_point_sale_base/data/mode/table_status/table_status_request.dart';
+import 'package:fnb_point_sale_base/data/remote/api_call/order_place/order_place_api.dart';
+import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/locator.dart';
+import 'package:fnb_point_sale_base/utils/network_utils.dart';
 import 'package:get/get.dart';
 
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
@@ -57,6 +64,42 @@ class TableController extends GetxController {
           mDashboardScreenController.selectMenu.refresh();
         }
       }
+    }
+  }
+
+
+  ///table status
+  callTableStatus( GetAllTablesResponseData mGetAllTablesResponseData) async {
+    try {
+      ///api product call
+      final orderPlaceApi = locator.get<OrderPlaceApi>();
+      await NetworkUtils()
+          .checkInternetConnection()
+          .then((isInternetAvailable) async {
+        if (isInternetAvailable) {
+          TableStatusRequest mTableStatusRequest = TableStatusRequest(
+              tableStatus: 'O',
+              seatIDP: mGetAllTablesResponseData.seatIDP ?? '',
+              userIDF: await SharedPrefs().getUserId());
+
+          WebResponseSuccess mWebResponseSuccess =
+          await orderPlaceApi.postTableStatus(mTableStatusRequest);
+
+          if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
+
+            // onPlaceOrder();
+          } else {
+            AppAlert.showSnackBar(
+                Get.context!, mWebResponseSuccess.statusMessage ?? '');
+          }
+        } else {
+          AppAlert.showSnackBar(
+              Get.context!, MessageConstants.noInternetConnection);
+        }
+      });
+    } catch (e) {
+      AppAlert.showSnackBar(
+          Get.context!, 'downloadTableList failed with exception $e');
     }
   }
 

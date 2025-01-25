@@ -57,12 +57,12 @@ class DineInScreen extends StatelessWidget {
             margin: EdgeInsets.only(left: 13.sp, right: 13.sp, top: 10.sp),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(35.sp),
+              borderRadius: BorderRadius.circular(8.sp),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.22),
-                  spreadRadius: 3,
-                  blurRadius: 5,
+                  color: Colors.grey.withOpacity(0.12),
+                  spreadRadius: 1,
+                  blurRadius: 3,
                   offset: const Offset(0, 0), // changes position of shadow
                 ),
               ], // use instead of BorderRadius.all(Radius.circular(20))

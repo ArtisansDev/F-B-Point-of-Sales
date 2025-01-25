@@ -171,25 +171,48 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
                                 ],
                               )),
                               Expanded(
+                                  child: GestureDetector(
+                                onTap: () {
+                                  controller.selectTable();
+                                },
+                                child: Container(
+                                  height: 18.sp,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(8.sp),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.15),
+                                        spreadRadius: 1,
+                                        blurRadius: 3,
+                                        offset:
+                                        const Offset(0, 0), // changes position of shadow
+                                      ),
+                                    ], // use instead of BorderRadius.all(Radius.circular(20))
+                                  ),
                                   child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    '${sSeatingNo.tr}',
-                                    style: getText300(
-                                        size: 11.5.sp,
-                                        colors: ColorConstants.black),
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        sSeatingNo.tr,
+                                        style: getText300(
+                                            size: 11.5.sp,
+                                            colors: ColorConstants.black),
+                                      ),
+                                      SizedBox(
+                                        width: 8.sp,
+                                      ),
+                                      Text(
+                                        controller.mOrderPlace.value?.tableNo ??
+                                            '',
+                                        style: getText500(
+                                            size: 11.5.sp,
+                                            colors: ColorConstants.black),
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(
-                                    width: 8.sp,
-                                  ),
-                                  Text(
-                                    controller.mOrderPlace.value?.tableNo ?? '',
-                                    style: getText500(
-                                        size: 11.5.sp,
-                                        colors: ColorConstants.black),
-                                  ),
-                                ],
+                                )
+                                ,
                               )),
                             ],
                           ),

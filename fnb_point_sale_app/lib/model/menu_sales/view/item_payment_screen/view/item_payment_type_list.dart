@@ -64,24 +64,21 @@ class ItemPaymentTypeList extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.only(
                             left: 11.sp, right: 11.sp, top: 10.sp),
-                        child: Row(
+                        child: Container(
+                          padding: EdgeInsets.only(
+                              top: 10.sp,
+                              bottom: 10.sp,
+                              left: 11.sp,
+                              right: 11.sp),
+                          decoration: BoxDecoration(
+                            color: ColorConstants.cAppButtonLightColour,
+                            borderRadius: BorderRadius.all(Radius.circular(8.sp)),
+                          ),
+                          child:Row(
                           children: [
                             Expanded(
                               flex: 9,
-                              child: Container(
-                                  padding: EdgeInsets.only(
-                                      top: 10.sp,
-                                      bottom: 10.sp,
-                                      left: 11.sp,
-                                      right: 11.sp),
-                                  decoration: BoxDecoration(
-                                    color: ColorConstants.cAppButtonLightColour,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(11.sp),
-                                      topRight: Radius.circular(11.sp),
-                                    ),
-                                  ),
-                                  child: Row(
+                              child:  Row(
                                     children: [
                                       selectCheckBox(
                                           size: 12.5.sp,
@@ -111,7 +108,7 @@ class ItemPaymentTypeList extends StatelessWidget {
                                         ),
                                       ))
                                     ],
-                                  )),
+                                  ),
                             ),
                             Expanded(
                                 flex: 4,
@@ -124,7 +121,7 @@ class ItemPaymentTypeList extends StatelessWidget {
                                           colors: ColorConstants.black),
                                     ))),
                           ],
-                        ),
+                        ),)
                       ),
                     );
                   },

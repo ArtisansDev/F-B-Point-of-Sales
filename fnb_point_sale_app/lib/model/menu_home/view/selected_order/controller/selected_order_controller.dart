@@ -10,11 +10,15 @@ import 'package:fnb_point_sale_base/data/local/database/hold_sale/hold_sale_mode
 import 'package:fnb_point_sale_base/data/local/database/offline_place_order/offline_place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_model.dart';
+import 'package:fnb_point_sale_base/data/local/shared_prefs/shared_prefs.dart';
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/data/mode/customer/get_all_customer/get_all_customer_response.dart';
 import 'package:fnb_point_sale_base/data/mode/order_place/process_multiple_orders_request.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_payment_type/get_all_payment_type_response.dart';
+import 'package:fnb_point_sale_base/data/mode/product/get_all_tables/get_all_tables_response.dart';
+import 'package:fnb_point_sale_base/data/mode/table_status/table_status_request.dart';
 import 'package:fnb_point_sale_base/data/remote/api_call/order_place/order_place_api.dart';
+import 'package:fnb_point_sale_base/data/remote/api_call/order_place/order_place_api_impl.dart';
 import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/locator.dart';
 import 'package:fnb_point_sale_base/printer/service/my_printer_service.dart';
@@ -24,6 +28,7 @@ import 'package:fnb_point_sale_base/utils/tracking_order_id.dart';
 import 'package:get/get.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/cart_item.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
+import '../../../../../common_view/table_drop_down.dart';
 import '../../../../cancel_order/view/cancel_order_screen.dart';
 import '../../../../payment_screen/controller/payment_screen_controller.dart';
 import '../../../../payment_screen/view/payment_screen.dart';
@@ -119,9 +124,9 @@ class SelectedOrderController extends HomeBaseController {
     ///TotalPrice
     mOrderPlace.value?.totalPrice = (mOrderPlace.value?.taxAmount ?? 0) +
         (mOrderPlace.value?.subTotalPrice ?? 0);
-    mOrderPlace.value?.rounOffPrice = getDoubleValue(roundToNearestPossible(getDoubleValue(mOrderPlace.value?.totalPrice)));
+    mOrderPlace.value?.rounOffPrice = getDoubleValue(
+        roundToNearestPossible(getDoubleValue(mOrderPlace.value?.totalPrice)));
     mOrderPlace.refresh();
-
   }
 
   ///cancel sale
@@ -155,6 +160,40 @@ class SelectedOrderController extends HomeBaseController {
     mOrderPlace.value = null;
     mOrderPlace.refresh();
     await mDashboardScreenController.onUpdateHoldSale();
+  }
+
+  ///table status
+  callTableStatus() async {
+    try {
+      ///api product call
+      final orderPlaceApi = locator.get<OrderPlaceApi>();
+      await NetworkUtils()
+          .checkInternetConnection()
+          .then((isInternetAvailable) async {
+        if (isInternetAvailable) {
+          TableStatusRequest mTableStatusRequest = TableStatusRequest(
+              tableStatus: 'O',
+              seatIDP: mOrderPlace.value?.seatIDP,
+              userIDF: await SharedPrefs().getUserId());
+
+          WebResponseSuccess mWebResponseSuccess =
+              await orderPlaceApi.postTableStatus(mTableStatusRequest);
+
+          if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
+            onPlaceOrder();
+          } else {
+            AppAlert.showSnackBar(
+                Get.context!, mWebResponseSuccess.statusMessage ?? '');
+          }
+        } else {
+          AppAlert.showSnackBar(
+              Get.context!, MessageConstants.noInternetConnection);
+        }
+      });
+    } catch (e) {
+      AppAlert.showSnackBar(
+          Get.context!, 'downloadTableList failed with exception $e');
+    }
   }
 
   ///place order
@@ -233,10 +272,12 @@ class SelectedOrderController extends HomeBaseController {
             ///selectPayment type
             debugPrint(
                 "mSelectPaymentType ----- ${jsonEncode(mSelectPaymentType)}");
+
             ///remove hold sale
             var holdSaleLocalApi = locator.get<HoldSaleLocalApi>();
             await holdSaleLocalApi
                 .getHoldSaleDelete(mOrderPlace.value?.sOrderNo ?? '');
+
             ///mOrderDetailList
             OrderDetailList mOrderDetailList = await createOrderPlaceRequest(
                 remarksController: remarkController.value.text,
@@ -253,7 +294,6 @@ class SelectedOrderController extends HomeBaseController {
             /// await mPlaceOrderSaleLocalApi
             ///     .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
 
-
             await callSaveOrder(mOrderDetailList, isPayment: true);
             placeOrder.value = false;
             mOrderPlace.value = null;
@@ -261,7 +301,6 @@ class SelectedOrderController extends HomeBaseController {
             await mDashboardScreenController.onUpdateHoldSale();
             await mTopBarController.allOrderPlace();
             remarkController.value.text = "";
-
 
             ///
           },
@@ -282,7 +321,7 @@ class SelectedOrderController extends HomeBaseController {
           .checkInternetConnection()
           .then((isInternetAvailable) async {
         ProcessMultipleOrdersRequest mProcessMultipleOrdersRequest =
-        ProcessMultipleOrdersRequest(orderDetailList: [mOrderDetailList]);
+            ProcessMultipleOrdersRequest(orderDetailList: [mOrderDetailList]);
         if (isInternetAvailable) {
           WebResponseSuccess mWebResponseSuccess =
               await orderPlaceApi.postOrderPlace(mProcessMultipleOrdersRequest);
@@ -302,25 +341,24 @@ class SelectedOrderController extends HomeBaseController {
             AppAlert.showSnackBar(
                 Get.context!, mWebResponseSuccess.statusMessage ?? '');
           } else {
-
-              ///offline save
-              var mOfflinePlaceOrderSaleLocalApi =
-                  locator.get<OfflinePlaceOrderSaleLocalApi>();
-              ProcessMultipleOrdersRequest mProcessMultipleOrders =
-                  await mOfflinePlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
-                      ProcessMultipleOrdersRequest();
-              if ((mProcessMultipleOrders.orderDetailList ?? []).isEmpty) {
-                await mOfflinePlaceOrderSaleLocalApi
-                    .save(mProcessMultipleOrdersRequest);
-              } else {
-                if ((mProcessMultipleOrdersRequest.orderDetailList ?? [])
-                    .isNotEmpty) {
-                  await mOfflinePlaceOrderSaleLocalApi.getPlaceOrderAdd(
-                      (mProcessMultipleOrdersRequest.orderDetailList ?? [])
-                          .first);
-                }
+            ///offline save
+            var mOfflinePlaceOrderSaleLocalApi =
+                locator.get<OfflinePlaceOrderSaleLocalApi>();
+            ProcessMultipleOrdersRequest mProcessMultipleOrders =
+                await mOfflinePlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
+                    ProcessMultipleOrdersRequest();
+            if ((mProcessMultipleOrders.orderDetailList ?? []).isEmpty) {
+              await mOfflinePlaceOrderSaleLocalApi
+                  .save(mProcessMultipleOrdersRequest);
+            } else {
+              if ((mProcessMultipleOrdersRequest.orderDetailList ?? [])
+                  .isNotEmpty) {
+                await mOfflinePlaceOrderSaleLocalApi.getPlaceOrderAdd(
+                    (mProcessMultipleOrdersRequest.orderDetailList ?? [])
+                        .first);
               }
-              if (isPayment) {
+            }
+            if (isPayment) {
               ///remove
               var mPlaceOrderSaleLocalApi =
                   locator.get<PlaceOrderSaleLocalApi>();
@@ -333,7 +371,7 @@ class SelectedOrderController extends HomeBaseController {
         } else {
           ///offline save
           var mOfflinePlaceOrderSaleLocalApi =
-          locator.get<OfflinePlaceOrderSaleLocalApi>();
+              locator.get<OfflinePlaceOrderSaleLocalApi>();
           ProcessMultipleOrdersRequest mProcessMultipleOrders =
               await mOfflinePlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
                   ProcessMultipleOrdersRequest();
@@ -344,14 +382,12 @@ class SelectedOrderController extends HomeBaseController {
             if ((mProcessMultipleOrdersRequest.orderDetailList ?? [])
                 .isNotEmpty) {
               await mOfflinePlaceOrderSaleLocalApi.getPlaceOrderAdd(
-                  (mProcessMultipleOrdersRequest.orderDetailList ?? [])
-                      .first);
+                  (mProcessMultipleOrdersRequest.orderDetailList ?? []).first);
             }
           }
           if (isPayment) {
             ///remove
-            var mPlaceOrderSaleLocalApi =
-            locator.get<PlaceOrderSaleLocalApi>();
+            var mPlaceOrderSaleLocalApi = locator.get<PlaceOrderSaleLocalApi>();
             await mPlaceOrderSaleLocalApi
                 .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
           }
@@ -374,5 +410,15 @@ class SelectedOrderController extends HomeBaseController {
     if (isPayment) {
       await myPrinterService.saleOrderPayment(mOrderDetailList, mOrderPlace);
     }
+  }
+
+  ///select table
+  void selectTable() {
+    showTableBottomSheet(mTopBarController.mGetAllTablesList.toList(),
+        (GetAllTablesResponseData value) {
+      mOrderPlace.value?.seatIDP = value.seatIDP ?? '--';
+      mOrderPlace.value?.tableNo = value.seatNumber ?? '--';
+      mOrderPlace.refresh();
+    });
   }
 }

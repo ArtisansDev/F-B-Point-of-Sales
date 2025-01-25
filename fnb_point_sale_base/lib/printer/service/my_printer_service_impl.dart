@@ -15,6 +15,7 @@ import '../../utils/my_log_utils.dart';
 import '../types/order_payment_print.dart';
 import '../types/place_order_print.dart';
 import '../types/sale_aftre_payment_print.dart';
+import '../types/sale_payment_kot_print.dart';
 import '../types/sale_payment_print.dart';
 import '../types/test_printing.dart';
 
@@ -36,6 +37,11 @@ class MyPrinterServiceImpl with MyPrinterService {
   @override
   Future<bool> salePayment(OrderHistoryData mOrderDetailList){
       return printSalePayment(mOrderDetailList);
+  }
+
+  @override
+  Future<bool> salePaymentKot(OrderHistoryData mOrderDetailList,{bool duplicate = false}){
+      return printSalePaymentKot(mOrderDetailList,duplicate);
   }
 
   // @override

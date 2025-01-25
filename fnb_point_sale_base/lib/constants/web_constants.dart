@@ -60,15 +60,18 @@ class WebConstants {
 
   ///
   static String actionGetAllTables =  "Seat/getAllTables";  //post
+  static String actionUpdateTableStatus =  "Seat/UpdateTableStatus";  //post
   static String actionGetAllPaymentType =  "POSPayment/getPaymentType";  //post
 
-///CustomerApi
+  /// CustomerApi
   static String actionCustomerSave =  "Customer/customerSave";  //post
   static String actionGetAllCustomer =  "Customer/GetCustomer";
+
   /// order place
   static String actionPOSOrder =  "POSOrder/ProcessMultipleOrders";
   static String actionPOSOrderHistory =  "POSOrder/GetOrderHistory";
-  ///Balance
+
+  /// Balance
   static String actionUpdateOpeningBalance =  "Counter/UpdateOpeningBalance";
   static String actionUpdateClosingBalance =  "Counter/updateClosingBalance";
   static String actionGetShiftDetails =  "Counter/GetShiftDetails";

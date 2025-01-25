@@ -20,13 +20,24 @@ class ItemSummaryController extends GetxController {
   MenuSalesController mMenuSalesController = Get.find<MenuSalesController>();
   Rx<TextEditingController> remarkController = TextEditingController().obs;
   Rx<OrderHistoryData> mOrderPlace = OrderHistoryData().obs;
+  RxInt index = (-1).obs;
 
-  ItemSummaryController(OrderHistoryData mOrder) {
+  ItemSummaryController(OrderHistoryData mOrder, int iIndex) {
+    index.value = iIndex;
     mOrderPlace.value = mOrder;
     remarkController.value.text = mOrderPlace.value.additionalNotes ?? '';
     if (Get.isRegistered<DashboardScreenController>()) {
       mDashboardScreenController.value = Get.find<DashboardScreenController>();
     }
+  }
+
+  void onCancelOrder() async {
+    AppAlert.showCustomDialogYesNoLogout(Get.context!, 'Cancel Order!',
+        'Are you sure you want to cancel this order?', () {
+          Get.back();
+          mMenuSalesController.orderCancelPayment(mOrderPlace.value);
+        },
+        rightText: 'Yes');
   }
 
   void onPayment() async {

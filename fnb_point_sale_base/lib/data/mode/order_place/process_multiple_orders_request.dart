@@ -92,6 +92,7 @@ class OrderDetailList {
     String? paymentGatewayIDF,
     String? paymentGatewaySettingIDF,
     String? paymentStatus,
+    String? orderStatus,
     String? tableNo,
     String? email,
     String? phoneNumber,
@@ -128,6 +129,7 @@ class OrderDetailList {
     _paymentGatewayIDF = paymentGatewayIDF;
     _paymentGatewaySettingIDF = paymentGatewaySettingIDF;
     _paymentStatus = paymentStatus;
+    _orderStatus = orderStatus;
     _tableNo = tableNo;
     _email = email;
     _phoneNumber = phoneNumber;
@@ -181,6 +183,7 @@ class OrderDetailList {
     _paymentGatewayIDF = json['PaymentGatewayIDF'];
     _paymentGatewaySettingIDF = json['PaymentGatewaySettingIDF'];
     _paymentStatus = json['PaymentStatus'];
+    _orderStatus = json['OrderStatus'];
     _tableNo = json['TableNo'];
     _email = json['Email'];
     _phoneNumber = json['PhoneNumber'];
@@ -218,6 +221,7 @@ class OrderDetailList {
   String? _paymentGatewayIDF;
   String? _paymentGatewaySettingIDF;
   String? _paymentStatus;
+  String? _orderStatus;
   String? _tableNo;
   String? _email;
   String? _phoneNumber;
@@ -280,6 +284,8 @@ class OrderDetailList {
 
   String? get paymentStatus => _paymentStatus;
 
+  String? get orderStatus => _orderStatus;
+
   String? get tableNo => _tableNo;
 
   String? get email => _email;
@@ -333,6 +339,7 @@ class OrderDetailList {
     map['PaymentGatewayIDF'] = _paymentGatewayIDF;
     map['PaymentGatewaySettingIDF'] = _paymentGatewaySettingIDF;
     map['PaymentStatus'] = _paymentStatus;
+    map['OrderStatus'] = _orderStatus;
     map['TableNo'] = _tableNo;
     map['Email'] = _email;
     map['PhoneNumber'] = _phoneNumber;

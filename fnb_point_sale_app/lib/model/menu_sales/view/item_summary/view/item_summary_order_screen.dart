@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fnb_point_sale_base/common/button_constants.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/image_assets_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
@@ -14,12 +15,13 @@ import 'item_summary_order_list.dart';
 
 class ItemSummaryOrderScreen extends GetView<ItemSummaryController> {
   final OrderHistoryData mOrderData;
+  final int index;
 
-  const ItemSummaryOrderScreen(this.mOrderData, {super.key});
+  const ItemSummaryOrderScreen(this.mOrderData, this.index, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => ItemSummaryController(mOrderData));
+    Get.lazyPut(() => ItemSummaryController(mOrderData, index));
     return FocusDetector(
         onVisibilityGained: () {},
         onVisibilityLost: () {},
@@ -131,7 +133,9 @@ class ItemSummaryOrderScreen extends GetView<ItemSummaryController> {
                                 ],
                               ),
                             ),
-                            SizedBox(width: 10.sp,),
+                            SizedBox(
+                              width: 10.sp,
+                            ),
                             Expanded(
                                 flex: 3,
                                 child: Row(
@@ -190,27 +194,35 @@ class ItemSummaryOrderScreen extends GetView<ItemSummaryController> {
                                     colors: ColorConstants.black),
                               ),
                             ),
-                            const Expanded(
-                                child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                // Text(
-                                //   'Attendant:',
-                                //   style: getText300(
-                                //       size: 11.5.sp,
-                                //       colors: ColorConstants.black),
-                                // ),
-                                // SizedBox(
-                                //   width: 8.sp,
-                                // ),
-                                // Text(
-                                //   'Denny',
-                                //   style: getText500(
-                                //       size: 11.5.sp,
-                                //       colors: ColorConstants.black),
-                                // ),
-                              ],
-                            )),
+
+                            ///button cancel
+                            Visibility(
+                                visible: (controller.mOrderPlace.value
+                                                .paymentStatus ==
+                                            'P' ||
+                                        controller.mOrderPlace.value
+                                                .paymentStatus ==
+                                            'F') &&
+                                    (controller
+                                            .mOrderPlace.value.paymentStatus !=
+                                        'S'),
+                                child: Container(
+                                  width: 8.w,
+                                    margin: EdgeInsets.only(
+                                        left: 8.sp, right: 8.sp),
+                                    child: rectangleCornerButtonText600(
+                                      boderColor:
+                                          ColorConstants.red.withOpacity(0.2),
+                                      bgColor:
+                                          ColorConstants.red.withOpacity(0.2),
+                                      textColor: ColorConstants.red,
+                                      height: 17.5.sp,
+                                      textSize: 11.sp,
+                                      sCancel.tr.toUpperCase(),
+                                      () {
+                                        controller.onCancelOrder();
+                                      },
+                                    ))),
                           ],
                         ),
                       ),

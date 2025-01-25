@@ -126,23 +126,83 @@ class SalesListRowView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   SizedBox(
-                    width: 5.5.w,
-                    child: (mOrderHistoryData.paymentStatus == 'P' ||
-                                mOrderHistoryData.paymentStatus == 'F') &&
-                            (mOrderHistoryData.paymentStatus != 'S')
-                        ? rectangleCornerButtonText600(
-                            sPAY.tr,
-                            height: 16.5.sp,
-                            textSize: 10.5.sp,
-                            () {
-                              controller.onPayNow(index);
-                            },
+                    width: 6.5.w,
+                    child: (mOrderHistoryData.paymentStatus == 'C')
+                        ? Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              'CANCEL',
+                              style:
+                                  getText500(size: 11.sp, colors: Colors.red),
+                            ),
                           )
-                        : const SizedBox(),
+                        : (mOrderHistoryData.paymentStatus == 'P' ||
+                                    mOrderHistoryData.paymentStatus == 'F') &&
+                                (mOrderHistoryData.paymentStatus != 'S')
+                            ? mOrderHistoryData.paymentGatewayNo == 1 ||
+                                    mOrderHistoryData.paymentGatewayNo == 2
+                                ? GestureDetector(
+                                    onTap: () {
+                                      controller.onAlertView(index);
+                                    },
+                                    child: Container(
+                                      height: 16.5.sp,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(8.sp),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.grey.withOpacity(0.15),
+                                            spreadRadius: 1,
+                                            blurRadius: 3,
+                                            offset: const Offset(0,
+                                                0), // changes position of shadow
+                                          ),
+                                        ], // use instead of BorderRadius.all(Radius.circular(20))
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 8.sp,
+                                          ),
+                                          Icon(
+                                            Icons.warning_rounded,
+                                            color: ColorConstants.red,
+                                            size: 12.sp,
+                                          ),
+                                          SizedBox(
+                                            width: 6.sp,
+                                          ),
+                                          const Text('Process'),
+                                          SizedBox(
+                                            width: 8.sp,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                : rectangleCornerButtonText600(
+                                    sPAY.tr,
+                                    height: 16.5.sp,
+                                    textSize: 10.5.sp,
+                                    () {
+                                      controller.onPayNow(index);
+                                    },
+                                  )
+                            :Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'DONE',
+                        style:
+                        getText500(size: 11.sp, colors: ColorConstants.cAppTextInviceColour),
+                      ),
+                    ),
                   ),
                   GestureDetector(
                     onTap: () {
-                      controller.onEdit(index);
+                      controller.onView(index);
                     },
                     child: Container(
                       margin: EdgeInsets.only(right: 10.sp, left: 10.sp),
@@ -162,7 +222,37 @@ class SalesListRowView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  (mOrderHistoryData.paymentStatus == 'S')
+                  (mOrderHistoryData.paymentStatus != 'C')
+                      ? GestureDetector(
+                          onTap: () {
+                            controller.onPrintKot(index);
+                          },
+                          child: Container(
+                            height: 16.5.sp,
+                            width: 16.5.sp,
+                            margin: EdgeInsets.only(right: 10.sp),
+                            padding: EdgeInsets.all(8.5.sp),
+                            decoration: BoxDecoration(
+                              color: ColorConstants.cAppTextInviceColour
+                                  .withOpacity(0.8),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(8.sp),
+                              ),
+                            ),
+                            child: Image.asset(
+                              ImageAssetsConstants.appPrint,
+                              fit: BoxFit.fitWidth,
+                            ),
+                          ),
+                        )
+                      : Container(
+                          height: 16.5.sp,
+                          width: 16.5.sp,
+                          margin: EdgeInsets.only(right: 10.sp),
+                          padding: EdgeInsets.all(8.5.sp),
+                        ),
+                  (mOrderHistoryData.paymentStatus == 'S' ||
+                          mOrderHistoryData.paymentStatus == 'C')
                       ? GestureDetector(
                           onTap: () {
                             controller.onPrint(index);
@@ -187,7 +277,7 @@ class SalesListRowView extends StatelessWidget {
                           height: 16.5.sp,
                           width: 16.5.sp,
                           padding: EdgeInsets.all(8.5.sp),
-                        )
+                        ),
                 ],
               )),
         ],

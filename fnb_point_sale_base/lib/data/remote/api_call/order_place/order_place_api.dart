@@ -6,4 +6,5 @@ import '../../web_response.dart';
 mixin OrderPlaceApi {
   Future<WebResponseSuccess> postOrderPlace(dynamic exhibitorsListRequest);
   Future<WebResponseSuccess> postOrderHistory(dynamic exhibitorsListRequest);
+  Future<WebResponseSuccess> postTableStatus(dynamic exhibitorsListRequest);
 }

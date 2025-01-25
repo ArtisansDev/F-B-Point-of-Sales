@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fnb_point_sale_app/common_view/logout_expired.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
 import 'package:fnb_point_sale_base/common/date_range_picker/models.dart';
 import 'package:fnb_point_sale_base/common/date_range_picker/widgets/date_range_picker.dart';
@@ -46,13 +47,16 @@ class MenuSalesController extends GetxController {
 
   Rx<TextEditingController> searchController = TextEditingController().obs;
   RxString selectType = 'Select Type'.obs;
-  RxList<String> selectTypeList = <String>[sAll.tr,sDine_In.tr,sTake_Away.tr].obs;
+  RxList<String> selectTypeList =
+      <String>[sAll.tr, sDine_In.tr, sTake_Away.tr].obs;
 
   RxString selectOrderSourceType = 'Select Source'.obs;
-  RxList<String> orderSourceList = <String>[sAll.tr,'Mobile App','From Pos','From Web'].obs;
+  RxList<String> orderSourceList =
+      <String>[sAll.tr, 'Mobile App', 'From Pos', 'From Web'].obs;
 
   RxString selectPaymentStatus = 'Payment Status'.obs;
-  RxList<String> paymentStatusList = <String>[sAll.tr,'Success','Pending','Fail'].obs;
+  RxList<String> paymentStatusList =
+      <String>[sAll.tr, 'Success', 'Pending', 'Fail'].obs;
 
   Rx<TextEditingController> sSelectDateRangeController =
       TextEditingController().obs;
@@ -147,20 +151,27 @@ class MenuSalesController extends GetxController {
     ///
   }
 
-  void onEdit(int index) async {
+  void onView(int index) async {
     OrderHistoryData mOrderData = mOrderHistoryData[index];
     await AppAlert.showViewWithoutBlur(
         Get.context!,
         Row(
           children: [
             const Expanded(flex: 7, child: SizedBox()),
-            Expanded(flex: 3, child: ItemSummaryOrderScreen(mOrderData))
+            Expanded(flex: 3, child: ItemSummaryOrderScreen(mOrderData, index))
           ],
         ),
         barrierDismissible: true);
     if (Get.isRegistered<ItemSummaryController>()) {
       Get.delete<ItemSummaryController>();
     }
+  }
+
+  void onAlertView(int index) async {
+    AppAlert.showCustomDialogYesNoLogout(Get.context!, 'Change Payment type!',
+        'Do you want to change the payment type?', () {
+      onPayNow(index);
+    }, rightText: 'Yes');
   }
 
   // void onDeleteSale(int index) async{
@@ -275,6 +286,37 @@ class MenuSalesController extends GetxController {
   }
 
   ///
+  void orderCancelPayment(
+    // GetAllPaymentTypeData mGetAllPaymentTypeData,
+    OrderHistoryData mOrderHistory,
+    // GetAllCustomerList? mGetAllCustomerList
+  ) async {
+    ///
+    OrderDetailList mOrderDetailList = await cancelOrder(
+      remarksController: mOrderHistory.additionalNotes ?? '',
+      mOrderPlace: mOrderHistory,
+      // printOrderPayment: mGetAllPaymentTypeData,
+      // mGetAllCustomerList: mGetAllCustomerList,
+    );
+    debugPrint("OrderDetail ----- ${jsonEncode(mOrderDetailList)}");
+
+    ///printOrderPayment
+
+    /// var mPlaceOrderSaleLocalApi = locator.get<PlaceOrderSaleLocalApi>();
+    /// await mPlaceOrderSaleLocalApi
+    ///     .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
+    ///  await printOrderPayment(mOrderDetailList,mOrderHistory);
+
+    await callSaveOrder(mOrderDetailList, mOrderHistory,
+        isPayment: true, isCancel: true);
+
+    ///
+    await mDashboardScreenController.onUpdateHoldSale();
+    await mTopBarController.allOrderPlace();
+    await callOrderHistory();
+  }
+
+  ///
   void orderPayment(
       GetAllPaymentTypeData mGetAllPaymentTypeData,
       OrderHistoryData mOrderHistory,
@@ -296,7 +338,8 @@ class MenuSalesController extends GetxController {
     ///     .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
     ///  await printOrderPayment(mOrderDetailList,mOrderHistory);
 
-    await callSaveOrder(mOrderDetailList,mOrderHistory, isPayment: true);
+    await callSaveOrder(mOrderDetailList, mOrderHistory, isPayment: true);
+
     ///
     await mDashboardScreenController.onUpdateHoldSale();
     await mTopBarController.allOrderPlace();
@@ -304,9 +347,9 @@ class MenuSalesController extends GetxController {
   }
 
   ///SaveOrder
-  callSaveOrder(OrderDetailList mOrderDetailList,
-      OrderHistoryData mOrderHistory,
-      {bool isPayment = false}) async {
+  callSaveOrder(
+      OrderDetailList mOrderDetailList, OrderHistoryData mOrderHistory,
+      {bool isPayment = false, bool isCancel = false}) async {
     try {
       ///api product call
       final orderPlaceApi = locator.get<OrderPlaceApi>();
@@ -320,7 +363,7 @@ class MenuSalesController extends GetxController {
               await orderPlaceApi.postOrderPlace(mProcessMultipleOrdersRequest);
           if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
             ///print....
-            printOrderPayment(mOrderDetailList,mOrderHistory);
+            printOrderPayment(mOrderDetailList, mOrderHistory);
 
             ///remove from local data base
             if (isPayment) {
@@ -373,14 +416,25 @@ class MenuSalesController extends GetxController {
   }
 
   ///print
-  printOrderPayment(OrderDetailList mOrderDetailList,OrderHistoryData mOrderHistory,) async {
+  printOrderPayment(
+    OrderDetailList mOrderDetailList,
+    OrderHistoryData mOrderHistory,
+  ) async {
     final myPrinterService = locator.get<MyPrinterService>();
-   await myPrinterService.saleAfterPayment(mOrderDetailList,mOrderHistory);
+    await myPrinterService.saleAfterPayment(mOrderDetailList, mOrderHistory);
   }
 
   void onPrint(int index) async {
     OrderHistoryData mOrderData = mOrderHistoryData[index];
     final myPrinterService = locator.get<MyPrinterService>();
     await myPrinterService.salePayment(mOrderData);
+  }
+
+  void onPrintKot(int index) async {
+    OrderHistoryData mOrderData = mOrderHistoryData[index];
+    final myPrinterService = locator.get<MyPrinterService>();
+    await myPrinterService.salePaymentKot(mOrderData);
+
+    await myPrinterService.salePaymentKot(mOrderData, duplicate: true);
   }
 }

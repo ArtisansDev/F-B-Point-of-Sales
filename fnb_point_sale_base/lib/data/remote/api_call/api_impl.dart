@@ -33,7 +33,7 @@ class AllApiImpl {
       case 401:
         var responseJson = jsonEncode(responseBody);
         if (BaseAppConstants.isWebLogToPrint) {
-          debugPrint("Webservices 200 decoded Response $responseJson",
+          debugPrint("Webservices 401 decoded Response $responseJson",
               wrapWidth: 3072);
         }
         return responseBody;
