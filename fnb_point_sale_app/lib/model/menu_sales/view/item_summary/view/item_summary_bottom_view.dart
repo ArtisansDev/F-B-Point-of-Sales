@@ -252,7 +252,7 @@ class ItemSummaryBottomView extends StatelessWidget {
                   child: rectangleCornerButtonText600(
                     height: 19.5.sp,
                     textSize: 11.5.sp,
-                    sPlaceOrder.tr,
+                    sPrintKot.tr,
                     () {
                       controller.mMenuSalesController
                           .onPrintKot(controller.index.value);

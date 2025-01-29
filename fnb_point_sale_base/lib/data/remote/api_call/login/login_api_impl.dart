@@ -26,7 +26,7 @@ class LoginApiImpl extends AllApiImpl with LoginApi {
     AppAlert.hideLoadingDialog(Get.context!);
     if (cases.statusCode == WebConstants.statusCode200) {
       LoginResponse mLoginResponse =
-      LoginResponse.fromJson(processResponseToJson(cases));
+          LoginResponse.fromJson(processResponseToJson(cases));
       mWebResponseSuccess = WebResponseSuccess(
         statusCode: cases.statusCode,
         data: mLoginResponse,
@@ -35,7 +35,7 @@ class LoginApiImpl extends AllApiImpl with LoginApi {
       );
     } else if (cases.statusCode == WebConstants.statusCode401) {
       WebResponseFailed mWebResponseFailed =
-      WebResponseFailed.fromJson(processResponseToJson(cases));
+          WebResponseFailed.fromJson(processResponseToJson(cases));
       mWebResponseSuccess = WebResponseSuccess(
         statusCode: cases.statusCode,
         data: mWebResponseFailed,
@@ -71,7 +71,7 @@ class LoginApiImpl extends AllApiImpl with LoginApi {
     }
     if (cases.statusCode == WebConstants.statusCode200) {
       ConfigurationResponse mConfigurationResponse =
-      ConfigurationResponse.fromJson(processResponseToJson(cases));
+          ConfigurationResponse.fromJson(processResponseToJson(cases));
       mWebResponseSuccess = WebResponseSuccess(
         statusCode: cases.statusCode,
         data: mConfigurationResponse,
@@ -80,7 +80,48 @@ class LoginApiImpl extends AllApiImpl with LoginApi {
       );
     } else if (cases.statusCode == WebConstants.statusCode404) {
       WebResponseFailed mWebResponseFailed =
-      WebResponseFailed.fromJson(processResponseToJson(cases));
+          WebResponseFailed.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        data: mWebResponseFailed,
+        statusMessage: mWebResponseFailed.statusMessage ?? '',
+        error: false,
+      );
+    } else {
+      mWebResponseFailed =
+          WebResponseFailed.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        // data: mWebResponseFailed,
+        statusMessage: mWebResponseFailed.statusMessage,
+        error: true,
+      );
+    }
+
+    return mWebResponseSuccess;
+  }
+
+  ///post actionUpdatePOSLoginStatus
+  @override
+  Future<WebResponseSuccess> postUpdatePOSLoginStatus(
+      dynamic exhibitorsListRequest) async {
+    AppAlert.showProgressDialog(Get.context!);
+    WebConstants.auth = true;
+    final cases = await mWebProvider.postWithRequest(
+        WebConstants.actionUpdatePOSLoginStatus, exhibitorsListRequest);
+    AppAlert.hideLoadingDialog(Get.context!);
+    if (cases.statusCode == WebConstants.statusCode200) {
+      // ConfigurationResponse mConfigurationResponse =
+      //     ConfigurationResponse.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        // data: mConfigurationResponse,
+        statusMessage: "",
+        error: false,
+      );
+    } else if (cases.statusCode == WebConstants.statusCode404) {
+      WebResponseFailed mWebResponseFailed =
+          WebResponseFailed.fromJson(processResponseToJson(cases));
       mWebResponseSuccess = WebResponseSuccess(
         statusCode: cases.statusCode,
         data: mWebResponseFailed,

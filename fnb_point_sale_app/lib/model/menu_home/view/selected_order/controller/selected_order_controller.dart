@@ -163,38 +163,38 @@ class SelectedOrderController extends HomeBaseController {
   }
 
   ///table status
-  callTableStatus() async {
-    try {
-      ///api product call
-      final orderPlaceApi = locator.get<OrderPlaceApi>();
-      await NetworkUtils()
-          .checkInternetConnection()
-          .then((isInternetAvailable) async {
-        if (isInternetAvailable) {
-          TableStatusRequest mTableStatusRequest = TableStatusRequest(
-              tableStatus: 'O',
-              seatIDP: mOrderPlace.value?.seatIDP,
-              userIDF: await SharedPrefs().getUserId());
-
-          WebResponseSuccess mWebResponseSuccess =
-              await orderPlaceApi.postTableStatus(mTableStatusRequest);
-
-          if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
-            onPlaceOrder();
-          } else {
-            AppAlert.showSnackBar(
-                Get.context!, mWebResponseSuccess.statusMessage ?? '');
-          }
-        } else {
-          AppAlert.showSnackBar(
-              Get.context!, MessageConstants.noInternetConnection);
-        }
-      });
-    } catch (e) {
-      AppAlert.showSnackBar(
-          Get.context!, 'downloadTableList failed with exception $e');
-    }
-  }
+  // callTableStatus() async {
+  //   try {
+  //     ///api product call
+  //     final orderPlaceApi = locator.get<OrderPlaceApi>();
+  //     await NetworkUtils()
+  //         .checkInternetConnection()
+  //         .then((isInternetAvailable) async {
+  //       if (isInternetAvailable) {
+  //         TableStatusRequest mTableStatusRequest = TableStatusRequest(
+  //             tableStatus: 'O',
+  //             seatIDP: mOrderPlace.value?.seatIDP,
+  //             userIDF: await SharedPrefs().getUserId());
+  //
+  //         WebResponseSuccess mWebResponseSuccess =
+  //             await orderPlaceApi.postTableStatus(mTableStatusRequest);
+  //
+  //         if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
+  //           onPlaceOrder();
+  //         } else {
+  //           AppAlert.showSnackBar(
+  //               Get.context!, mWebResponseSuccess.statusMessage ?? '');
+  //         }
+  //       } else {
+  //         AppAlert.showSnackBar(
+  //             Get.context!, MessageConstants.noInternetConnection);
+  //       }
+  //     });
+  //   } catch (e) {
+  //     AppAlert.showSnackBar(
+  //         Get.context!, 'downloadTableList failed with exception $e');
+  //   }
+  // }
 
   ///place order
   void onPlaceOrder() async {
@@ -206,6 +206,9 @@ class SelectedOrderController extends HomeBaseController {
     mOrderPlacePrint.value =
         OrderPlace.fromJson((mOrderPlace.value ?? OrderPlace()).toJson());
     List<CartItem> mCartItemList = mOrderPlace.value?.cartItem ?? [];
+    if (!mCartItemList.first.placeOrder) {
+      callUpdateTableStatus(mOrderPlacePrint.value ?? OrderPlace());
+    }
     if (mCartItemList.isNotEmpty) {
       List<CartItem> mSetCartItemList = [];
       for (CartItem mCartItem in mCartItemList) {
@@ -265,6 +268,11 @@ class SelectedOrderController extends HomeBaseController {
           onPayment: (GetAllPaymentTypeData mSelectPaymentType,
               GetAllCustomerList? mSelectCustomer) async {
             Get.back();
+            if ((mOrderPlace.value?.seatIDP ?? '').isNotEmpty) {
+              if (!(mOrderPlace.value?.cartItem ?? []).first.placeOrder) {
+                await callUpdateTableStatus(mOrderPlace.value ?? OrderPlace());
+              }
+            }
             if (mSelectCustomer != null) {
               mOrderPlace.value?.mSelectCustomer = mSelectCustomer;
             }
@@ -301,8 +309,6 @@ class SelectedOrderController extends HomeBaseController {
             await mDashboardScreenController.onUpdateHoldSale();
             await mTopBarController.allOrderPlace();
             remarkController.value.text = "";
-
-            ///
           },
         ),
         barrierDismissible: true);
@@ -401,6 +407,36 @@ class SelectedOrderController extends HomeBaseController {
     }
   }
 
+  ///update table status
+  callUpdateTableStatus(OrderPlace mOrderPlace) async {
+    ///api product call
+    final orderPlaceApi = locator.get<OrderPlaceApi>();
+    await NetworkUtils()
+        .checkInternetConnection()
+        .then((isInternetAvailable) async {
+      if (isInternetAvailable) {
+        TableStatusRequest mTableStatusRequest = TableStatusRequest(
+            trackingOrderID: mOrderPlace.sOrderNo ?? '',
+            tableStatus: 'O',
+            seatIDP: mOrderPlace.seatIDP,
+            userIDF: await SharedPrefs().getUserId());
+
+        WebResponseSuccess mWebResponseSuccess =
+            await orderPlaceApi.postTableStatus(mTableStatusRequest);
+
+        if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
+          // onPlaceOrder();
+        } else {
+          AppAlert.showSnackBar(
+              Get.context!, mWebResponseSuccess.statusMessage ?? '');
+        }
+      } else {
+        AppAlert.showSnackBar(
+            Get.context!, MessageConstants.noInternetConnection);
+      }
+    });
+  }
+
   printOrderPayment(OrderDetailList mOrderDetailList, OrderPlace mOrderPlace,
       {bool placeOrder = false, bool isPayment = false}) async {
     final myPrinterService = locator.get<MyPrinterService>();
@@ -413,8 +449,9 @@ class SelectedOrderController extends HomeBaseController {
   }
 
   ///select table
-  void selectTable() {
-    showTableBottomSheet(mTopBarController.mGetAllTablesList.toList(),
+  void selectTable() async{
+    await showTableBottomSheet(mTopBarController.mGetAllTablesList.toList(),
+        (mTopBarController.mGetAllTablesStatus.value?.data ?? []).toList(),
         (GetAllTablesResponseData value) {
       mOrderPlace.value?.seatIDP = value.seatIDP ?? '--';
       mOrderPlace.value?.tableNo = value.seatNumber ?? '--';

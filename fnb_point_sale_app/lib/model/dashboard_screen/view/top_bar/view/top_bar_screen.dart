@@ -29,6 +29,7 @@ class TopBarScreen extends GetView<TopBarController> {
     controller.mDashboardScreenController.onUpdateHoldSale();
     return FocusDetector(
         onVisibilityGained: () {
+          controller.callGetAllTableStatus();
           controller.onHomeUpdate();
           controller.loadAllTables();
         },
@@ -79,6 +80,42 @@ class TopBarScreen extends GetView<TopBarController> {
                         child: ListView(
                             scrollDirection: Axis.horizontal,
                             children: <Widget>[
+                              MyInkWellWidget(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.refresh,
+                                        color: ColorConstants.cAppButtonColour,
+                                        size: 2.9.h,
+                                      ),
+
+                                      // svgView(
+                                      //   key: const ValueKey('topBarSync'),
+                                      //   color: ColorConstants.cAppButtonColour,
+                                      //   ImageAssetsConstants.topBarSync,
+                                      //   height: 2.9.h,
+                                      //   width: 2.9.h,
+                                      // ),
+                                      SizedBox(
+                                        height: 0.5.h,
+                                      ),
+                                      Text('Refresh Table',
+                                          style: getText500(
+                                            size: 11.sp,
+                                            colors:
+                                                ColorConstants.cAppButtonColour,
+                                          )),
+                                    ],
+                                  ),
+                                  onTap: () async {
+                                    await controller.callGetAllTableStatus();
+                                    controller.mDashboardScreenController
+                                        .onRefreshTable();
+                                  }),
+                              SizedBox(
+                                width: 1.5.w,
+                              ),
                               MyInkWellWidget(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,

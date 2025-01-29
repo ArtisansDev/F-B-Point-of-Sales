@@ -46,13 +46,18 @@ logout() async {
 }
 
 clearConfiguration() async {
+  await SharedPrefs().setUserToken('');
+  await SharedPrefs().setUserId('');
+  await SharedPrefs().setHistoryID('');
+
+
   await locator.get<AllCategoryLocalApi>().deleteAllCategory();
   await locator.get<ModifierLocalApi>().deleteAllModifier();
   await locator.get<MenuItemLocalApi>().deleteAllMenuItem();
-
-  await locator.get<ConfigurationLocalApi>().deleteAllConfiguration();
   await locator.get<HoldSaleLocalApi>().deleteAllHoldSale();
-  await SharedPrefs().setUserToken('');
+  await locator.get<ConfigurationLocalApi>().deleteAllConfiguration();
+
+
   Get.delete<DashboardScreenController>();
   Get.offAllNamed(
     RouteConstants.rConfigurationScreen,

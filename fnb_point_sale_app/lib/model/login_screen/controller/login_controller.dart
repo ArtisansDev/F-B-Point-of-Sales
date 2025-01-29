@@ -6,10 +6,12 @@ import 'package:fnb_point_sale_base/data/local/database/configuration/configurat
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/data/mode/update_balance/opening_balance/opening_balance_request.dart';
 import 'package:fnb_point_sale_base/data/mode/update_balance/opening_balance/opening_balance_response.dart';
+import 'package:fnb_point_sale_base/data/mode/update_login_status/update_login_status_request.dart';
 import 'package:fnb_point_sale_base/data/remote/api_call/balance/balance_api.dart';
 import 'package:fnb_point_sale_base/data/remote/api_call/login/login_api.dart';
 import 'package:fnb_point_sale_base/locator.dart';
 import 'package:fnb_point_sale_base/utils/date_time_utils.dart';
+import 'package:fnb_point_sale_base/utils/get_device_details.dart';
 import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:get/get.dart';
 
@@ -89,13 +91,15 @@ class LoginScreenController extends GetxController {
               Get.context!, mWebResponseSuccess.statusMessage ?? '');
           WebConstants.isFastTimeLogin = true;
           if (mLoginResponse.data?.isAlreadyLoggedIn ?? false) {
-            if( (mLoginResponse.data?.activeCounterHistoryId ?? '').isNotEmpty){
+            await updateLoginStatusApiCall();
+            if ((mLoginResponse.data?.activeCounterHistoryId ?? '')
+                .isNotEmpty) {
               await SharedPrefs().setHistoryID(
                   mLoginResponse.data?.activeCounterHistoryId ?? '');
               Get.offNamed(
                 RouteConstants.rDashboardScreen,
               );
-            }else {
+            } else {
               await SharedPrefs().setHistoryID('');
               Get.offNamed(
                 RouteConstants.rOpenCounterScreen,
@@ -108,6 +112,46 @@ class LoginScreenController extends GetxController {
             );
           }
           // await openingBalanceApiCall();
+        } else {
+          AppAlert.showSnackBar(
+              Get.context!, mWebResponseSuccess.statusMessage ?? '');
+        }
+      } else {
+        AppAlert.showSnackBar(
+            Get.context!, MessageConstants.noInternetConnection);
+      }
+    });
+  }
+
+  updateLoginStatusApiCall() async {
+    DeviceInfo mDeviceInfo = await getDeviceDetails();
+    var configurationLocalApi = locator.get<ConfigurationLocalApi>();
+    Rx<ConfigurationResponse> mConfigurationResponse =
+        ConfigurationResponse().obs;
+    mConfigurationResponse.value =
+        await configurationLocalApi.getConfigurationResponse() ??
+            ConfigurationResponse();
+    NetworkUtils().checkInternetConnection().then((isInternetAvailable) async {
+      if (isInternetAvailable) {
+        final localApi = locator.get<LoginApi>();
+        UpdateLoginStatusRequest mUpdateLoginStatusRequest =
+            UpdateLoginStatusRequest(
+                deviceInfo: mDeviceInfo,
+                userIDF: await SharedPrefs().getUserId(),
+                counterIDF: (mConfigurationResponse
+                                .value.configurationData?.counterData ??
+                            [])
+                        .isEmpty
+                    ? ""
+                    : (mConfigurationResponse
+                                .value.configurationData?.counterData ??
+                            [])
+                        .first
+                        .counterIDP,
+                isLoggedIn: true);
+        WebResponseSuccess mWebResponseSuccess =
+            await localApi.postUpdatePOSLoginStatus(mUpdateLoginStatusRequest);
+        if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
         } else {
           AppAlert.showSnackBar(
               Get.context!, mWebResponseSuccess.statusMessage ?? '');

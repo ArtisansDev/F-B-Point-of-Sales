@@ -285,11 +285,9 @@ class MenuSalesController extends GetxController {
     }
   }
 
-  ///
+  ///Cancel Payment
   void orderCancelPayment(
-    // GetAllPaymentTypeData mGetAllPaymentTypeData,
     OrderHistoryData mOrderHistory,
-    // GetAllCustomerList? mGetAllCustomerList
   ) async {
     ///
     OrderDetailList mOrderDetailList = await cancelOrder(

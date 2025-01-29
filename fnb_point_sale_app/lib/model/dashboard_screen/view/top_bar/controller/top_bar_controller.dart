@@ -6,17 +6,29 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_app/common_view/logout_expired.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
+import 'package:fnb_point_sale_base/constants/message_constants.dart';
+import 'package:fnb_point_sale_base/constants/web_constants.dart';
 import 'package:fnb_point_sale_base/data/local/database/configuration/configuration_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_model.dart';
 import 'package:fnb_point_sale_base/data/local/database/table_list/table_list_local_api.dart';
+import 'package:fnb_point_sale_base/data/local/shared_prefs/shared_prefs.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_tables/get_all_tables_response.dart';
+import 'package:fnb_point_sale_base/data/mode/table_status/get_all_tables_by_table_status_request.dart';
+import 'package:fnb_point_sale_base/data/mode/table_status/get_all_tables_by_table_status_response.dart';
+import 'package:fnb_point_sale_base/data/mode/update_login_status/update_login_status_request.dart';
+import 'package:fnb_point_sale_base/data/remote/api_call/login/login_api.dart';
+import 'package:fnb_point_sale_base/data/remote/api_call/order_place/order_place_api.dart';
+import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/locator.dart';
 import 'package:fnb_point_sale_base/printer/types/test_printing.dart';
 import 'package:fnb_point_sale_base/printer/widgets/printer_configuration_widget.dart';
 import 'package:fnb_point_sale_base/serialportdevices/widgets/serial_port_device_config_widget.dart';
+import 'package:fnb_point_sale_base/utils/get_device_details.dart';
+import 'package:fnb_point_sale_base/utils/network_utils.dart';
+import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:get/get.dart';
 
 import '../../../../hold_sales/controller/hold_sales_controller.dart';
@@ -83,20 +95,54 @@ class TopBarController extends GetxController {
 
         ///mDashboardScreenController.selectMenu.value = 5;
         AppAlert.showCustomDialogYesNoLogout(
-            Get.context!, 'Logout!', 'Do you want to log out?', () {
-          logout();
+            Get.context!, 'Logout!', 'Do you want to log out?', () async {
+          mPlaceOrderSaleModel.value =
+              await mPlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
+                  PlaceOrderSaleModel();
+          if (getInValue(mDashboardScreenController.mTobBarModel[3].value) >
+              0) {
+            AppAlert.showCustomDialogOk(Get.context!, 'Alert',
+                'Ensure the hold sale is cleared before initiating the Logout.');
+            return;
+          } else if ((mPlaceOrderSaleModel.value?.mOrderPlace ?? []).isEmpty) {
+            updateLoginStatusApiCall(true);
+          } else {
+            AppAlert.showCustomDialogOk(Get.context!, 'Alert',
+                'Ensure the cart is cleared before initiating the Logout.');
+          }
         });
         break;
       case 2:
-        exit(0);
+        AppAlert.showCustomDialogYesNoLogout(
+            Get.context!,
+            'Logout & Clear Configuration!',
+            'Do you want to Logout & Clear Configuration?', () async {
+          mPlaceOrderSaleModel.value =
+              await mPlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
+                  PlaceOrderSaleModel();
+          if (getInValue(mDashboardScreenController.mTobBarModel[3].value) >
+              0) {
+            AppAlert.showCustomDialogOk(Get.context!, 'Alert',
+                'Ensure the hold sale is cleared before initiating the Logout & Clear Configuration.');
+            return;
+          } else if ((mPlaceOrderSaleModel.value?.mOrderPlace ?? []).isEmpty) {
+            updateLoginStatusApiCall(false);
+          } else {
+            AppAlert.showCustomDialogOk(Get.context!, 'Alert',
+                'Ensure the cart is cleared before initiating the Logout & Clear Configuration');
+          }
+        });
         break;
       case 3:
-        printPdf();
+        exit(0);
         break;
       case 4:
-        _searchPrinterDialog();
+        printPdf();
         break;
       case 5:
+        _searchPrinterDialog();
+        break;
+      case 6:
         _searchSerialPortDevicesDialog();
         break;
     }
@@ -145,10 +191,7 @@ class TopBarController extends GetxController {
   var mPlaceOrderSaleLocalApi = locator.get<PlaceOrderSaleLocalApi>();
 
   allOrderPlace() async {
-    mPlaceOrderSaleModel.value =
-        await mPlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
-            PlaceOrderSaleModel();
-    showTableCount();
+    callGetAllTableStatus();
   }
 
   ///all table
@@ -202,5 +245,128 @@ class TopBarController extends GetxController {
     }
     groupedByDepartment.refresh();
     // debugPrint(groupedByDepartment as String?);
+  }
+
+  Rxn<GetAllTablesByTableStatusResponse> mGetAllTablesStatus =
+      Rxn<GetAllTablesByTableStatusResponse>();
+
+  ///get All TableStatus
+  callGetAllTableStatus() async {
+    try {
+      var configurationLocalApi = locator.get<ConfigurationLocalApi>();
+      ConfigurationResponse mConfigurationResponse =
+          await configurationLocalApi.getConfigurationResponse() ??
+              ConfigurationResponse();
+
+      final orderPlaceApi = locator.get<OrderPlaceApi>();
+      await NetworkUtils()
+          .checkInternetConnection()
+          .then((isInternetAvailable) async {
+        if (isInternetAvailable) {
+          GetAllTablesByTableStatusRequest mGetAllTablesByTableStatusRequest =
+              GetAllTablesByTableStatusRequest(
+                  tableStatus: 'O',
+                  restaurantIDF: (mConfigurationResponse
+                                  .configurationData?.restaurantData ??
+                              [])
+                          .isEmpty
+                      ? ""
+                      : (mConfigurationResponse
+                                  .configurationData?.restaurantData ??
+                              [])
+                          .first
+                          .restaurantIDP,
+                  branchIDF: (mConfigurationResponse
+                                  .configurationData?.branchData ??
+                              [])
+                          .isEmpty
+                      ? ""
+                      : (mConfigurationResponse.configurationData?.branchData ??
+                              [])
+                          .first
+                          .branchIDP);
+
+          WebResponseSuccess mWebResponseSuccess = await orderPlaceApi
+              .postGetAllTablesByTableStatus(mGetAllTablesByTableStatusRequest);
+
+          if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
+            mGetAllTablesStatus.value = mWebResponseSuccess.data;
+            mGetAllTablesStatus.refresh();
+            String totalTable = (mGetAllTablesList.length ?? 0).toString();
+            mDashboardScreenController.mTobBarModel[0].value = totalTable;
+            mDashboardScreenController.mTobBarModel[1].value =
+                (int.parse(totalTable) -
+                        (mGetAllTablesStatus.value?.data?.length ?? 0))
+                    .toString();
+            mDashboardScreenController.mTobBarModel[2].value =
+                (mGetAllTablesStatus.value?.data?.length ?? 0).toString();
+            mDashboardScreenController.mTobBarModel.refresh();
+          } else {
+            mGetAllTablesStatus.value = null;
+            mGetAllTablesStatus.refresh();
+            String totalTable = (mGetAllTablesList.length ?? 0).toString();
+            mDashboardScreenController.mTobBarModel[0].value = totalTable;
+            mDashboardScreenController.mTobBarModel[1].value = totalTable;
+            mDashboardScreenController.mTobBarModel[2].value = 0.toString();
+            mDashboardScreenController.mTobBarModel.refresh();
+            // mGetAllTablesStatus.value = null;
+            // mGetAllTablesStatus.refresh();
+            // offLineCount();
+          }
+        } else {
+          // offLineCount();
+        }
+      });
+    } catch (e) {
+      // offLineCount();
+    }
+  }
+
+  offLineCount() async {
+    mPlaceOrderSaleModel.value =
+        await mPlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
+            PlaceOrderSaleModel();
+    showTableCount();
+  }
+
+  void updateLoginStatusApiCall(bool isLogout) async {
+    DeviceInfo mDeviceInfo = await getDeviceDetails();
+    await NetworkUtils()
+        .checkInternetConnection()
+        .then((isInternetAvailable) async {
+      if (isInternetAvailable) {
+        final localApi = locator.get<LoginApi>();
+        UpdateLoginStatusRequest mUpdateLoginStatusRequest =
+            UpdateLoginStatusRequest(
+                deviceInfo: mDeviceInfo,
+                userIDF: await SharedPrefs().getUserId(),
+                counterIDF: (mConfigurationResponse
+                                .value.configurationData?.counterData ??
+                            [])
+                        .isEmpty
+                    ? ""
+                    : (mConfigurationResponse
+                                .value.configurationData?.counterData ??
+                            [])
+                        .first
+                        .counterIDP,
+                isLoggedIn: false);
+        WebResponseSuccess mWebResponseSuccess =
+            await localApi.postUpdatePOSLoginStatus(mUpdateLoginStatusRequest);
+        if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
+          if (isLogout) {
+            logout();
+          } else {
+            clearConfiguration();
+          }
+        } else {
+          AppAlert.showSnackBar(
+              Get.context!, mWebResponseSuccess.statusMessage ?? '');
+        }
+      } else {
+        AppAlert.showSnackBar(
+            Get.context!, MessageConstants.noInternetConnection);
+      }
+    });
   }
 }

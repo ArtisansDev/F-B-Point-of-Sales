@@ -6,30 +6,36 @@ class TableStatusRequest {
   TableStatusRequest({
       String? seatIDP, 
       String? userIDF, 
+      String? trackingOrderID,
       String? tableStatus,}){
     _seatIDP = seatIDP;
     _userIDF = userIDF;
     _tableStatus = tableStatus;
+    _trackingOrderID = trackingOrderID;
 }
 
   TableStatusRequest.fromJson(dynamic json) {
     _seatIDP = json['SeatIDP'];
     _userIDF = json['UserIDF'];
     _tableStatus = json['TableStatus'];
+    _trackingOrderID = json['TrackingOrderID'];
   }
   String? _seatIDP;
   String? _userIDF;
   String? _tableStatus;
+  String? _trackingOrderID;
 
   String? get seatIDP => _seatIDP;
   String? get userIDF => _userIDF;
   String? get tableStatus => _tableStatus;
+  String? get trackingOrderID => _trackingOrderID;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['SeatIDP'] = _seatIDP;
     map['UserIDF'] = _userIDF;
     map['TableStatus'] = _tableStatus;
+    map['TrackingOrderID'] = _trackingOrderID;
     return map;
   }
 

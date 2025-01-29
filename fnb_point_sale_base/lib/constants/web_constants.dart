@@ -51,6 +51,7 @@ class WebConstants {
   /// Master - all Url
   static String actionLogin =  "Account/operatorLogin";  //post
   static String actionConfiguration =  "Configuration/getConfiguration";  //post
+  static String actionUpdatePOSLoginStatus =  "Account/updatePOSLoginStatus";  //post
 
   ///product
   static String actionGetAllCategory =  "Category/GetAllCategory";  //post
@@ -61,6 +62,7 @@ class WebConstants {
   ///
   static String actionGetAllTables =  "Seat/getAllTables";  //post
   static String actionUpdateTableStatus =  "Seat/UpdateTableStatus";  //post
+  static String actionGetAllTablesByTableStatus =  "Seat/getAllTablesByTableStatus";  //post
   static String actionGetAllPaymentType =  "POSPayment/getPaymentType";  //post
 
   /// CustomerApi

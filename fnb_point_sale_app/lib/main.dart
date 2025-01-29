@@ -6,7 +6,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:fnb_point_sale_app/service/notification_service.dart';
 import 'package:fnb_point_sale_base/data/local/shared_prefs/shared_prefs.dart';
 import 'package:fnb_point_sale_base/data/remote/web_http_overrides.dart';
 import 'package:fnb_point_sale_base/locator.dart';
@@ -19,6 +18,8 @@ const hiveDbPath = 'fnb-pos-data';
 
 
 void main() async {
+
+
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = WebHttpOverrides();
   // await NotificationService.initialize();
@@ -45,14 +46,19 @@ void main() async {
   await dotenv.load(fileName: ".env");
   _disableDebugLogs();
 
-  runApp(
-    // DevicePreview(
-    //   enabled: !kReleaseMode,
-    //   builder: (context) => const
-    // Enable debug paint
+  runZonedGuarded(() {
+    runApp(
+      // DevicePreview(
+      //   enabled: !kReleaseMode,
+      //   builder: (context) => const
+      // Enable debug paint
       const MyAppTheme(), // Wrap your app
-    // ),
-  );
+      // ),
+    );
+  }, (dynamic error, dynamic stack) {
+    // developer.log("Something went wrong!", error: error, stackTrace: stack);
+  });
+
 }
 
 void _disableDebugLogs() {

@@ -25,7 +25,7 @@ class ItemSummaryController extends GetxController {
   ItemSummaryController(OrderHistoryData mOrder, int iIndex) {
     index.value = iIndex;
     mOrderPlace.value = mOrder;
-    remarkController.value.text = mOrderPlace.value.additionalNotes ?? '';
+    remarkController.value.text = mOrderPlace.value.additionalNotes ?? 'No Remark';
     if (Get.isRegistered<DashboardScreenController>()) {
       mDashboardScreenController.value = Get.find<DashboardScreenController>();
     }

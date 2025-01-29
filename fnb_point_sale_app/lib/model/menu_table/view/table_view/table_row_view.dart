@@ -9,13 +9,16 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:fnb_point_sale_base/common/button_constants.dart';
 import 'package:fnb_point_sale_base/common/dynamic_height_grid_view.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
 import 'package:fnb_point_sale_base/data/mode/button_bar/button_bar_model.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_tables/get_all_tables_response.dart';
+import 'package:fnb_point_sale_base/data/mode/table_status/get_all_tables_by_table_status_response.dart';
 import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
+import 'package:fnb_point_sale_base/utils/date_time_utils.dart';
 import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
@@ -36,13 +39,16 @@ class TableRowView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    OrderPlace mOrderPlace =
-        controller.getOrderPlace(mGetAllTablesResponseData.seatIDP ?? '');
+    // OrderPlace mOrderPlace =
+    //     controller.getOrderPlace(mGetAllTablesResponseData.seatIDP ?? '');
+    TablesByTableStatusData mOrderPlace = controller
+        .getTablesByTableStatusData(mGetAllTablesResponseData.seatIDP ?? '');
     return GestureDetector(
       onTap: () {
-        controller.onTableSelectClick(mGetAllTablesResponseData);
+        controller.onTableSelectClick(mGetAllTablesResponseData, mOrderPlace);
       },
       child: Container(
+        height: 24.h,
         decoration: BoxDecoration(
           color: ColorConstants.white,
           borderRadius: BorderRadius.all(
@@ -55,12 +61,14 @@ class TableRowView extends StatelessWidget {
               padding: EdgeInsets.only(
                   top: 11.sp, left: 11.sp, right: 11.sp, bottom: 11.sp),
               decoration: BoxDecoration(
-                color: (mOrderPlace.cartItem ?? []).isNotEmpty
-                    ? Colors.green.withOpacity(0.15)
-                    : (!(mGetAllTablesResponseData.isDeleted ?? false) &&
-                            (mGetAllTablesResponseData.isActive ?? false))
-                        ? ColorConstants.cAppButtonLightColour
-                        : Colors.red.withOpacity(0.15),
+                color:
+                    // (mOrderPlace.cartItem ?? []).isNotEmpty
+                    (mOrderPlace.seatIDP ?? '').isNotEmpty
+                        ? Colors.green.withOpacity(0.15)
+                        : (!(mGetAllTablesResponseData.isDeleted ?? false) &&
+                                (mGetAllTablesResponseData.isActive ?? false))
+                            ? ColorConstants.cAppButtonLightColour
+                            : Colors.red.withOpacity(0.15),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(8.sp),
                   topRight: Radius.circular(8.sp),
@@ -73,13 +81,16 @@ class TableRowView extends StatelessWidget {
                     '${sSeatingNo.tr} ${mGetAllTablesResponseData.seatNumber ?? ''}',
                     style: getText500(
                         size: 11.6.sp,
-                        colors: (mOrderPlace.cartItem ?? []).isNotEmpty
-                            ? Colors.green
-                            : (!(mGetAllTablesResponseData.isDeleted ??
-                                    false) &&
-                                (mGetAllTablesResponseData.isActive ?? false))
-                            ? ColorConstants.cAppButtonColour
-                            : Colors.red),
+                        colors:
+                            // (mOrderPlace.cartItem ?? []).isNotEmpty
+                            (mOrderPlace.seatIDP ?? '').isNotEmpty
+                                ? Colors.green
+                                : (!(mGetAllTablesResponseData.isDeleted ??
+                                            false) &&
+                                        (mGetAllTablesResponseData.isActive ??
+                                            false))
+                                    ? ColorConstants.cAppButtonColour
+                                    : Colors.red),
                   )),
                   Align(
                       alignment: Alignment.centerRight,
@@ -91,10 +102,12 @@ class TableRowView extends StatelessWidget {
                 ],
               ),
             ),
-            Stack(
+            Expanded(
+                child: Stack(
               alignment: Alignment.center,
               children: [
-                (mOrderPlace.cartItem ?? []).isNotEmpty
+                // (mOrderPlace.cartItem ?? []).isNotEmpty
+                (mOrderPlace.seatIDP ?? '').isNotEmpty
                     ? Column(
                         children: [
                           Container(
@@ -108,7 +121,7 @@ class TableRowView extends StatelessWidget {
                                 Expanded(
                                   flex: 1,
                                   child: Text(
-                                    'Order No: ',
+                                    'Order No ',
                                     style: getText300(
                                         size: 11.sp,
                                         colors: ColorConstants.black),
@@ -117,7 +130,8 @@ class TableRowView extends StatelessWidget {
                                 Expanded(
                                   flex: 2,
                                   child: Text(
-                                    mOrderPlace.sOrderNo,
+                                    mOrderPlace.occupiedTrackingOrderID ?? '',
+                                    maxLines: 1,
                                     style: getText500(
                                         size: 11.5.sp,
                                         colors: ColorConstants.cAppTaxColour),
@@ -136,7 +150,7 @@ class TableRowView extends StatelessWidget {
                                 Expanded(
                                   flex: 1,
                                   child: Text(
-                                    'Time: ',
+                                    'Time ',
                                     style: getText300(
                                         size: 11.sp,
                                         colors: ColorConstants.black),
@@ -145,7 +159,8 @@ class TableRowView extends StatelessWidget {
                                 Expanded(
                                   flex: 2,
                                   child: Text(
-                                    mOrderPlace.dateTime ?? '',
+                                    getUTCToLocalDateTime(
+                                        mOrderPlace.orderDate ?? ''),
                                     style: getText500(
                                         size: 11.5.sp,
                                         colors: ColorConstants.cAppTaxColour),
@@ -159,13 +174,13 @@ class TableRowView extends StatelessWidget {
                                 top: 8.sp,
                                 left: 11.sp,
                                 right: 11.sp,
-                                bottom: 11.sp),
+                                bottom: 8.sp),
                             child: Row(
                               children: [
                                 Expanded(
                                   flex: 1,
                                   child: Text(
-                                    'Amount: ',
+                                    'Amount ',
                                     style: getText300(
                                         size: 11.sp,
                                         colors: ColorConstants.black),
@@ -174,7 +189,7 @@ class TableRowView extends StatelessWidget {
                                 Expanded(
                                   flex: 2,
                                   child: Text(
-                                    '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(mOrderPlace.rounOffPrice ?? 0).toStringAsFixed(2)}',
+                                    '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(mOrderPlace.totalPayableAmount ?? 0).toStringAsFixed(2)}',
                                     style: getText500(
                                         size: 11.5.sp,
                                         colors: ColorConstants.cAppTaxColour),
@@ -183,6 +198,88 @@ class TableRowView extends StatelessWidget {
                               ],
                             ),
                           ),
+                          Container(
+                            padding: EdgeInsets.only(
+                                left: 11.sp,
+                                right: 11.sp,
+                                bottom: 9.sp),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    'Order From',
+                                    style: getText300(
+                                        size: 11.sp,
+                                        colors: ColorConstants.black),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    (mOrderPlace.orderSource ?? '1') == '1'
+                                        ? 'APP'
+                                        : (mOrderPlace.orderSource ?? '1') ==
+                                                '2'
+                                            ? 'POS'
+                                            : 'WEB',
+                                    style: getText500(
+                                        size: 11.5.sp,
+                                        colors: ColorConstants.cAppTaxColour),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                              child: Container(
+                            decoration: BoxDecoration(
+                              color:
+                                  // (mOrderPlace.cartItem ?? []).isNotEmpty
+                                  (mOrderPlace.seatIDP ?? '').isNotEmpty
+                                      ? Colors.green.withOpacity(0.15)
+                                      : (!(mGetAllTablesResponseData
+                                                      .isDeleted ??
+                                                  false) &&
+                                              (mGetAllTablesResponseData
+                                                      .isActive ??
+                                                  false))
+                                          ? ColorConstants.cAppButtonLightColour
+                                          : Colors.red.withOpacity(0.15),
+                              borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(8.sp),
+                                bottomLeft: Radius.circular(8.sp),
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                const Expanded(child: SizedBox()),
+                                Visibility(
+                                    visible: mOrderPlace.paymentStatus != 'P',
+                                    child: Container(
+                                        width: 6.w,
+                                        margin: EdgeInsets.only(
+                                            left: 8.sp,
+                                            right: 8.sp,
+                                            top: 8.sp,
+                                            bottom: 8.sp),
+                                        child: rectangleCornerButtonText500(
+                                          boderColor: ColorConstants
+                                              .cAppButtonInviceColour,
+                                          bgColor: ColorConstants
+                                              .cAppButtonInviceColour,
+                                          textColor: ColorConstants
+                                              .cAppTextInviceColour,
+                                          height: 17.5.sp,
+                                          textSize: 10.sp,
+                                          sClear.tr,
+                                          () {
+                                            controller.onClear(mOrderPlace);
+                                          },
+                                        ))),
+                              ],
+                            ),
+                          ))
                         ],
                       )
                     : Container(
@@ -234,7 +331,7 @@ class TableRowView extends StatelessWidget {
                         ),
                       )
               ],
-            )
+            ))
           ],
         ),
       ),

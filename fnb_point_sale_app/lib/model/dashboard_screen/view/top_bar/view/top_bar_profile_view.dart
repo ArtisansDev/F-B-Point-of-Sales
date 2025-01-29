@@ -111,7 +111,7 @@ class TopBarProfileView extends StatelessWidget {
           PopupMenuItem(
             value: 2,
             child: Text(
-              'Exit',
+              'Logout & Clear Configuration',
               style: getTextRegular(
                   size: 12.5.sp, colors: ColorConstants.cAppColors),
             ),
@@ -119,7 +119,7 @@ class TopBarProfileView extends StatelessWidget {
           PopupMenuItem(
             value: 3,
             child: Text(
-              'Test Manual Print',
+              'Exit',
               style: getTextRegular(
                   size: 12.5.sp, colors: ColorConstants.cAppColors),
             ),
@@ -127,13 +127,21 @@ class TopBarProfileView extends StatelessWidget {
           PopupMenuItem(
             value: 4,
             child: Text(
-              'Printer Settings',
+              'Test Manual Print',
               style: getTextRegular(
                   size: 12.5.sp, colors: ColorConstants.cAppColors),
             ),
           ),
           PopupMenuItem(
             value: 5,
+            child: Text(
+              'Printer Settings',
+              style: getTextRegular(
+                  size: 12.5.sp, colors: ColorConstants.cAppColors),
+            ),
+          ),
+          PopupMenuItem(
+            value: 6,
             child: Text(
               'Config Serial Port Devices',
               style: getTextRegular(

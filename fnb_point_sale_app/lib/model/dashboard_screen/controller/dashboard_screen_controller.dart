@@ -30,6 +30,7 @@ import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:get/get.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 
+import '../../../service/periodic_service.dart';
 import '../../menu_customer/controller/customer_controller.dart';
 import '../../menu_customer/view/customer_screen.dart';
 import '../../menu_home/view/home_screen.dart';
@@ -316,6 +317,7 @@ class DashboardScreenController extends GetxController {
   }
 
   RxString sDownloadText = ''.obs;
+  // Rxn<PeriodicService> mPeriodicService = Rxn<PeriodicService>();
 
   onSync() async {
     if (Get.isRegistered<SelectedOrderController>()) {
@@ -494,5 +496,9 @@ class DashboardScreenController extends GetxController {
       AppAlert.showSnackBar(
           Get.context!, 'downloadTableList failed with exception $e');
     }
+  }
+
+  void onRefreshTable() {
+    setTopBarValue(0,1);
   }
 }

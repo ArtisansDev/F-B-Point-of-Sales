@@ -39,7 +39,6 @@ class TableView extends StatelessWidget {
           children: controller.groupedByDepartment.entries.map((entry) {
             final department = entry.key;
             final mGetAllTablesResponseList = entry.value;
-
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

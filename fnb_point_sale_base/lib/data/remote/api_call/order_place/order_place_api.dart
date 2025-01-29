@@ -7,4 +7,5 @@ mixin OrderPlaceApi {
   Future<WebResponseSuccess> postOrderPlace(dynamic exhibitorsListRequest);
   Future<WebResponseSuccess> postOrderHistory(dynamic exhibitorsListRequest);
   Future<WebResponseSuccess> postTableStatus(dynamic exhibitorsListRequest);
+  Future<WebResponseSuccess> postGetAllTablesByTableStatus(dynamic exhibitorsListRequest);
 }
