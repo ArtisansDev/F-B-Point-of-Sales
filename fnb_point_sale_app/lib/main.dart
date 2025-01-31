@@ -46,7 +46,7 @@ void main() async {
   await dotenv.load(fileName: ".env");
   _disableDebugLogs();
 
-  runZonedGuarded(() {
+  // runZonedGuarded(() {
     runApp(
       // DevicePreview(
       //   enabled: !kReleaseMode,
@@ -55,9 +55,9 @@ void main() async {
       const MyAppTheme(), // Wrap your app
       // ),
     );
-  }, (dynamic error, dynamic stack) {
+  // }, (dynamic error, dynamic stack) {
     // developer.log("Something went wrong!", error: error, stackTrace: stack);
-  });
+  // });
 
 }
 

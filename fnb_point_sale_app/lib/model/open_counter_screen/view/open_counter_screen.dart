@@ -191,10 +191,8 @@ class OpenCounterScreen extends GetView<OpenCounterController> {
               alignment: Alignment.topRight,
               child: GestureDetector(
                 onTap: () {
-                  AppAlert.showCustomDialogYesNoLogout(
-                      Get.context!, 'Logout!', 'Do you want to log out?', () {
-                    logout();
-                  });
+                  controller.logOutCall();
+
                 },
                 child: Container(
                   width: 9.5.w,

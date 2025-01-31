@@ -61,9 +61,9 @@ class TableRowView extends StatelessWidget {
               padding: EdgeInsets.only(
                   top: 11.sp, left: 11.sp, right: 11.sp, bottom: 11.sp),
               decoration: BoxDecoration(
-                color:
-                    // (mOrderPlace.cartItem ?? []).isNotEmpty
-                    (mOrderPlace.seatIDP ?? '').isNotEmpty
+                color: (mOrderPlace.paymentStatus == 'C')
+                    ? Colors.red.withOpacity(0.25)
+                    : (mOrderPlace.seatIDP ?? '').isNotEmpty
                         ? Colors.green.withOpacity(0.15)
                         : (!(mGetAllTablesResponseData.isDeleted ?? false) &&
                                 (mGetAllTablesResponseData.isActive ?? false))
@@ -81,9 +81,9 @@ class TableRowView extends StatelessWidget {
                     '${sSeatingNo.tr} ${mGetAllTablesResponseData.seatNumber ?? ''}',
                     style: getText500(
                         size: 11.6.sp,
-                        colors:
-                            // (mOrderPlace.cartItem ?? []).isNotEmpty
-                            (mOrderPlace.seatIDP ?? '').isNotEmpty
+                        colors: (mOrderPlace.paymentStatus == 'C')
+                            ? Colors.red
+                            : (mOrderPlace.seatIDP ?? '').isNotEmpty
                                 ? Colors.green
                                 : (!(mGetAllTablesResponseData.isDeleted ??
                                             false) &&
@@ -200,9 +200,7 @@ class TableRowView extends StatelessWidget {
                           ),
                           Container(
                             padding: EdgeInsets.only(
-                                left: 11.sp,
-                                right: 11.sp,
-                                bottom: 9.sp),
+                                left: 11.sp, right: 11.sp, bottom: 9.sp),
                             child: Row(
                               children: [
                                 Expanded(
@@ -234,9 +232,9 @@ class TableRowView extends StatelessWidget {
                           Expanded(
                               child: Container(
                             decoration: BoxDecoration(
-                              color:
-                                  // (mOrderPlace.cartItem ?? []).isNotEmpty
-                                  (mOrderPlace.seatIDP ?? '').isNotEmpty
+                              color: (mOrderPlace.paymentStatus == 'C')
+                                  ? Colors.red.withOpacity(0.25)
+                                  : (mOrderPlace.seatIDP ?? '').isNotEmpty
                                       ? Colors.green.withOpacity(0.15)
                                       : (!(mGetAllTablesResponseData
                                                       .isDeleted ??
@@ -253,7 +251,11 @@ class TableRowView extends StatelessWidget {
                             ),
                             child: Row(
                               children: [
-                                const Expanded(child: SizedBox()),
+                                 Expanded(child: Container(
+                                  child: (mOrderPlace.paymentStatus == 'C')
+                                      ?Text('Order Cancel'):SizedBox(),
+                                   padding: EdgeInsets.only(left: 10.sp),
+                                )),
                                 Visibility(
                                     visible: mOrderPlace.paymentStatus != 'P',
                                     child: Container(
@@ -264,11 +266,14 @@ class TableRowView extends StatelessWidget {
                                             top: 8.sp,
                                             bottom: 8.sp),
                                         child: rectangleCornerButtonText500(
-                                          boderColor: ColorConstants
+                                          boderColor: (mOrderPlace.paymentStatus == 'C')
+                                              ? Colors.red.withOpacity(0.05): ColorConstants
                                               .cAppButtonInviceColour,
-                                          bgColor: ColorConstants
+                                          bgColor:  (mOrderPlace.paymentStatus == 'C')
+                                              ? Colors.red.withOpacity(0.35):ColorConstants
                                               .cAppButtonInviceColour,
-                                          textColor: ColorConstants
+                                          textColor:  (mOrderPlace.paymentStatus == 'C')
+                                              ? Colors.red:ColorConstants
                                               .cAppTextInviceColour,
                                           height: 17.5.sp,
                                           textSize: 10.sp,

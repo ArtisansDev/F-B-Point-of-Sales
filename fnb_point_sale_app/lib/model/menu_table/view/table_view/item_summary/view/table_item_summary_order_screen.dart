@@ -272,6 +272,24 @@ class TableItemSummaryOrderScreen extends GetView<TableItemSummaryController> {
                           ),
                         )
                       : const Text("You can't able to modify this order")),
+              Visibility(
+                  visible: (controller.mOrderPlace.value.paymentStatus == 'C'),
+                  child: Container(
+                    margin: EdgeInsets.only(top: 8.sp, left: 8.sp, right: 8.sp),
+                    padding: EdgeInsets.all(8.sp),
+                    decoration: BoxDecoration(
+                      color: ColorConstants.red.withOpacity(0.25),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8.sp),
+                      ),
+                    ),
+                    alignment: Alignment.center,
+                    child:  Text(
+                      'This order canceled',
+                      style: getText500(
+                          size: 11.5.sp, colors: ColorConstants.red),
+                    ),
+                  )),
 
               ///BottomView
               TableItemSummaryBottomView()

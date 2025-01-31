@@ -7,6 +7,8 @@ import 'package:fnb_point_sale_base/alert/app_alert.dart';
 import 'package:fnb_point_sale_base/constants/message_constants.dart';
 import 'package:fnb_point_sale_base/constants/web_constants.dart';
 import 'package:fnb_point_sale_base/data/local/database/configuration/configuration_local_api.dart';
+import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
+import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_model.dart';
 import 'package:fnb_point_sale_base/data/local/shared_prefs/shared_prefs.dart';
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/data/mode/update_balance/closing_balance/closing_balance_request.dart';
@@ -93,6 +95,11 @@ class ShiftDetailsController extends GetxController {
             counterBalanceHistoryIDF: sHistoryID);
         WebResponseSuccess mWebResponseSuccess =
             await localApi.postShiftDetails(mShiftDetailsRequest);
+        var mPlaceOrderSaleLocalApi = locator.get<PlaceOrderSaleLocalApi>();
+        Rxn<PlaceOrderSaleModel> mPlaceOrderSaleModel = Rxn<PlaceOrderSaleModel>();
+        mPlaceOrderSaleModel.value =
+            await mPlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
+                PlaceOrderSaleModel();
         if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
           mShiftDetailsResponse.value = mWebResponseSuccess.data;
 
@@ -101,7 +108,7 @@ class ShiftDetailsController extends GetxController {
           if (isShiftClose.value) {
             sMessage.value =
                 "Please complete your sale then you can go for shift close";
-          } else if(getInValue(mDashboardScreenController.mTobBarModel[2].value)>0){
+          } else if ((mPlaceOrderSaleModel.value?.mOrderPlace ?? []).isNotEmpty) {
             sMessage.value =
             "Please complete your sale then you can go for shift close";
           } else if(getInValue(mDashboardScreenController.mTobBarModel[3].value)>0){

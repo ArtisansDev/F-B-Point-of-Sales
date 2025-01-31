@@ -123,15 +123,14 @@ class AppAlert {
                                         BorderRadius.circular(12.sp),
                                       ),
                                       child: rectangleCornerButtonText600(
-                                          leftText ?? 'Cancel', () {
+                                          rightText ?? 'Log Out', () {
                                         Navigator.pop(context);
+                                        onCall();
                                       },
-                                          bgColor: Colors.white,
+                                          bgColor:
+                                          ColorConstants.cAppButtonColour,
                                           textSize: 11.5.sp,
-                                          boderColor: ColorConstants
-                                              .cAppButtonColour,
-                                          textColor: ColorConstants
-                                              .cAppButtonColour))),
+                                          textColor: Colors.white))),
                               SizedBox(
                                 width: 13.sp,
                               ),
@@ -144,14 +143,15 @@ class AppAlert {
                                         BorderRadius.circular(12.sp),
                                       ),
                                       child: rectangleCornerButtonText600(
-                                          rightText ?? 'Log Out', () {
+                                          leftText ?? 'Cancel', () {
                                         Navigator.pop(context);
-                                        onCall();
                                       },
-                                          bgColor:
-                                          ColorConstants.cAppButtonColour,
+                                          bgColor: Colors.white,
                                           textSize: 11.5.sp,
-                                          textColor: Colors.white))),
+                                          boderColor: ColorConstants
+                                              .cAppButtonColour,
+                                          textColor: ColorConstants
+                                              .cAppButtonColour))),
                             ],
                           ))
                     ],
