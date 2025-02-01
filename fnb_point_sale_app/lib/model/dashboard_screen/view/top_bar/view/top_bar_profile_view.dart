@@ -108,14 +108,14 @@ class TopBarProfileView extends StatelessWidget {
                   size: 12.5.sp, colors: ColorConstants.cAppColors),
             ),
           ),
-          PopupMenuItem(
-            value: 2,
-            child: Text(
-              'Logout & Clear Configuration',
-              style: getTextRegular(
-                  size: 12.5.sp, colors: ColorConstants.cAppColors),
-            ),
-          ),
+          // PopupMenuItem(
+          //   value: 2,
+          //   child: Text(
+          //     'Logout & Clear Configuration',
+          //     style: getTextRegular(
+          //         size: 12.5.sp, colors: ColorConstants.cAppColors),
+          //   ),
+          // ),
           PopupMenuItem(
             value: 3,
             child: Text(
