@@ -112,37 +112,37 @@ class TopBarController extends GetxController {
           }
         });
         break;
-      // case 2:
-      //   AppAlert.showCustomDialogYesNoLogout(
-      //       Get.context!,
-      //       'Logout & Clear Configuration!',
-      //       'Do you want to Logout & Clear Configuration?', () async {
-      //     mPlaceOrderSaleModel.value =
-      //         await mPlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
-      //             PlaceOrderSaleModel();
-      //     if (getInValue(mDashboardScreenController.mTobBarModel[3].value) >
-      //         0) {
-      //       AppAlert.showCustomDialogOk(Get.context!, 'Alert',
-      //           'Ensure the hold sale is cleared before initiating the Logout & Clear Configuration.');
-      //       return;
-      //     } else if ((mPlaceOrderSaleModel.value?.mOrderPlace ?? []).isEmpty) {
-      //       updateLoginStatusApiCall(false);
-      //     } else {
-      //       AppAlert.showCustomDialogOk(Get.context!, 'Alert',
-      //           'Ensure the cart is cleared before initiating the Logout & Clear Configuration');
-      //     }
-      //   });
-      //   break;
       case 2:
-        exit(0);
+        AppAlert.showCustomDialogYesNoLogout(
+            Get.context!,
+            'Logout & Clear Configuration!',
+            'Do you want to Logout & Clear Configuration?', () async {
+          mPlaceOrderSaleModel.value =
+              await mPlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
+                  PlaceOrderSaleModel();
+          if (getInValue(mDashboardScreenController.mTobBarModel[3].value) >
+              0) {
+            AppAlert.showCustomDialogOk(Get.context!, 'Alert',
+                'Ensure the hold sale is cleared before initiating the Logout & Clear Configuration.');
+            return;
+          } else if ((mPlaceOrderSaleModel.value?.mOrderPlace ?? []).isEmpty) {
+            updateLoginStatusApiCall(false);
+          } else {
+            AppAlert.showCustomDialogOk(Get.context!, 'Alert',
+                'Ensure the cart is cleared before initiating the Logout & Clear Configuration');
+          }
+        });
         break;
       case 3:
-        printPdf();
+        exit(0);
         break;
       case 4:
-        _searchPrinterDialog();
+        printPdf();
         break;
       case 5:
+        _searchPrinterDialog();
+        break;
+      case 6:
         _searchSerialPortDevicesDialog();
         break;
     }
