@@ -136,13 +136,13 @@ class SelectedOrderList extends StatelessWidget {
                                                 mCartItem.placeOrder ?? false,
                                             count: mCartItem.count,
                                             priceIncDec: (value) {
-                                              if (!mCartItem.placeOrder) {
+                                              // if (!mCartItem.placeOrder) {
                                                 controller
                                                     .onCalculateTotalPricePerItem(
                                                         value,
                                                         index,
                                                         mCartItem);
-                                              }
+                                              // }
                                             })),
                                     Expanded(
                                         flex: 4,
@@ -183,9 +183,12 @@ class SelectedOrderList extends StatelessWidget {
               width: 15.5.sp,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.sp),
-                  color: placeOrder ?? false
-                      ? ColorConstants.appEditText
-                      : ColorConstants.cAppButtonColour),
+                  color:
+                  // placeOrder ?? false
+                  //     ? ColorConstants.appEditText
+                  //     :
+                  ColorConstants.cAppButtonColour
+              ),
               child: IconButton(
                 padding: EdgeInsets.zero,
                 icon: const Icon(Icons.remove),
@@ -209,9 +212,12 @@ class SelectedOrderList extends StatelessWidget {
                 width: 15.5.sp,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.sp),
-                    color: placeOrder ?? false
-                        ? ColorConstants.appEditText
-                        : ColorConstants.cAppButtonColour),
+                    color:
+                    // placeOrder ?? false
+                    //     ? ColorConstants.appEditText
+                    //     :
+                    ColorConstants.cAppButtonColour
+                ),
                 child: IconButton(
                   padding: EdgeInsets.zero,
                   icon: const Icon(Icons.add),

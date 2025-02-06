@@ -42,7 +42,6 @@ class TableItemSummaryController extends GetxController {
     AppAlert.showCustomDialogYesNoLogout(Get.context!, 'Cancel Order!',
         'Are you sure you want to cancel this order?', () async {
       Get.back();
-
       await mTableController.orderCancelPayment(mOrderPlace.value);
     }, rightText: 'Yes');
   }
@@ -75,9 +74,20 @@ class TableItemSummaryController extends GetxController {
     if ((mSelectOrderPlace.sOrderNo ?? '').isNotEmpty) {
       mDashboardScreenController.value?.mOrderPlace.value =
           getOrderPlace(mOrderPlace.value.seatIDF ?? '');
-      Get.back();
-      mDashboardScreenController.value?.selectMenu.value = 0;
-      mDashboardScreenController.value?.selectMenu.refresh();
+      if ((mDashboardScreenController.value?.mOrderPlace.value?.cartItem ?? [])
+          .isNotEmpty) {
+        mDashboardScreenController.value?.mOrderHistoryPlace.value = null;
+        Get.back();
+        mDashboardScreenController.value?.selectMenu.value = 0;
+        mDashboardScreenController.value?.selectMenu.refresh();
+      } else {
+        mDashboardScreenController.value?.mOrderPlace.value = null;
+        mDashboardScreenController.value?.mOrderHistoryPlace.value =
+            mOrderPlace.value;
+        Get.back();
+        mDashboardScreenController.value?.selectMenu.value = 0;
+        mDashboardScreenController.value?.selectMenu.refresh();
+      }
     }
   }
 

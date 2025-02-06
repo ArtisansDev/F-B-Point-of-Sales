@@ -14,12 +14,15 @@ import 'package:fnb_point_sale_base/constants/web_constants.dart';
 import 'package:fnb_point_sale_base/data/local/database/configuration/configuration_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/offline_place_order/offline_place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
+import 'package:fnb_point_sale_base/data/local/shared_prefs/shared_prefs.dart';
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/data/mode/customer/get_all_customer/get_all_customer_response.dart';
 import 'package:fnb_point_sale_base/data/mode/order_history/order_history_request.dart';
 import 'package:fnb_point_sale_base/data/mode/order_history/order_history_response.dart';
 import 'package:fnb_point_sale_base/data/mode/order_place/process_multiple_orders_request.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_payment_type/get_all_payment_type_response.dart';
+import 'package:fnb_point_sale_base/data/mode/table_status/get_all_tables_by_table_status_response.dart';
+import 'package:fnb_point_sale_base/data/mode/table_status/table_status_request.dart';
 import 'package:fnb_point_sale_base/data/remote/api_call/order_place/order_place_api.dart';
 import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
@@ -312,6 +315,14 @@ class MenuSalesController extends GetxController {
     await mDashboardScreenController.onUpdateHoldSale();
     await mTopBarController.allOrderPlace();
     await callOrderHistory();
+    ///clear table
+    if((mOrderDetailList.tableNo??"").isNotEmpty) {
+      TablesByTableStatusData mTablesByTableStatusData = TablesByTableStatusData(
+        occupiedOrderID: mOrderDetailList.trackingOrderID ?? '',
+        seatIDP: mOrderDetailList.seatIDF ?? '',
+      );
+      await callUpdateTableStatus(mTablesByTableStatusData);
+    }
   }
 
   ///
@@ -342,6 +353,15 @@ class MenuSalesController extends GetxController {
     await mDashboardScreenController.onUpdateHoldSale();
     await mTopBarController.allOrderPlace();
     await callOrderHistory();
+
+    ///clear table
+    if((mOrderDetailList.tableNo??"").isNotEmpty) {
+      TablesByTableStatusData mTablesByTableStatusData = TablesByTableStatusData(
+        occupiedOrderID: mOrderDetailList.trackingOrderID ?? '',
+        seatIDP: mOrderDetailList.seatIDF ?? '',
+      );
+      await callUpdateTableStatus(mTablesByTableStatusData);
+    }
   }
 
   ///SaveOrder
@@ -361,8 +381,9 @@ class MenuSalesController extends GetxController {
               await orderPlaceApi.postOrderPlace(mProcessMultipleOrdersRequest);
           if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
             ///print....
-            printOrderPayment(mOrderDetailList, mOrderHistory);
-
+            if(!isCancel) {
+              await printOrderPayment(mOrderDetailList, mOrderHistory);
+            }
             ///remove from local data base
             if (isPayment) {
               var mPlaceOrderSaleLocalApi =
@@ -411,6 +432,38 @@ class MenuSalesController extends GetxController {
       AppAlert.showSnackBar(
           Get.context!, 'downloadTableList failed with exception $e');
     }
+  }
+
+  ///update table status
+  callUpdateTableStatus(
+      TablesByTableStatusData mTablesByTableStatusData) async {
+    ///api product call
+    final orderPlaceApi = locator.get<OrderPlaceApi>();
+    await NetworkUtils()
+        .checkInternetConnection()
+        .then((isInternetAvailable) async {
+      if (isInternetAvailable) {
+        TableStatusRequest mTableStatusRequest = TableStatusRequest(
+            trackingOrderID:
+            mTablesByTableStatusData.occupiedTrackingOrderID ?? '',
+            tableStatus: 'A',
+            seatIDP: mTablesByTableStatusData.seatIDP,
+            userIDF: await SharedPrefs().getUserId());
+
+        WebResponseSuccess mWebResponseSuccess =
+        await orderPlaceApi.postTableStatus(mTableStatusRequest);
+
+        if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
+          // onRefresh();
+        } else {
+          AppAlert.showSnackBar(
+              Get.context!, mWebResponseSuccess.statusMessage ?? '');
+        }
+      } else {
+        AppAlert.showSnackBar(
+            Get.context!, MessageConstants.noInternetConnection);
+      }
+    });
   }
 
   ///print

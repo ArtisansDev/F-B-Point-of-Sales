@@ -284,10 +284,10 @@ class TableItemSummaryOrderScreen extends GetView<TableItemSummaryController> {
                       ),
                     ),
                     alignment: Alignment.center,
-                    child:  Text(
+                    child: Text(
                       'This order canceled',
-                      style: getText500(
-                          size: 11.5.sp, colors: ColorConstants.red),
+                      style:
+                          getText500(size: 11.5.sp, colors: ColorConstants.red),
                     ),
                   )),
 

@@ -137,9 +137,9 @@ class ItemSummaryOrderScreen extends GetView<ItemSummaryController> {
                               width: 10.sp,
                             ),
                             Expanded(
-                                flex: 3,
+                                flex: 4,
                                 child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Text(

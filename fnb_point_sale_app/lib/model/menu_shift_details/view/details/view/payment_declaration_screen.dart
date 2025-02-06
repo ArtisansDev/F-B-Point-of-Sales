@@ -97,31 +97,31 @@ class PaymentDeclarationScreen extends StatelessWidget {
                 ),
                 Expanded(
                     child: Container(
-                  padding: EdgeInsets.all(11.sp),
-                  decoration: BoxDecoration(
-                    color: ColorConstants.cShiftDetailsColour2,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(8.sp),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        sBookingPayment.tr,
-                        style: getText500(
-                            size: 11.sp, colors: ColorConstants.black),
-                      ),
-                      SizedBox(
-                        height: 8.sp,
-                      ),
-                      Text(
-                        '${controller.mShiftDetailsController.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} 0.00',
-                        style: getText500(
-                            size: 11.sp, colors: ColorConstants.black),
-                      ),
-                    ],
-                  ),
+                  // padding: EdgeInsets.all(11.sp),
+                  // decoration: BoxDecoration(
+                  //   color: ColorConstants.cShiftDetailsColour2,
+                  //   borderRadius: BorderRadius.all(
+                  //     Radius.circular(8.sp),
+                  //   ),
+                  // ),
+                  // child: Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Text(
+                  //       sBookingPayment.tr,
+                  //       style: getText500(
+                  //           size: 11.sp, colors: ColorConstants.black),
+                  //     ),
+                  //     SizedBox(
+                  //       height: 8.sp,
+                  //     ),
+                  //     Text(
+                  //       '${controller.mShiftDetailsController.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} 0.00',
+                  //       style: getText500(
+                  //           size: 11.sp, colors: ColorConstants.black),
+                  //     ),
+                  //   ],
+                  // ),
                 )),
               ],
             ),

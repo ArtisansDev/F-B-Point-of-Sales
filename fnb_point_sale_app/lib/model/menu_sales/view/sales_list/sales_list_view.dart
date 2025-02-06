@@ -65,7 +65,7 @@ class SalesListView extends StatelessWidget {
                               width: 15.sp,
                             ),
                             Expanded(
-                                flex: 8,
+                                flex: 7,
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
@@ -77,7 +77,7 @@ class SalesListView extends StatelessWidget {
                                   ),
                                 )),
                             Expanded(
-                                flex: 8,
+                                flex: 7,
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: Text(
@@ -89,7 +89,19 @@ class SalesListView extends StatelessWidget {
                                   ),
                                 )),
                             Expanded(
-                                flex: 8,
+                                flex: 7,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    sPhoneNumber.tr,
+                                    style: getText600(
+                                        colors:
+                                        ColorConstants.appTextSalesHader,
+                                        size: 11.sp),
+                                  ),
+                                )),
+                            Expanded(
+                                flex: 7,
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: Text(
@@ -101,7 +113,7 @@ class SalesListView extends StatelessWidget {
                                   ),
                                 )),
                             Expanded(
-                                flex: 6,
+                                flex: 4,
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: Text(
@@ -125,7 +137,7 @@ class SalesListView extends StatelessWidget {
                                   ),
                                 )),
                             Expanded(
-                                flex: 6,
+                                flex: 5,
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: Text(

@@ -87,51 +87,51 @@ class TransactionInfoScreen extends StatelessWidget {
               SizedBox(
                 width: 10.sp,
               ),
-              Expanded(
-                  child: Container(
-                padding: EdgeInsets.all(11.sp),
-                decoration: BoxDecoration(
-                  color: ColorConstants.cShiftDetailsColour2,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(8.sp),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(11.sp),
-                      height: 21.sp,
-                      width: 21.sp,
-                      decoration: BoxDecoration(
-                        color: ColorConstants.white,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8.sp),
-                        ),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        (controller.mShiftDetailsController.mShiftDetailsResponse
-                            .value.data?.refundCount ??0).toString(),
-                        style:
-                        getText500(size: 11.5.sp, colors: ColorConstants.black),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 11.sp,
-                    ),
-                    Text(
-                      sRefund.tr,
-                      style:
-                      getText500(size: 11.sp, colors: ColorConstants.black),
-                    ),
-                  ],
-                ),
-              )),
-              SizedBox(
-                width: 10.sp,
-              ),
+              // Expanded(
+              //     child: Container(
+              //   padding: EdgeInsets.all(11.sp),
+              //   decoration: BoxDecoration(
+              //     color: ColorConstants.cShiftDetailsColour2,
+              //     borderRadius: BorderRadius.all(
+              //       Radius.circular(8.sp),
+              //     ),
+              //   ),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children: [
+              //       Container(
+              //         padding: EdgeInsets.all(11.sp),
+              //         height: 21.sp,
+              //         width: 21.sp,
+              //         decoration: BoxDecoration(
+              //           color: ColorConstants.white,
+              //           borderRadius: BorderRadius.all(
+              //             Radius.circular(8.sp),
+              //           ),
+              //         ),
+              //         alignment: Alignment.center,
+              //         child: Text(
+              //           (controller.mShiftDetailsController.mShiftDetailsResponse
+              //               .value.data?.refundCount ??0).toString(),
+              //           style:
+              //           getText500(size: 11.5.sp, colors: ColorConstants.black),
+              //         ),
+              //       ),
+              //       SizedBox(
+              //         width: 11.sp,
+              //       ),
+              //       Text(
+              //         sRefund.tr,
+              //         style:
+              //         getText500(size: 11.sp, colors: ColorConstants.black),
+              //       ),
+              //     ],
+              //   ),
+              // )),
+              // SizedBox(
+              //   width: 10.sp,
+              // ),
               Expanded(
                   child: Container(
                 padding: EdgeInsets.all(11.sp),

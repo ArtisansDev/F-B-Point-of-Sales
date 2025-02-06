@@ -41,22 +41,11 @@ class SalesListRowView extends StatelessWidget {
           EdgeInsets.only(top: 11.sp, left: 11.sp, right: 11.sp, bottom: 11.sp),
       child: Row(
         children: [
-          Container(
-            padding: EdgeInsets.all(5.sp),
-            alignment: Alignment.center,
-            // decoration: const BoxDecoration(
-            //   color: ColorConstants.cAppButtonColour,
-            //   shape: BoxShape.circle,
-            // ),
+          SizedBox(
             width: 15.sp,
-            // child: Icon(
-            //   Icons.add,
-            //   color: ColorConstants.white,
-            //   size: 14.sp,
-            // ),
           ),
           Expanded(
-              flex: 8,
+              flex: 7,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -66,7 +55,7 @@ class SalesListRowView extends StatelessWidget {
                 ),
               )),
           Expanded(
-              flex: 8,
+              flex: 7,
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
@@ -78,7 +67,19 @@ class SalesListRowView extends StatelessWidget {
                 ),
               )),
           Expanded(
-              flex: 8,
+              flex: 7,
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  (mOrderHistoryData.phoneNumber ?? '').isEmpty
+                      ? '--'
+                      : '${mOrderHistoryData.phoneCountryCode ?? ' '} ${mOrderHistoryData.phoneNumber ?? ' '}',
+                  style: getTextRegular(
+                      colors: ColorConstants.appTextSalesHader, size: 11.sp),
+                ),
+              )),
+          Expanded(
+              flex: 7,
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
@@ -88,7 +89,7 @@ class SalesListRowView extends StatelessWidget {
                 ),
               )),
           Expanded(
-              flex: 6,
+              flex: 4,
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
@@ -110,7 +111,7 @@ class SalesListRowView extends StatelessWidget {
                 ),
               )),
           Expanded(
-              flex: 6,
+              flex: 5,
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
@@ -251,8 +252,8 @@ class SalesListRowView extends StatelessWidget {
                           margin: EdgeInsets.only(right: 10.sp),
                           padding: EdgeInsets.all(8.5.sp),
                         ),
-                  (mOrderHistoryData.paymentStatus == 'S' ||
-                          mOrderHistoryData.paymentStatus == 'C')
+                  (mOrderHistoryData.paymentStatus == 'S' &&
+                          mOrderHistoryData.paymentStatus != 'C')
                       ? GestureDetector(
                           onTap: () {
                             controller.onPrint(index);

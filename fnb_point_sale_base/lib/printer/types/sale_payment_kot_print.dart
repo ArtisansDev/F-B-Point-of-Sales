@@ -30,7 +30,7 @@ Future<bool> printSalePaymentKot(OrderHistoryData mOrderHistoryData,
 
   List<pw.Widget> widgets = List.empty(growable: true);
   widgets.add(pw.Center(
-      child: pw.Text('Payment Receipt', style: getBoldTextStyleMedium())));
+      child: pw.Text('Order Confirmation', style: getBoldTextStyleMedium())));
   widgets.add(pw.Container(height: 4));
   widgets.add(
       pw.Center(child: pw.Text(branchName, style: getBoldTextStyleMedium())));
@@ -53,6 +53,10 @@ Future<bool> printSalePaymentKot(OrderHistoryData mOrderHistoryData,
 
   ///table
   widgets.add(getTableRow(mOrderHistoryData));
+  ///user details
+  if((mOrderHistoryData.phoneNumber??'').isNotEmpty) {
+    widgets.add(getUserDetailsRow(mOrderHistoryData));
+  }
   widgets.add(pw.Container(height: 4));
   widgets.add(mySeparator());
   widgets.add(pw.Container(height: 4));
@@ -141,6 +145,61 @@ pw.Widget getTableRow(OrderHistoryData mOrderHistoryData) {
           ),
         )),
   ]);
+}
+
+///UserDetails
+pw.Widget getUserDetailsRow(OrderHistoryData mOrderDetailList) {
+  return
+    pw.Column(
+        children: [
+          pw.Row(
+            children: [
+              pw.Expanded(
+                  flex: 2,
+                  child: pw.Container(
+                    padding: const pw.EdgeInsets.all(2.0),
+                    child: pw.Align(
+                      alignment: pw.Alignment.centerLeft,
+                      child: pw.Text("${sCustomerName.tr}:-", style: getNormalTextStyle()),
+                    ),
+                  )),
+              pw.Expanded(
+                  flex: 3,
+                  child: pw.Container(
+                    padding: const pw.EdgeInsets.all(2.0),
+                    child: pw.Align(
+                      alignment: pw.Alignment.centerRight,
+                      child: pw.Text(mOrderDetailList.name ?? '--',
+                          style: getBoldTextStyle()),
+                    ),
+                  )),
+            ],
+          ),
+          pw.Row(
+            children: [
+              pw.Expanded(
+                  flex: 2,
+                  child: pw.Container(
+                    padding: const pw.EdgeInsets.all(2.0),
+                    child: pw.Align(
+                      alignment: pw.Alignment.centerLeft,
+                      child: pw.Text("${sPhoneNumber.tr}:-", style: getNormalTextStyle()),
+                    ),
+                  )),
+              pw.Expanded(
+                  flex: 3,
+                  child: pw.Container(
+                    padding: const pw.EdgeInsets.all(2.0),
+                    child: pw.Align(
+                      alignment: pw.Alignment.centerRight,
+                      child: pw.Text(mOrderDetailList.phoneNumber ?? '--',
+                          style: getBoldTextStyle()),
+                    ),
+                  )),
+            ],
+          )
+        ]
+    );
 }
 
 ///item list

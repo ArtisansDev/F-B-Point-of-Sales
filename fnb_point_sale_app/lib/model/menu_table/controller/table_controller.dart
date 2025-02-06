@@ -7,11 +7,8 @@ import 'package:fnb_point_sale_base/alert/app_alert.dart';
 import 'package:fnb_point_sale_base/constants/message_constants.dart';
 import 'package:fnb_point_sale_base/constants/web_constants.dart';
 import 'package:fnb_point_sale_base/data/local/database/configuration/configuration_local_api.dart';
-import 'package:fnb_point_sale_base/data/local/database/offline_place_order/offline_place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
-import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_model.dart';
 import 'package:fnb_point_sale_base/data/local/shared_prefs/shared_prefs.dart';
-import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/data/mode/customer/get_all_customer/get_all_customer_response.dart';
 import 'package:fnb_point_sale_base/data/mode/order_history/order_history_request.dart';
@@ -25,7 +22,6 @@ import 'package:fnb_point_sale_base/data/remote/api_call/order_place/order_place
 import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/locator.dart';
 import 'package:fnb_point_sale_base/printer/service/my_printer_service.dart';
-import 'package:fnb_point_sale_base/printer/types/order_payment_print.dart';
 import 'package:fnb_point_sale_base/utils/create_order_place_request.dart';
 import 'package:fnb_point_sale_base/utils/network_utils.dart';
 import 'package:get/get.dart';
@@ -427,7 +423,7 @@ class TableController extends GetxController {
       GetAllCustomerList? mGetAllCustomerList) async {
     ///
     OrderDetailList mOrderDetailList =
-    await createOrderPlaceRequestFromOrderHistory(
+        await createOrderPlaceRequestFromOrderHistory(
       remarksController: mOrderHistory.additionalNotes ?? '',
       mOrderPlace: mOrderHistory,
       printOrderPayment: mGetAllPaymentTypeData,
@@ -447,15 +443,24 @@ class TableController extends GetxController {
     ///
     await mDashboardScreenController.onUpdateHoldSale();
     await mTopBarController.allOrderPlace();
-    await callOrderHistory();
+    ///clear table
+    TablesByTableStatusData mTablesByTableStatusData = TablesByTableStatusData(
+      occupiedOrderID: mOrderDetailList.trackingOrderID ?? '',
+      seatIDP: mOrderDetailList.seatIDF ?? '',
+    );
+    await callUpdateTableStatus(mTablesByTableStatusData);
+    // await callOrderHistory();
     await onRefresh();
     Get.back();
   }
 
   ///Cancel Payment
-   orderCancelPayment(
-      OrderHistoryData mOrderHistory,
-      ) async {
+  orderCancelPayment(
+    OrderHistoryData mOrderHistory,
+  ) async {
+    Get.back();
+
+
     ///
     OrderDetailList mOrderDetailList = await cancelOrder(
       remarksController: mOrderHistory.additionalNotes ?? '',
@@ -478,9 +483,16 @@ class TableController extends GetxController {
     ///
     await mDashboardScreenController.onUpdateHoldSale();
     await mTopBarController.allOrderPlace();
-    await callOrderHistory();
+
+
+    ///clear table
+    TablesByTableStatusData mTablesByTableStatusData = TablesByTableStatusData(
+      occupiedOrderID: mOrderDetailList.trackingOrderID ?? '',
+      seatIDP: mOrderDetailList.seatIDF ?? '',
+    );
+    await callUpdateTableStatus(mTablesByTableStatusData);
+    /// await callOrderHistory();
     await onRefresh();
-    Get.back();
   }
 
   ///SaveOrder
@@ -495,17 +507,18 @@ class TableController extends GetxController {
           .then((isInternetAvailable) async {
         if (isInternetAvailable) {
           ProcessMultipleOrdersRequest mProcessMultipleOrdersRequest =
-          ProcessMultipleOrdersRequest(orderDetailList: [mOrderDetailList]);
+              ProcessMultipleOrdersRequest(orderDetailList: [mOrderDetailList]);
           WebResponseSuccess mWebResponseSuccess =
-          await orderPlaceApi.postOrderPlace(mProcessMultipleOrdersRequest);
+              await orderPlaceApi.postOrderPlace(mProcessMultipleOrdersRequest);
           if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
             ///print....
-            printOrderPayment(mOrderDetailList, mOrderHistory);
-
+            if(!isCancel) {
+              await  printOrderPayment(mOrderDetailList, mOrderHistory);
+            }
             ///remove from local data base
             if (isPayment) {
               var mPlaceOrderSaleLocalApi =
-              locator.get<PlaceOrderSaleLocalApi>();
+                  locator.get<PlaceOrderSaleLocalApi>();
               await mPlaceOrderSaleLocalApi
                   .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
             }
@@ -554,14 +567,14 @@ class TableController extends GetxController {
 
   ///print
   printOrderPayment(
-      OrderDetailList mOrderDetailList,
-      OrderHistoryData mOrderHistory,
-      ) async {
+    OrderDetailList mOrderDetailList,
+    OrderHistoryData mOrderHistory,
+  ) async {
     final myPrinterService = locator.get<MyPrinterService>();
     await myPrinterService.saleAfterPayment(mOrderDetailList, mOrderHistory);
   }
 
-   onRefresh() async{
+  onRefresh() async {
     await mTopBarController.callGetAllTableStatus();
     await onUpdateViewTable();
   }

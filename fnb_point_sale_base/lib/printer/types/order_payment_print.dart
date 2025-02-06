@@ -51,6 +51,10 @@ Future<bool> printOrderPayment(
 
   ///table
   widgets.add(getTableRow(mOrderDetailList));
+  ///user details
+  if((mOrderDetailList.phoneNumber??'').isNotEmpty) {
+    widgets.add(getUserDetailsRow(mOrderDetailList));
+  }
   widgets.add(pw.Container(height: 4));
   widgets.add(mySeparator());
   widgets.add(pw.Container(height: 4));
@@ -143,6 +147,61 @@ pw.Widget getTableRow(OrderDetailList mOrderDetailList) {
           ),
         )),
   ]);
+}
+
+///UserDetails
+pw.Widget getUserDetailsRow(OrderDetailList mOrderDetailList) {
+  return
+    pw.Column(
+        children: [
+          pw.Row(
+            children: [
+              pw.Expanded(
+                  flex: 2,
+                  child: pw.Container(
+                    padding: const pw.EdgeInsets.all(2.0),
+                    child: pw.Align(
+                      alignment: pw.Alignment.centerLeft,
+                      child: pw.Text("${sCustomerName.tr}:-", style: getNormalTextStyle()),
+                    ),
+                  )),
+              pw.Expanded(
+                  flex: 3,
+                  child: pw.Container(
+                    padding: const pw.EdgeInsets.all(2.0),
+                    child: pw.Align(
+                      alignment: pw.Alignment.centerRight,
+                      child: pw.Text(mOrderDetailList.name ?? '--',
+                          style: getBoldTextStyle()),
+                    ),
+                  )),
+            ],
+          ),
+          pw.Row(
+            children: [
+              pw.Expanded(
+                  flex: 2,
+                  child: pw.Container(
+                    padding: const pw.EdgeInsets.all(2.0),
+                    child: pw.Align(
+                      alignment: pw.Alignment.centerLeft,
+                      child: pw.Text("${sPhoneNumber.tr}:-", style: getNormalTextStyle()),
+                    ),
+                  )),
+              pw.Expanded(
+                  flex: 3,
+                  child: pw.Container(
+                    padding: const pw.EdgeInsets.all(2.0),
+                    child: pw.Align(
+                      alignment: pw.Alignment.centerRight,
+                      child: pw.Text(mOrderDetailList.phoneNumber ?? '--',
+                          style: getBoldTextStyle()),
+                    ),
+                  )),
+            ],
+          )
+        ]
+    );
 }
 
 ///item list

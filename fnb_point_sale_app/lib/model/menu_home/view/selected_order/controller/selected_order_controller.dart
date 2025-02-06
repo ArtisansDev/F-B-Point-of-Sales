@@ -52,6 +52,10 @@ class SelectedOrderController extends HomeBaseController {
       mOrderPlace.refresh();
       getCalculateSubTotal();
       mDashboardScreenController.mOrderPlace.value = null;
+    } else if (mDashboardScreenController.mOrderHistoryPlace.value != null) {
+      mOrderPlace.value = OrderPlace();
+      mOrderPlace.value?.tableNo = mDashboardScreenController.mOrderHistoryPlace.value?.tableNo??'';
+      mOrderPlace.value?.seatIDP = mDashboardScreenController.mOrderHistoryPlace.value?.seatIDF??'';
     }
   }
 
@@ -108,9 +112,9 @@ class SelectedOrderController extends HomeBaseController {
       mOrderPlace.value?.subTotalPrice =
           (mOrderPlace.value?.subTotalPrice ?? 0) +
               ((mCartItem.taxPriceAmount ?? 0) * (mCartItem.count));
-      if (mCartItem.placeOrder == false) {
+      // if (mCartItem.placeOrder == false) {
         placeOrder.value = true;
-      }
+      // }
     }
 
     ///taxPrice
@@ -268,11 +272,11 @@ class SelectedOrderController extends HomeBaseController {
           onPayment: (GetAllPaymentTypeData mSelectPaymentType,
               GetAllCustomerList? mSelectCustomer) async {
             Get.back();
-            if ((mOrderPlace.value?.seatIDP ?? '').isNotEmpty) {
-              if (!(mOrderPlace.value?.cartItem ?? []).first.placeOrder) {
-                await callUpdateTableStatus(mOrderPlace.value ?? OrderPlace());
-              }
-            }
+            // if ((mOrderPlace.value?.seatIDP ?? '').isNotEmpty) {
+            //   if (!(mOrderPlace.value?.cartItem ?? []).first.placeOrder) {
+            //     await callUpdateTableStatus(mOrderPlace.value ?? OrderPlace());
+            //   }
+            // }
             if (mSelectCustomer != null) {
               mOrderPlace.value?.mSelectCustomer = mSelectCustomer;
             }

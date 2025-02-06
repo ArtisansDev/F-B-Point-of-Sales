@@ -21,6 +21,7 @@ import 'package:fnb_point_sale_base/data/mode/button_bar/button_bar_model.dart';
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/data/mode/customer/get_all_customer/get_all_customer_request.dart';
 import 'package:fnb_point_sale_base/data/mode/customer/get_all_customer/get_all_customer_response.dart';
+import 'package:fnb_point_sale_base/data/mode/order_history/order_history_response.dart';
 import 'package:fnb_point_sale_base/data/remote/api_call/customer/customer_api.dart';
 import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/locator.dart';
@@ -56,6 +57,7 @@ class DashboardScreenController extends GetxController {
     TobBarModel(name: 'HOLD SALE', value: '0'),
   ].obs;
   Rxn<OrderPlace> mOrderPlace = Rxn<OrderPlace>();
+  Rxn<OrderHistoryData> mOrderHistoryPlace = Rxn<OrderHistoryData>();
 
   ///set Top Bar value
   RxInt topBarIndex = 0.obs;
@@ -303,8 +305,10 @@ class DashboardScreenController extends GetxController {
         if (onUpdateDate.value != null) {
           onUpdateDate.value!();
         }
-        if (updateHomeMenu.value != null) {
-          updateHomeMenu.value!();
+        if (Get.isRegistered<HomeBaseController>()) {
+          if (updateHomeMenu.value != null) {
+            updateHomeMenu.value!();
+          }
         }
         if (updateTopBar.value != null) {
           updateTopBar.value!();
@@ -317,6 +321,7 @@ class DashboardScreenController extends GetxController {
   }
 
   RxString sDownloadText = ''.obs;
+
   // Rxn<PeriodicService> mPeriodicService = Rxn<PeriodicService>();
 
   onSync() async {
@@ -325,7 +330,8 @@ class DashboardScreenController extends GetxController {
           Get.find<SelectedOrderController>();
       if ((mSelectedOrderController.mOrderPlace.value?.cartItem ?? [])
           .isNotEmpty) {
-        AppAlert.showCustomDialogOk(Get.context!,'Alert','Ensure the cart is cleared before initiating the sync process.');
+        AppAlert.showCustomDialogOk(Get.context!, 'Alert',
+            'Ensure the cart is cleared before initiating the sync process.');
         // AppAlert.showSnackBar(Get.context!,
         //     'Ensure the cart is cleared before initiating the sync process.');
         return;
@@ -333,12 +339,14 @@ class DashboardScreenController extends GetxController {
     }
 
     if (getInValue(mTobBarModel[2].value) > 0) {
-      AppAlert.showCustomDialogOk(Get.context!,'Alert','Ensure the cart is cleared before initiating the sync process.');
+      AppAlert.showCustomDialogOk(Get.context!, 'Alert',
+          'Ensure the cart is cleared before initiating the sync process.');
       // AppAlert.showSnackBar(Get.context!,
       //     'Ensure the cart is cleared before initiating the sync process.');
       return;
     } else if (getInValue(mTobBarModel[3].value) > 0) {
-      AppAlert.showCustomDialogOk(Get.context!,'Alert','Ensure the hold sale is cleared before initiating the sync process.');
+      AppAlert.showCustomDialogOk(Get.context!, 'Alert',
+          'Ensure the hold sale is cleared before initiating the sync process.');
 
       // AppAlert.showSnackBar(Get.context!,
       //     'Ensure the hold sale is cleared before initiating the sync process.');
@@ -363,8 +371,10 @@ class DashboardScreenController extends GetxController {
                   if (onUpdateDate.value != null) {
                     onUpdateDate.value!();
                   }
-                  if (updateHomeMenu.value != null) {
-                    updateHomeMenu.value!();
+                  if (Get.isRegistered<HomeBaseController>()) {
+                    if (updateHomeMenu.value != null) {
+                      updateHomeMenu.value!();
+                    }
                   }
                   if (updateTopBar.value != null) {
                     updateTopBar.value!();
@@ -499,6 +509,6 @@ class DashboardScreenController extends GetxController {
   }
 
   void onRefreshTable() {
-    setTopBarValue(0,1);
+    setTopBarValue(0, 1);
   }
 }

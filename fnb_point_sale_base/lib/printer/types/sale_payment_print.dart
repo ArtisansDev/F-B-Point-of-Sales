@@ -20,16 +20,22 @@ Future<bool> printSalePayment(OrderHistoryData mOrderHistoryData) async {
       (mConfigurationResponse.configurationData?.currencyData ?? []).first;
 
   String branchName =
-      (mConfigurationResponse.configurationData?.branchData ?? []).isEmpty
-          ? ""
-          : (mConfigurationResponse.configurationData?.branchData ?? [])
-                  .first
-                  .branchName ??
-              '';
+  (mConfigurationResponse.configurationData?.branchData ?? []).isEmpty
+      ? ""
+      : (mConfigurationResponse.configurationData?.branchData ?? [])
+      .first
+      .branchName ??
+      '';
 
   List<pw.Widget> widgets = List.empty(growable: true);
-  widgets.add(pw.Center(
-      child: pw.Text('Payment Receipt', style: getBoldTextStyleMedium())));
+  if ((mOrderHistoryData.paymentStatus??'').toUpperCase() == 'C') {
+    widgets.add(pw.Center(
+        child: pw.Text('Cancel Order', style: getBoldTextStyleMedium())));
+  } else {
+    widgets.add(pw.Center(
+        child: pw.Text('Payment Receipt', style: getBoldTextStyleMedium())));
+  }
+
   widgets.add(pw.Container(height: 4));
   widgets.add(
       pw.Center(child: pw.Text(branchName, style: getBoldTextStyleMedium())));
@@ -47,6 +53,10 @@ Future<bool> printSalePayment(OrderHistoryData mOrderHistoryData) async {
 
   ///table
   widgets.add(getTableRow(mOrderHistoryData));
+  ///user details
+  if((mOrderHistoryData.phoneNumber??'').isNotEmpty) {
+    widgets.add(getUserDetailsRow(mOrderHistoryData));
+  }
   widgets.add(pw.Container(height: 4));
   widgets.add(mySeparator());
   widgets.add(pw.Container(height: 4));
@@ -137,6 +147,61 @@ pw.Widget getTableRow(OrderHistoryData mOrderHistoryData) {
   ]);
 }
 
+///UserDetails
+pw.Widget getUserDetailsRow(OrderHistoryData mOrderDetailList) {
+  return
+    pw.Column(
+        children: [
+          pw.Row(
+            children: [
+              pw.Expanded(
+                  flex: 2,
+                  child: pw.Container(
+                    padding: const pw.EdgeInsets.all(2.0),
+                    child: pw.Align(
+                      alignment: pw.Alignment.centerLeft,
+                      child: pw.Text("${sCustomerName.tr}:-", style: getNormalTextStyle()),
+                    ),
+                  )),
+              pw.Expanded(
+                  flex: 3,
+                  child: pw.Container(
+                    padding: const pw.EdgeInsets.all(2.0),
+                    child: pw.Align(
+                      alignment: pw.Alignment.centerRight,
+                      child: pw.Text(mOrderDetailList.name ?? '--',
+                          style: getBoldTextStyle()),
+                    ),
+                  )),
+            ],
+          ),
+          pw.Row(
+            children: [
+              pw.Expanded(
+                  flex: 2,
+                  child: pw.Container(
+                    padding: const pw.EdgeInsets.all(2.0),
+                    child: pw.Align(
+                      alignment: pw.Alignment.centerLeft,
+                      child: pw.Text("${sPhoneNumber.tr}:-", style: getNormalTextStyle()),
+                    ),
+                  )),
+              pw.Expanded(
+                  flex: 3,
+                  child: pw.Container(
+                    padding: const pw.EdgeInsets.all(2.0),
+                    child: pw.Align(
+                      alignment: pw.Alignment.centerRight,
+                      child: pw.Text(mOrderDetailList.phoneNumber ?? '--',
+                          style: getBoldTextStyle()),
+                    ),
+                  )),
+            ],
+          )
+        ]
+    );
+}
+
 ///item list
 pw.Widget getItemRow(OrderHistoryMenu mCartItem, String currencyData) {
   return pw.Column(children: [
@@ -154,23 +219,28 @@ pw.Widget getItemRow(OrderHistoryMenu mCartItem, String currencyData) {
                       pw.Text(mCartItem.itemName ?? '',
                           style: getBoldTextStyle()),
                       pw.Text(
-                          '${mCartItem.itemVariantName ?? ''} ${(mCartItem.discountPercentage ?? 0.0) > 0 ? '(${(mCartItem.discountPercentage ?? 0.0)})%' : ""}',
+                          '${mCartItem.itemVariantName ?? ''} ${(mCartItem
+                              .discountPercentage ?? 0.0) > 0 ? '(${(mCartItem
+                              .discountPercentage ?? 0.0)})%' : ""}',
                           style: getNormalTextStyle()),
                       (mCartItem.discountPercentage ?? 0.0) > 0
                           ? pw.Row(children: [
-                              pw.Text(
-                                  '$currencyData ${(mCartItem.variantPrice ?? 0.0).toString()}',
-                                  style: getNormalTextStyleLineThrough()),
-                              pw.SizedBox(width: 3),
-                              pw.Text(
-                                  '$currencyData  ${(mCartItem.itemDiscountPrice ?? 0.0).toString()}',
-                                  style: getBoldTextStyle()),
-                            ])
+                        pw.Text(
+                            '$currencyData ${(mCartItem.variantPrice ?? 0.0)
+                                .toString()}',
+                            style: getNormalTextStyleLineThrough()),
+                        pw.SizedBox(width: 3),
+                        pw.Text(
+                            '$currencyData  ${(mCartItem.itemDiscountPrice ??
+                                0.0).toString()}',
+                            style: getBoldTextStyle()),
+                      ])
                           : pw.SizedBox(
-                              child: pw.Text(
-                                  '$currencyData ${(mCartItem.variantPrice ?? 0.0).toString()}',
-                                  style: getBoldTextStyle()),
-                            )
+                        child: pw.Text(
+                            '$currencyData ${(mCartItem.variantPrice ?? 0.0)
+                                .toString()}',
+                            style: getBoldTextStyle()),
+                      )
                     ])),
           )),
       pw.Expanded(
@@ -190,39 +260,40 @@ pw.Widget getItemRow(OrderHistoryMenu mCartItem, String currencyData) {
             child: pw.Align(
               alignment: pw.Alignment.centerRight,
               child: pw.Text(
-                  '$currencyData ${getDoubleValue(mCartItem.totalItemAmount).toStringAsFixed(2)}',
+                  '$currencyData ${getDoubleValue(mCartItem.totalItemAmount)
+                      .toStringAsFixed(2)}',
                   style: getNormalTextStyle()),
             ),
           )),
     ]),
     (mCartItem.modifierData ?? []).isNotEmpty
         ? pw.Row(children: [
-            pw.Expanded(
-                flex: 2,
-                child:
-                    getModifier((mCartItem.modifierData ?? []), currencyData)),
-            pw.Expanded(flex: 1, child: pw.SizedBox()),
-          ])
+      pw.Expanded(
+          flex: 2,
+          child:
+          getModifier((mCartItem.modifierData ?? []), currencyData)),
+      pw.Expanded(flex: 1, child: pw.SizedBox()),
+    ])
         : pw.SizedBox(),
     (mCartItem.itemTaxPercent ?? 0) > 0
         ? pw.Row(children: [
+      pw.Expanded(
+          flex: 2,
+          child: pw.Row(children: [
             pw.Expanded(
-                flex: 2,
-                child: pw.Row(children: [
-                  pw.Expanded(
-                      child: pw.Align(
-                          alignment: pw.Alignment.centerLeft,
-                          child: pw.Text('Tax (${mCartItem.itemTaxPercent}%)',
-                              style: getNormalTextStyle()))),
-                  pw.Expanded(
-                      child: pw.Align(
-                          alignment: pw.Alignment.centerRight,
-                          child: pw.Text(
-                              '$currencyData ${mCartItem.itemTaxPrice}',
-                              style: getNormalTextStyle())))
-                ])),
-            pw.Expanded(flex: 1, child: pw.SizedBox()),
-          ])
+                child: pw.Align(
+                    alignment: pw.Alignment.centerLeft,
+                    child: pw.Text('Tax (${mCartItem.itemTaxPercent}%)',
+                        style: getNormalTextStyle()))),
+            pw.Expanded(
+                child: pw.Align(
+                    alignment: pw.Alignment.centerRight,
+                    child: pw.Text(
+                        '$currencyData ${mCartItem.itemTaxPrice}',
+                        style: getNormalTextStyle())))
+          ])),
+      pw.Expanded(flex: 1, child: pw.SizedBox()),
+    ])
         : pw.SizedBox()
   ]);
 }
@@ -255,7 +326,8 @@ pw.Widget addModifierRow(ModifierData mModifierList, String currencyData) {
           child: pw.Align(
             alignment: pw.Alignment.centerRight,
             child: pw.Text(
-                '$currencyData ${getDoubleValue(mModifierList.price).toStringAsFixed(2)}',
+                '$currencyData ${getDoubleValue(mModifierList.price)
+                    .toStringAsFixed(2)}',
                 style: getNormalTextStyle()),
           ),
         ))
@@ -263,8 +335,8 @@ pw.Widget addModifierRow(ModifierData mModifierList, String currencyData) {
 }
 
 /// subTotal
-pw.Widget getSubTotalRow(
-    OrderHistoryData mOrderHistoryData, String currencyData) {
+pw.Widget getSubTotalRow(OrderHistoryData mOrderHistoryData,
+    String currencyData) {
   return pw.Row(children: [
     pw.Expanded(
         flex: 2,
@@ -282,7 +354,8 @@ pw.Widget getSubTotalRow(
           child: pw.Align(
             alignment: pw.Alignment.centerRight,
             child: pw.Text(
-                '$currencyData ${getDoubleValue(mOrderHistoryData.subTotal).toStringAsFixed(2)}',
+                '$currencyData ${getDoubleValue(mOrderHistoryData.subTotal)
+                    .toStringAsFixed(2)}',
                 style: getBoldTextStyle()),
           ),
         )),
@@ -308,7 +381,7 @@ pw.Widget getTax(OrderHistoryTax tax, String currencyData) {
           child: pw.Align(
             alignment: pw.Alignment.center,
             child:
-                pw.Text('${tax.taxPercentage}%', style: getNormalTextStyle()),
+            pw.Text('${tax.taxPercentage}%', style: getNormalTextStyle()),
           ),
         )),
     pw.Expanded(
@@ -318,7 +391,8 @@ pw.Widget getTax(OrderHistoryTax tax, String currencyData) {
           child: pw.Align(
             alignment: pw.Alignment.centerRight,
             child: pw.Text(
-                '$currencyData ${getDoubleValue(tax.taxAmount).toStringAsFixed(2)}',
+                '$currencyData ${getDoubleValue(tax.taxAmount).toStringAsFixed(
+                    2)}',
                 style: getNormalTextStyle()),
           ),
         )),
@@ -344,7 +418,8 @@ pw.Widget getTotalRow(OrderHistoryData mOrderHistoryData, String currencyData) {
           child: pw.Align(
             alignment: pw.Alignment.centerRight,
             child: pw.Text(
-                '$currencyData ${getDoubleValue(mOrderHistoryData.totalAmount).toStringAsFixed(2)}',
+                '$currencyData ${getDoubleValue(mOrderHistoryData.totalAmount)
+                    .toStringAsFixed(2)}',
                 style: getBoldTextStyle()),
           ),
         )),
@@ -352,8 +427,8 @@ pw.Widget getTotalRow(OrderHistoryData mOrderHistoryData, String currencyData) {
 }
 
 /// Rounding
-pw.Widget getRoundingRow(
-    OrderHistoryData mOrderHistoryData, String currencyData) {
+pw.Widget getRoundingRow(OrderHistoryData mOrderHistoryData,
+    String currencyData) {
   return pw.Row(children: [
     pw.Expanded(
         flex: 2,
@@ -371,7 +446,12 @@ pw.Widget getRoundingRow(
           child: pw.Align(
             alignment: pw.Alignment.centerRight,
             child: pw.Text(
-                '$currencyData ${(getDoubleValue(mOrderHistoryData.totalAmount) - getDoubleValue((mOrderHistoryData.adjustedAmount ?? 0) > 0 ? mOrderHistoryData.adjustedAmount : mOrderHistoryData.totalAmount)).toStringAsFixed(2)}',
+                '$currencyData ${(getDoubleValue(
+                    (mOrderHistoryData.adjustedAmount ?? 0) > 0
+                        ? mOrderHistoryData.adjustedAmount
+                        : mOrderHistoryData.totalAmount) -
+                    getDoubleValue(mOrderHistoryData.totalAmount))
+                    .toStringAsFixed(2)}',
                 style: getNormalTextStyle()),
           ),
         )),
@@ -379,8 +459,8 @@ pw.Widget getRoundingRow(
 }
 
 /// Total pay
-pw.Widget getTotalPayRow(
-    OrderHistoryData mOrderHistoryData, String currencyData) {
+pw.Widget getTotalPayRow(OrderHistoryData mOrderHistoryData,
+    String currencyData) {
   return pw.Row(children: [
     pw.Expanded(
         flex: 2,
@@ -398,7 +478,10 @@ pw.Widget getTotalPayRow(
           child: pw.Align(
             alignment: pw.Alignment.centerRight,
             child: pw.Text(
-                '$currencyData ${getDoubleValue((mOrderHistoryData.adjustedAmount ?? 0) > 0 ? mOrderHistoryData.adjustedAmount : mOrderHistoryData.totalAmount).toStringAsFixed(2)}',
+                '$currencyData ${getDoubleValue(
+                    (mOrderHistoryData.adjustedAmount ?? 0) > 0
+                        ? mOrderHistoryData.adjustedAmount
+                        : mOrderHistoryData.totalAmount).toStringAsFixed(2)}',
                 style: getBoldTextStyle()),
           ),
         )),
@@ -406,8 +489,8 @@ pw.Widget getTotalPayRow(
 }
 
 /// payment
-pw.Widget getPaymentRow(
-    OrderHistoryData mOrderHistoryData, String currencyData) {
+pw.Widget getPaymentRow(OrderHistoryData mOrderHistoryData,
+    String currencyData) {
   return pw.Row(children: [
     pw.Expanded(
         flex: 2,
@@ -429,7 +512,10 @@ pw.Widget getPaymentRow(
           child: pw.Align(
             alignment: pw.Alignment.centerRight,
             child: pw.Text(
-                '$currencyData ${getDoubleValue((mOrderHistoryData.adjustedAmount ?? 0) > 0 ? mOrderHistoryData.adjustedAmount : mOrderHistoryData.totalAmount).toStringAsFixed(2)}',
+                '$currencyData ${getDoubleValue(
+                    (mOrderHistoryData.adjustedAmount ?? 0) > 0
+                        ? mOrderHistoryData.adjustedAmount
+                        : mOrderHistoryData.totalAmount).toStringAsFixed(2)}',
                 style: getBoldTextStyle()),
           ),
         )),
