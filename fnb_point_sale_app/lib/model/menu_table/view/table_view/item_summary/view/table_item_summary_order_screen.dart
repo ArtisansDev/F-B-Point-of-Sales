@@ -137,7 +137,7 @@ class TableItemSummaryOrderScreen extends GetView<TableItemSummaryController> {
                               width: 10.sp,
                             ),
                             Expanded(
-                                flex: 3,
+                                flex: 4,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.end,
@@ -240,38 +240,41 @@ class TableItemSummaryOrderScreen extends GetView<TableItemSummaryController> {
               /// Add More Items
               Visibility(
                   visible: (controller.mOrderPlace.value.paymentStatus == 'P'),
-                  child: controller.mOrderPlace.value.orderSource.toString() ==
-                          '2'
-                      ? GestureDetector(
-                          onTap: () {
-                            controller.addMore();
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(
-                                top: 8.sp, left: 8.sp, right: 8.sp),
-                            padding: EdgeInsets.all(8.sp),
-                            decoration: BoxDecoration(
-                              color: ColorConstants.cAppButtonLightColour,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(8.sp),
-                              ),
-                            ),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 13.sp,
-                                ),
-                                Text(
-                                  sAddMoreItems.tr,
-                                  style: getText500(
-                                      size: 11.5.sp,
-                                      colors: ColorConstants.cAppButtonColour),
-                                ),
-                              ],
-                            ),
+                  child:
+                      controller.mOrderPlace.value.orderSource.toString() ==
+                              '2'
+                          ?
+                      GestureDetector(
+                    onTap: () {
+                      controller.addMore();
+                    },
+                    child: Container(
+                      margin:
+                          EdgeInsets.only(top: 8.sp, left: 8.sp, right: 8.sp),
+                      padding: EdgeInsets.all(8.sp),
+                      decoration: BoxDecoration(
+                        color: ColorConstants.cAppButtonLightColour,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(8.sp),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 13.sp,
                           ),
-                        )
-                      : const Text("You can't able to modify this order")),
+                          Text(
+                            sAddMoreItems.tr,
+                            style: getText500(
+                                size: 11.5.sp,
+                                colors: ColorConstants.cAppButtonColour),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                  : const Text("You can't able to modify this order")
+                  ),
               Visibility(
                   visible: (controller.mOrderPlace.value.paymentStatus == 'C'),
                   child: Container(

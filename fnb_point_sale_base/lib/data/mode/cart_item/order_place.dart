@@ -10,10 +10,10 @@ import 'cart_item.dart';
 ///21/12/24
 class OrderPlace {
   String userName = "";
-  String remarkController = "";
   String userPhone = "";
   String seatIDP = "";
   String tableNo = "--";
+  String remarkController = "";
   String dateTime = "";
   String sOrderNo = "";
   GetAllCustomerList? mSelectCustomer;

@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fnb_point_sale_base/data/local/shared_prefs/shared_prefs.dart';
 import 'package:fnb_point_sale_base/data/remote/web_http_overrides.dart';
@@ -16,10 +17,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 const hiveDbPath = 'fnb-pos-data';
 
-
 void main() async {
-
-
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = WebHttpOverrides();
   // await NotificationService.initialize();
@@ -46,7 +44,11 @@ void main() async {
   await dotenv.load(fileName: ".env");
   _disableDebugLogs();
 
-  // runZonedGuarded(() {
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.landscapeRight,
+  ]).then((_) {
+    // runZonedGuarded(() {
     runApp(
       // DevicePreview(
       //   enabled: !kReleaseMode,
@@ -55,10 +57,10 @@ void main() async {
       const MyAppTheme(), // Wrap your app
       // ),
     );
-  // }, (dynamic error, dynamic stack) {
+    // }, (dynamic error, dynamic stack) {
     // developer.log("Something went wrong!", error: error, stackTrace: stack);
-  // });
-
+    // });
+  });
 }
 
 void _disableDebugLogs() {
@@ -68,4 +70,3 @@ void _disableDebugLogs() {
     debugPrint = (String? message, {int? wrapWidth}) {};
   }
 }
-

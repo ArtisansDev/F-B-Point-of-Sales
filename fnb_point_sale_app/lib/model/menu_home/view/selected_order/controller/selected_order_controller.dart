@@ -7,13 +7,16 @@ import 'package:fnb_point_sale_base/constants/message_constants.dart';
 import 'package:fnb_point_sale_base/constants/web_constants.dart';
 import 'package:fnb_point_sale_base/data/local/database/hold_sale/hold_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/hold_sale/hold_sale_model.dart';
+import 'package:fnb_point_sale_base/data/local/database/menu_item/menu_item_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/offline_place_order/offline_place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_model.dart';
 import 'package:fnb_point_sale_base/data/local/shared_prefs/shared_prefs.dart';
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/data/mode/customer/get_all_customer/get_all_customer_response.dart';
+import 'package:fnb_point_sale_base/data/mode/order_history/order_history_response.dart';
 import 'package:fnb_point_sale_base/data/mode/order_place/process_multiple_orders_request.dart';
+import 'package:fnb_point_sale_base/data/mode/product/get_all_menu_item/menu_item_response.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_payment_type/get_all_payment_type_response.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_tables/get_all_tables_response.dart';
 import 'package:fnb_point_sale_base/data/mode/table_status/table_status_request.dart';
@@ -22,6 +25,7 @@ import 'package:fnb_point_sale_base/data/remote/api_call/order_place/order_place
 import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/locator.dart';
 import 'package:fnb_point_sale_base/printer/service/my_printer_service.dart';
+import 'package:fnb_point_sale_base/utils/date_time_utils.dart';
 import 'package:fnb_point_sale_base/utils/network_utils.dart';
 import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:fnb_point_sale_base/utils/tracking_order_id.dart';
@@ -53,9 +57,42 @@ class SelectedOrderController extends HomeBaseController {
       getCalculateSubTotal();
       mDashboardScreenController.mOrderPlace.value = null;
     } else if (mDashboardScreenController.mOrderHistoryPlace.value != null) {
-      mOrderPlace.value = OrderPlace();
-      mOrderPlace.value?.tableNo = mDashboardScreenController.mOrderHistoryPlace.value?.tableNo??'';
-      mOrderPlace.value?.seatIDP = mDashboardScreenController.mOrderHistoryPlace.value?.seatIDF??'';
+      // mOrderPlace.value = OrderPlace();
+      // mOrderPlace.value?.tableNo =
+      //     mDashboardScreenController.mOrderHistoryPlace.value?.tableNo ?? '';
+      // mOrderPlace.value?.seatIDP =
+      //     mDashboardScreenController.mOrderHistoryPlace.value?.seatIDF ?? '';
+      // mOrderPlace.value?.sOrderNo = mDashboardScreenController
+      //         .mOrderHistoryPlace.value?.trackingOrderID ??
+      //     '';
+      // mOrderPlace.value?.dateTime = getUTCToLocalDateTime(
+      //     mDashboardScreenController.mOrderHistoryPlace.value?.orderDate ?? '');
+      // for (OrderHistoryMenu mOrderHistoryMenu
+      //     in mDashboardScreenController.mOrderHistoryPlace.value?.orderMenu ??
+      //         []) {
+      //   var localMenuItemApi = locator.get<MenuItemLocalApi>();
+      //   List<MenuItemData> mMenuItemData = [];
+      //   mMenuItemData.addAll(await localMenuItemApi.getMenuItemIdSearch(
+      //           mOrderHistoryMenu.menuItemIDF.toString().toLowerCase()) ??
+      //       []);
+      //   CartItem mCartItem = CartItem(
+      //     mMenuItemData:
+      //   );
+      //   mCartItem.count = mOrderHistoryMenu.quantity ?? 1;
+      //   mCartItem.textRemarks = mOrderHistoryMenu.itemAdditionalNotes ?? '';
+      //   mCartItem.placeOrder = true;
+      //   print("######## ${jsonEncode(mOrderHistoryMenu)}");
+      //   // ///price
+      //   // mCartItem.price =
+      //   //     (mOrderHistoryMenu.price ?? 0) + (mCartItem.value?.priceModifier ?? 0.0);
+      //   //
+      //   // mCartItem.taxPriceAmount =
+      //   //     (mCartItem.value?.price ?? 0) + (mCartItem.value?.taxAmount ?? 0);
+      //   //
+      //   // ///total price
+      //   // mCartItem.totalPrice = getDoubleValue((mCartItem.value?.count ?? 1) *
+      //   //     getDoubleValue(mCartItem.value?.taxPriceAmount));
+      // }
     }
   }
 
@@ -113,7 +150,7 @@ class SelectedOrderController extends HomeBaseController {
           (mOrderPlace.value?.subTotalPrice ?? 0) +
               ((mCartItem.taxPriceAmount ?? 0) * (mCartItem.count));
       // if (mCartItem.placeOrder == false) {
-        placeOrder.value = true;
+      placeOrder.value = true;
       // }
     }
 
@@ -453,7 +490,7 @@ class SelectedOrderController extends HomeBaseController {
   }
 
   ///select table
-  void selectTable() async{
+  void selectTable() async {
     await showTableBottomSheet(mTopBarController.mGetAllTablesList.toList(),
         (mTopBarController.mGetAllTablesStatus.value?.data ?? []).toList(),
         (GetAllTablesResponseData value) {

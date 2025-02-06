@@ -159,6 +159,7 @@ class TableRowView extends StatelessWidget {
                                 Expanded(
                                   flex: 2,
                                   child: Text(
+                                      (mOrderPlace.orderDate ?? '').isEmpty?"":
                                     getUTCToLocalDateTime(
                                         mOrderPlace.orderDate ?? ''),
                                     style: getText500(

@@ -67,6 +67,7 @@ class TableItemSummaryController extends GetxController {
 
   void addMore() async {
     await allOrderPlace();
+    ///get OrderPlace
     OrderPlace mSelectOrderPlace =
         getOrderPlace(mOrderPlace.value.seatIDF ?? '');
 
