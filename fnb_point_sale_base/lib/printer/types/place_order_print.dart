@@ -45,9 +45,9 @@ Future<bool> printPlaceOrder(
   ///table
   widgets.add(getTableRow(mOrderDetailList));
   ///user details
-  if((mOrderDetailList.phoneNumber??'').isNotEmpty) {
-    widgets.add(getUserDetailsRow(mOrderDetailList));
-  }
+  // if((mOrderDetailList.phoneNumber??'').isNotEmpty) {
+  //   widgets.add(getUserDetailsRow(mOrderDetailList));
+  // }
 
   widgets.add(pw.Container(height: 4));
   widgets.add(mySeparator());

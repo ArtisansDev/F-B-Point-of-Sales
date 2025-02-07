@@ -20,6 +20,8 @@ class SideMenuController extends GetxController {
   ]).obs;
 
   void onClickSideMenu(index) {
+    mDashboardScreenController.mOrderHistoryPlace.value =null;
+    mDashboardScreenController.mOrderPlace.value =null;
     mDashboardScreenController.selectMenu.value = index;
   }
 }

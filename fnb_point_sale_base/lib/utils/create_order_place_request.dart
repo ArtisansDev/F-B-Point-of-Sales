@@ -102,6 +102,36 @@ createOrderPlaceRequestFromOrderHistory(
         responseData: "",
         responseMessage: "",
       );
+    } else if (printOrderPayment.paymentGatewayNo.toString() == "5") {
+      mPaymentResponse = PaymentResponse(
+        transactionID: "",
+        paidAmount: getDoubleValue(mOrderPlace?.totalAmount),
+        paymentGatewayNo: printOrderPayment.paymentGatewayNo,
+        paymentStatus: "S",
+        responseCode: "200",
+        responseData: "",
+        responseMessage: "",
+      );
+    } else if (printOrderPayment.paymentGatewayNo.toString() == "6") {
+      mPaymentResponse = PaymentResponse(
+        transactionID: "",
+        paidAmount: getDoubleValue(mOrderPlace?.totalAmount),
+        paymentGatewayNo: printOrderPayment.paymentGatewayNo,
+        paymentStatus: "S",
+        responseCode: "200",
+        responseData: "",
+        responseMessage: "",
+      );
+    } else if (printOrderPayment.paymentGatewayNo.toString() == "7") {
+      mPaymentResponse = PaymentResponse(
+        transactionID: "",
+        paidAmount: getDoubleValue(mOrderPlace?.totalAmount),
+        paymentGatewayNo: printOrderPayment.paymentGatewayNo,
+        paymentStatus: "S",
+        responseCode: "200",
+        responseData: "",
+        responseMessage: "",
+      );
     }
   }
 

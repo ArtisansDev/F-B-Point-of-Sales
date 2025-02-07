@@ -1,4 +1,4 @@
-/// OrderDetailList : [{"TrackingOrderID":"E24C92B9-2D3E-41A3-98A9-6BC509EC12F7","RestaurantIDF":"0D74BFA1-AF7D-4182-835B-B815C2972591","CounterIDF":"0E75BFA1-AF7D-4182-835B-B815C2972591","BranchIDF":"8281F828-2F99-457E-AC27-06914ABBE720","SeatIDF":"F27476A7-D498-462B-9A0A-F87933D6E518","OrderDate":"2024-11-26T10:30:00Z","OrderType":1,"OrderSource":1,"OrderMenu":[{"MenuItemIDF":"D1C092A3-8245-4D74-8C4E-CBC5E9A26D6F","VariantIDF":"A1E6D4A9-2AB2-4D19-B603-FDB6B4C21D27","Quantity":2,"DiscountPercentage":10,"ItemName":"Pizza","ItemVariantName":"Large","ItemTaxPercent":5,"AllModifierPrices":"10,20","AllModifierIDFs":"B47C3A72-6E52-489A-BC1A-99F5378E7A8A,B6ACD313-9372-4E47-9988-89E205F3D3A5","VariantPrice":500,"ItemDiscountPrice":475,"DiscountedItemAmount":25,"DiscountedItemTotalAmount":50,"ItemTaxPrice":38,"ItemTotal":1000,"ItemTotalTaxPrice":76,"ItemModifierTotal":60,"ItemDiscountPriceTotal":950,"TotalItemAmount":1036}],"OrderTax":[{"TaxIDF":"F7C95F97-BC89-41F4-B734-1D8C404A48D1","TaxName":"GST","TaxPercentage":5,"TaxAmount":76.75}],"PaymentResponse":[{"TransactionID":"7B0157A9-4EE9-40A5-81EC-77A9088484C9","ResponseCode":"200","ResponseMessage":"Success","PaymentStatus":"S","PaidAmount":1765.25,"ResponseData":"Success","PaymentGatewayNo":"1"}],"QuantityTotal":2,"ItemTotal":1000,"ModifierTotal":60,"DiscountTotal":50,"ItemTaxTotal":98.50,"SubTotal":1535,"TaxAmountTotal":230.25,"TotalAmount":1765.25,"AdjustedAmount":1765.25,"GrandTotal":1765.25,"AdditionalNotes":"No extra cheese","PaymentGatewayIDF":"9F1C4E45-9B51-4B57-A61D-A09BB51D2F7E","PaymentGatewaySettingIDF":"1D53AB9E-3A02-4177-8D4C-299BCB7C3A5C","PaymentStatus":"S","TableNo":"T5","Email":"customer@example.com","PhoneNumber":"1234567890","Name":"John Doe","PhoneCountryCode":"+1","UserIDF":"AE0D58D7-5F8A-4C65-A9F3-983E74D3EF82","CustomerIDF":"7D56F4F5-B7DB-4E96-B92B-97B57D3B49E1"}]
+/// OrderDetailList : [{"TrackingOrderID":"E24C92B9-2D3E-41A3-98A9-6BC509EC12F7","RestaurantIDF":"0D74BFA1-AF7D-4182-835B-B815C2972591","CounterIDF":"0E75BFA1-AF7D-4182-835B-B815C2972591","BranchIDF":"8281F828-2F99-457E-AC27-06914ABBE720","SeatIDF":"F27476A7-D498-462B-9A0A-F87933D6E518","OrderDate":"2024-11-26T10:30:00Z","OrderType":1,"OrderSource":1,"OrderMenu":[{"MenuItemIDF":"D1C092A3-8245-4D74-8C4E-CBC5E9A26D6F","VariantIDF":"A1E6D4A9-2AB2-4D19-B603-FDB6B4C21D27","Quantity":2,"DiscountPercentage":10,"ItemName":"Pizza","ItemVariantName":"Large","ItemTaxPercent":5,"AllModifierPrices":"10,20","AllModifierIDFs":"B47C3A72-6E52-489A-BC1A-99F5378E7A8A,B6ACD313-9372-4E47-9988-89E205F3D3A5","VariantPrice":500,"ItemDiscountPrice":475,"DiscountedItemAmount":25,"DiscountedItemTotalAmount":50,"ItemTaxPrice":38,"ItemTotal":1000,"ItemTotalTaxPrice":76,"ItemModifierTotal":60,"ItemDiscountPriceTotal":950,"TotalItemAmount":1036}],"OrderTax":[{"TaxIDF":"F7C95F97-BC89-41F4-B734-1D8C404A48D1","TaxName":"GST","TaxPercentage":5,"TaxAmount":76.75}],"PaymentResponse":[{"TransactionID":"7B0157A9-4EE9-40A5-81EC-77A9088484C9","ResponseCode":"200","ResponseMessage":"Success","RequestData":"Success","PaymentStatus":"S","PaidAmount":1765.25,"ResponseData":"Success","PaymentGatewayNo":"1"}],"QuantityTotal":2,"ItemTotal":1000,"ModifierTotal":60,"DiscountTotal":50,"ItemTaxTotal":98.50,"SubTotal":1535,"TaxAmountTotal":230.25,"TotalAmount":1765.25,"AdjustedAmount":1765.25,"GrandTotal":1765.25,"AdditionalNotes":"No extra cheese","PaymentGatewayIDF":"9F1C4E45-9B51-4B57-A61D-A09BB51D2F7E","PaymentGatewaySettingIDF":"1D53AB9E-3A02-4177-8D4C-299BCB7C3A5C","PaymentStatus":"S","TableNo":"T5","Email":"customer@example.com","PhoneNumber":"1234567890","Name":"John Doe","PhoneCountryCode":"+1","UserIDF":"AE0D58D7-5F8A-4C65-A9F3-983E74D3EF82","CustomerIDF":"7D56F4F5-B7DB-4E96-B92B-97B57D3B49E1"}]
 
 class ProcessMultipleOrdersRequest {
   ProcessMultipleOrdersRequest({
@@ -41,7 +41,7 @@ class ProcessMultipleOrdersRequest {
 /// OrderSource : 1
 /// OrderMenu : [{"MenuItemIDF":"D1C092A3-8245-4D74-8C4E-CBC5E9A26D6F","VariantIDF":"A1E6D4A9-2AB2-4D19-B603-FDB6B4C21D27","Quantity":2,"DiscountPercentage":10,"ItemName":"Pizza","ItemVariantName":"Large","ItemTaxPercent":5,"AllModifierPrices":"10,20","AllModifierIDFs":"B47C3A72-6E52-489A-BC1A-99F5378E7A8A,B6ACD313-9372-4E47-9988-89E205F3D3A5","VariantPrice":500,"ItemDiscountPrice":475,"DiscountedItemAmount":25,"DiscountedItemTotalAmount":50,"ItemTaxPrice":38,"ItemTotal":1000,"ItemTotalTaxPrice":76,"ItemModifierTotal":60,"ItemDiscountPriceTotal":950,"TotalItemAmount":1036}]
 /// OrderTax : [{"TaxIDF":"F7C95F97-BC89-41F4-B734-1D8C404A48D1","TaxName":"GST","TaxPercentage":5,"TaxAmount":76.75}]
-/// PaymentResponse : [{"TransactionID":"7B0157A9-4EE9-40A5-81EC-77A9088484C9","ResponseCode":"200","ResponseMessage":"Success","PaymentStatus":"S","PaidAmount":1765.25,"ResponseData":"Success","PaymentGatewayNo":"1"}]
+/// PaymentResponse : [{"TransactionID":"7B0157A9-4EE9-40A5-81EC-77A9088484C9","ResponseCode":"200","ResponseMessage":"Success","RequestData":"Success","PaymentStatus":"S","PaidAmount":1765.25,"ResponseData":"Success","PaymentGatewayNo":"1"}]
 /// QuantityTotal : 2
 /// ItemTotal : 1000
 /// ModifierTotal : 60
@@ -89,6 +89,7 @@ class OrderDetailList {
     double? adjustedAmount,
     double? grandTotal,
     String? additionalNotes,
+    String? paymentGatewayNo,
     String? paymentGatewayIDF,
     String? paymentGatewaySettingIDF,
     String? paymentStatus,
@@ -126,6 +127,7 @@ class OrderDetailList {
     _adjustedAmount = adjustedAmount;
     _grandTotal = grandTotal;
     _additionalNotes = additionalNotes;
+    _paymentGatewayNo = paymentGatewayNo;
     _paymentGatewayIDF = paymentGatewayIDF;
     _paymentGatewaySettingIDF = paymentGatewaySettingIDF;
     _paymentStatus = paymentStatus;
@@ -180,6 +182,7 @@ class OrderDetailList {
     _adjustedAmount = json['AdjustedAmount'];
     _grandTotal = json['GrandTotal'];
     _additionalNotes = json['AdditionalNotes'];
+    _paymentGatewayNo = json['PaymentGatewayNo'];
     _paymentGatewayIDF = json['PaymentGatewayIDF'];
     _paymentGatewaySettingIDF = json['PaymentGatewaySettingIDF'];
     _paymentStatus = json['PaymentStatus'];
@@ -218,6 +221,7 @@ class OrderDetailList {
   double? _adjustedAmount;
   double? _grandTotal;
   String? _additionalNotes;
+  String? _paymentGatewayNo;
   String? _paymentGatewayIDF;
   String? _paymentGatewaySettingIDF;
   String? _paymentStatus;
@@ -278,6 +282,8 @@ class OrderDetailList {
 
   String? get additionalNotes => _additionalNotes;
 
+  String? get paymentGatewayNo => _paymentGatewayNo;
+
   String? get paymentGatewayIDF => _paymentGatewayIDF;
 
   String? get paymentGatewaySettingIDF => _paymentGatewaySettingIDF;
@@ -336,6 +342,7 @@ class OrderDetailList {
     map['AdjustedAmount'] = _adjustedAmount;
     map['GrandTotal'] = _grandTotal;
     map['AdditionalNotes'] = _additionalNotes;
+    map['PaymentGatewayNo'] = _paymentGatewayNo;
     map['PaymentGatewayIDF'] = _paymentGatewayIDF;
     map['PaymentGatewaySettingIDF'] = _paymentGatewaySettingIDF;
     map['PaymentStatus'] = _paymentStatus;
@@ -360,6 +367,7 @@ class OrderDetailList {
 /// PaidAmount : 1765.25
 /// ResponseData : "Success"
 /// PaymentGatewayNo : "1"
+/// RequestData : "1"
 
 class PaymentResponse {
   PaymentResponse({
@@ -370,6 +378,7 @@ class PaymentResponse {
     double? paidAmount,
     String? responseData,
     String? paymentGatewayNo,
+    String? requestData,
   }) {
     _transactionID = transactionID;
     _responseCode = responseCode;
@@ -378,6 +387,7 @@ class PaymentResponse {
     _paidAmount = paidAmount;
     _responseData = responseData;
     _paymentGatewayNo = paymentGatewayNo;
+    _requestData = requestData;
   }
 
   PaymentResponse.fromJson(dynamic json) {
@@ -388,6 +398,7 @@ class PaymentResponse {
     _paidAmount = json['PaidAmount'];
     _responseData = json['ResponseData'];
     _paymentGatewayNo = json['PaymentGatewayNo'];
+    _requestData = json['RequestData'];
   }
 
   String? _transactionID;
@@ -397,6 +408,7 @@ class PaymentResponse {
   double? _paidAmount;
   String? _responseData;
   String? _paymentGatewayNo;
+  String? _requestData;
 
   String? get transactionID => _transactionID;
 
@@ -412,6 +424,8 @@ class PaymentResponse {
 
   String? get paymentGatewayNo => _paymentGatewayNo;
 
+  String? get requestData => _requestData;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['TransactionID'] = _transactionID;
@@ -421,6 +435,7 @@ class PaymentResponse {
     map['PaidAmount'] = _paidAmount;
     map['ResponseData'] = _responseData;
     map['PaymentGatewayNo'] = _paymentGatewayNo;
+    map['RequestData'] = _requestData;
     return map;
   }
 }

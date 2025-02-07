@@ -33,9 +33,8 @@ dependencies:
     path: ../flutter_pos_printer_platform/
   libserialport:
     path: ../libserialport/
-  flutter_libserialport:
-    path: ../flutter_libserialport/
-
+#  flutter_libserialport:
+#    path: ../flutter_libserialport/
   process_run: ^0.12.5+2
   easy_localization: ^3.0.1
   json_annotation: ^4.8.0

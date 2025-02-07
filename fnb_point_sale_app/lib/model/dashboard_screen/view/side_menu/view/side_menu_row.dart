@@ -41,7 +41,7 @@ class SideMenuRow extends StatelessWidget {
                   margin: EdgeInsets.only(
                       left: 14.sp, right: 14.sp, bottom: 6.sp, top: 11.sp),
                   child: Image.asset(
-                    controller.sideMenuImage.value[index],
+                    controller.sideMenuImage[index],
                     fit: BoxFit.fitWidth,
                     color: controller
                                 .mDashboardScreenController.selectMenu.value ==

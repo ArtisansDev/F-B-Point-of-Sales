@@ -38,7 +38,7 @@ class MenuItemLocalApiImpl extends MenuItemLocalApi {
 
   @override
   Future<List<MenuItemData>?> getMenuItemData(String categoryIDP) async {
-    if(categoryIDP.isEmpty){
+    if (categoryIDP.isEmpty) {
       return [];
     }
     MenuItemResponse mMenuItemResponse =
@@ -58,7 +58,7 @@ class MenuItemLocalApiImpl extends MenuItemLocalApi {
 
   @override
   Future<List<MenuItemData>?> getMenuItemDataSearch(String name) async {
-    if(name.isEmpty){
+    if (name.isEmpty) {
       return [];
     }
     MenuItemResponse mMenuItemResponse =
@@ -66,11 +66,13 @@ class MenuItemLocalApiImpl extends MenuItemLocalApi {
     List<MenuItemData> selectMenuItem = [];
     if ((mMenuItemResponse.data ?? []).isNotEmpty) {
       for (MenuItemData mMenuItemData in (mMenuItemResponse.data ?? [])) {
-        String sValueMenuItemIDP = jsonEncode(mMenuItemData.menuItemIDP ?? []).toLowerCase();
-        String sValueName = jsonEncode(mMenuItemData.itemName ?? []).toLowerCase();
+        String sValueMenuItemIDP =
+            jsonEncode(mMenuItemData.menuItemIDP ?? []).toLowerCase();
+        String sValueName =
+            jsonEncode(mMenuItemData.itemName ?? []).toLowerCase();
         debugPrint("MenuList $sValueMenuItemIDP == $name");
         debugPrint("MenuList $sValueName == $name");
-        if (sValueMenuItemIDP.contains(name)||sValueName.contains(name)) {
+        if (sValueMenuItemIDP.contains(name) || sValueName.contains(name)) {
           selectMenuItem.add(mMenuItemData);
         }
       }
@@ -80,7 +82,7 @@ class MenuItemLocalApiImpl extends MenuItemLocalApi {
 
   @override
   Future<List<MenuItemData>?> getMenuItemIdSearch(String name) async {
-    if(name.isEmpty){
+    if (name.isEmpty) {
       return [];
     }
     MenuItemResponse mMenuItemResponse =
@@ -88,7 +90,8 @@ class MenuItemLocalApiImpl extends MenuItemLocalApi {
     List<MenuItemData> selectMenuItem = [];
     if ((mMenuItemResponse.data ?? []).isNotEmpty) {
       for (MenuItemData mMenuItemData in (mMenuItemResponse.data ?? [])) {
-        String sValueMenuItemIDP = jsonEncode(mMenuItemData.menuItemIDP ?? []).toLowerCase();
+        String sValueMenuItemIDP =
+            jsonEncode(mMenuItemData.menuItemIDP ?? []).toLowerCase();
         debugPrint("MenuList $sValueMenuItemIDP == $name");
         if (sValueMenuItemIDP.contains(name)) {
           selectMenuItem.add(mMenuItemData);
@@ -96,6 +99,19 @@ class MenuItemLocalApiImpl extends MenuItemLocalApi {
       }
     }
     return selectMenuItem;
+  }
+
+  @override
+  Future<MenuItemData?> getMenuItemSearch(String name) async {
+    if (name.isEmpty) {
+      return null;
+    }
+    MenuItemResponse mMenuItemResponse =
+        await getMenuItemResponse() ?? MenuItemResponse();
+    MenuItemData mMenuItemData = (mMenuItemResponse.data ?? []).firstWhere(
+        (user) =>
+            user.menuItemIDP.toString().toLowerCase() == name.toLowerCase());
+    return mMenuItemData;
   }
 
   @override

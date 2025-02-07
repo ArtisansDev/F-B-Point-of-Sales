@@ -67,6 +67,7 @@ class TableItemSummaryController extends GetxController {
 
   void addMore() async {
     await allOrderPlace();
+
     ///get OrderPlace
     OrderPlace mSelectOrderPlace =
         getOrderPlace(mOrderPlace.value.seatIDF ?? '');
@@ -75,13 +76,14 @@ class TableItemSummaryController extends GetxController {
     if ((mSelectOrderPlace.sOrderNo ?? '').isNotEmpty) {
       mDashboardScreenController.value?.mOrderPlace.value =
           getOrderPlace(mOrderPlace.value.seatIDF ?? '');
-      if ((mDashboardScreenController.value?.mOrderPlace.value?.cartItem ?? [])
-          .isNotEmpty) {
-        mDashboardScreenController.value?.mOrderHistoryPlace.value = null;
-        Get.back();
-        mDashboardScreenController.value?.selectMenu.value = 0;
-        mDashboardScreenController.value?.selectMenu.refresh();
-      } else {
+      // if ((mDashboardScreenController.value?.mOrderPlace.value?.cartItem ?? [])
+      //     .isNotEmpty) {
+      //   mDashboardScreenController.value?.mOrderHistoryPlace.value = null;
+      //   Get.back();
+      //   mDashboardScreenController.value?.selectMenu.value = 0;
+      //   mDashboardScreenController.value?.selectMenu.refresh();
+      // } else
+      {
         mDashboardScreenController.value?.mOrderPlace.value = null;
         mDashboardScreenController.value?.mOrderHistoryPlace.value =
             mOrderPlace.value;

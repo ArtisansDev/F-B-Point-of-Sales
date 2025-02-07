@@ -88,3 +88,11 @@ getUTCToLocalDateTime(String sValue) {
       '${selected.day.toString().padLeft(2, '0')}-${selected.month.toString().padLeft(2, '0')}-${selected.year.toString()} | $formattedTime';
   return sDate;
 }
+
+getUTCToLocalDateTimeCart(String sValue) {
+  DateTime selected=  DateTime.parse(sValue).toLocal();
+  String formattedTime = DateFormat('hh:mm a').format(selected);
+  String sDate =
+      '${selected.day.toString().padLeft(2, '0')}-${selected.month.toString().padLeft(2, '0')}-${selected.year.toString()} $formattedTime';
+  return sDate;
+}

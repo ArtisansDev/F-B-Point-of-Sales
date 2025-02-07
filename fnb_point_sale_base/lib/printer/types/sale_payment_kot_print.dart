@@ -53,10 +53,10 @@ Future<bool> printSalePaymentKot(OrderHistoryData mOrderHistoryData,
 
   ///table
   widgets.add(getTableRow(mOrderHistoryData));
-  ///user details
-  if((mOrderHistoryData.phoneNumber??'').isNotEmpty) {
-    widgets.add(getUserDetailsRow(mOrderHistoryData));
-  }
+  // ///user details
+  // if((mOrderHistoryData.phoneNumber??'').isNotEmpty) {
+  //   widgets.add(getUserDetailsRow(mOrderHistoryData));
+  // }
   widgets.add(pw.Container(height: 4));
   widgets.add(mySeparator());
   widgets.add(pw.Container(height: 4));

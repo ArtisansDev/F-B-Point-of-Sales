@@ -20,6 +20,7 @@ import '../data/mode/cart_item/cart_item.dart';
 import '../data/mode/cart_item/order_place.dart';
 import '../data/mode/configuration/configuration_response.dart';
 import '../data/mode/customer/get_all_customer/get_all_customer_response.dart';
+import '../data/mode/order_history/order_history_response.dart';
 import '../data/mode/order_place/process_multiple_orders_request.dart';
 import '../data/mode/product/get_all_modifier/get_all_modifier_response.dart';
 import '../data/mode/product/get_all_payment_type/get_all_payment_type_response.dart';
@@ -27,10 +28,12 @@ import '../locator.dart';
 import 'date_time_utils.dart';
 import 'num_utils.dart';
 
-createOrderPlaceRequest({String? remarksController,
-  // String? orderDate,
-  OrderPlace? mOrderPlace,
-  GetAllPaymentTypeData? printOrderPayment}) async {
+createOrderPlaceRequest(
+    {String? remarksController,
+    // String? orderDate,
+    OrderPlace? mOrderPlace,
+    OrderHistoryData? mOrderHistoryData,
+    GetAllPaymentTypeData? printOrderPayment}) async {
   var configurationLocalApi = locator.get<ConfigurationLocalApi>();
   ConfigurationResponse mConfigurationResponse =
       await configurationLocalApi.getConfigurationResponse() ??
@@ -56,7 +59,7 @@ createOrderPlaceRequest({String? remarksController,
     var subDiscountTotal = 0.0;
     if ((mCartItem.mSelectVariantListData?.discountPercentage ?? 0) > 0) {
       subDiscountTotal =
-      (mCartItem.mSelectVariantListData?.discountedPrice ?? 0);
+          (mCartItem.mSelectVariantListData?.discountedPrice ?? 0);
       subDiscountTotal = (subTotalAmount - subDiscountTotal);
       discountTotal =
           discountTotal + (subDiscountTotal * (mCartItem.count ?? 0));
@@ -103,17 +106,17 @@ createOrderPlaceRequest({String? remarksController,
         ///variant
         variantPrice: mCartItem.mSelectVariantListData?.price,
         itemVariantName:
-        mCartItem.mSelectVariantListData?.quantitySpecification ?? '',
+            mCartItem.mSelectVariantListData?.quantitySpecification ?? '',
         itemTotal: (mCartItem.mSelectVariantListData?.price ?? 0) *
             (mCartItem.count ?? 0),
         itemDiscountPrice: mCartItem.mSelectVariantListData?.discountedPrice,
         discountedItemAmount: (mCartItem.mSelectVariantListData?.price ?? 0) -
             (mCartItem.mSelectVariantListData?.discountedPrice ?? 0),
         itemDiscountPriceTotal:
-        (mCartItem.mSelectVariantListData?.discountedPrice ?? 0) *
-            (mCartItem.count ?? 0),
+            (mCartItem.mSelectVariantListData?.discountedPrice ?? 0) *
+                (mCartItem.count ?? 0),
         discountPercentage:
-        mCartItem.mSelectVariantListData?.discountPercentage,
+            mCartItem.mSelectVariantListData?.discountPercentage,
         discountedItemTotalAmount: subDiscountTotal * (mCartItem.count ?? 0),
 
         ///Modifier
@@ -128,8 +131,8 @@ createOrderPlaceRequest({String? remarksController,
 
         ///Total
         totalItemAmount:
-        ((subTotalAmount + subTotalTax) * (mCartItem.count ?? 0)) +
-            subModifierTotal,
+            ((subTotalAmount + subTotalTax) * (mCartItem.count ?? 0)) +
+                subModifierTotal,
 
         ///ItemAdditionalNotes
         itemAdditionalNotes: mCartItem.textRemarks);
@@ -144,9 +147,9 @@ createOrderPlaceRequest({String? remarksController,
   double taxTotal = 0.0;
   List<OrderTax> orderTaxList = [];
   for (TaxData mTaxData
-  in mConfigurationResponse.configurationData?.taxData ?? []) {
+      in mConfigurationResponse.configurationData?.taxData ?? []) {
     double subTaxTotal =
-    calculatePercentageOf(subTotal, mTaxData.taxPercentage ?? 0.0);
+        calculatePercentageOf(subTotal, mTaxData.taxPercentage ?? 0.0);
     taxTotal = taxTotal + subTaxTotal;
     OrderTax mOrderTax = OrderTax(
         taxIDF: mTaxData.taxIDP ?? '',
@@ -171,6 +174,40 @@ createOrderPlaceRequest({String? remarksController,
         responseCode: "200",
         responseData: "",
         responseMessage: "",
+        requestData: "",
+      );
+    } else if (printOrderPayment.paymentGatewayNo.toString() == "5") {
+      mPaymentResponse = PaymentResponse(
+        transactionID: "",
+        paidAmount: getDoubleValue(subTotal + taxTotal),
+        paymentGatewayNo: printOrderPayment.paymentGatewayNo,
+        paymentStatus: "S",
+        responseCode: "200",
+        responseData: "",
+        responseMessage: "",
+        requestData: "",
+      );
+    } else if (printOrderPayment.paymentGatewayNo.toString() == "6") {
+      mPaymentResponse = PaymentResponse(
+        transactionID: "",
+        paidAmount: getDoubleValue(subTotal + taxTotal),
+        paymentGatewayNo: printOrderPayment.paymentGatewayNo,
+        paymentStatus: "S",
+        responseCode: "200",
+        responseData: "",
+        responseMessage: "",
+        requestData: "",
+      );
+    } else if (printOrderPayment.paymentGatewayNo.toString() == "7") {
+      mPaymentResponse = PaymentResponse(
+        transactionID: "",
+        paidAmount: getDoubleValue(subTotal + taxTotal),
+        paymentGatewayNo: printOrderPayment.paymentGatewayNo,
+        paymentStatus: "S",
+        responseCode: "200",
+        responseData: "",
+        responseMessage: "",
+        requestData: "",
       );
     }
   }
@@ -185,27 +222,26 @@ createOrderPlaceRequest({String? remarksController,
       trackingOrderID: mOrderPlace?.sOrderNo ?? '',
       counterBalanceHistoryIDF: sCounterBalanceHistoryIDF,
       counterIDF:
-      (mConfigurationResponse.configurationData?.counterData ?? []).isEmpty
-          ? ""
-          : (mConfigurationResponse.configurationData?.counterData ?? [])
-          .first
-          .counterIDP,
-      orderSource: "2",
-      orderType: '1',
+          (mConfigurationResponse.configurationData?.counterData ?? []).isEmpty
+              ? ""
+              : (mConfigurationResponse.configurationData?.counterData ?? [])
+                  .first
+                  .counterIDP,
+      orderSource: (mOrderHistoryData?.orderSource ?? 2).toString(),
+      orderType: (mOrderHistoryData?.orderType ?? 1).toString(),
       branchIDF:
-      (mConfigurationResponse.configurationData?.branchData ?? []).isEmpty
-          ? ""
-          : (mConfigurationResponse.configurationData?.branchData ?? [])
-          .first
-          .branchIDP,
-      userIDF: sUserId.toString(),
+          (mConfigurationResponse.configurationData?.branchData ?? []).isEmpty
+              ? ""
+              : (mConfigurationResponse.configurationData?.branchData ?? [])
+                  .first
+                  .branchIDP,
+      userIDF: (mOrderHistoryData?.userIDF ?? sUserId.toString()),
       restaurantIDF:
-      (mConfigurationResponse.configurationData?.restaurantData ?? [])
-          .isEmpty
-          ? ""
-          : (mConfigurationResponse.configurationData?.restaurantData ?? [])
-          .first
-          .restaurantIDP,
+          (mConfigurationResponse.configurationData?.restaurantData ?? []).isEmpty
+              ? ""
+              : (mConfigurationResponse.configurationData?.restaurantData ?? [])
+                  .first
+                  .restaurantIDP,
       additionalNotes: remarksController ?? '',
       orderDate: getUTCValue(mOrderPlace!.dateTime.isEmpty
           ? DateTime.now()
@@ -228,7 +264,7 @@ createOrderPlaceRequest({String? remarksController,
       adjustedAmount: grandTotal == adjustedAmount ? null : adjustedAmount,
 
       ///table no
-      tableNo: (mOrderPlace.tableNo == '--') ? '' : mOrderPlace?.tableNo,
+      tableNo: (mOrderPlace.tableNo == '--') ? '' : mOrderPlace.tableNo,
       seatIDF: (mOrderPlace.seatIDP ?? ""),
 
       ///orderTax
@@ -238,9 +274,23 @@ createOrderPlaceRequest({String? remarksController,
       orderMenu: orderMenu,
 
       ///payment_service
-      paymentGatewayIDF: printOrderPayment?.paymentGatewayIDP ?? '',
+      paymentGatewayNo: (printOrderPayment?.paymentGatewayNo ?? '').isEmpty
+          ? (mOrderHistoryData?.paymentGatewayNo ??
+                  printOrderPayment?.paymentGatewayNo ??
+                  '')
+              .toString()
+          : (printOrderPayment?.paymentGatewayNo ?? ''),
+      paymentGatewayIDF: (printOrderPayment?.paymentGatewayIDP ?? '').isEmpty
+          ? (mOrderHistoryData?.paymentGatewayIDF ??
+              printOrderPayment?.paymentGatewayIDP ??
+              '')
+          : (printOrderPayment?.paymentGatewayIDP ?? ''),
       paymentGatewaySettingIDF:
-      printOrderPayment?.paymentGatewaySettingIDP ?? '',
+          (printOrderPayment?.paymentGatewaySettingIDP ?? '').isEmpty
+              ? (mOrderHistoryData?.paymentGatewaySettingIDF ??
+                  printOrderPayment?.paymentGatewaySettingIDP ??
+                  '')
+              : (printOrderPayment?.paymentGatewaySettingIDP ?? ''),
       paymentStatus: printOrderPayment == null ? "P" : "S",
       orderStatus: printOrderPayment == null ? "A" : "P",
 
@@ -248,11 +298,12 @@ createOrderPlaceRequest({String? remarksController,
       paymentResponse: printOrderPayment == null ? null : [mPaymentResponse],
 
       ///customer
-      name: mOrderPlace.mSelectCustomer?.name,
-      email: mOrderPlace.mSelectCustomer?.email,
-      phoneCountryCode: mOrderPlace.mSelectCustomer?.phoneCountryCode,
-      phoneNumber: mOrderPlace.mSelectCustomer?.phoneNumber,
-      customerIDF: mOrderPlace.mSelectCustomer?.customerIDP);
+      name: (mOrderHistoryData?.name ?? mOrderPlace.mSelectCustomer?.name),
+      email: (mOrderHistoryData?.email ?? mOrderPlace.mSelectCustomer?.email),
+      phoneCountryCode: (mOrderHistoryData?.phoneCountryCode ??
+          mOrderPlace.mSelectCustomer?.phoneCountryCode),
+      phoneNumber: (mOrderHistoryData?.phoneNumber ?? mOrderPlace.mSelectCustomer?.phoneNumber),
+      customerIDF: (mOrderHistoryData?.userIDF ?? "").isEmpty ? mOrderPlace.mSelectCustomer?.customerIDP : "");
 
   return mOrderDetailList;
 }

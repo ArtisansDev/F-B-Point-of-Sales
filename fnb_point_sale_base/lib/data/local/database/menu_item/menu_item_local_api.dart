@@ -18,6 +18,8 @@ abstract class MenuItemLocalApi {
   ///searchMenuItemId
   Future<List<MenuItemData>?> getMenuItemIdSearch(String name);
 
+  Future<MenuItemData?> getMenuItemSearch(String name);
+
   /// Delete the current MenuItem
   Future<bool> deleteAllMenuItem();
 

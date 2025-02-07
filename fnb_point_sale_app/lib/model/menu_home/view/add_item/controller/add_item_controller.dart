@@ -163,7 +163,10 @@ class AddItemController extends GetxController {
           int index = -1;
           for (CartItem mMenuCartItem in mOrderPlace.cartItem ?? []) {
             index++;
-            if (!mMenuCartItem.placeOrder) {
+            ///
+            debugPrint("mMenuCartItem ${jsonEncode(mMenuCartItem)}");
+            ///as new requirement
+            // if (!mMenuCartItem.placeOrder) {
               if (mMenuCartItem.textRemarks.toString() ==
                   remarkController.value.text.toString()) {
                 String sSelectVariant = (mMenuCartItem
@@ -188,7 +191,7 @@ class AddItemController extends GetxController {
                   }
                 }
               }
-            }
+            // }
           }
 
           ///add

@@ -508,10 +508,24 @@ pw.Widget getPaymentRow(OrderDetailList mOrderDetailList, String currencyData) {
             alignment: pw.Alignment.centerLeft,
             child: pw.Text(
                 mOrderDetailList.paymentResponse?.first.paymentGatewayNo
-                    .toString() ==
+                    .toString()
+                    ==
                     "0"
-                    ? 'Cash'
+                    ? 'Cash' :
+                mOrderDetailList.paymentResponse?.first.paymentGatewayNo
+                    .toString() ==
+                    "5"
+                    ? 'Debit card' :
+                mOrderDetailList.paymentResponse?.first.paymentGatewayNo
+                    .toString() ==
+                    "6"
+                    ? 'Credit Card' :
+                mOrderDetailList.paymentResponse?.first.paymentGatewayNo
+                    .toString() ==
+                    "7"
+                    ? 'Qr code'
                     : '--',
+
                 style: getBoldTextStyle()),
           ),
         )),

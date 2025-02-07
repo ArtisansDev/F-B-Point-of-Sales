@@ -28,7 +28,8 @@ class PlaceOrderSaleLocalApiImpl extends PlaceOrderSaleLocalApi {
     if (content != null) {
       String? encoded = json.encode(content);
       Map<String, dynamic> decoded = json.decode(encoded);
-      PlaceOrderSaleModel? mPlaceOrderSaleModel = PlaceOrderSaleModel.fromJson(decoded);
+      PlaceOrderSaleModel? mPlaceOrderSaleModel = PlaceOrderSaleModel.fromJson(
+          decoded);
       return Future.value(mPlaceOrderSaleModel);
     }
 
@@ -64,11 +65,10 @@ class PlaceOrderSaleLocalApiImpl extends PlaceOrderSaleLocalApi {
     for (int i = 0; i < (mPlaceOrderSaleModel?.mOrderPlace ?? []).length; i++) {
       if ((mPlaceOrderSaleModel?.mOrderPlace ?? [])[i].sOrderNo.toString() ==
           mOrderPlace.sOrderNo.toString()) {
-        (mPlaceOrderSaleModel?.mOrderPlace ?? []).removeAt(i);
+        (mPlaceOrderSaleModel?.mOrderPlace ?? [])[i] = mOrderPlace;
         break;
       }
     }
-    mPlaceOrderSaleModel?.mOrderPlace?.add(mOrderPlace);
     save(mPlaceOrderSaleModel ?? PlaceOrderSaleModel());
   }
 

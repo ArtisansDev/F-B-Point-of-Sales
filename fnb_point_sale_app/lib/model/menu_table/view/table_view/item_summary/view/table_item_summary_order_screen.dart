@@ -241,9 +241,9 @@ class TableItemSummaryOrderScreen extends GetView<TableItemSummaryController> {
               Visibility(
                   visible: (controller.mOrderPlace.value.paymentStatus == 'P'),
                   child:
-                      controller.mOrderPlace.value.orderSource.toString() ==
-                              '2'
-                          ?
+                      // controller.mOrderPlace.value.orderSource.toString() ==
+                      //         '2'
+                      //     ?
                       GestureDetector(
                     onTap: () {
                       controller.addMore();
@@ -273,7 +273,7 @@ class TableItemSummaryOrderScreen extends GetView<TableItemSummaryController> {
                       ),
                     ),
                   )
-                  : const Text("You can't able to modify this order")
+                  // : const Text("You can't able to modify this order")
                   ),
               Visibility(
                   visible: (controller.mOrderPlace.value.paymentStatus == 'C'),

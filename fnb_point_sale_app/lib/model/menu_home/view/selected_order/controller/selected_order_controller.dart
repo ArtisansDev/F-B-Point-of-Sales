@@ -8,17 +8,21 @@ import 'package:fnb_point_sale_base/constants/web_constants.dart';
 import 'package:fnb_point_sale_base/data/local/database/hold_sale/hold_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/hold_sale/hold_sale_model.dart';
 import 'package:fnb_point_sale_base/data/local/database/menu_item/menu_item_local_api.dart';
+import 'package:fnb_point_sale_base/data/local/database/modifier/modifier_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/offline_place_order/offline_place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_model.dart';
+import 'package:fnb_point_sale_base/data/local/database/variant/variant_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/shared_prefs/shared_prefs.dart';
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/data/mode/customer/get_all_customer/get_all_customer_response.dart';
 import 'package:fnb_point_sale_base/data/mode/order_history/order_history_response.dart';
 import 'package:fnb_point_sale_base/data/mode/order_place/process_multiple_orders_request.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_menu_item/menu_item_response.dart';
+import 'package:fnb_point_sale_base/data/mode/product/get_all_modifier/get_all_modifier_response.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_payment_type/get_all_payment_type_response.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_tables/get_all_tables_response.dart';
+import 'package:fnb_point_sale_base/data/mode/product/get_all_variant/get_all_variant_response.dart';
 import 'package:fnb_point_sale_base/data/mode/table_status/table_status_request.dart';
 import 'package:fnb_point_sale_base/data/remote/api_call/order_place/order_place_api.dart';
 import 'package:fnb_point_sale_base/data/remote/api_call/order_place/order_place_api_impl.dart';
@@ -43,9 +47,14 @@ class SelectedOrderController extends HomeBaseController {
   Rxn<OrderPlace> mOrderPlace = Rxn<OrderPlace>();
   Rxn<OrderPlace> mOrderPlacePrint = Rxn<OrderPlace>();
   RxBool placeOrder = false.obs;
+  RxBool isOrderHistory = false.obs;
 
   SelectedOrderController() {
     mSelectedOrderController.value = this;
+    mOrderPlace.value = null;
+    mOrderPlacePrint.value = null;
+    placeOrder.value = false;
+    isOrderHistory.value = false;
   }
 
   ///Order Place from Another page
@@ -55,45 +64,136 @@ class SelectedOrderController extends HomeBaseController {
       remarkController.value.text = mOrderPlace.value?.remarkController ?? '';
       mOrderPlace.refresh();
       getCalculateSubTotal();
+      isOrderHistory.value = true;
       mDashboardScreenController.mOrderPlace.value = null;
     } else if (mDashboardScreenController.mOrderHistoryPlace.value != null) {
-      // mOrderPlace.value = OrderPlace();
-      // mOrderPlace.value?.tableNo =
-      //     mDashboardScreenController.mOrderHistoryPlace.value?.tableNo ?? '';
-      // mOrderPlace.value?.seatIDP =
-      //     mDashboardScreenController.mOrderHistoryPlace.value?.seatIDF ?? '';
-      // mOrderPlace.value?.sOrderNo = mDashboardScreenController
-      //         .mOrderHistoryPlace.value?.trackingOrderID ??
-      //     '';
-      // mOrderPlace.value?.dateTime = getUTCToLocalDateTime(
-      //     mDashboardScreenController.mOrderHistoryPlace.value?.orderDate ?? '');
-      // for (OrderHistoryMenu mOrderHistoryMenu
-      //     in mDashboardScreenController.mOrderHistoryPlace.value?.orderMenu ??
-      //         []) {
-      //   var localMenuItemApi = locator.get<MenuItemLocalApi>();
-      //   List<MenuItemData> mMenuItemData = [];
-      //   mMenuItemData.addAll(await localMenuItemApi.getMenuItemIdSearch(
-      //           mOrderHistoryMenu.menuItemIDF.toString().toLowerCase()) ??
-      //       []);
-      //   CartItem mCartItem = CartItem(
-      //     mMenuItemData:
-      //   );
-      //   mCartItem.count = mOrderHistoryMenu.quantity ?? 1;
-      //   mCartItem.textRemarks = mOrderHistoryMenu.itemAdditionalNotes ?? '';
-      //   mCartItem.placeOrder = true;
-      //   print("######## ${jsonEncode(mOrderHistoryMenu)}");
-      //   // ///price
-      //   // mCartItem.price =
-      //   //     (mOrderHistoryMenu.price ?? 0) + (mCartItem.value?.priceModifier ?? 0.0);
-      //   //
-      //   // mCartItem.taxPriceAmount =
-      //   //     (mCartItem.value?.price ?? 0) + (mCartItem.value?.taxAmount ?? 0);
-      //   //
-      //   // ///total price
-      //   // mCartItem.totalPrice = getDoubleValue((mCartItem.value?.count ?? 1) *
-      //   //     getDoubleValue(mCartItem.value?.taxPriceAmount));
-      // }
+      isOrderHistory.value = true;
+      mOrderPlace.value = OrderPlace();
+      mOrderPlace.value?.tableNo =
+          mDashboardScreenController.mOrderHistoryPlace.value?.tableNo ?? '';
+      mOrderPlace.value?.seatIDP =
+          mDashboardScreenController.mOrderHistoryPlace.value?.seatIDF ?? '';
+      mOrderPlace.value?.sOrderNo = mDashboardScreenController
+              .mOrderHistoryPlace.value?.trackingOrderID ??
+          '';
+      mOrderPlace.value?.dateTime = getUTCToLocalDateTimeCart(
+          mDashboardScreenController.mOrderHistoryPlace.value?.orderDate ?? '');
+
+      debugPrint(
+          "mOrderHistoryMenu ${(mDashboardScreenController.mOrderHistoryPlace.value?.orderMenu ?? []).length}");
+
+      ///cartItem
+      mOrderPlace.value?.cartItem = [];
+      for (OrderHistoryMenu mOrderHistoryMenu
+          in mDashboardScreenController.mOrderHistoryPlace.value?.orderMenu ??
+              []) {
+        debugPrint("mOrderHistoryMenu ${jsonEncode(mOrderHistoryMenu)}");
+        try {
+          var localMenuItemApi = locator.get<MenuItemLocalApi>();
+          MenuItemData? mMenuItemData =
+              await localMenuItemApi.getMenuItemSearch(
+                  mOrderHistoryMenu.menuItemIDF.toString().toLowerCase());
+          debugPrint("mMenuItemData ${jsonEncode(mMenuItemData)}");
+          if (mMenuItemData != null) {
+            ///Variant list
+            var localVariantApi = locator.get<VariantLocalApi>();
+            List<VariantListData> mVariantListData = [];
+            mVariantListData.addAll(await localVariantApi
+                    .getVariantList(mMenuItemData.menuItemIDP ?? '') ??
+                []);
+
+            ///selectVariantListData
+            VariantListData selectVariantListData = mVariantListData.firstWhere(
+                (user) =>
+                    user.variantIDP.toString().toLowerCase() ==
+                    (mOrderHistoryMenu.variantIDF ?? '').toLowerCase());
+
+            debugPrint(
+                "selectVariantListData ${jsonEncode(selectVariantListData)}");
+
+            ///ModifierList list
+            var localModifierApi = locator.get<ModifierLocalApi>();
+            List<ModifierList> mModifierListData = [];
+            mModifierListData.addAll(await localModifierApi
+                    .getModifierList(mMenuItemData.modifierIDs ?? []) ??
+                []);
+
+            ///select ModifierList list
+            List<ModifierList> mSelectModifierListData = [];
+
+            if ((mOrderHistoryMenu.allModifierIDFs ?? '').isNotEmpty) {
+              List<String>? mSelectModifierIDFs =
+                  (mOrderHistoryMenu.allModifierIDFs ?? '').split(',');
+              if ((mSelectModifierIDFs ?? []).isNotEmpty &&
+                  mModifierListData.isNotEmpty) {
+                for (String sModifierIDF in mSelectModifierIDFs) {
+                  ModifierList getModifier = mModifierListData.firstWhere(
+                      (user) =>
+                          user.modifierIDP.toString().toLowerCase() ==
+                          sModifierIDF.toLowerCase());
+                  if (getModifier.modifierIDP != null) {
+                    mSelectModifierListData.add(getModifier);
+                  }
+                }
+              }
+            }
+
+            ///create mCartItem
+            CartItem mCartItem = CartItem(
+                mMenuItemData: mMenuItemData,
+                mVariantListData: mVariantListData,
+                mSelectVariantListData: selectVariantListData,
+                mModifierList: mModifierListData,
+                mSelectModifierList: mSelectModifierListData);
+            mCartItem.count = mOrderHistoryMenu.quantity ?? 1;
+            mCartItem = onCalculateTotal(mCartItem);
+            mCartItem.textRemarks = mOrderHistoryMenu.itemAdditionalNotes ?? '';
+            mCartItem.placeOrder = true;
+            debugPrint("mCartItem ${jsonEncode(mCartItem)}");
+            mOrderPlace.value?.cartItem?.add(mCartItem);
+          }
+          getCalculateSubTotal();
+          debugPrint("mOrderPlace ${jsonEncode(mOrderPlace.value)}");
+        } catch (e) {
+          debugPrint("exception ${e.toString()}");
+        }
+      }
     }
+  }
+
+  ///onCalculateTotal
+  onCalculateTotal(CartItem mCartItem) {
+    ///Variant
+    mCartItem.price =
+        (mCartItem.mSelectVariantListData?.discountPercentage ?? 0.0) > 0
+            ? mCartItem.mSelectVariantListData?.discountedPrice ?? 0.0
+            : mCartItem.mSelectVariantListData?.price ?? 0.0;
+
+    ///tax
+    mCartItem.taxAmount = 0.0;
+    if ((mCartItem.mMenuItemData?.itemTaxPercent ?? 0) > 0) {
+      mCartItem.taxAmount = calculatePercentageOf(mCartItem.price ?? 0,
+          getDoubleValue((mCartItem.mMenuItemData?.itemTaxPercent ?? 0)));
+    }
+
+    ///Modifier
+    mCartItem.priceModifier = 0.0;
+    for (ModifierList mModifierList in mCartItem.mSelectModifierList ?? []) {
+      mCartItem.priceModifier = (mCartItem.priceModifier ?? 0) +
+          ((mModifierList.price ?? 0) * (mModifierList.count ?? 1));
+    }
+
+    ///price
+    mCartItem.price = (mCartItem.price ?? 0) + (mCartItem.priceModifier ?? 0.0);
+
+    mCartItem.taxPriceAmount =
+        (mCartItem.price ?? 0) + (mCartItem.taxAmount ?? 0);
+
+    ///total price
+    mCartItem.totalPrice = getDoubleValue(
+        (mCartItem.count ?? 1) * getDoubleValue(mCartItem.taxPriceAmount));
+
+    return mCartItem;
   }
 
   onSelectOrder(CartItem mCartItem) async {
@@ -177,6 +277,7 @@ class SelectedOrderController extends HomeBaseController {
     if (mDashboardScreenController.mOrderPlace.value == null ||
         (mDashboardScreenController.mOrderPlace.value?.sOrderNo ?? '')
             .isEmpty) {
+      isOrderHistory.value = false;
       remarkController.value.text = "";
     }
   }
@@ -197,6 +298,7 @@ class SelectedOrderController extends HomeBaseController {
     }
 
     ///clear data
+    isOrderHistory.value = false;
     placeOrder.value = false;
     mOrderPlace.value = null;
     mOrderPlace.refresh();
@@ -247,9 +349,12 @@ class SelectedOrderController extends HomeBaseController {
     mOrderPlacePrint.value =
         OrderPlace.fromJson((mOrderPlace.value ?? OrderPlace()).toJson());
     List<CartItem> mCartItemList = mOrderPlace.value?.cartItem ?? [];
-    if (!mCartItemList.first.placeOrder) {
-      callUpdateTableStatus(mOrderPlacePrint.value ?? OrderPlace());
-    }
+
+    ///select table
+    // if (!isOrderHistory.value) {
+    await callUpdateTableStatus(mOrderPlacePrint.value ?? OrderPlace());
+    // }
+
     if (mCartItemList.isNotEmpty) {
       List<CartItem> mSetCartItemList = [];
       for (CartItem mCartItem in mCartItemList) {
@@ -272,7 +377,9 @@ class SelectedOrderController extends HomeBaseController {
 
       OrderDetailList mOrderDetailList = await createOrderPlaceRequest(
           remarksController: remarkController.value.text,
-          mOrderPlace: mOrderPlace.value);
+          mOrderPlace: mOrderPlace.value,
+          mOrderHistoryData:
+              mDashboardScreenController.mOrderHistoryPlace.value);
 
       /// debugPrint("OrderDetail ----- ${jsonEncode(mOrderDetailList)}");
       ///place order print testing
@@ -331,7 +438,9 @@ class SelectedOrderController extends HomeBaseController {
             OrderDetailList mOrderDetailList = await createOrderPlaceRequest(
                 remarksController: remarkController.value.text,
                 mOrderPlace: mOrderPlace.value,
-                printOrderPayment: mSelectPaymentType);
+                printOrderPayment: mSelectPaymentType,
+                mOrderHistoryData:
+                    mDashboardScreenController.mOrderHistoryPlace.value);
             debugPrint("OrderDetail ----- ${jsonEncode(mOrderDetailList)}");
 
             ///printOrderPayment

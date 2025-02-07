@@ -173,7 +173,9 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
                               Expanded(
                                   child: GestureDetector(
                                 onTap: () {
-                                  controller.selectTable();
+                                  if (!controller.isOrderHistory.value) {
+                                    controller.selectTable();
+                                  }
                                 },
                                 child: Container(
                                   height: 18.sp,
@@ -185,8 +187,8 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
                                         color: Colors.grey.withOpacity(0.15),
                                         spreadRadius: 1,
                                         blurRadius: 3,
-                                        offset:
-                                        const Offset(0, 0), // changes position of shadow
+                                        offset: const Offset(
+                                            0, 0), // changes position of shadow
                                       ),
                                     ], // use instead of BorderRadius.all(Radius.circular(20))
                                   ),
@@ -211,8 +213,7 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
                                       ),
                                     ],
                                   ),
-                                )
-                                ,
+                                ),
                               )),
                             ],
                           ),
