@@ -38,6 +38,12 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
 import '../../dashboard_screen/view/top_bar/controller/top_bar_controller.dart';
+import '../../payment_screen/payment_type/credit_card_view/controller/credit_card_view_controller.dart';
+import '../../payment_screen/payment_type/credit_card_view/view/credit_card_view.dart';
+import '../../payment_screen/payment_type/debit_card_view/controller/debit_card_view_controller.dart';
+import '../../payment_screen/payment_type/debit_card_view/view/debit_card_view.dart';
+import '../../payment_screen/payment_type/qr_code_view/controller/qr_view_controller.dart';
+import '../../payment_screen/payment_type/qr_code_view/view/qr_view.dart';
 import '../view/item_payment_screen/controller/item_payment_screen_controller.dart';
 import '../view/item_payment_screen/view/item_payment_screen.dart';
 import '../view/item_summary/controller/item_summary_controller.dart';
@@ -276,7 +282,7 @@ class MenuSalesController extends GetxController {
         ItemPaymentScreen(
           mOrderHistory,
           onPayment: (GetAllPaymentTypeData mGetAllPaymentTypeData,
-              GetAllCustomerList? mGetAllCustomerList) {
+              GetAllCustomerList? mGetAllCustomerList) async {
             Get.back();
             orderPayment(
                 mGetAllPaymentTypeData, mOrderHistory, mGetAllCustomerList);
@@ -315,9 +321,11 @@ class MenuSalesController extends GetxController {
     await mDashboardScreenController.onUpdateHoldSale();
     await mTopBarController.allOrderPlace();
     await callOrderHistory();
+
     ///clear table
-    if((mOrderDetailList.tableNo??"").isNotEmpty) {
-      TablesByTableStatusData mTablesByTableStatusData = TablesByTableStatusData(
+    if ((mOrderDetailList.tableNo ?? "").isNotEmpty) {
+      TablesByTableStatusData mTablesByTableStatusData =
+          TablesByTableStatusData(
         occupiedOrderID: mOrderDetailList.trackingOrderID ?? '',
         seatIDP: mOrderDetailList.seatIDF ?? '',
       );
@@ -330,7 +338,55 @@ class MenuSalesController extends GetxController {
       GetAllPaymentTypeData mGetAllPaymentTypeData,
       OrderHistoryData mOrderHistory,
       GetAllCustomerList? mGetAllCustomerList) async {
-    ///
+    ///payment
+    switch (mGetAllPaymentTypeData.paymentGatewayNo) {
+      case "5":
+
+        ///Debit Card
+        await AppAlert.showViewWithoutBlur(Get.context!, DebitCardView(
+          onPayment: (String value) {
+            mGetAllPaymentTypeData.setRequestData(value);
+          },
+        ));
+        if (Get.isRegistered<DebitCardViewController>()) {
+          Get.delete<DebitCardViewController>();
+        }
+        break;
+      case "6":
+
+        ///Credit Card
+        await AppAlert.showViewWithoutBlur(Get.context!, CreditCardView(
+          onPayment: (String value) {
+            mGetAllPaymentTypeData.setRequestData(value);
+          },
+        ));
+        if (Get.isRegistered<CreditCardViewController>()) {
+          Get.delete<CreditCardViewController>();
+        }
+        break;
+      case "7":
+
+        ///Qr code
+        await AppAlert.showViewWithoutBlur(
+            Get.context!,
+            QrView(
+              mSelectPaymentType: mGetAllPaymentTypeData,
+              onPayment: (String sValue) {
+                mGetAllPaymentTypeData.setRequestData(sValue);
+              },
+            ));
+        if (Get.isRegistered<QrViewController>()) {
+          await Get.delete<QrViewController>();
+        }
+        break;
+    }
+
+    if ((mGetAllPaymentTypeData.paymentGatewayNo == "5" ||
+            mGetAllPaymentTypeData.paymentGatewayNo == "6" ||
+            mGetAllPaymentTypeData.paymentGatewayNo == "7") &&
+        mGetAllPaymentTypeData.requestData == 'Cancel') {
+      return;
+    }
     OrderDetailList mOrderDetailList =
         await createOrderPlaceRequestFromOrderHistory(
       remarksController: mOrderHistory.additionalNotes ?? '',
@@ -355,8 +411,9 @@ class MenuSalesController extends GetxController {
     await callOrderHistory();
 
     ///clear table
-    if((mOrderDetailList.tableNo??"").isNotEmpty) {
-      TablesByTableStatusData mTablesByTableStatusData = TablesByTableStatusData(
+    if ((mOrderDetailList.tableNo ?? "").isNotEmpty) {
+      TablesByTableStatusData mTablesByTableStatusData =
+          TablesByTableStatusData(
         occupiedOrderID: mOrderDetailList.trackingOrderID ?? '',
         seatIDP: mOrderDetailList.seatIDF ?? '',
       );
@@ -381,9 +438,10 @@ class MenuSalesController extends GetxController {
               await orderPlaceApi.postOrderPlace(mProcessMultipleOrdersRequest);
           if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
             ///print....
-            if(!isCancel) {
+            if (!isCancel) {
               await printOrderPayment(mOrderDetailList, mOrderHistory);
             }
+
             ///remove from local data base
             if (isPayment) {
               var mPlaceOrderSaleLocalApi =
@@ -445,13 +503,13 @@ class MenuSalesController extends GetxController {
       if (isInternetAvailable) {
         TableStatusRequest mTableStatusRequest = TableStatusRequest(
             trackingOrderID:
-            mTablesByTableStatusData.occupiedTrackingOrderID ?? '',
+                mTablesByTableStatusData.occupiedTrackingOrderID ?? '',
             tableStatus: 'A',
             seatIDP: mTablesByTableStatusData.seatIDP,
             userIDF: await SharedPrefs().getUserId());
 
         WebResponseSuccess mWebResponseSuccess =
-        await orderPlaceApi.postTableStatus(mTableStatusRequest);
+            await orderPlaceApi.postTableStatus(mTableStatusRequest);
 
         if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
           // onRefresh();

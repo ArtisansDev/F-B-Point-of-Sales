@@ -53,6 +53,7 @@ const String sPrintKot = "PRINT KOT";
 const String sCancelOrder = "Cancel Order";
 const String sCancel = "Cancel";
 const String sClose = "Close";
+const String sDone = "Done";
 const String sReserveNow = "Reserve Now";
 const String sAddItem = "Add Item";
 const String sCreateOrder = "Create Order";

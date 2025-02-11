@@ -45,8 +45,8 @@ void main() async {
   _disableDebugLogs();
 
   await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.landscapeLeft,
-    DeviceOrientation.landscapeRight,
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
   ]).then((_) {
     // runZonedGuarded(() {
     runApp(

@@ -65,6 +65,7 @@ class GetAllPaymentTypeResponse {
 /// APIKey : ""
 /// URL : ""
 /// Configurations : ""
+/// QRCodeData : [{"QRCodeImage":"QR_638747992413304281.jpg"},{"QRCodeImage":"QR_638747992413304282.jpg"}]
 
 class GetAllPaymentTypeData {
   GetAllPaymentTypeData({
@@ -80,7 +81,10 @@ class GetAllPaymentTypeData {
     String? aPIKey,
     String? url,
     bool? isSelect,
-    String? configurations,}) {
+    String? configurations,
+    String? requestData,
+    List<QrCodeData>? qRCodeData,
+  }) {
     _restaurantIDF = restaurantIDF;
     _paymentGatewayIDP = paymentGatewayIDP;
     _paymentGatewaySettingIDP = paymentGatewaySettingIDP;
@@ -94,6 +98,8 @@ class GetAllPaymentTypeData {
     _url = url;
     _isSelect = isSelect;
     _configurations = configurations;
+    _requestData = requestData;
+    _qRCodeData = qRCodeData;
   }
 
   GetAllPaymentTypeData.fromJson(dynamic json) {
@@ -110,6 +116,13 @@ class GetAllPaymentTypeData {
     _url = json['URL'];
     _isSelect = json['isSelect'] ?? false;
     _configurations = json['Configurations'];
+    _requestData = json['RequestData'];
+    if (json['QRCodeData'] != null) {
+      _qRCodeData = [];
+      json['QRCodeData'].forEach((v) {
+        _qRCodeData?.add(QrCodeData.fromJson(v));
+      });
+    }
   }
 
   String? _restaurantIDF;
@@ -125,6 +138,9 @@ class GetAllPaymentTypeData {
   String? _url;
   bool? _isSelect;
   String? _configurations;
+  String? _requestData;
+  List<QrCodeData>? _qRCodeData;
+
 
   String? get restaurantIDF => _restaurantIDF;
 
@@ -152,8 +168,17 @@ class GetAllPaymentTypeData {
 
   String? get configurations => _configurations;
 
+  String? get requestData => _requestData;
+
+  List<QrCodeData>? get qRCodeData => _qRCodeData;
+
+
   setIsSelect(bool isSelect) {
     _isSelect = isSelect;
+  }
+
+  setRequestData(String requestData) {
+    _requestData = requestData;
   }
 
   Map<String, dynamic> toJson() {
@@ -171,6 +196,32 @@ class GetAllPaymentTypeData {
     map['URL'] = _url;
     map['isSelect'] = _isSelect;
     map['Configurations'] = _configurations;
+    map['RequestData'] = _requestData;
+    if (_qRCodeData != null) {
+      map['QRCodeData'] = _qRCodeData?.map((v) => v.toJson()).toList();
+    }
+    return map;
+  }
+}
+
+/// QRCodeImage : "QR_638747992413304281.jpg"
+
+class QrCodeData {
+  QrCodeData({
+    String? qRCodeImage,}){
+    _qRCodeImage = qRCodeImage;
+  }
+
+  QrCodeData.fromJson(dynamic json) {
+    _qRCodeImage = json['QRCodeImage'];
+  }
+  String? _qRCodeImage;
+
+  String? get qRCodeImage => _qRCodeImage;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['QRCodeImage'] = _qRCodeImage;
     return map;
   }
 

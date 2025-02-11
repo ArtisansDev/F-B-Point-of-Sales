@@ -16,10 +16,44 @@ class AppAlert {
   AppAlert._();
 
   static showSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(message),
-      duration: const Duration(seconds: 3),
-    ));
+    ScaffoldMessenger.of(context)
+      ..clearSnackBars()
+      ..showSnackBar(SnackBar(
+        backgroundColor: ColorConstants.cAppColors,
+        content: Text(message,
+          style: getText600(size: 12.5.sp, colors: ColorConstants.white),),
+        duration: const Duration(seconds: 3),
+      ));
+  }
+
+  static void showCustomSnackbar(BuildContext context, String message) {
+    final overlay = Navigator.of(context).overlay!;
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 0, // Show at the top
+        width: MediaQuery.of(context).size.width,
+        height: 6.h,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding: EdgeInsets.all(10),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: ColorConstants.cAppColors,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+              message,
+              style: getText600(size: 12.sp, colors: ColorConstants.white),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+    Future.delayed(Duration(seconds: 3), () => overlayEntry.remove());
   }
 
   static showProgressDialog(BuildContext context) {
@@ -242,9 +276,11 @@ class AppAlert {
                                           'Close', () {
                                         Navigator.pop(context);
                                       },
-                                          bgColor: ColorConstants.cAppButtonColour,
+                                          bgColor: ColorConstants
+                                              .cAppButtonColour,
                                           textSize: 11.5.sp,
-                                          boderColor: ColorConstants.cAppButtonColour,
+                                          boderColor: ColorConstants
+                                              .cAppButtonColour,
                                           textColor: ColorConstants
                                               .white))),
                               SizedBox(

@@ -44,6 +44,13 @@ Future<void> downloadPaymentType(Function onError) async {
                           [])
                       .first
                       .restaurantIDP,
+            branchIDF: (mConfigurationResponse.configurationData?.branchData ?? [])
+                .isEmpty
+                ? ""
+                : (mConfigurationResponse.configurationData?.branchData ??
+                [])
+                .first
+                .branchIDP,
         );
         WebResponseSuccess mWebResponseSuccess =
             await productApiImpl.postGetAllPaymentType(mProductRequest);

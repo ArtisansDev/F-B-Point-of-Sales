@@ -168,15 +168,15 @@ class SalesListRowView extends StatelessWidget {
                                           SizedBox(
                                             width: 8.sp,
                                           ),
-                                          Icon(
-                                            Icons.warning_rounded,
-                                            color: ColorConstants.red,
-                                            size: 12.sp,
-                                          ),
-                                          SizedBox(
-                                            width: 6.sp,
-                                          ),
-                                          const Text('Process'),
+                                          // Icon(
+                                          //   Icons.warning_rounded,
+                                          //   color: ColorConstants.red,
+                                          //   size: 12.sp,
+                                          // ),
+                                          // SizedBox(
+                                          //   width: 6.sp,
+                                          // ),
+                                          const Text('Pending'),
                                           SizedBox(
                                             width: 8.sp,
                                           ),

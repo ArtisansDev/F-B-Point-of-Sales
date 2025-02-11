@@ -3,49 +3,36 @@ import 'dart:collection';
 import 'package:printing/printing.dart';
 
 import '../../data/mode/cart_item/order_place.dart';
+import '../../data/mode/cash_model/cash_model.dart';
+import '../../data/mode/configuration/configuration_response.dart';
 import '../../data/mode/order_history/order_history_response.dart';
 import '../../data/mode/order_place/process_multiple_orders_request.dart';
-
+import '../../data/mode/update_balance/closing_balance/closing_balance_request.dart';
 
 mixin MyPrinterService {
   void testManualPrint();
 
   void testAutoMaticPrint(Printer printer);
 
-  Future<bool> salePlaceOrder(OrderDetailList mOrderDetailList, OrderPlace mOrderPlace);
+  Future<bool> salePlaceOrder(
+      OrderDetailList mOrderDetailList, OrderPlace mOrderPlace);
 
-  Future<bool> saleOrderPayment(OrderDetailList mOrderDetailList, OrderPlace mOrderPlace);
+  Future<bool> saleOrderPayment(
+      OrderDetailList mOrderDetailList, OrderPlace mOrderPlace);
 
-  Future<bool> saleAfterPayment(OrderDetailList mOrderDetailList, OrderHistoryData mOrderPlace);
+  Future<bool> saleAfterPayment(
+      OrderDetailList mOrderDetailList, OrderHistoryData mOrderPlace);
 
   Future<bool> salePayment(OrderHistoryData mOrderDetailList);
 
-  Future<bool> salePaymentKot(OrderHistoryData mOrderDetailList,{bool duplicate = false});
+  Future<bool> salePaymentKot(OrderHistoryData mOrderDetailList,
+      {bool duplicate = false});
 
-  // Future<bool> salePrint(
-  //     String? title, Sale sale, bool duplicateCopy, bool voidSale,
-  //     {SaleTye saleTye = SaleTye.REGULAR, bool returnOrExchange = false});
-  //
-  // Future<bool> bookingPaymentPrint(
-  //     String? title, BookingPayments sale, bool duplicateCopy);
-  //
-  // Future<bool> resetBookingPaymentPrint(
-  //     String? title, BookingPaymentProducts sale, bool duplicateCopy);
-  //
-  // Future<bool> cashMovementPrint(
-  //     String? title, CashMovements sale, bool duplicateCopy);
+  Future<bool> shiftDetails(
+      String amount,
+      ClosingBalanceRequest mClosingBalanceRequest,
+      List<CashModel> mCashModelList,
+      ConfigurationResponse mConfigurationResponse);
 
   Future<bool> openCashDrawer();
-
-  // Future<bool> cashDeclarationReceipt(
-  //     String? title,
-  //     CounterClosingDetails counterClosingDetails,
-  //     List<Denominations> denominations,
-  //     HashMap<int, double>? paymentDeclaration);
-  //
-  // Future<bool> openCounterReceipt(String? title, Stores? store,
-  //     Counters? counters, double openingBalance, bool duplicateCopy);
-  //
-  // Future<bool> printBirthdayVoucher(
-  //     String? title, Customers customers, Vouchers vouchers);
 }

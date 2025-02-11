@@ -8,6 +8,8 @@
  * Ticket       : 
  */
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_app/model/menu_sales/view/sales_list/sales_list_row_view.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
@@ -161,7 +163,11 @@ class CustomerListView extends StatelessWidget {
                               controller.page.value = pageNumber;
                               controller.selectPage();
                             },
-                            visiblePagesCount: 10,
+                            visiblePagesCount: Platform.isIOS
+                                ? 6
+                                : Platform.isAndroid
+                                    ? 6
+                                    : 10,
                             totalPages: controller.totalPage.value,
                             currentPage: controller.pageNumber.value,
                             selectedButtonColor:

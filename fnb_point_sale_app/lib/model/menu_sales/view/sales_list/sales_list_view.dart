@@ -8,6 +8,8 @@
  * Ticket       : 
  */
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_app/model/menu_sales/view/sales_list/sales_list_row_view.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
@@ -96,7 +98,7 @@ class SalesListView extends StatelessWidget {
                                     sPhoneNumber.tr,
                                     style: getText600(
                                         colors:
-                                        ColorConstants.appTextSalesHader,
+                                            ColorConstants.appTextSalesHader,
                                         size: 11.sp),
                                   ),
                                 )),
@@ -187,7 +189,11 @@ class SalesListView extends StatelessWidget {
                                             pageNumber;
                                         controller.callOrderHistory();
                                       },
-                                      visiblePagesCount: 10,
+                                      visiblePagesCount: Platform.isIOS
+                                          ? 6
+                                          : Platform.isAndroid
+                                              ? 6
+                                              : 10,
                                       totalPages:
                                           controller.totalPageNumber.value,
                                       currentPage: controller.pageNumber.value,

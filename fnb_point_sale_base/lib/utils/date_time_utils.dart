@@ -19,6 +19,17 @@ getDateTimeFromMilliseconds(int milliseconds) {
   return formattedDate;
 }
 
+
+getTodayDateTime() {
+  // Convert milliseconds to DateTime
+  DateTime dateTime = DateTime.now();
+
+  // Format DateTime as you like (using intl package)
+  String formattedDate = DateFormat('EEE, dd MMM, yyyy, HH:mm').format(dateTime);
+  return formattedDate;
+}
+
+
 Future<DateTime?> selectDatePicker(BuildContext context,
     DateTime? selectedDate) async {
   final DateTime? picked = await showDatePicker(

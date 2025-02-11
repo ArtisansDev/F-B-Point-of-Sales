@@ -37,22 +37,32 @@ class MenuView extends StatelessWidget {
                   child: Text("Loading...."),
                 )
               : SingleChildScrollView(
+                  padding: EdgeInsets.zero,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       ///CategoryView
-                      DynamicHeightGridView(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: controller.mGetAllCategoryView.length,
-                          crossAxisCount: 4,
-                          crossAxisSpacing: 11.sp,
-                          mainAxisSpacing: 11.sp,
-                          builder: (ctx, index) {
-                            /// return your widget here.
-                            return CategoryRowView(
-                              index: index,
-                            );
-                          }),
+                      if ((controller.selectGetAllCategory ?? []).isEmpty ||
+                          (controller.selectGetAllCategory ?? [])
+                              .last
+                              ?.subCategories
+                              .isNotEmpty)
+                        DynamicHeightGridView(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: controller.mGetAllCategoryView.length,
+                            crossAxisCount: 4,
+                            crossAxisSpacing: 11.sp,
+                            mainAxisSpacing: 11.sp,
+                            builder: (ctx, index) {
+                              /// return your widget here.
+                              return CategoryRowView(
+                                index: index,
+                              );
+                            })
+                      else
+                        const SizedBox(),
 
                       ///no sub Category
                       if ((controller.selectGetAllCategory ?? []).isEmpty ||

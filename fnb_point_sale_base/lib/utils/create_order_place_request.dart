@@ -15,12 +15,11 @@ import '../data/mode/product/get_all_payment_type/get_all_payment_type_response.
 import '../locator.dart';
 import 'num_utils.dart';
 
-createOrderPlaceRequestFromOrderHistory(
-    {String? remarksController,
-    // String? orderDate,
-    OrderHistoryData? mOrderPlace,
-    GetAllPaymentTypeData? printOrderPayment,
-    GetAllCustomerList? mGetAllCustomerList}) async {
+createOrderPlaceRequestFromOrderHistory({String? remarksController,
+  // String? orderDate,
+  OrderHistoryData? mOrderPlace,
+  GetAllPaymentTypeData? printOrderPayment,
+  GetAllCustomerList? mGetAllCustomerList}) async {
   var configurationLocalApi = locator.get<ConfigurationLocalApi>();
   ConfigurationResponse mConfigurationResponse =
       await configurationLocalApi.getConfigurationResponse() ??
@@ -104,33 +103,36 @@ createOrderPlaceRequestFromOrderHistory(
       );
     } else if (printOrderPayment.paymentGatewayNo.toString() == "5") {
       mPaymentResponse = PaymentResponse(
-        transactionID: "",
-        paidAmount: getDoubleValue(mOrderPlace?.totalAmount),
-        paymentGatewayNo: printOrderPayment.paymentGatewayNo,
-        paymentStatus: "S",
-        responseCode: "200",
-        responseData: "",
-        responseMessage: "",
+          transactionID: "",
+          paidAmount: getDoubleValue(mOrderPlace?.totalAmount),
+          paymentGatewayNo: printOrderPayment.paymentGatewayNo,
+          paymentStatus: "S",
+          responseCode: "200",
+          responseData: "",
+          responseMessage: "",
+          requestData: printOrderPayment.requestData ?? ''
       );
     } else if (printOrderPayment.paymentGatewayNo.toString() == "6") {
       mPaymentResponse = PaymentResponse(
-        transactionID: "",
-        paidAmount: getDoubleValue(mOrderPlace?.totalAmount),
-        paymentGatewayNo: printOrderPayment.paymentGatewayNo,
-        paymentStatus: "S",
-        responseCode: "200",
-        responseData: "",
-        responseMessage: "",
+          transactionID: "",
+          paidAmount: getDoubleValue(mOrderPlace?.totalAmount),
+          paymentGatewayNo: printOrderPayment.paymentGatewayNo,
+          paymentStatus: "S",
+          responseCode: "200",
+          responseData: "",
+          requestData: printOrderPayment.requestData ?? ''
+
       );
     } else if (printOrderPayment.paymentGatewayNo.toString() == "7") {
       mPaymentResponse = PaymentResponse(
-        transactionID: "",
-        paidAmount: getDoubleValue(mOrderPlace?.totalAmount),
-        paymentGatewayNo: printOrderPayment.paymentGatewayNo,
-        paymentStatus: "S",
-        responseCode: "200",
-        responseData: "",
-        responseMessage: "",
+          transactionID: "",
+          paidAmount: getDoubleValue(mOrderPlace?.totalAmount),
+          paymentGatewayNo: printOrderPayment.paymentGatewayNo,
+          paymentStatus: "S",
+          responseCode: "200",
+          responseData: "",
+          requestData: printOrderPayment.requestData ?? ''
+
       );
     }
   }
@@ -158,11 +160,11 @@ createOrderPlaceRequestFromOrderHistory(
   OrderDetailList mOrderDetailList = OrderDetailList(
     trackingOrderID: mOrderPlace?.trackingOrderID ?? '',
     counterIDF:
-        (mConfigurationResponse.configurationData?.counterData ?? []).isEmpty
-            ? ""
-            : (mConfigurationResponse.configurationData?.counterData ?? [])
-                .first
-                .counterIDP,
+    (mConfigurationResponse.configurationData?.counterData ?? []).isEmpty
+        ? ""
+        : (mConfigurationResponse.configurationData?.counterData ?? [])
+        .first
+        .counterIDP,
     orderSource: (mOrderPlace?.orderSource ?? 2).toString(),
     orderType: (mOrderPlace?.orderType ?? 2).toString(),
     branchIDF: mOrderPlace?.branchIDF,
@@ -191,7 +193,7 @@ createOrderPlaceRequestFromOrderHistory(
     adjustedAmount: grandTotal == adjustedAmount
         ? null
         : getDoubleValue(
-            roundToNearestPossible(getDoubleValue(mOrderPlace?.grandTotal))),
+        roundToNearestPossible(getDoubleValue(mOrderPlace?.grandTotal))),
 
     ///table no
     tableNo: mOrderPlace?.tableNo ?? '',
@@ -228,13 +230,12 @@ createOrderPlaceRequestFromOrderHistory(
 }
 
 
-cancelOrder(
-    {String? remarksController,
-      // String? orderDate,
-      OrderHistoryData? mOrderPlace,
-      // GetAllPaymentTypeData? printOrderPayment,
-      GetAllCustomerList? mGetAllCustomerList
-    }) async {
+cancelOrder({String? remarksController,
+  // String? orderDate,
+  OrderHistoryData? mOrderPlace,
+  // GetAllPaymentTypeData? printOrderPayment,
+  GetAllCustomerList? mGetAllCustomerList
+}) async {
   var configurationLocalApi = locator.get<ConfigurationLocalApi>();
   ConfigurationResponse mConfigurationResponse =
       await configurationLocalApi.getConfigurationResponse() ??
@@ -394,7 +395,7 @@ cancelOrder(
     orderStatus: 'C',
 
     ///orderPlaceGuestInfoRequest
-    paymentResponse:  null ,
+    paymentResponse: null,
 
     ///customer
     name: mGetAllCustomerList.name,

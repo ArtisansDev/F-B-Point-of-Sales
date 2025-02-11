@@ -26,7 +26,7 @@ Future<bool> printPlaceOrder(
               '';
   List<pw.Widget> widgets = List.empty(growable: true);
   widgets.add(pw.Center(
-      child: pw.Text('Place Order', style: getBoldTextStyleMedium())));
+      child: pw.Text('Order Confirmation', style: getBoldTextStyleMedium())));
   widgets.add(pw.Container(height: 4));
   widgets.add(
       pw.Center(child: pw.Text(branchName, style: getBoldTextStyleMedium())));

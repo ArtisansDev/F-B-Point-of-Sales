@@ -103,7 +103,7 @@ Future<bool> printOrderPayment(OrderDetailList mOrderDetailList,
   ///payment
   widgets.add(pw.Container(
       padding: const pw.EdgeInsets.only(left: 2.0),
-      child: pw.Text('Payment', style: getBoldTextStyle())));
+      child: pw.Text('Payment Type', style: getBoldTextStyle())));
   widgets.add(pw.Container(height: 3));
   widgets
       .add(getPaymentRow(mOrderDetailList, mCurrencyData.currencySymbol ?? ''));

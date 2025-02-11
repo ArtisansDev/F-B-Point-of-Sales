@@ -48,6 +48,7 @@ class DynamicHeightGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      padding: EdgeInsets.zero,
       controller: controller,
       shrinkWrap: shrinkWrap,
       physics: physics,

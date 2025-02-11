@@ -39,6 +39,12 @@ import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 import '../../../../../common_view/table_drop_down.dart';
 import '../../../../cancel_order/view/cancel_order_screen.dart';
 import '../../../../payment_screen/controller/payment_screen_controller.dart';
+import '../../../../payment_screen/payment_type/credit_card_view/controller/credit_card_view_controller.dart';
+import '../../../../payment_screen/payment_type/credit_card_view/view/credit_card_view.dart';
+import '../../../../payment_screen/payment_type/debit_card_view/controller/debit_card_view_controller.dart';
+import '../../../../payment_screen/payment_type/debit_card_view/view/debit_card_view.dart';
+import '../../../../payment_screen/payment_type/qr_code_view/controller/qr_view_controller.dart';
+import '../../../../payment_screen/payment_type/qr_code_view/view/qr_view.dart';
 import '../../../../payment_screen/view/payment_screen.dart';
 import '../../../home_base_controller/home_base_controller.dart';
 
@@ -416,11 +422,7 @@ class SelectedOrderController extends HomeBaseController {
           onPayment: (GetAllPaymentTypeData mSelectPaymentType,
               GetAllCustomerList? mSelectCustomer) async {
             Get.back();
-            // if ((mOrderPlace.value?.seatIDP ?? '').isNotEmpty) {
-            //   if (!(mOrderPlace.value?.cartItem ?? []).first.placeOrder) {
-            //     await callUpdateTableStatus(mOrderPlace.value ?? OrderPlace());
-            //   }
-            // }
+
             if (mSelectCustomer != null) {
               mOrderPlace.value?.mSelectCustomer = mSelectCustomer;
             }
@@ -428,6 +430,57 @@ class SelectedOrderController extends HomeBaseController {
             ///selectPayment type
             debugPrint(
                 "mSelectPaymentType ----- ${jsonEncode(mSelectPaymentType)}");
+            switch (mSelectPaymentType.paymentGatewayNo) {
+              case "5":
+
+                ///Debit Card
+                await AppAlert.showViewWithoutBlur(Get.context!, DebitCardView(
+                  onPayment: (String sValue) {
+                    mSelectPaymentType.setRequestData(sValue);
+                  },
+                ));
+                if (Get.isRegistered<DebitCardViewController>()) {
+                  await Get.delete<DebitCardViewController>();
+                }
+                break;
+              case "6":
+
+                ///Credit Card
+                await AppAlert.showViewWithoutBlur(Get.context!, CreditCardView(
+                  onPayment: (String sValue) {
+                    mSelectPaymentType.setRequestData(sValue);
+                  },
+                ));
+                if (Get.isRegistered<CreditCardViewController>()) {
+                  await Get.delete<CreditCardViewController>();
+                }
+                break;
+              case "7":
+
+                ///Qr code
+                await AppAlert.showViewWithoutBlur(
+                    Get.context!,
+                    QrView(
+                      mSelectPaymentType: mSelectPaymentType,
+                      onPayment: (String sValue) {
+                        mSelectPaymentType.setRequestData(sValue);
+                      },
+                    ));
+                if (Get.isRegistered<QrViewController>()) {
+                  await Get.delete<QrViewController>();
+                }
+                break;
+            }
+            debugPrint(
+                "## mSelectPaymentType ----- ${jsonEncode(mSelectPaymentType)}");
+
+            ////
+            if ((mSelectPaymentType.paymentGatewayNo == "5" ||
+                    mSelectPaymentType.paymentGatewayNo == "7" ||
+                    mSelectPaymentType.paymentGatewayNo == "6") &&
+                mSelectPaymentType.requestData == 'Cancel') {
+              return;
+            }
 
             ///remove hold sale
             var holdSaleLocalApi = locator.get<HoldSaleLocalApi>();
@@ -591,6 +644,7 @@ class SelectedOrderController extends HomeBaseController {
       {bool placeOrder = false, bool isPayment = false}) async {
     final myPrinterService = locator.get<MyPrinterService>();
     if (placeOrder) {
+      await myPrinterService.salePlaceOrder(mOrderDetailList, mOrderPlace);
       await myPrinterService.salePlaceOrder(mOrderDetailList, mOrderPlace);
     }
     if (isPayment) {

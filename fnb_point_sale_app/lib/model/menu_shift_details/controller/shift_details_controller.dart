@@ -10,6 +10,7 @@ import 'package:fnb_point_sale_base/data/local/database/configuration/configurat
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_model.dart';
 import 'package:fnb_point_sale_base/data/local/shared_prefs/shared_prefs.dart';
+import 'package:fnb_point_sale_base/data/mode/cash_model/cash_model.dart';
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/data/mode/update_balance/closing_balance/closing_balance_request.dart';
 import 'package:fnb_point_sale_base/data/mode/update_balance/shift_details/shift_details_request.dart';
@@ -17,6 +18,7 @@ import 'package:fnb_point_sale_base/data/mode/update_balance/shift_details/shift
 import 'package:fnb_point_sale_base/data/remote/api_call/balance/balance_api.dart';
 import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/locator.dart';
+import 'package:fnb_point_sale_base/printer/service/my_printer_service.dart';
 import 'package:fnb_point_sale_base/utils/date_time_utils.dart';
 import 'package:fnb_point_sale_base/utils/network_utils.dart';
 import 'package:fnb_point_sale_base/utils/num_utils.dart';
@@ -25,7 +27,6 @@ import 'package:get/get.dart';
 import '../../../common_view/logout_expired.dart';
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
 import '../view/details/controller/details_screen_controller.dart';
-import '../view/open_cash_drawer/controller/cash_model/cash_model.dart';
 import '../view/open_cash_drawer/controller/open_cash_drawer_screen_controller.dart';
 
 class ShiftDetailsController extends GetxController {
@@ -55,9 +56,8 @@ class ShiftDetailsController extends GetxController {
     mConfigurationResponse.refresh();
   }
 
-  onDeleteHoldSale(){
-    mDashboardScreenController.onUpdate(() async {
-    },updateHoldSale: () async{
+  onDeleteHoldSale() {
+    mDashboardScreenController.onUpdate(() async {}, updateHoldSale: () async {
       sMessage.value = "Loading...";
       sMessage.refresh();
       postShiftDetailsApiCall();
@@ -66,9 +66,7 @@ class ShiftDetailsController extends GetxController {
 
   RxBool isShiftClose = false.obs;
   RxString sLoading = "Loading...".obs;
-  RxString sMessage =
-      "Loading..."
-          .obs;
+  RxString sMessage = "Loading...".obs;
   Rx<ShiftDetailsResponse> mShiftDetailsResponse = ShiftDetailsResponse().obs;
 
   ///postShiftDetailsApiCall
@@ -96,7 +94,8 @@ class ShiftDetailsController extends GetxController {
         WebResponseSuccess mWebResponseSuccess =
             await localApi.postShiftDetails(mShiftDetailsRequest);
         var mPlaceOrderSaleLocalApi = locator.get<PlaceOrderSaleLocalApi>();
-        Rxn<PlaceOrderSaleModel> mPlaceOrderSaleModel = Rxn<PlaceOrderSaleModel>();
+        Rxn<PlaceOrderSaleModel> mPlaceOrderSaleModel =
+            Rxn<PlaceOrderSaleModel>();
         mPlaceOrderSaleModel.value =
             await mPlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
                 PlaceOrderSaleModel();
@@ -108,12 +107,15 @@ class ShiftDetailsController extends GetxController {
           if (isShiftClose.value) {
             sMessage.value =
                 "Please complete your sale then you can go for shift close";
-          } else if ((mPlaceOrderSaleModel.value?.mOrderPlace ?? []).isNotEmpty) {
+          } else if ((mPlaceOrderSaleModel.value?.mOrderPlace ?? [])
+              .isNotEmpty) {
             sMessage.value =
-            "Please complete your sale then you can go for shift close";
-          } else if(getInValue(mDashboardScreenController.mTobBarModel[3].value)>0){
+                "Please complete your sale then you can go for shift close";
+          } else if (getInValue(
+                  mDashboardScreenController.mTobBarModel[3].value) >
+              0) {
             sMessage.value =
-            "Please clear all hold sale then you can go for shift close";
+                "Please clear all hold sale then you can go for shift close";
           } else {
             sMessage.value = "";
             sMessage.refresh();
@@ -195,7 +197,7 @@ class ShiftDetailsController extends GetxController {
     isCheckAmount.refresh();
   }
 
-  calculateAmount(String amount) {
+  calculateAmount(String amount) async {
     double calculateAmount = getDoubleValue(amount);
     List<CashCounter> mCashCounterList = [];
     if (calculateAmount > 0) {
@@ -262,7 +264,11 @@ class ShiftDetailsController extends GetxController {
         if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
           AppAlert.showSnackBar(
               Get.context!, mWebResponseSuccess.statusMessage ?? '');
-          ///
+
+          ///print
+          await onPrintShiftClose(amount, mClosingBalanceRequest);
+
+          ///open counter
           openCounter();
         } else {
           AppAlert.showSnackBar(
@@ -273,5 +279,12 @@ class ShiftDetailsController extends GetxController {
             Get.context!, MessageConstants.noInternetConnection);
       }
     });
+  }
+
+  onPrintShiftClose(
+      String amount, ClosingBalanceRequest mClosingBalanceRequest) async {
+    final myPrinterService = locator.get<MyPrinterService>();
+    await myPrinterService.shiftDetails(amount, mClosingBalanceRequest,
+        mCashModelList, mConfigurationResponse.value);
   }
 }

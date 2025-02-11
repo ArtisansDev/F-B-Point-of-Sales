@@ -185,7 +185,7 @@ createOrderPlaceRequest(
         responseCode: "200",
         responseData: "",
         responseMessage: "",
-        requestData: "",
+        requestData: printOrderPayment.requestData??'',
       );
     } else if (printOrderPayment.paymentGatewayNo.toString() == "6") {
       mPaymentResponse = PaymentResponse(
@@ -196,7 +196,7 @@ createOrderPlaceRequest(
         responseCode: "200",
         responseData: "",
         responseMessage: "",
-        requestData: "",
+        requestData: printOrderPayment.requestData??'',
       );
     } else if (printOrderPayment.paymentGatewayNo.toString() == "7") {
       mPaymentResponse = PaymentResponse(
@@ -207,7 +207,7 @@ createOrderPlaceRequest(
         responseCode: "200",
         responseData: "",
         responseMessage: "",
-        requestData: "",
+        requestData: printOrderPayment.requestData??'',
       );
     }
   }

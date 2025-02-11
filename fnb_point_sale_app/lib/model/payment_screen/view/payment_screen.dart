@@ -393,26 +393,28 @@ class PaymentScreen extends GetView<PaymentScreenController> {
                 Expanded(child: PaymentTypeList()),
 
                 ///Print Invoice button
-                Visibility(
-                    visible: controller.isSelectPayment.value,
-                    child: Container(
-                        margin: EdgeInsets.only(
-                            left: 25.sp,
-                            right: 25.sp,
-                            top: 12.sp,
-                            bottom: 13.sp),
-                        child: controller.isSelectPayment.value
-                            ? rectangleCornerButtonText600(
-                                height: 19.5.sp,
-                                textSize: 11.7.sp,
-                                sPrintInvoice.tr,
-                                () {
-                                  controller.onPrint();
-                                },
-                              )
-                            : const SizedBox(
-                                height: 42.5,
-                              ))),
+                // Visibility(
+                //     visible: controller.isSelectPayment.value,
+                //     child:
+                Container(
+                    margin: EdgeInsets.only(
+                        left: 25.sp, right: 25.sp, top: 12.sp, bottom: 13.sp),
+                    child:
+                        // controller.isSelectPayment.value
+                        //     ?
+                        rectangleCornerButtonText600(
+                      height: 19.5.sp,
+                      textSize: 11.7.sp,
+                      sPrintInvoice.tr,
+                      () {
+                        controller.onPrint();
+                      },
+                    )
+                    // : const SizedBox(
+                    //     height: 42.5,
+                    //   )
+                    )
+                // ),
               ],
             ),
           ),

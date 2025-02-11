@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fnb_point_sale_base/alert/app_alert.dart';
 import 'package:fnb_point_sale_base/data/local/database/payment_type/payment_type_local_api.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 import 'package:fnb_point_sale_base/data/mode/customer/get_all_customer/get_all_customer_response.dart';
@@ -77,6 +78,13 @@ class PaymentScreenController extends GetxController {
   }
 
   void onPrint() async{
+
+   if(!isSelectPayment.value){
+     AppAlert.showCustomSnackbar(
+         Get.context!, 'Please select the payment type');
+     return;
+   }
+
     if(mSelectCustomer.value!=null){
       if(mSelectCustomer.value?.name.toString()=='_new_') {
         AddCustomer mAddCustomer = AddCustomer(

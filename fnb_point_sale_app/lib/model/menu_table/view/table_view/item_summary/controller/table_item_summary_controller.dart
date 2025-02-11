@@ -13,6 +13,12 @@ import 'package:get/get.dart';
 import '../../../../../dashboard_screen/controller/dashboard_screen_controller.dart';
 import '../../../../../menu_sales/view/item_payment_screen/controller/item_payment_screen_controller.dart';
 import '../../../../../menu_sales/view/item_payment_screen/view/item_payment_screen.dart';
+import '../../../../../payment_screen/payment_type/credit_card_view/controller/credit_card_view_controller.dart';
+import '../../../../../payment_screen/payment_type/credit_card_view/view/credit_card_view.dart';
+import '../../../../../payment_screen/payment_type/debit_card_view/controller/debit_card_view_controller.dart';
+import '../../../../../payment_screen/payment_type/debit_card_view/view/debit_card_view.dart';
+import '../../../../../payment_screen/payment_type/qr_code_view/controller/qr_view_controller.dart';
+import '../../../../../payment_screen/payment_type/qr_code_view/view/qr_view.dart';
 import '../../../../controller/table_controller.dart';
 
 class TableItemSummaryController extends GetxController {
@@ -53,8 +59,58 @@ class TableItemSummaryController extends GetxController {
         ItemPaymentScreen(
           mOrderPlace.value,
           onPayment: (GetAllPaymentTypeData mGetAllPaymentTypeData,
-              GetAllCustomerList? mGetAllCustomerList) {
+              GetAllCustomerList? mGetAllCustomerList) async {
             Get.back();
+
+            switch (mGetAllPaymentTypeData.paymentGatewayNo) {
+              case "5":
+
+                ///Debit Card
+                await AppAlert.showViewWithoutBlur(Get.context!, DebitCardView(
+                  onPayment: (String value) {
+                    mGetAllPaymentTypeData.setRequestData(value);
+                  },
+                ));
+                if (Get.isRegistered<DebitCardViewController>()) {
+                  Get.delete<DebitCardViewController>();
+                }
+                break;
+              case "6":
+
+                ///Credit Card
+                await AppAlert.showViewWithoutBlur(Get.context!, CreditCardView(
+                  onPayment: (String value) {
+                    mGetAllPaymentTypeData.setRequestData(value);
+                  },
+                ));
+                if (Get.isRegistered<CreditCardViewController>()) {
+                  Get.delete<CreditCardViewController>();
+                }
+                break;
+              case "7":
+
+                ///Qr code
+                await AppAlert.showViewWithoutBlur(
+                    Get.context!,
+                    QrView(
+                      mSelectPaymentType: mGetAllPaymentTypeData,
+                      onPayment: (String sValue) {
+                        mGetAllPaymentTypeData.setRequestData(sValue);
+                      },
+                    ));
+                if (Get.isRegistered<QrViewController>()) {
+                  await Get.delete<QrViewController>();
+                }
+                break;
+            }
+
+            if ((mGetAllPaymentTypeData.paymentGatewayNo == "5" ||
+                    mGetAllPaymentTypeData.paymentGatewayNo == "6" ||
+                    mGetAllPaymentTypeData.paymentGatewayNo == "7") &&
+                mGetAllPaymentTypeData.requestData == 'Cancel') {
+              return;
+            }
+
             mTableController.orderPayment(
                 mGetAllPaymentTypeData, mOrderPlace.value, mGetAllCustomerList);
           },
