@@ -44,10 +44,8 @@ void main() async {
   await dotenv.load(fileName: ".env");
   _disableDebugLogs();
 
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]).then((_) {
+  await  SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft])
+      .then((_) {
     // runZonedGuarded(() {
     runApp(
       // DevicePreview(
