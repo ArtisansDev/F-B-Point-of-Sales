@@ -25,6 +25,7 @@ class CartItem {
 
   String textRemarks = "";
   bool placeOrder = false;
+  bool cancelOrder = false;
 
   CartItem(
       {this.mMenuItemData,
@@ -33,7 +34,7 @@ class CartItem {
       this.mVariantListData,
       this.mSelectVariantListData});
 
-  getModifierString(){
+  getModifierString() {
     String value = '';
     for(ModifierList mModifierList in mSelectModifierList??[]){
       value =  value + (mModifierList?.modifierIDP??'').toString();
@@ -82,6 +83,7 @@ class CartItem {
     ///
     textRemarks = json['text_remarks']??'';
     placeOrder = json['place_order']??false;
+    cancelOrder = json['cancel_order']??false;
   }
 
   Map<String, dynamic> toJson() {
@@ -117,7 +119,7 @@ class CartItem {
     ///
     map['text_remarks'] = textRemarks;
     map['place_order'] = placeOrder;
-
+    map['cancel_order'] = cancelOrder;
     return map;
   }
 }

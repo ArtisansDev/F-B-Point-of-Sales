@@ -12,6 +12,7 @@ import 'package:fnb_point_sale_base/data/local/database/configuration/configurat
 import 'package:fnb_point_sale_base/data/local/database/hold_sale/hold_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/menu_item/menu_item_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/modifier/modifier_local_api.dart';
+import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/product/all_category/all_category_local_api.dart';
 import 'package:fnb_point_sale_base/locator.dart';
 import 'package:get/get.dart';
@@ -30,6 +31,8 @@ import 'package:fnb_point_sale_base/data/local/shared_prefs/shared_prefs.dart';
 
 openCounter() async {
   await SharedPrefs().setHistoryID('');
+  var mPlaceOrderSaleLocalApi = locator.get<PlaceOrderSaleLocalApi>();
+  mPlaceOrderSaleLocalApi.clearBox();
   Get.delete<DashboardScreenController>();
   Get.offNamed(
     RouteConstants.rOpenCounterScreen,

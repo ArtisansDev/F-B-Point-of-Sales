@@ -48,7 +48,7 @@ class CashCalculateScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                        'Denomination (RM)',
+                        'Denomination (${controller.mShiftDetailsController.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''})',
                         style: getText500(
                             size: 10.5.sp, colors: ColorConstants.black),
                       ),

@@ -13,6 +13,7 @@ import '../../data/mode/configuration/configuration_response.dart';
 import '../../data/mode/order_history/order_history_response.dart';
 import '../../data/mode/order_place/process_multiple_orders_request.dart';
 import '../../data/mode/update_balance/closing_balance/closing_balance_request.dart';
+import '../../data/mode/update_balance/shift_details/shift_details_response.dart';
 import '../../locator.dart';
 import '../../utils/my_log_utils.dart';
 import '../types/order_payment_print.dart';
@@ -58,9 +59,10 @@ class MyPrinterServiceImpl with MyPrinterService {
       String amount,
       ClosingBalanceRequest mClosingBalanceRequest,
       List<CashModel> mCashModelList,
-      ConfigurationResponse mConfigurationResponse
+      ConfigurationResponse mConfigurationResponse,
+      ShiftDetailsResponse mShiftDetailsResponse
       ) async {
-    return await printShiftClose(amount, mClosingBalanceRequest,mCashModelList,mConfigurationResponse);
+    return await printShiftClose(amount, mClosingBalanceRequest,mCashModelList,mConfigurationResponse,mShiftDetailsResponse);
   }
 
   // @override

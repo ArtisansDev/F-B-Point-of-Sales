@@ -231,7 +231,7 @@ class HomeBaseController extends GetxController {
   }
 
   onAddValue(CartItem mCartItem) {
-    MyLogUtils.logDebug("##### mModifierListData ${mCartItem.totalPrice}");
+    MyLogUtils.logDebug("mModifierListData ${mCartItem.totalPrice}");
     getAllCategoryList();
     mSelectedOrderController.value ??= Get.find<SelectedOrderController>();
     mSelectedOrderController.value?.onSelectOrder(mCartItem);

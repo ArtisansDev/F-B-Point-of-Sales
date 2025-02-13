@@ -107,11 +107,13 @@ class ShiftDetailsController extends GetxController {
           if (isShiftClose.value) {
             sMessage.value =
                 "Please complete your sale then you can go for shift close";
-          } else if ((mPlaceOrderSaleModel.value?.mOrderPlace ?? [])
-              .isNotEmpty) {
-            sMessage.value =
-                "Please complete your sale then you can go for shift close";
-          } else if (getInValue(
+          }
+          // else if ((mPlaceOrderSaleModel.value?.mOrderPlace ?? [])
+          //     .isNotEmpty) {
+          //   sMessage.value =
+          //       "Please complete your sale then you can go for shift close2";
+          // }
+          else if (getInValue(
                   mDashboardScreenController.mTobBarModel[3].value) >
               0) {
             sMessage.value =
@@ -259,6 +261,7 @@ class ShiftDetailsController extends GetxController {
                         mShiftDetailsResponse.value.data?.cashPayment ?? 0) -
                     getDoubleValue(totalCashCollected.value))
                 .toStringAsFixed(2));
+
         WebResponseSuccess mWebResponseSuccess =
             await localApi.postUpdateClosingBalance(mClosingBalanceRequest);
         if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
@@ -285,6 +288,6 @@ class ShiftDetailsController extends GetxController {
       String amount, ClosingBalanceRequest mClosingBalanceRequest) async {
     final myPrinterService = locator.get<MyPrinterService>();
     await myPrinterService.shiftDetails(amount, mClosingBalanceRequest,
-        mCashModelList, mConfigurationResponse.value);
+        mCashModelList, mConfigurationResponse.value,mShiftDetailsResponse.value);
   }
 }

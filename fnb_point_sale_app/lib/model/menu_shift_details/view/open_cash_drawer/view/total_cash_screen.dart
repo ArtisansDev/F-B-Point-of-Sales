@@ -15,6 +15,7 @@ class TotalCashScreen extends StatelessWidget {
   TotalCashScreen({super.key}) {
     controller = Get.find<OpenCashDrawerScreenController>();
   }
+
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -25,11 +26,10 @@ class TotalCashScreen extends StatelessWidget {
           children: [
             Text(
               sCashCollected.tr,
-              style:
-              getText500(size: 11.sp, colors: ColorConstants.black),
+              style: getText500(size: 11.sp, colors: ColorConstants.black),
             ),
             Text(
-              'RM ${getDoubleValue(controller.mShiftDetailsController.totalCashCollected.value).toStringAsFixed(2)}',
+              '${controller.mShiftDetailsController.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''}  ${getDoubleValue(controller.mShiftDetailsController.totalCashCollected.value).toStringAsFixed(2)}',
               style: getText500(
                   size: 11.sp, colors: ColorConstants.cAppButtonColour),
             )

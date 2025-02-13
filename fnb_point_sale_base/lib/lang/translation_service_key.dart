@@ -39,6 +39,7 @@ const String sOpenCashDrawer = "Open Cash Drawer";
 const String sUserInfo = "User Info";
 const String sTransactionInfo = "Transaction Info";
 const String sPaymentDeclaration = "Payment Declaration";
+const String sPaymentType = "Payment Type";
 const String sCounter = "Counter";
 const String sCashier = "Cashier";
 const String sCash = "Cash";

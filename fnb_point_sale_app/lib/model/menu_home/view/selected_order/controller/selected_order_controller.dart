@@ -23,9 +23,9 @@ import 'package:fnb_point_sale_base/data/mode/product/get_all_modifier/get_all_m
 import 'package:fnb_point_sale_base/data/mode/product/get_all_payment_type/get_all_payment_type_response.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_tables/get_all_tables_response.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_variant/get_all_variant_response.dart';
+import 'package:fnb_point_sale_base/data/mode/table_status/get_all_tables_by_table_status_response.dart';
 import 'package:fnb_point_sale_base/data/mode/table_status/table_status_request.dart';
 import 'package:fnb_point_sale_base/data/remote/api_call/order_place/order_place_api.dart';
-import 'package:fnb_point_sale_base/data/remote/api_call/order_place/order_place_api_impl.dart';
 import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/locator.dart';
 import 'package:fnb_point_sale_base/printer/service/my_printer_service.dart';
@@ -51,14 +51,18 @@ import '../../../home_base_controller/home_base_controller.dart';
 class SelectedOrderController extends HomeBaseController {
   Rx<TextEditingController> remarkController = TextEditingController().obs;
   Rxn<OrderPlace> mOrderPlace = Rxn<OrderPlace>();
+  Rxn<OrderPlace> mOrderPlaceHistory = Rxn<OrderPlace>();
   Rxn<OrderPlace> mOrderPlacePrint = Rxn<OrderPlace>();
   RxBool placeOrder = false.obs;
   RxBool isOrderHistory = false.obs;
 
   SelectedOrderController() {
     mSelectedOrderController.value = this;
+
     mOrderPlace.value = null;
+    mOrderPlaceHistory.value = null;
     mOrderPlacePrint.value = null;
+
     placeOrder.value = false;
     isOrderHistory.value = false;
   }
@@ -77,6 +81,9 @@ class SelectedOrderController extends HomeBaseController {
       mOrderPlace.value = OrderPlace();
       mOrderPlace.value?.tableNo =
           mDashboardScreenController.mOrderHistoryPlace.value?.tableNo ?? '';
+      remarkController.value.text = mDashboardScreenController
+              .mOrderHistoryPlace.value?.additionalNotes ??
+          '';
       mOrderPlace.value?.seatIDP =
           mDashboardScreenController.mOrderHistoryPlace.value?.seatIDF ?? '';
       mOrderPlace.value?.sOrderNo = mDashboardScreenController
@@ -160,6 +167,11 @@ class SelectedOrderController extends HomeBaseController {
           }
           getCalculateSubTotal();
           debugPrint("mOrderPlace ${jsonEncode(mOrderPlace.value)}");
+          mOrderPlaceHistory.value =
+              OrderPlace.fromJson(mOrderPlace.value!.toJson());
+          debugPrint(
+              "mOrderPlaceHistory ${jsonEncode(mOrderPlaceHistory.value)}");
+          placeOrder.value = false;
         } catch (e) {
           debugPrint("exception ${e.toString()}");
         }
@@ -283,8 +295,11 @@ class SelectedOrderController extends HomeBaseController {
     if (mDashboardScreenController.mOrderPlace.value == null ||
         (mDashboardScreenController.mOrderPlace.value?.sOrderNo ?? '')
             .isEmpty) {
-      isOrderHistory.value = false;
       remarkController.value.text = "";
+
+      ///History.value
+      mOrderPlaceHistory.value = null;
+      isOrderHistory.value = false;
     }
   }
 
@@ -311,42 +326,14 @@ class SelectedOrderController extends HomeBaseController {
     await mDashboardScreenController.onUpdateHoldSale();
   }
 
-  ///table status
-  // callTableStatus() async {
-  //   try {
-  //     ///api product call
-  //     final orderPlaceApi = locator.get<OrderPlaceApi>();
-  //     await NetworkUtils()
-  //         .checkInternetConnection()
-  //         .then((isInternetAvailable) async {
-  //       if (isInternetAvailable) {
-  //         TableStatusRequest mTableStatusRequest = TableStatusRequest(
-  //             tableStatus: 'O',
-  //             seatIDP: mOrderPlace.value?.seatIDP,
-  //             userIDF: await SharedPrefs().getUserId());
-  //
-  //         WebResponseSuccess mWebResponseSuccess =
-  //             await orderPlaceApi.postTableStatus(mTableStatusRequest);
-  //
-  //         if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
-  //           onPlaceOrder();
-  //         } else {
-  //           AppAlert.showSnackBar(
-  //               Get.context!, mWebResponseSuccess.statusMessage ?? '');
-  //         }
-  //       } else {
-  //         AppAlert.showSnackBar(
-  //             Get.context!, MessageConstants.noInternetConnection);
-  //       }
-  //     });
-  //   } catch (e) {
-  //     AppAlert.showSnackBar(
-  //         Get.context!, 'downloadTableList failed with exception $e');
-  //   }
-  // }
-
   ///place order
   void onPlaceOrder() async {
+    // if (isOrderHistory.value) {
+    //   debugPrint("## mOrderPlace ## ${jsonEncode(mOrderPlace.value)}");
+    //   debugPrint(
+    //       "## mOrderPlaceHistory ## ${jsonEncode(mOrderPlaceHistory.value)}");
+    // }
+
     ///local data base save
     var mPlaceOrderSaleLocalApi = locator.get<PlaceOrderSaleLocalApi>();
     PlaceOrderSaleModel mPlaceOrderSaleModel =
@@ -401,6 +388,10 @@ class SelectedOrderController extends HomeBaseController {
       await mDashboardScreenController.onUpdateHoldSale();
       await mTopBarController.allOrderPlace();
       remarkController.value.text = "";
+
+      ///History value
+      mOrderPlaceHistory.value = null;
+      isOrderHistory.value = false;
     } else {
       AppAlert.showSnackBar(Get.context!, 'Please add item in the cart');
     }
@@ -512,6 +503,20 @@ class SelectedOrderController extends HomeBaseController {
             await mDashboardScreenController.onUpdateHoldSale();
             await mTopBarController.allOrderPlace();
             remarkController.value.text = "";
+
+            ///History value
+            mOrderPlaceHistory.value = null;
+            isOrderHistory.value = false;
+
+            ///clear table
+            if ((mOrderDetailList.seatIDF ?? '').isNotEmpty) {
+              TablesByTableStatusData mTablesByTableStatusData =
+                  TablesByTableStatusData(
+                occupiedOrderID: mOrderDetailList.trackingOrderID ?? '',
+                seatIDP: mOrderDetailList.seatIDF ?? '',
+              );
+              await callUpdateTableStatusAvailable(mTablesByTableStatusData);
+            }
           },
         ),
         barrierDismissible: true);
@@ -629,6 +634,38 @@ class SelectedOrderController extends HomeBaseController {
 
         if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
           // onPlaceOrder();
+        } else {
+          // AppAlert.showSnackBar(
+          //     Get.context!, mWebResponseSuccess.statusMessage ?? '');
+        }
+      } else {
+        // AppAlert.showSnackBar(
+        //     Get.context!, MessageConstants.noInternetConnection);
+      }
+    });
+  }
+
+  ///update table status Available
+  callUpdateTableStatusAvailable(
+      TablesByTableStatusData mTablesByTableStatusData) async {
+    ///api product call
+    final orderPlaceApi = locator.get<OrderPlaceApi>();
+    await NetworkUtils()
+        .checkInternetConnection()
+        .then((isInternetAvailable) async {
+      if (isInternetAvailable) {
+        TableStatusRequest mTableStatusRequest = TableStatusRequest(
+            trackingOrderID:
+                mTablesByTableStatusData.occupiedTrackingOrderID ?? '',
+            tableStatus: 'A',
+            seatIDP: mTablesByTableStatusData.seatIDP,
+            userIDF: await SharedPrefs().getUserId());
+
+        WebResponseSuccess mWebResponseSuccess =
+            await orderPlaceApi.postTableStatus(mTableStatusRequest);
+
+        if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
+          await mTopBarController.callGetAllTableStatus();
         } else {
           AppAlert.showSnackBar(
               Get.context!, mWebResponseSuccess.statusMessage ?? '');
