@@ -115,19 +115,20 @@ class TableItemSummaryOrderScreen extends GetView<TableItemSummaryController> {
                                   Text(
                                     'Order No:',
                                     style: getText300(
-                                        size: 11.5.sp,
+                                        size: 11.3.sp,
                                         colors: ColorConstants.black),
                                   ),
                                   SizedBox(
-                                    width: 8.sp,
+                                    width: 7.sp,
                                   ),
                                   Expanded(
                                       child: Text(
-                                    controller.mOrderPlace.value
+                                        '${controller.mDashboardScreenController.value?.mRestaurantData.value?.orderIDPrefixCode ?? ''}${controller.mOrderPlace.value
                                             .trackingOrderID ??
-                                        '',
+                                            ''}'
+                                   ,
                                     style: getText500(
-                                        size: 11.5.sp,
+                                        size: 11.3.sp,
                                         colors: ColorConstants.black),
                                   )),
                                 ],
@@ -145,7 +146,7 @@ class TableItemSummaryOrderScreen extends GetView<TableItemSummaryController> {
                                     Text(
                                       '${sSeatingNo.tr}:',
                                       style: getText300(
-                                          size: 11.5.sp,
+                                          size: 11.3.sp,
                                           colors: ColorConstants.black),
                                     ),
                                     SizedBox(
@@ -156,7 +157,7 @@ class TableItemSummaryOrderScreen extends GetView<TableItemSummaryController> {
                                       controller.mOrderPlace.value.tableNo ??
                                           '',
                                       style: getText500(
-                                          size: 11.5.sp,
+                                          size: 11.3.sp,
                                           colors: ColorConstants.black),
                                     )),
                                   ],

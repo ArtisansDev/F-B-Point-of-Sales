@@ -47,7 +47,7 @@ class HoldSalesListRowView extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  mOrderPlace.sOrderNo ?? '',
+                  '${controller.mDashboardScreenController.mRestaurantData.value?.orderIDPrefixCode ?? ''}${mOrderPlace.sOrderNo ?? ''}',
                   style: getTextRegular(
                       colors: ColorConstants.appTextSalesHader, size: 10.5.sp),
                 ),

@@ -7,6 +7,7 @@ import 'package:printing/src/printer.dart';
 
 import '../../data/local/database/printer/model/my_printer.dart';
 import '../../data/local/database/printer/printer_local_api.dart';
+import '../../data/mode/cart_item/cart_item.dart';
 import '../../data/mode/cart_item/order_place.dart';
 import '../../data/mode/cash_model/cash_model.dart';
 import '../../data/mode/configuration/configuration_response.dart';
@@ -26,9 +27,9 @@ import '../types/test_printing.dart';
 
 class MyPrinterServiceImpl with MyPrinterService {
   @override
-  Future<bool> salePlaceOrder(
-      OrderDetailList mOrderDetailList, OrderPlace mOrderPlace) async {
-    return await printPlaceOrder(mOrderDetailList, mOrderPlace);
+  Future<bool> salePlaceOrder(OrderDetailList mOrderDetailList,
+      OrderPlace mOrderPlace, List<CartItem> cartItemKot) async {
+    return await printPlaceOrder(mOrderDetailList, mOrderPlace, cartItemKot);
   }
 
   @override
@@ -60,9 +61,9 @@ class MyPrinterServiceImpl with MyPrinterService {
       ClosingBalanceRequest mClosingBalanceRequest,
       List<CashModel> mCashModelList,
       ConfigurationResponse mConfigurationResponse,
-      ShiftDetailsResponse mShiftDetailsResponse
-      ) async {
-    return await printShiftClose(amount, mClosingBalanceRequest,mCashModelList,mConfigurationResponse,mShiftDetailsResponse);
+      ShiftDetailsResponse mShiftDetailsResponse) async {
+    return await printShiftClose(amount, mClosingBalanceRequest, mCashModelList,
+        mConfigurationResponse, mShiftDetailsResponse);
   }
 
   // @override

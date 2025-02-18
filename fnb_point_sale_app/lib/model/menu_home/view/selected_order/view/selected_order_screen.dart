@@ -150,30 +150,35 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
                           child: Row(
                             children: [
                               Expanded(
+                                flex: 10,
                                   child: Row(
                                 children: [
                                   Text(
                                     'Order No:',
                                     style: getText300(
-                                        size: 11.5.sp,
+                                        size: 11.2.sp,
                                         colors: ColorConstants.black),
                                   ),
                                   SizedBox(
-                                    width: 8.sp,
+                                    width: 7.sp,
                                   ),
-                                  Text(
-                                    controller.mOrderPlace.value?.sOrderNo ??
-                                        '',
+                                  Expanded(
+                                      child: Text(
+                                    '${controller.mDashboardScreenController.mRestaurantData.value?.orderIDPrefixCode ?? ''}${controller.mOrderPlace.value?.sOrderNo ?? ''}',
                                     style: getText500(
-                                        size: 11.5.sp,
+                                        size: 11.2.sp,
                                         colors: ColorConstants.black),
-                                  ),
+                                  )),
                                 ],
                               )),
                               Expanded(
+                                  flex: 9,
                                   child: GestureDetector(
                                 onTap: () {
-                                  if (!controller.isOrderHistory.value) {
+                                  if (!controller.isOrderHistory.value ||
+                                      (controller.mOrderPlace.value?.tableNo ??
+                                              '--') ==
+                                          '--') {
                                     controller.selectTable();
                                   }
                                 },
@@ -198,19 +203,20 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
                                       Text(
                                         sSeatingNo.tr,
                                         style: getText300(
-                                            size: 11.5.sp,
+                                            size: 11.2.sp,
                                             colors: ColorConstants.black),
                                       ),
                                       SizedBox(
-                                        width: 8.sp,
+                                        width: 6.sp,
                                       ),
-                                      Text(
+                                       Text(
                                         controller.mOrderPlace.value?.tableNo ??
                                             '',
                                         style: getText500(
-                                            size: 11.5.sp,
+                                            size: 11.2.sp,
                                             colors: ColorConstants.black),
-                                      ),
+                                      )
+                                      ,
                                     ],
                                   ),
                                 ),

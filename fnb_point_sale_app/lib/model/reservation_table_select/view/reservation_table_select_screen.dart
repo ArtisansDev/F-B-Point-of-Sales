@@ -56,7 +56,7 @@ class ReservationTableSelectScreen
                         ),
                       ),
                       child: Text(
-                        'Order #: ${controller.orderNumber.value}',
+                        'Order #: ${controller.mDashboardScreenController.value?.mRestaurantData.value?.orderIDPrefixCode ?? ''}${controller.orderNumber.value}',
                         style: getText600(
                           size: 11.8.sp,
                           colors: ColorConstants.cAppButtonColour,

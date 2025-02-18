@@ -130,7 +130,7 @@ class TableRowView extends StatelessWidget {
                                 Expanded(
                                   flex: 2,
                                   child: Text(
-                                    mOrderPlace.occupiedTrackingOrderID ?? '',
+                                    '${controller.mDashboardScreenController.mRestaurantData.value?.orderIDPrefixCode ?? ''}${mOrderPlace.occupiedTrackingOrderID ?? ''}',
                                     maxLines: 1,
                                     style: getText500(
                                         size: 11.5.sp,
@@ -159,9 +159,10 @@ class TableRowView extends StatelessWidget {
                                 Expanded(
                                   flex: 2,
                                   child: Text(
-                                      (mOrderPlace.orderDate ?? '').isEmpty?"":
-                                    getUTCToLocalDateTime(
-                                        mOrderPlace.orderDate ?? ''),
+                                    (mOrderPlace.orderDate ?? '').isEmpty
+                                        ? ""
+                                        : getUTCToLocalDateTime(
+                                            mOrderPlace.orderDate ?? ''),
                                     style: getText500(
                                         size: 11.5.sp,
                                         colors: ColorConstants.cAppTaxColour),
@@ -252,10 +253,12 @@ class TableRowView extends StatelessWidget {
                             ),
                             child: Row(
                               children: [
-                                 Expanded(child: Container(
+                                Expanded(
+                                    child: Container(
                                   child: (mOrderPlace.paymentStatus == 'C')
-                                      ?Text('Order Cancel'):SizedBox(),
-                                   padding: EdgeInsets.only(left: 10.sp),
+                                      ? Text('Order Cancel')
+                                      : SizedBox(),
+                                  padding: EdgeInsets.only(left: 10.sp),
                                 )),
                                 Visibility(
                                     visible: mOrderPlace.paymentStatus != 'P',
@@ -267,15 +270,21 @@ class TableRowView extends StatelessWidget {
                                             top: 8.sp,
                                             bottom: 8.sp),
                                         child: rectangleCornerButtonText500(
-                                          boderColor: (mOrderPlace.paymentStatus == 'C')
-                                              ? Colors.red.withOpacity(0.05): ColorConstants
-                                              .cAppButtonInviceColour,
-                                          bgColor:  (mOrderPlace.paymentStatus == 'C')
-                                              ? Colors.red.withOpacity(0.35):ColorConstants
-                                              .cAppButtonInviceColour,
-                                          textColor:  (mOrderPlace.paymentStatus == 'C')
-                                              ? Colors.red:ColorConstants
-                                              .cAppTextInviceColour,
+                                          boderColor:
+                                              (mOrderPlace.paymentStatus == 'C')
+                                                  ? Colors.red.withOpacity(0.05)
+                                                  : ColorConstants
+                                                      .cAppButtonInviceColour,
+                                          bgColor:
+                                              (mOrderPlace.paymentStatus == 'C')
+                                                  ? Colors.red.withOpacity(0.35)
+                                                  : ColorConstants
+                                                      .cAppButtonInviceColour,
+                                          textColor:
+                                              (mOrderPlace.paymentStatus == 'C')
+                                                  ? Colors.red
+                                                  : ColorConstants
+                                                      .cAppTextInviceColour,
                                           height: 17.5.sp,
                                           textSize: 10.sp,
                                           sClear.tr,

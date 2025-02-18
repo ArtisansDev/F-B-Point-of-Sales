@@ -160,7 +160,7 @@ class SearchDateView extends StatelessWidget {
                         topPadding: 5.sp,
                         leftPadding: 13.sp,
                         hintTextSize: 11.sp,
-                        textSize: 11.5.sp,
+                        textSize: 11.2.sp,
                         hintTextColor: ColorConstants.cAppTaxColour,
                         borderSideColor: Colors.transparent,
                       )),
@@ -179,8 +179,8 @@ class SearchDateView extends StatelessWidget {
                             },
                             child: Container(
                                 margin:
-                                    EdgeInsets.only( right: 8.sp),
-                                padding: EdgeInsets.all(8.sp),
+                                    EdgeInsets.only( right: 6.5.sp),
+                                padding: EdgeInsets.all(7.sp),
                                 decoration: BoxDecoration(
                                   color: ColorConstants.cAppButtonColour,
                                   borderRadius: BorderRadius.all(
@@ -454,14 +454,15 @@ class SearchDateView extends StatelessWidget {
             .toList(),
         onChanged: (value) {
           controller.selectPaymentStatus.value = value.toString();
-          if (controller.selectPaymentStatus.value == sAll.tr) {
+          if (controller.selectPaymentStatus.value == 'All') {
+            controller.selectPaymentStatus.value = "Payment Status";
             controller.paymentStatus.value = null;
           } else if (controller.selectPaymentStatus.value == 'Success') {
             controller.paymentStatus.value = 'S';
           } else if (controller.selectPaymentStatus.value == 'Pending') {
             controller.paymentStatus.value = 'P';
-          } else if (controller.selectPaymentStatus.value == 'Fail') {
-            controller.paymentStatus.value = 'F';
+          } else if (controller.selectPaymentStatus.value == 'Cancel') {
+            controller.paymentStatus.value = 'C';
           }
           controller.pageNumber.value = 1;
           controller.sLoading.value = 'Loading...';

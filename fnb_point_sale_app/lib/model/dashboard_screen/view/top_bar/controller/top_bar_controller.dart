@@ -104,12 +104,14 @@ class TopBarController extends GetxController {
             AppAlert.showCustomDialogOk(Get.context!, 'Alert',
                 'Ensure the hold sale is cleared before initiating the Logout.');
             return;
-          } else if ((mPlaceOrderSaleModel.value?.mOrderPlace ?? []).isEmpty) {
-            updateLoginStatusApiCall(true);
           } else {
-            AppAlert.showCustomDialogOk(Get.context!, 'Alert',
-                'Ensure the cart is cleared before initiating the Logout.');
+            // if ((mPlaceOrderSaleModel.value?.mOrderPlace ?? []).isEmpty) {
+            updateLoginStatusApiCall(true);
           }
+          // else {
+          //   AppAlert.showCustomDialogOk(Get.context!, 'Alert',
+          //       'Ensure the cart is cleared before initiating the Logout.');
+          // }
         });
         break;
       case 2:
@@ -125,12 +127,14 @@ class TopBarController extends GetxController {
             AppAlert.showCustomDialogOk(Get.context!, 'Alert',
                 'Ensure the hold sale is cleared before initiating the Logout & Clear Configuration.');
             return;
-          } else if ((mPlaceOrderSaleModel.value?.mOrderPlace ?? []).isEmpty) {
-            updateLoginStatusApiCall(false);
           } else {
-            AppAlert.showCustomDialogOk(Get.context!, 'Alert',
-                'Ensure the cart is cleared before initiating the Logout & Clear Configuration');
+            // if ((mPlaceOrderSaleModel.value?.mOrderPlace ?? []).isEmpty) {
+            updateLoginStatusApiCall(false);
           }
+          // else {
+          //   AppAlert.showCustomDialogOk(Get.context!, 'Alert',
+          //       'Ensure the cart is cleared before initiating the Logout & Clear Configuration');
+          // }
         });
         break;
       case 3:
@@ -191,7 +195,8 @@ class TopBarController extends GetxController {
   var mPlaceOrderSaleLocalApi = locator.get<PlaceOrderSaleLocalApi>();
 
   allOrderPlace() async {
-    callGetAllTableStatus();
+    print("######### allOrderPlace");
+    await callGetAllTableStatus();
   }
 
   ///all table

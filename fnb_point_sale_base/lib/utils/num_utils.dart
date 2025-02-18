@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:easy_localization/easy_localization.dart';
+
 // For now rounding is done for 2 decimal places even for calculations
 const maxDecimalPlaces = 2;
 
@@ -297,5 +299,9 @@ double roundToNearestPossible(double value) {
   }
 
   return value + roundOffValue;
+}
+
+getNumberFormat(double value){
+  return NumberFormat('#,##,##0.00').format(getDoubleValue(value));
 }
 

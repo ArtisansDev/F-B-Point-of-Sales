@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
 import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
+import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -82,7 +82,7 @@ class PaymentDeclarationScreen extends StatelessWidget {
                             ],
                           )),
                       Text(
-                        '${controller.mShiftDetailsController.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${controller.mShiftDetailsController.totalCashCollected}',
+                        '${controller.mShiftDetailsController.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${getNumberFormat(getDoubleValue(controller.mShiftDetailsController.totalCashCollected.value))}',
                         style: getText500(
                             size: 11.sp, colors: ColorConstants.black),
                       ),
@@ -94,32 +94,32 @@ class PaymentDeclarationScreen extends StatelessWidget {
                 ),
                 Expanded(
                     child: Container(
-                  // padding: EdgeInsets.all(11.sp),
-                  // decoration: BoxDecoration(
-                  //   color: ColorConstants.cShiftDetailsColour2,
-                  //   borderRadius: BorderRadius.all(
-                  //     Radius.circular(8.sp),
-                  //   ),
-                  // ),
-                  // child: Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     Text(
-                  //       sBookingPayment.tr,
-                  //       style: getText500(
-                  //           size: 11.sp, colors: ColorConstants.black),
-                  //     ),
-                  //     SizedBox(
-                  //       height: 8.sp,
-                  //     ),
-                  //     Text(
-                  //       '${controller.mShiftDetailsController.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} 0.00',
-                  //       style: getText500(
-                  //           size: 11.sp, colors: ColorConstants.black),
-                  //     ),
-                  //   ],
-                  // ),
-                )),
+                        // padding: EdgeInsets.all(11.sp),
+                        // decoration: BoxDecoration(
+                        //   color: ColorConstants.cShiftDetailsColour2,
+                        //   borderRadius: BorderRadius.all(
+                        //     Radius.circular(8.sp),
+                        //   ),
+                        // ),
+                        // child: Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     Text(
+                        //       sBookingPayment.tr,
+                        //       style: getText500(
+                        //           size: 11.sp, colors: ColorConstants.black),
+                        //     ),
+                        //     SizedBox(
+                        //       height: 8.sp,
+                        //     ),
+                        //     Text(
+                        //       '${controller.mShiftDetailsController.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} 0.00',
+                        //       style: getText500(
+                        //           size: 11.sp, colors: ColorConstants.black),
+                        //     ),
+                        //   ],
+                        // ),
+                        )),
               ],
             ),
           ),

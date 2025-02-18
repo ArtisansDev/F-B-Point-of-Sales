@@ -29,7 +29,7 @@ class TotalCashScreen extends StatelessWidget {
               style: getText500(size: 11.sp, colors: ColorConstants.black),
             ),
             Text(
-              '${controller.mShiftDetailsController.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''}  ${getDoubleValue(controller.mShiftDetailsController.totalCashCollected.value).toStringAsFixed(2)}',
+              '${controller.mShiftDetailsController.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${getNumberFormat(getDoubleValue(controller.mShiftDetailsController.totalCashCollected.value))}',
               style: getText500(
                   size: 11.sp, colors: ColorConstants.cAppButtonColour),
             )

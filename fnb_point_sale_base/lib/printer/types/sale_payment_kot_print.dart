@@ -16,7 +16,9 @@ Future<bool> printSalePaymentKot(OrderHistoryData mOrderHistoryData,
   ConfigurationResponse mConfigurationResponse =
       await configurationLocalApi.getConfigurationResponse() ??
           ConfigurationResponse();
-
+  RestaurantData mRestaurantData =
+      mConfigurationResponse.configurationData?.restaurantData?.first ??
+          RestaurantData();
   mCurrencyData =
       (mConfigurationResponse.configurationData?.currencyData ?? []).first;
 
@@ -45,7 +47,7 @@ Future<bool> printSalePaymentKot(OrderHistoryData mOrderHistoryData,
   widgets.add(
       pw.Center(child: pw.Text('Order Number', style: getBoldTextStyle())));
   widgets.add(pw.Center(
-      child: pw.Text('${mOrderHistoryData.trackingOrderID}',
+      child: pw.Text('${mRestaurantData.orderIDPrefixCode}${mOrderHistoryData.trackingOrderID}',
           style: getNormalTextStyle())));
   widgets.add(pw.Container(height: 4));
   widgets.add(mySeparator());
@@ -119,6 +121,10 @@ Future<bool> printSalePaymentKot(OrderHistoryData mOrderHistoryData,
     widgets.add(mySeparator());
     widgets.add(pw.Container(height: 4));
   }
+
+  widgets.add(pw.Center(
+      child:
+      pw.Text(mRestaurantData.tagLine ?? '', style: getBoldTextStyle())));
   return printWidgets(widgets, true, false);
 }
 

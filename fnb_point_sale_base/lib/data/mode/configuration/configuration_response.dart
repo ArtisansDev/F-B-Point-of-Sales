@@ -380,6 +380,8 @@ class LoggedInUserDetails {
 /// Address : "test,gujrat"
 /// ContactEmail : "test@gmail.com"
 /// ContactNumber : "9988776655"
+/// OrderIDPrefixCode : "APP"
+/// TagLine : "Demo"
 /// TermsAndConditions : "<ul><li><i>test1</i></li><li><i>test2</i><ul><li><i>test3</i></li><li><i>test4</i></li><li><i>test5</i></li><li><i>test6</i></li><li><i>test7</i></li><li><i>test9</i></li><li><i>test10</i></li></ul></li></ul>"
 
 class RestaurantData {
@@ -391,6 +393,8 @@ class RestaurantData {
     String? address,
     String? contactEmail,
     String? contactNumber,
+    String? orderIDPrefixCode,
+    String? tagLine,
     String? termsAndConditions,}) {
     _restaurantIDP = restaurantIDP;
     _restaurantName = restaurantName;
@@ -400,6 +404,8 @@ class RestaurantData {
     _contactEmail = contactEmail;
     _contactNumber = contactNumber;
     _termsAndConditions = termsAndConditions;
+    _orderIDPrefixCode = orderIDPrefixCode;
+    _tagLine = tagLine;
   }
 
   RestaurantData.fromJson(dynamic json) {
@@ -411,6 +417,8 @@ class RestaurantData {
     _contactEmail = json['ContactEmail'];
     _contactNumber = json['ContactNumber'];
     _termsAndConditions = json['TermsAndConditions'];
+    _orderIDPrefixCode = json['OrderIDPrefixCode'];
+    _tagLine = json['TagLine'];
   }
 
   String? _restaurantIDP;
@@ -421,6 +429,8 @@ class RestaurantData {
   String? _contactEmail;
   String? _contactNumber;
   String? _termsAndConditions;
+  String? _orderIDPrefixCode;
+  String? _tagLine;
 
   String? get restaurantIDP => _restaurantIDP;
 
@@ -438,6 +448,10 @@ class RestaurantData {
 
   String? get termsAndConditions => _termsAndConditions;
 
+  String? get orderIDPrefixCode => _orderIDPrefixCode;
+
+  String? get tagLine => _tagLine;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['RestaurantIDP'] = _restaurantIDP;
@@ -448,6 +462,8 @@ class RestaurantData {
     map['ContactEmail'] = _contactEmail;
     map['ContactNumber'] = _contactNumber;
     map['TermsAndConditions'] = _termsAndConditions;
+    map['OrderIDPrefixCode'] = _orderIDPrefixCode;
+    map['TagLine'] = _tagLine;
     return map;
   }
 

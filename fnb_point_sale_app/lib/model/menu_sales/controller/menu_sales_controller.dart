@@ -65,7 +65,7 @@ class MenuSalesController extends GetxController {
 
   RxString selectPaymentStatus = 'Payment Status'.obs;
   RxList<String> paymentStatusList =
-      <String>[sAll.tr, 'Success', 'Pending', 'Fail'].obs;
+      <String>[sAll.tr, 'Success', 'Pending', 'Cancel'].obs;
 
   Rx<TextEditingController> sSelectDateRangeController =
       TextEditingController().obs;
@@ -319,7 +319,6 @@ class MenuSalesController extends GetxController {
 
     ///
     await mDashboardScreenController.onUpdateHoldSale();
-    await mTopBarController.allOrderPlace();
     await callOrderHistory();
 
     ///clear table
@@ -331,6 +330,8 @@ class MenuSalesController extends GetxController {
       );
       await callUpdateTableStatus(mTablesByTableStatusData);
     }
+
+    await mTopBarController.allOrderPlace();
   }
 
   ///
@@ -407,7 +408,6 @@ class MenuSalesController extends GetxController {
 
     ///
     await mDashboardScreenController.onUpdateHoldSale();
-    await mTopBarController.allOrderPlace();
     await callOrderHistory();
 
     ///clear table
@@ -419,6 +419,9 @@ class MenuSalesController extends GetxController {
       );
       await callUpdateTableStatus(mTablesByTableStatusData);
     }
+
+    ///
+    await mTopBarController.allOrderPlace();
   }
 
   ///SaveOrder

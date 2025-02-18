@@ -11,12 +11,17 @@ import '../../data/mode/order_place/process_multiple_orders_request.dart';
 import '../../data/mode/product/get_all_modifier/get_all_modifier_response.dart';
 import '../../locator.dart';
 
-Future<bool> printPlaceOrder(
-    OrderDetailList mOrderDetailList, OrderPlace mOrderPlace) async {
+Future<bool> printPlaceOrder(OrderDetailList mOrderDetailList,
+    OrderPlace mOrderPlace, List<CartItem> cartItemKot) async {
   var configurationLocalApi = locator.get<ConfigurationLocalApi>();
   ConfigurationResponse mConfigurationResponse =
       await configurationLocalApi.getConfigurationResponse() ??
           ConfigurationResponse();
+
+  RestaurantData mRestaurantData =
+      mConfigurationResponse.configurationData?.restaurantData?.first ??
+          RestaurantData();
+
   String branchName =
       (mConfigurationResponse.configurationData?.branchData ?? []).isEmpty
           ? ""
@@ -36,7 +41,8 @@ Future<bool> printPlaceOrder(
   widgets.add(
       pw.Center(child: pw.Text('Order Number', style: getBoldTextStyle())));
   widgets.add(pw.Center(
-      child: pw.Text('${mOrderDetailList.trackingOrderID}',
+      child: pw.Text(
+          '${mRestaurantData.orderIDPrefixCode}${mOrderDetailList.trackingOrderID}',
           style: getNormalTextStyle())));
   widgets.add(pw.Container(height: 4));
   widgets.add(mySeparator());
@@ -44,6 +50,7 @@ Future<bool> printPlaceOrder(
 
   ///table
   widgets.add(getTableRow(mOrderDetailList));
+
   ///user details
   // if((mOrderDetailList.phoneNumber??'').isNotEmpty) {
   //   widgets.add(getUserDetailsRow(mOrderDetailList));
@@ -51,15 +58,43 @@ Future<bool> printPlaceOrder(
 
   widgets.add(pw.Container(height: 4));
   widgets.add(mySeparator());
-  widgets.add(pw.Container(height: 4));
-  for (CartItem element in (mOrderPlace.cartItem ?? [])) {
-    // if (!element.placeOrder) {
+  widgets.add(pw.Container(height: 5));
+
+  ///new order
+  CartItem mCartItem = cartItemKot.firstWhere((element) => element.count > 0,
+      orElse: () => CartItem());
+  if (mCartItem.mMenuItemData != null) {
+    widgets
+        .add(pw.Center(child: pw.Text('New Order', style: getBoldTextStyle())));
+    widgets.add(pw.Container(height: 5));
+  }
+
+  for (CartItem element in cartItemKot) {
+    if (element.count > 0) {
       widgets.add(getItemRow(element));
-    // }
+    }
+  }
+  // widgets.add(pw.Container(height: 4));
+
+  ///cancel
+  CartItem mCartItemCancel = cartItemKot
+      .firstWhere((element) => element.count < 0, orElse: () => CartItem());
+  if (mCartItemCancel.mMenuItemData != null) {
+    widgets.add(
+        pw.Center(child: pw.Text('Cancel Order', style: getBoldTextStyle())));
+    widgets.add(pw.Container(height: 5));
+  }
+  for (CartItem element in cartItemKot) {
+    if (element.count < 0) {
+      widgets.add(getItemRowCancel(element));
+    }
   }
   widgets.add(pw.Container(height: 4));
   widgets.add(mySeparator());
   widgets.add(pw.Container(height: 4));
+  widgets.add(pw.Center(
+      child:
+          pw.Text(mRestaurantData.tagLine ?? '', style: getBoldTextStyle())));
   return printWidgets(widgets, true, false);
 }
 
@@ -90,57 +125,56 @@ pw.Widget getTableRow(OrderDetailList mOrderDetailList) {
 }
 
 pw.Widget getUserDetailsRow(OrderDetailList mOrderDetailList) {
-  return
-    pw.Column(
-        children: [
-          pw.Row(
-            children: [
-              pw.Expanded(
-                  flex: 2,
-                  child: pw.Container(
-                    padding: const pw.EdgeInsets.all(2.0),
-                    child: pw.Align(
-                      alignment: pw.Alignment.centerLeft,
-                      child: pw.Text("${sCustomerName.tr}:-", style: getNormalTextStyle()),
-                    ),
-                  )),
-              pw.Expanded(
-                  flex: 3,
-                  child: pw.Container(
-                    padding: const pw.EdgeInsets.all(2.0),
-                    child: pw.Align(
-                      alignment: pw.Alignment.centerRight,
-                      child: pw.Text(mOrderDetailList.name ?? '--',
-                          style: getBoldTextStyle()),
-                    ),
-                  )),
-            ],
-          ),
-          pw.Row(
-            children: [
-              pw.Expanded(
-                  flex: 2,
-                  child: pw.Container(
-                    padding: const pw.EdgeInsets.all(2.0),
-                    child: pw.Align(
-                      alignment: pw.Alignment.centerLeft,
-                      child: pw.Text("${sPhoneNumber.tr}:-", style: getNormalTextStyle()),
-                    ),
-                  )),
-              pw.Expanded(
-                  flex: 3,
-                  child: pw.Container(
-                    padding: const pw.EdgeInsets.all(2.0),
-                    child: pw.Align(
-                      alignment: pw.Alignment.centerRight,
-                      child: pw.Text(mOrderDetailList.phoneNumber ?? '--',
-                          style: getBoldTextStyle()),
-                    ),
-                  )),
-            ],
-          )
-        ]
-    );
+  return pw.Column(children: [
+    pw.Row(
+      children: [
+        pw.Expanded(
+            flex: 2,
+            child: pw.Container(
+              padding: const pw.EdgeInsets.all(2.0),
+              child: pw.Align(
+                alignment: pw.Alignment.centerLeft,
+                child: pw.Text("${sCustomerName.tr}:-",
+                    style: getNormalTextStyle()),
+              ),
+            )),
+        pw.Expanded(
+            flex: 3,
+            child: pw.Container(
+              padding: const pw.EdgeInsets.all(2.0),
+              child: pw.Align(
+                alignment: pw.Alignment.centerRight,
+                child: pw.Text(mOrderDetailList.name ?? '--',
+                    style: getBoldTextStyle()),
+              ),
+            )),
+      ],
+    ),
+    pw.Row(
+      children: [
+        pw.Expanded(
+            flex: 2,
+            child: pw.Container(
+              padding: const pw.EdgeInsets.all(2.0),
+              child: pw.Align(
+                alignment: pw.Alignment.centerLeft,
+                child: pw.Text("${sPhoneNumber.tr}:-",
+                    style: getNormalTextStyle()),
+              ),
+            )),
+        pw.Expanded(
+            flex: 3,
+            child: pw.Container(
+              padding: const pw.EdgeInsets.all(2.0),
+              child: pw.Align(
+                alignment: pw.Alignment.centerRight,
+                child: pw.Text(mOrderDetailList.phoneNumber ?? '--',
+                    style: getBoldTextStyle()),
+              ),
+            )),
+      ],
+    )
+  ]);
 }
 
 pw.Widget getItemRow(CartItem mCartItem) {
@@ -173,6 +207,66 @@ pw.Widget getItemRow(CartItem mCartItem) {
               alignment: pw.Alignment.centerRight,
               child:
                   pw.Text('x${mCartItem.count}', style: getNormalTextStyle()),
+            ),
+          )),
+    ]),
+    (mCartItem.mSelectModifierList ?? []).isNotEmpty
+        ? pw.Row(children: [
+            pw.Expanded(
+                flex: 2,
+                child: getModifier((mCartItem.mSelectModifierList ?? []))),
+            pw.Expanded(flex: 1, child: pw.SizedBox()),
+          ])
+        : pw.SizedBox(),
+    (mCartItem.textRemarks ?? "").isNotEmpty
+        ? pw.Row(children: [
+            pw.Expanded(
+                flex: 2,
+                child: pw.Container(
+                  padding: const pw.EdgeInsets.all(2.0),
+                  child: pw.Align(
+                    alignment: pw.Alignment.centerLeft,
+                    child: pw.Text("Note:- ${mCartItem.textRemarks}",
+                        style: getBoldTextStyle()),
+                  ),
+                )),
+            pw.Expanded(flex: 1, child: pw.SizedBox()),
+          ])
+        : pw.SizedBox()
+  ]);
+}
+
+///cancel
+pw.Widget getItemRowCancel(CartItem mCartItem) {
+  return pw.Column(children: [
+    pw.Row(children: [
+      pw.Expanded(
+          flex: 2,
+          child: pw.Container(
+            padding: const pw.EdgeInsets.all(2.0),
+            child: pw.Align(
+                alignment: pw.Alignment.centerLeft,
+                child: pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    mainAxisAlignment: pw.MainAxisAlignment.start,
+                    children: [
+                      pw.Text(mCartItem.mMenuItemData?.itemName ?? '',
+                          style: getBoldTextStyle()),
+                      pw.Text(
+                          mCartItem.mSelectVariantListData
+                                  ?.quantitySpecification ??
+                              '',
+                          style: getNormalTextStyle()),
+                    ])),
+          )),
+      pw.Expanded(
+          flex: 1,
+          child: pw.Container(
+            padding: const pw.EdgeInsets.all(2.0),
+            child: pw.Align(
+              alignment: pw.Alignment.centerRight,
+              child: pw.Text('x${(mCartItem.count) * (-1)}',
+                  style: getNormalTextStyle()),
             ),
           )),
     ]),

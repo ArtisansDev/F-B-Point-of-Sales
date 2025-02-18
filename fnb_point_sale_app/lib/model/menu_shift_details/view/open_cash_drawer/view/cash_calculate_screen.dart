@@ -8,6 +8,7 @@ import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
 import 'package:fnb_point_sale_base/data/mode/cash_model/cash_model.dart';
 import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../controller/open_cash_drawer_screen_controller.dart';
@@ -89,10 +90,11 @@ class CashCalculateScreen extends StatelessWidget {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     padding: const EdgeInsets.all(0),
-                    itemCount: controller.mShiftDetailsController.mCashModelList.length,
+                    itemCount: controller
+                        .mShiftDetailsController.mCashModelList.length,
                     itemBuilder: (BuildContext context, int index) {
-                      CashModel mCashModel =
-                          controller.mShiftDetailsController.mCashModelList[index];
+                      CashModel mCashModel = controller
+                          .mShiftDetailsController.mCashModelList[index];
                       return Container(
                         padding: EdgeInsets.only(
                             left: 10.sp, top: 5.sp, right: 5.sp, bottom: 5.sp),
@@ -129,7 +131,8 @@ class CashCalculateScreen extends StatelessWidget {
                                       hintTextColor: ColorConstants.black
                                           .withOpacity(0.50),
                                       onTextChange: (value) {
-                                        controller.mShiftDetailsController.onTextQtyChange(index);
+                                        controller.mShiftDetailsController
+                                            .onTextQtyChange(index);
                                       },
                                       showFloatingLabel: false,
                                       topPadding: 5.sp,
@@ -149,8 +152,8 @@ class CashCalculateScreen extends StatelessWidget {
                               child: Align(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  getDoubleValue(mCashModel.totalAmount)
-                                      .toStringAsFixed(2),
+                                  getNumberFormat(
+                                      getDoubleValue(mCashModel.totalAmount)),
                                   style: getTextRegular(
                                       size: 11.sp,
                                       colors: ColorConstants.black),

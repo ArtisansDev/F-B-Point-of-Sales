@@ -40,7 +40,9 @@ class UserInfoScreen extends StatelessWidget {
                     textSize: 10.5.sp,
                     height: 18.sp,
                     sPrintOpeningBalance.tr,
-                    () {},
+                    () {
+                      controller.mShiftDetailsController.sPrintOpeningBalance();
+                    },
                   ),
                 )
               ],

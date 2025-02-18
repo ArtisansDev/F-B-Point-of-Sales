@@ -122,8 +122,9 @@ class TableSummaryOrderScreen extends GetView<TableSummaryController> {
                                         width: 8.sp,
                                       ),
                                       Text(
-                                        controller.mOrderPlace.value?.sOrderNo ??
-                                            '',
+                                        '${controller.mDashboardScreenController.mRestaurantData.value?.orderIDPrefixCode ?? ''}${controller.mOrderPlace.value?.sOrderNo ??
+                                            ''}'
+                                        ,
                                         style: getText500(
                                             size: 11.5.sp,
                                             colors: ColorConstants.black),

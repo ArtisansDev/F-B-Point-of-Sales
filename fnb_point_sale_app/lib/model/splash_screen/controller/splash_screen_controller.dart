@@ -19,41 +19,39 @@ class SplashScreenController extends GetxController {
     nextPage();
   }
 
-  void nextPage() async{
+  void nextPage() async {
     // NetworkUtils().checkInternetConnection().then((isInternetAvailable) async {
     //   if (isInternetAvailable) {
-        String sLoginStatus = await SharedPrefs().getUserToken();
-        await Future.delayed(const Duration(seconds: 1));
-        if (sLoginStatus.trim().isNotEmpty) {
-          String sHistoryID = await SharedPrefs().getHistoryID();
-          if(sHistoryID.isEmpty){
-            Get.offNamed(
-              RouteConstants.rOpenCounterScreen,
-            );
-          }else {
-            Get.offNamed(
-              RouteConstants.rDashboardScreen,
-            );
-          }
-        } else {
-          var configurationLocalApi = locator.get<ConfigurationLocalApi>();
-          ConfigurationResponse mConfigurationResponse =
-              await configurationLocalApi.getConfigurationResponse() ??
-                  ConfigurationResponse();
-          if (mConfigurationResponse.error ?? false) {
-            Get.offNamed(
-              RouteConstants.rConfigurationScreen,
-            );
-          } else {
-            Get.offNamed(
-              RouteConstants.rConfigurationScreen,
-            );
-            // Get.offNamed(
-            //   RouteConstants.rLoginScreen,
-            // );
-          }
-        }
-    //   }
-    // });
+    String sLoginStatus = await SharedPrefs().getUserToken();
+    await Future.delayed(const Duration(seconds: 1));
+    if (sLoginStatus.trim().isNotEmpty) {
+      String sHistoryID = await SharedPrefs().getHistoryID();
+      if (sHistoryID.isEmpty) {
+        Get.offNamed(
+          RouteConstants.rOpenCounterScreen,
+        );
+      } else {
+        Get.offNamed(
+          RouteConstants.rDashboardScreen,
+        );
+      }
+    } else {
+      var configurationLocalApi = locator.get<ConfigurationLocalApi>();
+      ConfigurationResponse mConfigurationResponse =
+          await configurationLocalApi.getConfigurationResponse() ??
+              ConfigurationResponse();
+      if (mConfigurationResponse.error ?? false) {
+        Get.offNamed(
+          RouteConstants.rConfigurationScreen,
+        );
+      } else {
+        // Get.offNamed(
+        //   RouteConstants.rConfigurationScreen,
+        // );
+        Get.offNamed(
+          RouteConstants.rLoginScreen,
+        );
+      }
+    }
   }
 }

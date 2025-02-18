@@ -60,7 +60,7 @@ class ItemPaymentScreen extends GetView<ItemPaymentScreenController> {
                       children: [
                         Expanded(
                             child: Text(
-                          'Order #: ${controller.mOrderPlace.value?.trackingOrderID ?? '--'}',
+                          'Order #: ${controller.mDashboardScreenController.mRestaurantData.value?.orderIDPrefixCode ?? ''}${controller.mOrderPlace.value?.trackingOrderID ?? '--'}',
                           style: getText600(
                             size: 11.8.sp,
                             colors: ColorConstants.cAppButtonColour,

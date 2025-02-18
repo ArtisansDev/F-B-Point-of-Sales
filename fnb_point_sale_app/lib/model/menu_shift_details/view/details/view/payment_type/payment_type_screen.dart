@@ -4,6 +4,7 @@ import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
 import 'package:fnb_point_sale_base/data/mode/update_balance/shift_details/shift_details_response.dart';
 import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
+import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -66,7 +67,7 @@ class PaymentTypeScreen extends StatelessWidget {
                             width: 20.sp,
                           ),
                           Text(
-                              '${controller.mShiftDetailsController.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''}  ${(mPaymentType.amount ?? 0).toStringAsFixed(2)}')
+                              '${controller.mShiftDetailsController.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''}  ${getNumberFormat(getDoubleValue(mPaymentType.amount ?? 0))}')
                         ],
                       ),
                     );

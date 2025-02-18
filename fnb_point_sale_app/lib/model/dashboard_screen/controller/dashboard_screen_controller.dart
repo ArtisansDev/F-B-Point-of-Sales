@@ -282,13 +282,22 @@ class DashboardScreenController extends GetxController {
   }
 
   RxList<TaxData> taxData = <TaxData>[].obs;
+  Rxn<ConfigurationResponse> mConfigurationResponse =
+      Rxn<ConfigurationResponse>();
+  // String orderIDPrefixCode = "";
+  Rxn<RestaurantData> mRestaurantData=    Rxn<RestaurantData>();
 
   getTexList() async {
-    ConfigurationResponse mConfigurationResponse =
+    mConfigurationResponse.value =
         await configurationLocalApi.getConfigurationResponse() ??
             ConfigurationResponse();
+
+    mRestaurantData.value = mConfigurationResponse.value?.configurationData
+            ?.restaurantData?.first;
+
     taxData.clear();
-    taxData.addAll(mConfigurationResponse.configurationData?.taxData ?? []);
+    taxData
+        .addAll(mConfigurationResponse.value?.configurationData?.taxData ?? []);
   }
 
   ///onSync
@@ -456,10 +465,6 @@ class DashboardScreenController extends GetxController {
     try {
       ///api product call
       final customerApi = locator.get<CustomerApi>();
-      var configurationLocalApi = locator.get<ConfigurationLocalApi>();
-      ConfigurationResponse mConfigurationResponse =
-          await configurationLocalApi.getConfigurationResponse() ??
-              ConfigurationResponse();
       await NetworkUtils()
           .checkInternetConnection()
           .then((isInternetAvailable) async {
@@ -468,11 +473,12 @@ class DashboardScreenController extends GetxController {
               pageNumber: 1,
               rowsPerPage: 0,
               restaurantIDF: (mConfigurationResponse
-                              .configurationData?.restaurantData ??
+                              .value?.configurationData?.restaurantData ??
                           [])
                       .isEmpty
                   ? ""
-                  : (mConfigurationResponse.configurationData?.restaurantData ??
+                  : (mConfigurationResponse
+                              .value?.configurationData?.restaurantData ??
                           [])
                       .first
                       .restaurantIDP);

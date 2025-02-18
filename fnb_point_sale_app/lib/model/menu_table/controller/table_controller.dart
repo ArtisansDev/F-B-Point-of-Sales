@@ -443,6 +443,7 @@ class TableController extends GetxController {
     ///
     await mDashboardScreenController.onUpdateHoldSale();
     await mTopBarController.allOrderPlace();
+
     ///clear table
     TablesByTableStatusData mTablesByTableStatusData = TablesByTableStatusData(
       occupiedOrderID: mOrderDetailList.trackingOrderID ?? '',
@@ -459,7 +460,6 @@ class TableController extends GetxController {
     OrderHistoryData mOrderHistory,
   ) async {
     Get.back();
-
 
     ///
     OrderDetailList mOrderDetailList = await cancelOrder(
@@ -484,13 +484,13 @@ class TableController extends GetxController {
     await mDashboardScreenController.onUpdateHoldSale();
     await mTopBarController.allOrderPlace();
 
-
     ///clear table
     TablesByTableStatusData mTablesByTableStatusData = TablesByTableStatusData(
       occupiedOrderID: mOrderDetailList.trackingOrderID ?? '',
       seatIDP: mOrderDetailList.seatIDF ?? '',
     );
     await callUpdateTableStatus(mTablesByTableStatusData);
+
     /// await callOrderHistory();
     await onRefresh();
   }
@@ -512,9 +512,10 @@ class TableController extends GetxController {
               await orderPlaceApi.postOrderPlace(mProcessMultipleOrdersRequest);
           if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
             ///print....
-            if(!isCancel) {
-              await  printOrderPayment(mOrderDetailList, mOrderHistory);
+            if (!isCancel) {
+              await printOrderPayment(mOrderDetailList, mOrderHistory);
             }
+
             ///remove from local data base
             if (isPayment) {
               var mPlaceOrderSaleLocalApi =

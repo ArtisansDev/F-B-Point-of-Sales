@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:printing/printing.dart';
 
+import '../../data/mode/cart_item/cart_item.dart';
 import '../../data/mode/cart_item/order_place.dart';
 import '../../data/mode/cash_model/cash_model.dart';
 import '../../data/mode/configuration/configuration_response.dart';
@@ -15,8 +16,8 @@ mixin MyPrinterService {
 
   void testAutoMaticPrint(Printer printer);
 
-  Future<bool> salePlaceOrder(
-      OrderDetailList mOrderDetailList, OrderPlace mOrderPlace);
+  Future<bool> salePlaceOrder(OrderDetailList mOrderDetailList,
+      OrderPlace mOrderPlace, List<CartItem> cartItemKot);
 
   Future<bool> saleOrderPayment(
       OrderDetailList mOrderDetailList, OrderPlace mOrderPlace);

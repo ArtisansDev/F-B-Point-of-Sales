@@ -77,7 +77,7 @@ class CancelOrderScreen extends GetView<CancelOrderController> {
                                 children: [
                                   Expanded(
                                       child: Text(
-                                    'Order #: ${controller.mOrderPlace.value?.sOrderNo ?? ""}',
+                                    'Order #: ${controller.mDashboardScreenController.value?.mRestaurantData.value?.orderIDPrefixCode ?? ''}${controller.mOrderPlace.value?.sOrderNo ?? ""}',
                                     style: getText600(
                                       size: 11.8.sp,
                                       colors: ColorConstants.cAppButtonColour,

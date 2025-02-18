@@ -67,47 +67,11 @@ class SalesListView extends StatelessWidget {
                               width: 15.sp,
                             ),
                             Expanded(
-                                flex: 7,
+                                flex: 4,
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     sOrder.tr,
-                                    style: getText600(
-                                        colors:
-                                            ColorConstants.appTextSalesHader,
-                                        size: 11.sp),
-                                  ),
-                                )),
-                            Expanded(
-                                flex: 7,
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    sCustomerName.tr,
-                                    style: getText600(
-                                        colors:
-                                            ColorConstants.appTextSalesHader,
-                                        size: 11.sp),
-                                  ),
-                                )),
-                            Expanded(
-                                flex: 7,
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    sPhoneNumber.tr,
-                                    style: getText600(
-                                        colors:
-                                            ColorConstants.appTextSalesHader,
-                                        size: 11.sp),
-                                  ),
-                                )),
-                            Expanded(
-                                flex: 7,
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    sTime.tr,
                                     style: getText600(
                                         colors:
                                             ColorConstants.appTextSalesHader,
@@ -122,10 +86,47 @@ class SalesListView extends StatelessWidget {
                                     sType.tr,
                                     style: getText600(
                                         colors:
+                                        ColorConstants.appTextSalesHader,
+                                        size: 11.sp),
+                                  ),
+                                )),
+                            Expanded(
+                                flex: 5,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    sCustomerName.tr,
+                                    style: getText600(
+                                        colors:
                                             ColorConstants.appTextSalesHader,
                                         size: 11.sp),
                                   ),
                                 )),
+                            Expanded(
+                                flex: 6,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    sPhoneNumber.tr,
+                                    style: getText600(
+                                        colors:
+                                            ColorConstants.appTextSalesHader,
+                                        size: 11.sp),
+                                  ),
+                                )),
+                            Expanded(
+                                flex: 6,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    sTime.tr,
+                                    style: getText600(
+                                        colors:
+                                            ColorConstants.appTextSalesHader,
+                                        size: 11.sp),
+                                  ),
+                                )),
+
                             Expanded(
                                 flex: 4,
                                 child: Align(
@@ -135,6 +136,18 @@ class SalesListView extends StatelessWidget {
                                     style: getText600(
                                         colors:
                                             ColorConstants.appTextSalesHader,
+                                        size: 11.sp),
+                                  ),
+                                )),
+                            Expanded(
+                                flex: 4,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    sPaymentType.tr,
+                                    style: getText600(
+                                        colors:
+                                        ColorConstants.appTextSalesHader,
                                         size: 11.sp),
                                   ),
                                 )),

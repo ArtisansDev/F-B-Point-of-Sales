@@ -261,22 +261,23 @@ class ShiftDetailsController extends GetxController {
                         mShiftDetailsResponse.value.data?.cashPayment ?? 0) -
                     getDoubleValue(totalCashCollected.value))
                 .toStringAsFixed(2));
-
-        WebResponseSuccess mWebResponseSuccess =
-            await localApi.postUpdateClosingBalance(mClosingBalanceRequest);
-        if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
-          AppAlert.showSnackBar(
-              Get.context!, mWebResponseSuccess.statusMessage ?? '');
-
-          ///print
-          await onPrintShiftClose(amount, mClosingBalanceRequest);
-
-          ///open counter
-          openCounter();
-        } else {
-          AppAlert.showSnackBar(
-              Get.context!, mWebResponseSuccess.statusMessage ?? '');
-        }
+        ///print
+        await onPrintShiftClose(amount, mClosingBalanceRequest,mCashModelList);
+        // WebResponseSuccess mWebResponseSuccess =
+        //     await localApi.postUpdateClosingBalance(mClosingBalanceRequest);
+        // if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
+        //   AppAlert.showSnackBar(
+        //       Get.context!, mWebResponseSuccess.statusMessage ?? '');
+        //
+        //   ///print
+        //   await onPrintShiftClose(amount, mClosingBalanceRequest);
+        //
+        //   ///open counter
+        //   openCounter();
+        // } else {
+        //   AppAlert.showSnackBar(
+        //       Get.context!, mWebResponseSuccess.statusMessage ?? '');
+        // }
       } else {
         AppAlert.showSnackBar(
             Get.context!, MessageConstants.noInternetConnection);
@@ -284,10 +285,17 @@ class ShiftDetailsController extends GetxController {
     });
   }
 
+  void sPrintOpeningBalance() async{
+    // await onPrintShiftClose("0.0", ClosingBalanceRequest(),mCashModelList);
+    await onPrintShiftClose("0.0", ClosingBalanceRequest(),[]);
+  }
+
   onPrintShiftClose(
-      String amount, ClosingBalanceRequest mClosingBalanceRequest) async {
+      String amount, ClosingBalanceRequest mClosingBalanceRequest,List<CashModel> mCashModelList) async {
     final myPrinterService = locator.get<MyPrinterService>();
     await myPrinterService.shiftDetails(amount, mClosingBalanceRequest,
         mCashModelList, mConfigurationResponse.value,mShiftDetailsResponse.value);
   }
+
+
 }
