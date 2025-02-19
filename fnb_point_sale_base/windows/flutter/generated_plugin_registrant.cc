@@ -7,10 +7,8 @@
 #include "generated_plugin_registrant.h"
 
 #include <connectivity_plus/connectivity_plus_windows_plugin.h>
-#include <flutter_libserialport/flutter_libserialport_plugin.h>
 #include <flutter_pos_printer_platform/flutter_pos_printer_platform_plugin.h>
 #include <flutter_secure_storage_windows/flutter_secure_storage_windows_plugin.h>
-#include <network_info_plus/network_info_plus_windows_plugin.h>
 #include <permission_handler_windows/permission_handler_windows_plugin.h>
 #include <printing/printing_plugin.h>
 #include <screen_retriever/screen_retriever_plugin.h>
@@ -19,14 +17,10 @@
 void RegisterPlugins(flutter::PluginRegistry* registry) {
   ConnectivityPlusWindowsPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("ConnectivityPlusWindowsPlugin"));
-  FlutterLibserialportPluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("FlutterLibserialportPlugin"));
   FlutterPosPrinterPlatformPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FlutterPosPrinterPlatformPlugin"));
   FlutterSecureStorageWindowsPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FlutterSecureStorageWindowsPlugin"));
-  NetworkInfoPlusWindowsPluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("NetworkInfoPlusWindowsPlugin"));
   PermissionHandlerWindowsPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("PermissionHandlerWindowsPlugin"));
   PrintingPluginRegisterWithRegistrar(
