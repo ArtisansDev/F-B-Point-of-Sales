@@ -10,24 +10,51 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38947a7c-9f2f-41ac-986f-38186cf8d673" name="Changes" comment="add printer">
-      <change afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/common_view/table_drop_down.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/printer/types/sale_payment_kot_print.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/.dart_tool/dartpad/web_plugin_registrant.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/.dart_tool/dartpad/web_plugin_registrant.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/.dart_tool/package_config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/.dart_tool/package_config_subset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/.flutter-plugins" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/fnb_point_sale_app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/fnb_point_sale_app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_home/view/selected_order/controller/selected_order_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_home/view/selected_order/controller/selected_order_controller.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_home/view/selected_order/view/selected_order_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_home/view/selected_order/view/selected_order_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/controller/menu_sales_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/controller/menu_sales_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/view/item_payment_screen/view/item_payment_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/view/item_payment_screen/view/item_payment_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/view/item_payment_screen/view/item_payment_type_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/view/item_payment_screen/view/item_payment_type_list.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/view/sales_list/sales_list_row_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/view/sales_list/sales_list_row_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/payment_screen/view/payment_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/payment_screen/view/payment_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/payment_screen/view/payment_type_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/payment_screen/view/payment_type_list.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/table_select/view/dine_in/dine_in_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/table_select/view/dine_in/dine_in_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/table_select/view/table_select_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/table_select/view/table_select_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/table_select/view/take_away/take_away_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/table_select/view/take_away/take_away_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/view/sales_list/sales_list_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/view/sales_list/sales_list_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/view/top_search_view/search_date_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_sales/view/top_search_view/search_date_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/controller/shift_details_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/controller/shift_details_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/view/details/view/payment_declaration_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/view/details/view/payment_declaration_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/view/details/view/payment_type/payment_type_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/view/details/view/payment_type/payment_type_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/view/details/view/user_info_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/view/details/view/user_info_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/view/open_cash_drawer/view/cash_calculate_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/view/open_cash_drawer/view/cash_calculate_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/view/open_cash_drawer/view/total_cash_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/lib/model/menu_shift_details/view/open_cash_drawer/view/total_cash_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/macos/Flutter/ephemeral/Flutter-Generated.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/macos/Flutter/ephemeral/Flutter-Generated.xcconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/macos/Flutter/ephemeral/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/macos/Flutter/ephemeral/flutter_export_environment.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fnb_point_sale_app/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../fnb_point_sale_app/windows/flutter/generated_plugins.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/dartpad/web_plugin_registrant.dart" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/dartpad/web_plugin_registrant.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config_subset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fnb_point_sale_base.iml" beforeDir="false" afterPath="$PROJECT_DIR$/fnb_point_sale_base.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/data/mode/configuration/configuration_response.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/mode/configuration/configuration_response.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/printer/service/my_printer_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/printer/service/my_printer_service.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/printer/service/my_printer_service_impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/printer/service/my_printer_service_impl.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/printer/types/place_order_print.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/printer/types/place_order_print.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/printer/types/shift_details_print.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/printer/types/shift_details_print.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/num_utils.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/num_utils.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,18 +118,18 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/parthapaul/all_project/macbookpro/android_studio/dev_project/F-B-Point-of-Sales/fnb_point_sale_base/lib/data/remote/api_call/balance&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/parthapaul/all_project/macbookpro/android_studio/dev_project/F-B-Point-of-Sales/fnb_point_sale_base/lib/data/mode&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;dart.settings&quot;,
     &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/data/mode" />
       <recent name="$PROJECT_DIR$/lib/data/remote/api_call/balance" />
       <recent name="$PROJECT_DIR$/lib/printer/types" />
       <recent name="$PROJECT_DIR$/lib/data/local/database" />
       <recent name="$PROJECT_DIR$/lib/common" />
-      <recent name="$PROJECT_DIR$/lib/data/remote/api_call" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib/data/mode/product/get_all_modifier" />
