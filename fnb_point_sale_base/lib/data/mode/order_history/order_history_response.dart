@@ -207,7 +207,9 @@ class OrderHistoryData {
     String? tableNo,
     String? packagingName,
     String? environmentType,
+    String? sequentialOrderID,
   }) {
+    _sequentialOrderID = sequentialOrderID;
     _orderIDP = orderIDP;
     _formatedOrderDate = formatedOrderDate;
     _grandTotal = grandTotal;
@@ -256,6 +258,7 @@ class OrderHistoryData {
   }
 
   OrderHistoryData.fromJson(dynamic json) {
+    _sequentialOrderID = json['SequentialOrderID'];
     _orderIDP = json['OrderIDP'];
     _formatedOrderDate = json['FormatedOrderDate'];
     _grandTotal = json['GrandTotal'];
@@ -313,6 +316,7 @@ class OrderHistoryData {
     _environmentType = (json['EnvironmentType']??0).toString();
   }
 
+  String? _sequentialOrderID;
   String? _orderIDP;
   String? _formatedOrderDate;
   double? _grandTotal;
@@ -359,6 +363,8 @@ class OrderHistoryData {
   String? _packagingName;
   String? _environmentType;
 
+  String? get sequentialOrderID => _sequentialOrderID;
+  
   String? get orderIDP => _orderIDP;
 
   String? get formatedOrderDate => _formatedOrderDate;
@@ -451,6 +457,7 @@ class OrderHistoryData {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['SequentialOrderID'] = _sequentialOrderID;
     map['OrderIDP'] = _orderIDP;
     map['FormatedOrderDate'] = _formatedOrderDate;
     map['GrandTotal'] = _grandTotal;

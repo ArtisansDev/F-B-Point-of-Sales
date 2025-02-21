@@ -158,6 +158,9 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
 
   ///OrderPlaceRequest
   OrderDetailList mOrderDetailList = OrderDetailList(
+    sequentialOrderID: (mOrderPlace?.sequentialOrderID ?? '').isEmpty
+        ? null
+        : (mOrderPlace?.sequentialOrderID ?? ''),
     trackingOrderID: mOrderPlace?.trackingOrderID ?? '',
     counterIDF:
     (mConfigurationResponse.configurationData?.counterData ?? []).isEmpty
@@ -206,6 +209,7 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
     orderMenu: orderMenu,
 
     ///payment_service
+    paymentGatewayNo:printOrderPayment?.paymentGatewayNo??'',
     paymentGatewayIDF: printOrderPayment?.paymentGatewayIDP ?? '',
     paymentGatewaySettingIDF: printOrderPayment?.paymentGatewaySettingIDP ?? '',
     paymentStatus: printOrderPayment == null ? "P" : "S",
@@ -339,8 +343,15 @@ cancelOrder({String? remarksController,
       : getDoubleValue(mOrderPlace?.totalAmount);
   double adjustedAmount = getDoubleValue(roundToNearestPossible(grandTotal));
 
+  print("###### ${(mOrderPlace?.sequentialOrderID ?? '').isEmpty
+      ? null
+      : (mOrderPlace?.sequentialOrderID ?? '')}");
+
   ///OrderPlaceRequest
   OrderDetailList mOrderDetailList = OrderDetailList(
+    sequentialOrderID: (mOrderPlace?.sequentialOrderID ?? '').isEmpty
+        ? null
+        : (mOrderPlace?.sequentialOrderID ?? ''),
     trackingOrderID: mOrderPlace?.trackingOrderID ?? '',
     counterIDF:
     (mConfigurationResponse.configurationData?.counterData ?? []).isEmpty
@@ -389,6 +400,7 @@ cancelOrder({String? remarksController,
     orderMenu: orderMenu,
 
     ///payment_service
+    paymentGatewayNo: null,
     paymentGatewayIDF: null,
     paymentGatewaySettingIDF: null,
     paymentStatus: 'C',
