@@ -262,22 +262,23 @@ class ShiftDetailsController extends GetxController {
                     getDoubleValue(totalCashCollected.value))
                 .toStringAsFixed(2));
         ///print
-        await onPrintShiftClose(amount, mClosingBalanceRequest,mCashModelList);
-        // WebResponseSuccess mWebResponseSuccess =
-        //     await localApi.postUpdateClosingBalance(mClosingBalanceRequest);
-        // if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
-        //   AppAlert.showSnackBar(
-        //       Get.context!, mWebResponseSuccess.statusMessage ?? '');
-        //
-        //   ///print
-        //   await onPrintShiftClose(amount, mClosingBalanceRequest);
-        //
-        //   ///open counter
-        //   openCounter();
-        // } else {
-        //   AppAlert.showSnackBar(
-        //       Get.context!, mWebResponseSuccess.statusMessage ?? '');
-        // }
+        // await onPrintShiftClose(amount, mClosingBalanceRequest,mCashModelList);
+        WebResponseSuccess mWebResponseSuccess =
+            await localApi.postUpdateClosingBalance(mClosingBalanceRequest);
+        if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
+          AppAlert.showSnackBar(
+              Get.context!, mWebResponseSuccess.statusMessage ?? '');
+
+          ///print
+          await onPrintShiftClose(amount, mClosingBalanceRequest,mCashModelList);
+
+
+          ///open counter
+          openCounter();
+        } else {
+          AppAlert.showSnackBar(
+              Get.context!, mWebResponseSuccess.statusMessage ?? '');
+        }
       } else {
         AppAlert.showSnackBar(
             Get.context!, MessageConstants.noInternetConnection);

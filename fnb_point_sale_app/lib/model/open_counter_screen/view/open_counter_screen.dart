@@ -189,40 +189,82 @@ class OpenCounterScreen extends GetView<OpenCounterController> {
             ),
             Align(
               alignment: Alignment.topRight,
-              child: GestureDetector(
-                onTap: () {
-                  controller.logOutCall();
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      controller.logOutCall();
 
-                },
-                child: Container(
-                  width: 9.5.w,
-                  height: 4.5.h,
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.all(18.sp),
-                  padding: EdgeInsets.only(left: 13.sp, right: 13.sp),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(8.sp)),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Logout',
-                        style: getText500(
-                            size: 12.5.sp, colors: ColorConstants.cAppColors),
+                    },
+                    child: Container(
+                      width: 9.5.w,
+                      height: 4.5.h,
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(top:18.sp,
+                      right: 18.sp,
+                      bottom: 13.sp),
+                      padding: EdgeInsets.only(left: 13.sp, right: 13.sp),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(8.sp)),
                       ),
-                      Icon(
-                        Icons.logout,
-                        size: 13.sp,
-                        color: ColorConstants.cAppColors,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Logout',
+                            style: getText500(
+                                size: 12.5.sp, colors: ColorConstants.cAppColors),
+                          ),
+                          Icon(
+                            Icons.logout,
+                            size: 13.sp,
+                            color: ColorConstants.cAppColors,
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            )
+                  GestureDetector(
+                    onTap: () {
+                      controller.logOutConfiguration();
+
+                    },
+                    child: Container(
+                      width: 22.5.w,
+                      height: 4.5.h,
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(right:18.sp),
+                      padding: EdgeInsets.only(left: 13.sp, right: 13.sp),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(8.sp)),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Logout & Clear Configuration',
+                            style: getText500(
+                                size: 12.5.sp, colors: ColorConstants.cAppColors),
+                          ),
+                          Icon(
+                            Icons.logout,
+                            size: 13.sp,
+                            color: ColorConstants.cAppColors,
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              )
+
+            ),
           ],
         ));
   }

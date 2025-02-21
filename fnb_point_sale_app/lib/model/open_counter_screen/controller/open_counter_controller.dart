@@ -125,6 +125,15 @@ class OpenCounterController extends GetxController {
     });
   }
 
+  void logOutConfiguration() {
+    AppAlert.showCustomDialogYesNoLogout(
+        Get.context!,
+        'Logout & Clear Configuration!',
+        'Do you want to Logout & Clear Configuration?', ()  {
+      updateLoginStatusApiCall(false);
+    });
+  }
+
   void updateLoginStatusApiCall(bool isLogout) async {
     DeviceInfo mDeviceInfo = await getDeviceDetails();
     await NetworkUtils()
