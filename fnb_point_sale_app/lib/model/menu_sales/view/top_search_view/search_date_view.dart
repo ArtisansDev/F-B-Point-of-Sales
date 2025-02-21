@@ -386,9 +386,9 @@ class SearchDateView extends StatelessWidget {
             controller.orderSource.value = 0;
           } else if (controller.selectOrderSourceType.value == 'Mobile App') {
             controller.orderSource.value = 1;
-          } else if (controller.selectOrderSourceType.value == 'From Pos') {
+          } else if (controller.selectOrderSourceType.value == 'Pos') {
             controller.orderSource.value = 2;
-          } else if (controller.selectOrderSourceType.value == 'From Web') {
+          } else if (controller.selectOrderSourceType.value == 'Web') {
             controller.orderSource.value = 3;
           }
           controller.pageNumber.value = 1;

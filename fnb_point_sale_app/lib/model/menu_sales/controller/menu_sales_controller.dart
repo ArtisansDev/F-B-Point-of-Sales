@@ -61,7 +61,7 @@ class MenuSalesController extends GetxController {
 
   RxString selectOrderSourceType = 'Select Source'.obs;
   RxList<String> orderSourceList =
-      <String>[sAll.tr, 'Mobile App', 'From Pos', 'From Web'].obs;
+      <String>[sAll.tr, 'Mobile App', 'Pos', 'Web'].obs;
 
   RxString selectPaymentStatus = 'Payment Status'.obs;
   RxList<String> paymentStatusList =
@@ -149,9 +149,12 @@ class MenuSalesController extends GetxController {
   void onDateSelected(DateTime? fromDate, DateTime? toDate) {
     MyLogUtils.logDebug('fromDate : $fromDate, toDate : $toDate');
     sSelectDateRangeController.value.text =
-        '${DateFormat('dd/MM/yyyy').format(fromDate!)} - ${DateFormat('dd/MM/yyyy').format(toDate!)}';
+        '${DateFormat('dd/MM/yyyy').format(selectedDateRange?.start ?? DateTime.now())} - ${DateFormat('dd/MM/yyyy').format(selectedDateRange?.end ?? DateTime.now())}';
     sSelectDateRangeController.refresh();
 
+
+    MyLogUtils.logDebug("######## ${selectedDateRange?.start ?? DateTime.now()}");
+    MyLogUtils.logDebug("######## ${selectedDateRange?.end ?? DateTime.now()}");
     ///api call
     pageNumber.value = 1;
     sLoading.value = 'Loading...';
@@ -232,10 +235,10 @@ class MenuSalesController extends GetxController {
               paymentStatus: paymentStatus.value,
               fromDate: selectedDateRange == null
                   ? ""
-                  : getUTCValue(selectedDateRange?.start ?? DateTime.now()),
+                  : (selectedDateRange?.start ?? DateTime.now()).toString(),
               toDate: selectedDateRange == null
                   ? ""
-                  : getUTCValue(selectedDateRange?.end ?? DateTime.now()),
+                  : (selectedDateRange?.end ?? DateTime.now()).toString(),
               orderType: orderType,
               trackingOrderID: trackingOrderID);
           WebResponseSuccess mWebResponseSuccess =

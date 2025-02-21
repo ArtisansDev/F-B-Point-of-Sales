@@ -34,10 +34,6 @@ class CalenderView extends StatelessWidget {
               controller.selectedDateRange = value;
               controller.onDateSelected(
                   controller.selectedDateRange?.start, controller.selectedDateRange?.end);
-            } else {
-              controller.selectedDateRange = DateRangeModel(value!.start, value.start);
-              controller.onDateSelected(
-                  controller.selectedDateRange?.start, controller.selectedDateRange?.end);
             }
           }
         },

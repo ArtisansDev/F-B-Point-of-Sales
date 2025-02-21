@@ -149,7 +149,7 @@ class SalesListRowView extends StatelessWidget {
                         ? Align(
                             alignment: Alignment.center,
                             child: Text(
-                              'CANCEL',
+                              'Cancel',
                               style:
                                   getText500(size: 11.sp, colors: Colors.red),
                             ),
@@ -212,7 +212,7 @@ class SalesListRowView extends StatelessWidget {
                             :Align(
                       alignment: Alignment.center,
                       child: Text(
-                        'DONE',
+                        'Success',
                         style:
                         getText500(size: 11.sp, colors: ColorConstants.cAppTextInviceColour),
                       ),
