@@ -25,6 +25,7 @@ import 'package:fnb_point_sale_base/data/remote/api_call/api_impl.dart';
 import 'package:fnb_point_sale_base/data/remote/web_response.dart';
 import 'package:fnb_point_sale_base/utils/network_utils.dart';
 
+import '../../../common_view/logout_expired.dart';
 import '../../../routes/route_constants.dart';
 
 class LoginScreenController extends GetxController {
@@ -162,4 +163,14 @@ class LoginScreenController extends GetxController {
       }
     });
   }
+
+  void logOutConfiguration() {
+    AppAlert.showCustomDialogYesNoLogout(
+        Get.context!,
+        'Logout & Clear Configuration!',
+        'Do you want to Logout & Clear Configuration?', ()  {
+      clearConfiguration();
+    });
+  }
+
 }

@@ -32,183 +32,231 @@ class LoginScreen extends GetView<LoginScreenController> {
         // controller.getPackageInfo();
       },
       onVisibilityLost: () {},
-      child: Container(
-        width: 100.w,
-        height: 100.h,
-        decoration: BoxDecoration(
-            color: ColorConstants.cAppColors,
-            image: DecorationImage(
-              image: AssetImage(
-                ImageAssetsConstants.loginBackground1,
-              ),
-              fit: BoxFit.fill,
-            )),
-        child: Row(
-          children: [
-            Expanded(
-                child: SizedBox(
-                    height: 100.h,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          ImageAssetsConstants.appLogo,
-                          fit: BoxFit.fitWidth,
-                          width: 23.w,
-                        ),
-                        Container(
-                          width: 30.w,
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Effortless Ordering,',
-                            style: getTextRegular(size: 17.sp),
-                          ),
-                        ),
-                        Container(
-                          width: 30.w,
-                          margin: EdgeInsets.only(top: 10.sp,bottom: 10.sp),
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Elevated Dining.',
-                            style: getText600(size: 17.sp),
-                          ),
-                        ),
-                        Container(
-                          width: 30.w,
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-                            textAlign: TextAlign.center,
-                            style: getTextRegular(size: 14.5.sp),
-                          ),
-                        ),
-                      ],
-                    ))),
-            Expanded(
-                child: Container(
-                    alignment: Alignment.center,
-                    child: SingleChildScrollView(
-                      child: Container(
-                        width: 30.w,
-                        padding: EdgeInsets.only(top:14.sp,bottom:14.sp,left: 19.sp,right: 19.sp),
-                        decoration: BoxDecoration(
-                          color:
-                          ColorConstants.cAppButtonColour.withOpacity(0.50),
-                          borderRadius: BorderRadius.circular(11.sp),
-                          // Rounded corners
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              // Shadow color
-                              spreadRadius: 1,
-                              // Spread radius
-                              blurRadius: 3,
-                              // Blur radius
-                              offset: const Offset(0,
-                                  0), // Shadow position (horizontal, vertical)
-                            ),
-                          ],
-                        ),
+      child: Stack(
+        children: [
+          Container(
+            width: 100.w,
+            height: 100.h,
+            decoration: BoxDecoration(
+                color: ColorConstants.cAppColors,
+                image: DecorationImage(
+                  image: AssetImage(
+                    ImageAssetsConstants.loginBackground1,
+                  ),
+                  fit: BoxFit.fill,
+                )),
+            child: Row(
+              children: [
+                Expanded(
+                    child: SizedBox(
+                        height: 100.h,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(
-                              height: 15.sp,
-                            ),
-                            Text(
-                              'Welcome Back',
-                              style: getText600(
-                                  colors: ColorConstants.white, size: 14.sp),
-                            ),
-                            SizedBox(
-                              height: 18.sp,
+                            Image.asset(
+                              ImageAssetsConstants.appLogo,
+                              fit: BoxFit.fitWidth,
+                              width: 23.w,
                             ),
                             Container(
-                              decoration: BoxDecoration(
-                                color: ColorConstants.white,
-                                borderRadius: BorderRadius.circular(8.sp),
-                                // Rounded corners
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    // Shadow color
-                                    spreadRadius: 1,
-                                    // Spread radius
-                                    blurRadius: 3,
-                                    // Blur radius
-                                    offset: const Offset(0,
-                                        0), // Shadow position (horizontal, vertical)
-                                  ),
-                                ],
+                              width: 30.w,
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Effortless Ordering,',
+                                style: getTextRegular(size: 17.sp),
                               ),
-                              child: TextInputWidget(
-                                placeHolder: sUsername.tr,
-                                controller: controller.userNameController.value,
-                                errorText: null,
-                                textInputType: TextInputType.emailAddress,
-                                hintText: sUsernameHint.tr,
-                                showFloatingLabel: false,
-                                prefixIcon: Icons.person_rounded,
-                                topPadding: 5.sp,
-
-                                onFilteringTextInputFormatter: [
-                                  FilteringTextInputFormatter.allow(RegExp(
-                                      AppUtilConstants.patternEmailStringAtDot)),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 13.sp,
                             ),
                             Container(
-                                decoration: BoxDecoration(
-                                  color: ColorConstants.white,
-                                  borderRadius: BorderRadius.circular(8.sp),
-                                  // Rounded corners
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.1),
-                                      // Shadow color
-                                      spreadRadius: 1,
-                                      // Spread radius
-                                      blurRadius: 3,
-                                      // Blur radius
-                                      offset: const Offset(0,
-                                          0), // Shadow position (horizontal, vertical)
-                                    ),
-                                  ],
-                                ),
-                                child: TextInputWidget(
-                                    placeHolder: sPassword.tr,
-                                    controller:
-                                    controller.passwordController.value,
-                                    errorText: null,
-                                    textInputType: TextInputType.text,
-                                    hintText: sPasswordHint.tr,
-                                    showFloatingLabel: false,
-                                    prefixIcon: Icons.password,
-                                    topPadding: 5.sp,
-                                    hidePassword: true)),
-                            SizedBox(
-                              height: 15.sp,
+                              width: 30.w,
+                              margin: EdgeInsets.only(top: 10.sp,bottom: 10.sp),
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Elevated Dining.',
+                                style: getText600(size: 17.sp),
+                              ),
                             ),
-                            rectangleCornerButtonText600(
-                              sLogin.tr,
-                              textSize: 12.5.sp,
-                                  () {
-                                controller.isLoginCheck();
-                              },
-                            ),
-                            SizedBox(
-                              height: 18.sp,
+                            Container(
+                              width: 30.w,
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+                                textAlign: TextAlign.center,
+                                style: getTextRegular(size: 14.5.sp),
+                              ),
                             ),
                           ],
-                        ),
+                        ))),
+                Expanded(
+                    child: Container(
+                        alignment: Alignment.center,
+                        child: SingleChildScrollView(
+                          child: Container(
+                            width: 30.w,
+                            padding: EdgeInsets.only(top:14.sp,bottom:14.sp,left: 19.sp,right: 19.sp),
+                            decoration: BoxDecoration(
+                              color:
+                              ColorConstants.cAppButtonColour.withOpacity(0.50),
+                              borderRadius: BorderRadius.circular(11.sp),
+                              // Rounded corners
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  // Shadow color
+                                  spreadRadius: 1,
+                                  // Spread radius
+                                  blurRadius: 3,
+                                  // Blur radius
+                                  offset: const Offset(0,
+                                      0), // Shadow position (horizontal, vertical)
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 15.sp,
+                                ),
+                                Text(
+                                  'Welcome Back',
+                                  style: getText600(
+                                      colors: ColorConstants.white, size: 14.sp),
+                                ),
+                                SizedBox(
+                                  height: 18.sp,
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: ColorConstants.white,
+                                    borderRadius: BorderRadius.circular(8.sp),
+                                    // Rounded corners
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.1),
+                                        // Shadow color
+                                        spreadRadius: 1,
+                                        // Spread radius
+                                        blurRadius: 3,
+                                        // Blur radius
+                                        offset: const Offset(0,
+                                            0), // Shadow position (horizontal, vertical)
+                                      ),
+                                    ],
+                                  ),
+                                  child: TextInputWidget(
+                                    placeHolder: sUsername.tr,
+                                    controller: controller.userNameController.value,
+                                    errorText: null,
+                                    textInputType: TextInputType.emailAddress,
+                                    hintText: sUsernameHint.tr,
+                                    showFloatingLabel: false,
+                                    prefixIcon: Icons.person_rounded,
+                                    topPadding: 5.sp,
+
+                                    onFilteringTextInputFormatter: [
+                                      FilteringTextInputFormatter.allow(RegExp(
+                                          AppUtilConstants.patternEmailStringAtDot)),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 13.sp,
+                                ),
+                                Container(
+                                    decoration: BoxDecoration(
+                                      color: ColorConstants.white,
+                                      borderRadius: BorderRadius.circular(8.sp),
+                                      // Rounded corners
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          // Shadow color
+                                          spreadRadius: 1,
+                                          // Spread radius
+                                          blurRadius: 3,
+                                          // Blur radius
+                                          offset: const Offset(0,
+                                              0), // Shadow position (horizontal, vertical)
+                                        ),
+                                      ],
+                                    ),
+                                    child: TextInputWidget(
+                                        placeHolder: sPassword.tr,
+                                        controller:
+                                        controller.passwordController.value,
+                                        errorText: null,
+                                        textInputType: TextInputType.text,
+                                        hintText: sPasswordHint.tr,
+                                        showFloatingLabel: false,
+                                        prefixIcon: Icons.password,
+                                        topPadding: 5.sp,
+                                        hidePassword: true)),
+                                SizedBox(
+                                  height: 15.sp,
+                                ),
+                                rectangleCornerButtonText600(
+                                  sLogin.tr,
+                                  textSize: 12.5.sp,
+                                      () {
+                                    controller.isLoginCheck();
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 18.sp,
+                                ),
+                              ],
+                            ),
+                          ),
+                        )))
+              ],
+            ),
+          ),
+          Align(
+              alignment: Alignment.topRight,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      controller.logOutConfiguration();
+
+                    },
+                    child: Container(
+                      width: 22.5.w,
+                      height: 4.5.h,
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(top:18.sp,right:18.sp),
+                      padding: EdgeInsets.only(left: 13.sp, right: 13.sp),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(8.sp)),
                       ),
-                    )))
-          ],
-        ),
-      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Logout & Clear Configuration',
+                            style: getText500(
+                                size: 12.5.sp, colors: ColorConstants.cAppColors),
+                          ),
+                          Icon(
+                            Icons.logout,
+                            size: 13.sp,
+                            color: ColorConstants.cAppColors,
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              )
+
+          ),
+        ],
+      )
+      ,
     );
   }
 }
