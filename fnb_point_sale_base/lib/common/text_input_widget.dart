@@ -161,7 +161,7 @@ class TextInputWidget extends StatelessWidget {
             padding: const EdgeInsets.all(0.0),
             child: Icon(
               suffixIcon,
-              size: 22.sp,
+              size: prefixHeight ?? 15.sp,
             ), // icon is 48px widget.
           ),
         ),
@@ -300,7 +300,7 @@ class TextInputWidget extends StatelessWidget {
             padding: const EdgeInsets.all(0.0),
             child: Icon(
               suffixIcon,
-              size: 22.sp,
+              size: prefixHeight ?? 15.sp,
             ), // icon is 48px widget.
           ),
         ),
