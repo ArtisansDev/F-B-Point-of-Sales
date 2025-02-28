@@ -76,6 +76,7 @@ class OrderDetailList {
     String? orderType,
     String? orderSource,
     List<OrderMenu>? orderMenu,
+    List<OrderMenu>? kOTMenu,
     List<OrderTax>? orderTax,
     List<PaymentResponse>? paymentResponse,
     int? quantityTotal,
@@ -115,6 +116,7 @@ class OrderDetailList {
     _orderType = orderType;
     _orderSource = orderSource;
     _orderMenu = orderMenu;
+    _kOTMenu = kOTMenu;
     _orderTax = orderTax;
     _paymentResponse = paymentResponse;
     _quantityTotal = quantityTotal;
@@ -159,6 +161,12 @@ class OrderDetailList {
       _orderMenu = [];
       json['OrderMenu'].forEach((v) {
         _orderMenu?.add(OrderMenu.fromJson(v));
+      });
+    }
+    if (json['KOTMenu'] != null) {
+      _kOTMenu = [];
+      json['KOTMenu'].forEach((v) {
+        _kOTMenu?.add(OrderMenu.fromJson(v));
       });
     }
     if (json['OrderTax'] != null) {
@@ -212,6 +220,7 @@ class OrderDetailList {
   String? _orderType;
   String? _orderSource;
   List<OrderMenu>? _orderMenu;
+  List<OrderMenu>? _kOTMenu;
   List<OrderTax>? _orderTax;
   List<PaymentResponse>? _paymentResponse;
   int? _quantityTotal;
@@ -261,6 +270,8 @@ class OrderDetailList {
   String? get orderSource => _orderSource;
 
   List<OrderMenu>? get orderMenu => _orderMenu;
+
+  List<OrderMenu>? get kOTMenu => _kOTMenu;
 
   List<OrderTax>? get orderTax => _orderTax;
 
@@ -330,6 +341,9 @@ class OrderDetailList {
     map['OrderSource'] = _orderSource;
     if (_orderMenu != null) {
       map['OrderMenu'] = _orderMenu?.map((v) => v.toJson()).toList();
+    }
+    if (_kOTMenu != null) {
+      map['KOTMenu'] = _kOTMenu?.map((v) => v.toJson()).toList();
     }
     if (_orderTax != null) {
       map['OrderTax'] = _orderTax?.map((v) => v.toJson()).toList();

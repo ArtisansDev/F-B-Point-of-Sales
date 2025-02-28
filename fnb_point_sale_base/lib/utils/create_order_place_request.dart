@@ -213,7 +213,7 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
     paymentGatewayIDF: printOrderPayment?.paymentGatewayIDP ?? '',
     paymentGatewaySettingIDF: printOrderPayment?.paymentGatewaySettingIDP ?? '',
     paymentStatus: printOrderPayment == null ? "P" : "S",
-    orderStatus: printOrderPayment == null ? "P" : "P",
+    orderStatus: printOrderPayment == null ? "A" : "D",
 
     ///orderPlaceGuestInfoRequest
     paymentResponse: printOrderPayment == null ? null : [mPaymentResponse],

@@ -92,9 +92,9 @@ Future<bool> printPlaceOrder(OrderDetailList mOrderDetailList,
   widgets.add(pw.Container(height: 4));
   widgets.add(mySeparator());
   widgets.add(pw.Container(height: 4));
-  widgets.add(pw.Center(
-      child:
-          pw.Text(mRestaurantData.tagLine ?? '', style: getBoldTextStyle())));
+  // widgets.add(pw.Center(
+  //     child:
+  //         pw.Text(mRestaurantData.tagLine ?? '', style: getBoldTextStyle())));
   return printWidgets(widgets, true, false);
 }
 

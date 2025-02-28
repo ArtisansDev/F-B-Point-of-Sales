@@ -32,7 +32,93 @@ createOrderPlaceRequest({String? remarksController,
   // String? orderDate,
   OrderPlace? mOrderPlace,
   OrderHistoryData? mOrderHistoryData,
-  GetAllPaymentTypeData? printOrderPayment}) async {
+  GetAllPaymentTypeData? printOrderPayment,
+  List<CartItem>? kotCartItem}) async {
+  List<OrderMenu> kOTMenu = [];
+  ///Item calculation kOTMenu
+  if((kotCartItem??[]).isNotEmpty) {
+    for (CartItem mCartItem in (kotCartItem??[])) {
+      ///original total
+      var subTotalAmount = 0.0;
+      subTotalAmount = (mCartItem.mSelectVariantListData?.price ?? 0);
+      ///discount
+      var subDiscountTotal = 0.0;
+      if ((mCartItem.mSelectVariantListData?.discountPercentage ?? 0) > 0) {
+        subDiscountTotal =
+        (mCartItem.mSelectVariantListData?.discountedPrice ?? 0);
+        subDiscountTotal = (subTotalAmount - subDiscountTotal);
+        subTotalAmount = subTotalAmount - subDiscountTotal;
+      }
+
+      ///modifier
+      var subModifierTotal = 0.0;
+      String allModifierIDF = '';
+      String allModifierPrices = '';
+      for (ModifierList mModifierData in mCartItem.mSelectModifierList ?? []) {
+        subModifierTotal = subModifierTotal + (mModifierData.price ?? 0);
+        allModifierIDF = '$allModifierIDF${mModifierData.modifierIDP ?? ''},';
+        allModifierPrices = '$allModifierPrices${mModifierData.price ?? ''},';
+      }
+
+      if (subModifierTotal > 0) {
+        subModifierTotal = subModifierTotal * (mCartItem.count ?? 0);
+        allModifierIDF = allModifierIDF.substring(0, allModifierIDF.length - 1);
+        allModifierPrices =
+            allModifierPrices.substring(0, allModifierPrices.length - 1);
+      }
+
+      ///Item tax
+      double subTotalTax = 0.0;
+      if ((mCartItem.taxAmount ?? 0.0) > 0) {
+        subTotalTax = mCartItem.taxAmount;
+      }
+
+
+      ///Item add
+      OrderMenu mOrderMenu = OrderMenu(
+          menuItemIDF: mCartItem.mMenuItemData?.menuItemIDP ?? '',
+          variantIDF: mCartItem.mSelectVariantListData?.variantIDP ?? '',
+          itemName: mCartItem.mMenuItemData?.itemName ?? '',
+          quantity: (mCartItem.count ?? 0),
+
+          ///variant
+          variantPrice: mCartItem.mSelectVariantListData?.price,
+          itemVariantName:
+          mCartItem.mSelectVariantListData?.quantitySpecification ?? '',
+          itemTotal: (mCartItem.mSelectVariantListData?.price ?? 0) *
+              (mCartItem.count ?? 0),
+          itemDiscountPrice: mCartItem.mSelectVariantListData?.discountedPrice,
+          discountedItemAmount: (mCartItem.mSelectVariantListData?.price ?? 0) -
+              (mCartItem.mSelectVariantListData?.discountedPrice ?? 0),
+          itemDiscountPriceTotal:
+          (mCartItem.mSelectVariantListData?.discountedPrice ?? 0) *
+              (mCartItem.count ?? 0),
+          discountPercentage:
+          mCartItem.mSelectVariantListData?.discountPercentage,
+          discountedItemTotalAmount: subDiscountTotal * (mCartItem.count ?? 0),
+
+          ///Modifier
+          allModifierPrices: allModifierPrices,
+          allModifierIDFs: allModifierIDF,
+          itemModifierTotal: subModifierTotal,
+
+          ///tax
+          itemTaxPercent: mCartItem.mMenuItemData?.itemTaxPercent,
+          itemTaxPrice: subTotalTax,
+          itemTotalTaxPrice: subTotalTax * (mCartItem.count ?? 0),
+
+          ///Total
+          totalItemAmount:
+          ((subTotalAmount + subTotalTax) * (mCartItem.count ?? 0)) +
+              subModifierTotal,
+
+          ///ItemAdditionalNotes
+          itemAdditionalNotes: mCartItem.textRemarks);
+      debugPrint("\nmOrderMenu:   ${jsonEncode(mOrderMenu)}\n");
+      kOTMenu.add(mOrderMenu);
+    }
+  }
+
   var configurationLocalApi = locator.get<ConfigurationLocalApi>();
   ConfigurationResponse mConfigurationResponse =
       await configurationLocalApi.getConfigurationResponse() ??
@@ -138,6 +224,9 @@ createOrderPlaceRequest({String? remarksController,
     debugPrint("\nmOrderMenu:   ${jsonEncode(mOrderMenu)}\n");
     orderMenu.add(mOrderMenu);
   }
+
+
+
 
   ///subTotal calculation
   double subTotal = totalAmount + modifierTotal + itemTaxTotal - discountTotal;
@@ -274,6 +363,8 @@ createOrderPlaceRequest({String? remarksController,
 
       ///orderMenu
       orderMenu: orderMenu,
+      ///kot
+      kOTMenu: kOTMenu,
 
       ///payment_service
       paymentGatewayNo: (printOrderPayment?.paymentGatewayNo ?? '').isEmpty
@@ -294,7 +385,7 @@ createOrderPlaceRequest({String? remarksController,
           '')
           : (printOrderPayment?.paymentGatewaySettingIDP ?? ''),
       paymentStatus: printOrderPayment == null ? "P" : "S",
-      orderStatus: printOrderPayment == null ? "A" : "P",
+      orderStatus: printOrderPayment == null ? "A" : "D",
 
       ///orderPlaceGuestInfoRequest
       paymentResponse: printOrderPayment == null ? null : [mPaymentResponse],

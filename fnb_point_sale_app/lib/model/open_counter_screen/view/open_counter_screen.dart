@@ -31,6 +31,8 @@ class OpenCounterScreen extends GetView<OpenCounterController> {
     return FocusDetector(
         onVisibilityGained: () {
           controller.getConfiguration();
+          controller.openCounterController.value.text = "";
+
         },
         onVisibilityLost: () {},
         child: Stack(

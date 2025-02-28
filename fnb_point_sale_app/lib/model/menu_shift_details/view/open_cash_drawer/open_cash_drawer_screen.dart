@@ -6,6 +6,7 @@ import 'package:fnb_point_sale_base/common/button_constants.dart';
 import 'package:fnb_point_sale_base/common/text_input_widget.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/pattern_constants.dart';
+import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
 import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:focus_detector/focus_detector.dart';
@@ -51,8 +52,16 @@ class OpenCashDrawerScreen extends GetView<OpenCashDrawerScreenController> {
                       child: Container(
                           alignment: Alignment.center,
                           margin: EdgeInsets.only(left: 15.sp, right: 15.sp),
-                          child: Text(controller
-                              .mShiftDetailsController.sMessage.value))),
+                          child: Text(
+                            controller.mShiftDetailsController.sMessage.value,
+                            style: getText500(
+                                size: 12.sp,
+                                colors: controller.mShiftDetailsController
+                                            .sMessage.value ==
+                                        'Loading...'
+                                    ? ColorConstants.black
+                                    : ColorConstants.red),
+                          ))),
                 ),
 
                 ///reason

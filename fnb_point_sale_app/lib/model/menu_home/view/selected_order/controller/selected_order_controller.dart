@@ -82,44 +82,43 @@ class SelectedOrderController extends HomeBaseController {
       mOrderPlace.value?.tableNo =
           mDashboardScreenController.mOrderHistoryPlace.value?.tableNo ?? '';
       remarkController.value.text = mDashboardScreenController
-          .mOrderHistoryPlace.value?.additionalNotes ??
+              .mOrderHistoryPlace.value?.additionalNotes ??
           '';
       mOrderPlace.value?.seatIDP =
           mDashboardScreenController.mOrderHistoryPlace.value?.seatIDF ?? '';
       mOrderPlace.value?.sOrderNo = mDashboardScreenController
-          .mOrderHistoryPlace.value?.trackingOrderID ??
+              .mOrderHistoryPlace.value?.trackingOrderID ??
           '';
       mOrderPlace.value?.dateTime = getUTCToLocalDateTimeCart(
           mDashboardScreenController.mOrderHistoryPlace.value?.orderDate ?? '');
 
       debugPrint(
-          "mOrderHistoryMenu ${(mDashboardScreenController.mOrderHistoryPlace
-              .value?.orderMenu ?? []).length}");
+          "mOrderHistoryMenu ${(mDashboardScreenController.mOrderHistoryPlace.value?.orderMenu ?? []).length}");
 
       ///cartItem
       mOrderPlace.value?.cartItem = [];
       for (OrderHistoryMenu mOrderHistoryMenu
-      in mDashboardScreenController.mOrderHistoryPlace.value?.orderMenu ??
-          []) {
+          in mDashboardScreenController.mOrderHistoryPlace.value?.orderMenu ??
+              []) {
         debugPrint("mOrderHistoryMenu ${jsonEncode(mOrderHistoryMenu)}");
         try {
           var localMenuItemApi = locator.get<MenuItemLocalApi>();
           MenuItemData? mMenuItemData =
-          await localMenuItemApi.getMenuItemSearch(
-              mOrderHistoryMenu.menuItemIDF.toString().toLowerCase());
+              await localMenuItemApi.getMenuItemSearch(
+                  mOrderHistoryMenu.menuItemIDF.toString().toLowerCase());
           debugPrint("mMenuItemData ${jsonEncode(mMenuItemData)}");
           if (mMenuItemData != null) {
             ///Variant list
             var localVariantApi = locator.get<VariantLocalApi>();
             List<VariantListData> mVariantListData = [];
             mVariantListData.addAll(await localVariantApi
-                .getVariantList(mMenuItemData.menuItemIDP ?? '') ??
+                    .getVariantList(mMenuItemData.menuItemIDP ?? '') ??
                 []);
 
             ///selectVariantListData
             VariantListData selectVariantListData = mVariantListData.firstWhere(
-                    (user) =>
-                user.variantIDP.toString().toLowerCase() ==
+                (user) =>
+                    user.variantIDP.toString().toLowerCase() ==
                     (mOrderHistoryMenu.variantIDF ?? '').toLowerCase());
 
             debugPrint(
@@ -129,7 +128,7 @@ class SelectedOrderController extends HomeBaseController {
             var localModifierApi = locator.get<ModifierLocalApi>();
             List<ModifierList> mModifierListData = [];
             mModifierListData.addAll(await localModifierApi
-                .getModifierList(mMenuItemData.modifierIDs ?? []) ??
+                    .getModifierList(mMenuItemData.modifierIDs ?? []) ??
                 []);
 
             ///select ModifierList list
@@ -137,13 +136,13 @@ class SelectedOrderController extends HomeBaseController {
 
             if ((mOrderHistoryMenu.allModifierIDFs ?? '').isNotEmpty) {
               List<String>? mSelectModifierIDFs =
-              (mOrderHistoryMenu.allModifierIDFs ?? '').split(',');
+                  (mOrderHistoryMenu.allModifierIDFs ?? '').split(',');
               if ((mSelectModifierIDFs ?? []).isNotEmpty &&
                   mModifierListData.isNotEmpty) {
                 for (String sModifierIDF in mSelectModifierIDFs) {
                   ModifierList getModifier = mModifierListData.firstWhere(
-                          (user) =>
-                      user.modifierIDP.toString().toLowerCase() ==
+                      (user) =>
+                          user.modifierIDP.toString().toLowerCase() ==
                           sModifierIDF.toLowerCase());
                   if (getModifier.modifierIDP != null) {
                     mSelectModifierListData.add(getModifier);
@@ -184,9 +183,9 @@ class SelectedOrderController extends HomeBaseController {
   onCalculateTotal(CartItem mCartItem) {
     ///Variant
     mCartItem.price =
-    (mCartItem.mSelectVariantListData?.discountPercentage ?? 0.0) > 0
-        ? mCartItem.mSelectVariantListData?.discountedPrice ?? 0.0
-        : mCartItem.mSelectVariantListData?.price ?? 0.0;
+        (mCartItem.mSelectVariantListData?.discountPercentage ?? 0.0) > 0
+            ? mCartItem.mSelectVariantListData?.discountedPrice ?? 0.0
+            : mCartItem.mSelectVariantListData?.price ?? 0.0;
 
     ///tax
     mCartItem.taxAmount = 0.0;
@@ -231,9 +230,11 @@ class SelectedOrderController extends HomeBaseController {
   }
 
   ///onCalculateTotalItem value
-  onCalculateTotalPricePerItem(int value,
-      int index,
-      CartItem mCartItem,) {
+  onCalculateTotalPricePerItem(
+    int value,
+    int index,
+    CartItem mCartItem,
+  ) {
     if (value == 0) {
       mOrderPlace.value?.cartItem?.removeAt(index);
       mOrderPlace.refresh();
@@ -331,10 +332,10 @@ class SelectedOrderController extends HomeBaseController {
   getCartItemKot() async {
     ///new Kot
     List<CartItem> cartItemSelectKot =
-    (mOrderPlace.value?.cartItem ?? []).toList();
+        (mOrderPlace.value?.cartItem ?? []).toList();
 
     cartItemSelectKot.removeWhere(
-          (element) {
+      (element) {
         return element.placeOrder;
       },
     );
@@ -347,9 +348,9 @@ class SelectedOrderController extends HomeBaseController {
       // debugPrint(
       //     "## mOrderPlaceHistory ## ${jsonEncode(mOrderPlaceHistory.value)}");
       for (CartItem mCartItemHistory
-      in mOrderPlaceHistory.value?.cartItem ?? []) {
+          in mOrderPlaceHistory.value?.cartItem ?? []) {
         CartItem mCartItemSelect =
-        (mOrderPlace.value?.cartItem ?? []).firstWhere((element) {
+            (mOrderPlace.value?.cartItem ?? []).firstWhere((element) {
           bool value = element.placeOrder;
           if (value) {
             value = element.mMenuItemData?.menuItemIDP.toString() ==
@@ -434,230 +435,203 @@ class SelectedOrderController extends HomeBaseController {
       OrderDetailList mOrderDetailList = await createOrderPlaceRequest(
           remarksController: remarkController.value.text,
           mOrderPlace: mOrderPlace.value,
+          kotCartItem: cartItemKot,
           mOrderHistoryData:
-          mDashboardScreenController.mOrderHistoryPlace.value);
+              mDashboardScreenController.mOrderHistoryPlace.value);
 
-      /// debugPrint("OrderDetail ----- ${jsonEncode(mOrderDetailList)}");
+      debugPrint("OrderDetail ----- ${jsonEncode(mOrderDetailList)}");
+
       ///place order print testing
       /// debugPrint("mOrderPlacePrint ----- ${jsonEncode(mOrderPlacePrint.value)}");
       /// printOrderPayment(
       ///     mOrderDetailList, mOrderPlacePrint.value ?? OrderPlace(),
       ///     placeOrder: true);
 
-        await callSaveOrder(mOrderDetailList);
+      await callSaveOrder(mOrderDetailList);
 
-        ///clear data
-        placeOrder.value = false;
-        mOrderPlace.value = null;
-        mOrderPlace.refresh();
-        await mDashboardScreenController.onUpdateHoldSale();
-        await mTopBarController.allOrderPlace();
-        remarkController.value.text = "";
+      ///clear data
+      placeOrder.value = false;
+      mOrderPlace.value = null;
+      mOrderPlace.refresh();
+      await mDashboardScreenController.onUpdateHoldSale();
+      await mTopBarController.allOrderPlace();
+      remarkController.value.text = "";
 
-        ///History value
-        mOrderPlaceHistory.value = null;
-        isOrderHistory.value = false;
-      } else {
-        AppAlert.showSnackBar(Get.context!, 'Please add item in the cart');
-      }
+      ///History value
+      mOrderPlaceHistory.value = null;
+      isOrderHistory.value = false;
+    } else {
+      AppAlert.showSnackBar(Get.context!, 'Please add item in the cart');
     }
+  }
 
-    ///printPlaceOrder
-    // void printPlaceOrder(
-    //     OrderDetailList mOrderDetailList, OrderPlace mOrderPlace) async {
-    //   final myPrinterService = locator.get<MyPrinterService>();
-    //   await myPrinterService.salePlaceOrder(mOrderDetailList, mOrderPlace);
-    // }
+  ///printPlaceOrder
+  // void printPlaceOrder(
+  //     OrderDetailList mOrderDetailList, OrderPlace mOrderPlace) async {
+  //   final myPrinterService = locator.get<MyPrinterService>();
+  //   await myPrinterService.salePlaceOrder(mOrderDetailList, mOrderPlace);
+  // }
 
-    ///Payment
-    void onPayment() async {
-      await AppAlert.showViewWithoutBlur(
-          Get.context!,
-          PaymentScreen(
-            mOrderPlace.value ?? OrderPlace(),
-            onPayment: (GetAllPaymentTypeData mSelectPaymentType,
-                GetAllCustomerList? mSelectCustomer) async {
-              Get.back();
-              ///getCartItemKot
-              await getCartItemKot();
-              debugPrint("## select cartItemKot ## ${jsonEncode(cartItemKot)}");
-              ///
-              if (mSelectCustomer != null) {
-                mOrderPlace.value?.mSelectCustomer = mSelectCustomer;
-              }
-              ///selectPayment type
-              debugPrint(
-                  "mSelectPaymentType ----- ${jsonEncode(mSelectPaymentType)}");
-              switch (mSelectPaymentType.paymentGatewayNo) {
-                case "5":
+  ///Payment
+  void onPayment() async {
+    await AppAlert.showViewWithoutBlur(
+        Get.context!,
+        PaymentScreen(
+          mOrderPlace.value ?? OrderPlace(),
+          onPayment: (GetAllPaymentTypeData mSelectPaymentType,
+              GetAllCustomerList? mSelectCustomer) async {
+            Get.back();
+
+            ///getCartItemKot
+            await getCartItemKot();
+            debugPrint("## select cartItemKot ## ${jsonEncode(cartItemKot)}");
+
+            ///
+            if (mSelectCustomer != null) {
+              mOrderPlace.value?.mSelectCustomer = mSelectCustomer;
+            }
+
+            ///selectPayment type
+            debugPrint(
+                "mSelectPaymentType ----- ${jsonEncode(mSelectPaymentType)}");
+            switch (mSelectPaymentType.paymentGatewayNo) {
+              case "5":
 
                 ///Debit Card
-                  await AppAlert.showViewWithoutBlur(
-                      Get.context!, DebitCardView(
-                    onPayment: (String sValue) {
-                      mSelectPaymentType.setRequestData(sValue);
-                    },
-                  ));
-                  if (Get.isRegistered<DebitCardViewController>()) {
-                    await Get.delete<DebitCardViewController>();
-                  }
-                  break;
-                case "6":
+                await AppAlert.showViewWithoutBlur(Get.context!, DebitCardView(
+                  onPayment: (String sValue) {
+                    mSelectPaymentType.setRequestData(sValue);
+                  },
+                ));
+                if (Get.isRegistered<DebitCardViewController>()) {
+                  await Get.delete<DebitCardViewController>();
+                }
+                break;
+              case "6":
 
                 ///Credit Card
-                  await AppAlert.showViewWithoutBlur(
-                      Get.context!, CreditCardView(
-                    onPayment: (String sValue) {
-                      mSelectPaymentType.setRequestData(sValue);
-                    },
-                  ));
-                  if (Get.isRegistered<CreditCardViewController>()) {
-                    await Get.delete<CreditCardViewController>();
-                  }
-                  break;
-                case "7":
+                await AppAlert.showViewWithoutBlur(Get.context!, CreditCardView(
+                  onPayment: (String sValue) {
+                    mSelectPaymentType.setRequestData(sValue);
+                  },
+                ));
+                if (Get.isRegistered<CreditCardViewController>()) {
+                  await Get.delete<CreditCardViewController>();
+                }
+                break;
+              case "7":
 
                 ///Qr code
-                  await AppAlert.showViewWithoutBlur(
-                      Get.context!,
-                      QrView(
-                        mSelectPaymentType: mSelectPaymentType,
-                        onPayment: (String sValue) {
-                          mSelectPaymentType.setRequestData(sValue);
-                        },
-                      ));
-                  if (Get.isRegistered<QrViewController>()) {
-                    await Get.delete<QrViewController>();
-                  }
-                  break;
-              }
-              debugPrint(
-                  "## mSelectPaymentType ----- ${jsonEncode(
-                      mSelectPaymentType)}");
-
-              ////
-              if ((mSelectPaymentType.paymentGatewayNo == "5" ||
-                  mSelectPaymentType.paymentGatewayNo == "7" ||
-                  mSelectPaymentType.paymentGatewayNo == "6") &&
-                  mSelectPaymentType.requestData == 'Cancel') {
-                return;
-              }
-
-              ///remove hold sale
-              var holdSaleLocalApi = locator.get<HoldSaleLocalApi>();
-              await holdSaleLocalApi
-                  .getHoldSaleDelete(mOrderPlace.value?.sOrderNo ?? '');
-
-              ///mOrderDetailList
-              OrderDetailList mOrderDetailList = await createOrderPlaceRequest(
-                  remarksController: remarkController.value.text,
-                  mOrderPlace: mOrderPlace.value,
-                  printOrderPayment: mSelectPaymentType,
-                  mOrderHistoryData:
-                  mDashboardScreenController.mOrderHistoryPlace.value);
-              debugPrint("OrderDetail ----- ${jsonEncode(mOrderDetailList)}");
-
-              ///printOrderPayment
-              /// await printOrderPayment(
-              ///     mOrderDetailList, mOrderPlacePrint.value ?? OrderPlace(),
-              ///     placeOrder: placeOrder.value, isPayment: true);
-              ///
-              /// var mPlaceOrderSaleLocalApi = locator.get<PlaceOrderSaleLocalApi>();
-              /// await mPlaceOrderSaleLocalApi
-              ///     .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
-
-              await callSaveOrder(mOrderDetailList, isPayment: true);
-              placeOrder.value = false;
-              mOrderPlace.value = null;
-              mOrderPlace.refresh();
-              await mDashboardScreenController.onUpdateHoldSale();
-              await mTopBarController.allOrderPlace();
-              remarkController.value.text = "";
-
-              ///History value
-              mOrderPlaceHistory.value = null;
-              isOrderHistory.value = false;
-
-              ///clear table
-              if ((mOrderDetailList.seatIDF ?? '').isNotEmpty) {
-                TablesByTableStatusData mTablesByTableStatusData =
-                TablesByTableStatusData(
-                  occupiedOrderID: mOrderDetailList.trackingOrderID ?? '',
-                  seatIDP: mOrderDetailList.seatIDF ?? '',
-                );
-                await callUpdateTableStatusAvailable(mTablesByTableStatusData);
-              }
-            },
-          ),
-          barrierDismissible: true);
-      if (Get.isRegistered<PaymentScreenController>()) {
-        Get.delete<PaymentScreenController>();
-      }
-    }
-
-    ///SaveOrder
-    callSaveOrder(OrderDetailList mOrderDetailList,
-        {bool isPayment = false}) async {
-      try {
-        ///api product call
-        final orderPlaceApi = locator.get<OrderPlaceApi>();
-        await NetworkUtils()
-            .checkInternetConnection()
-            .then((isInternetAvailable) async {
-          ProcessMultipleOrdersRequest mProcessMultipleOrdersRequest =
-          ProcessMultipleOrdersRequest(orderDetailList: [mOrderDetailList]);
-          if (isInternetAvailable) {
-            WebResponseSuccess mWebResponseSuccess =
-            await orderPlaceApi.postOrderPlace(mProcessMultipleOrdersRequest);
-            if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
-              ///print....
-              await printOrderPayment(
-                  mOrderDetailList, mOrderPlacePrint.value ?? OrderPlace(),
-                  placeOrder: placeOrder.value, isPayment: isPayment);
-
-              ///remove from local data base
-              if (isPayment) {
-                var mPlaceOrderSaleLocalApi =
-                locator.get<PlaceOrderSaleLocalApi>();
-                await mPlaceOrderSaleLocalApi
-                    .getPlaceOrderDelete(
-                    mOrderDetailList.trackingOrderID ?? '');
-              }
-              AppAlert.showSnackBar(
-                  Get.context!, mWebResponseSuccess.statusMessage ?? '');
-            } else {
-              ///offline save
-              var mOfflinePlaceOrderSaleLocalApi =
-              locator.get<OfflinePlaceOrderSaleLocalApi>();
-              ProcessMultipleOrdersRequest mProcessMultipleOrders =
-                  await mOfflinePlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
-                      ProcessMultipleOrdersRequest();
-              if ((mProcessMultipleOrders.orderDetailList ?? []).isEmpty) {
-                await mOfflinePlaceOrderSaleLocalApi
-                    .save(mProcessMultipleOrdersRequest);
-              } else {
-                if ((mProcessMultipleOrdersRequest.orderDetailList ?? [])
-                    .isNotEmpty) {
-                  await mOfflinePlaceOrderSaleLocalApi.getPlaceOrderAdd(
-                      (mProcessMultipleOrdersRequest.orderDetailList ?? [])
-                          .first);
+                await AppAlert.showViewWithoutBlur(
+                    Get.context!,
+                    QrView(
+                      mSelectPaymentType: mSelectPaymentType,
+                      onPayment: (String sValue) {
+                        mSelectPaymentType.setRequestData(sValue);
+                      },
+                    ));
+                if (Get.isRegistered<QrViewController>()) {
+                  await Get.delete<QrViewController>();
                 }
-              }
-              if (isPayment) {
-                ///remove
-                var mPlaceOrderSaleLocalApi =
-                locator.get<PlaceOrderSaleLocalApi>();
-                await mPlaceOrderSaleLocalApi
-                    .getPlaceOrderDelete(
-                    mOrderDetailList.trackingOrderID ?? '');
-              }
-              AppAlert.showSnackBar(
-                  Get.context!, mWebResponseSuccess.statusMessage ?? '');
+                break;
             }
+            debugPrint(
+                "## mSelectPaymentType ----- ${jsonEncode(mSelectPaymentType)}");
+
+            ////
+            if ((mSelectPaymentType.paymentGatewayNo == "5" ||
+                    mSelectPaymentType.paymentGatewayNo == "7" ||
+                    mSelectPaymentType.paymentGatewayNo == "6") &&
+                mSelectPaymentType.requestData == 'Cancel') {
+              return;
+            }
+
+            ///remove hold sale
+            var holdSaleLocalApi = locator.get<HoldSaleLocalApi>();
+            await holdSaleLocalApi
+                .getHoldSaleDelete(mOrderPlace.value?.sOrderNo ?? '');
+
+            ///mOrderDetailList
+            OrderDetailList mOrderDetailList = await createOrderPlaceRequest(
+                remarksController: remarkController.value.text,
+                mOrderPlace: mOrderPlace.value,
+                kotCartItem: cartItemKot,
+                printOrderPayment: mSelectPaymentType,
+                mOrderHistoryData:
+                    mDashboardScreenController.mOrderHistoryPlace.value);
+            debugPrint("OrderDetail ----- ${jsonEncode(mOrderDetailList)}");
+
+            ///printOrderPayment
+            /// await printOrderPayment(
+            ///     mOrderDetailList, mOrderPlacePrint.value ?? OrderPlace(),
+            ///     placeOrder: placeOrder.value, isPayment: true);
+            ///
+            /// var mPlaceOrderSaleLocalApi = locator.get<PlaceOrderSaleLocalApi>();
+            /// await mPlaceOrderSaleLocalApi
+            ///     .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
+
+            await callSaveOrder(mOrderDetailList, isPayment: true);
+            placeOrder.value = false;
+            mOrderPlace.value = null;
+            mOrderPlace.refresh();
+            await mDashboardScreenController.onUpdateHoldSale();
+            await mTopBarController.allOrderPlace();
+            remarkController.value.text = "";
+
+            ///History value
+            mOrderPlaceHistory.value = null;
+            isOrderHistory.value = false;
+
+            ///clear table
+            if ((mOrderDetailList.seatIDF ?? '').isNotEmpty) {
+              TablesByTableStatusData mTablesByTableStatusData =
+                  TablesByTableStatusData(
+                occupiedOrderID: mOrderDetailList.trackingOrderID ?? '',
+                seatIDP: mOrderDetailList.seatIDF ?? '',
+              );
+              await callUpdateTableStatusAvailable(mTablesByTableStatusData);
+            }
+          },
+        ),
+        barrierDismissible: true);
+    if (Get.isRegistered<PaymentScreenController>()) {
+      Get.delete<PaymentScreenController>();
+    }
+  }
+
+  ///SaveOrder
+  callSaveOrder(OrderDetailList mOrderDetailList,
+      {bool isPayment = false}) async {
+    try {
+      ///api product call
+      final orderPlaceApi = locator.get<OrderPlaceApi>();
+      await NetworkUtils()
+          .checkInternetConnection()
+          .then((isInternetAvailable) async {
+        ProcessMultipleOrdersRequest mProcessMultipleOrdersRequest =
+            ProcessMultipleOrdersRequest(orderDetailList: [mOrderDetailList]);
+        if (isInternetAvailable) {
+          WebResponseSuccess mWebResponseSuccess =
+              await orderPlaceApi.postOrderPlace(mProcessMultipleOrdersRequest);
+          if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
+            ///print....
+            await printOrderPayment(
+                mOrderDetailList, mOrderPlacePrint.value ?? OrderPlace(),
+                placeOrder: placeOrder.value, isPayment: isPayment);
+
+            ///remove from local data base
+            if (isPayment) {
+              var mPlaceOrderSaleLocalApi =
+                  locator.get<PlaceOrderSaleLocalApi>();
+              await mPlaceOrderSaleLocalApi
+                  .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
+            }
+            AppAlert.showSnackBar(
+                Get.context!, mWebResponseSuccess.statusMessage ?? '');
           } else {
             ///offline save
             var mOfflinePlaceOrderSaleLocalApi =
-            locator.get<OfflinePlaceOrderSaleLocalApi>();
+                locator.get<OfflinePlaceOrderSaleLocalApi>();
             ProcessMultipleOrdersRequest mProcessMultipleOrders =
                 await mOfflinePlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
                     ProcessMultipleOrdersRequest();
@@ -674,105 +648,160 @@ class SelectedOrderController extends HomeBaseController {
             }
             if (isPayment) {
               ///remove
-              var mPlaceOrderSaleLocalApi = locator.get<
-                  PlaceOrderSaleLocalApi>();
+              var mPlaceOrderSaleLocalApi =
+                  locator.get<PlaceOrderSaleLocalApi>();
               await mPlaceOrderSaleLocalApi
                   .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
             }
             AppAlert.showSnackBar(
-                Get.context!, MessageConstants.noInternetConnection);
-          }
-        });
-      } catch (e) {
-        AppAlert.showSnackBar(
-            Get.context!, 'downloadTableList failed with exception $e');
-      }
-    }
-
-    ///update table status
-    callUpdateTableStatus(OrderPlace mOrderPlace) async {
-      ///api product call
-      final orderPlaceApi = locator.get<OrderPlaceApi>();
-      await NetworkUtils()
-          .checkInternetConnection()
-          .then((isInternetAvailable) async {
-        if (isInternetAvailable) {
-          TableStatusRequest mTableStatusRequest = TableStatusRequest(
-              trackingOrderID: mOrderPlace.sOrderNo ?? '',
-              tableStatus: 'O',
-              seatIDP: mOrderPlace.seatIDP,
-              userIDF: await SharedPrefs().getUserId());
-
-          WebResponseSuccess mWebResponseSuccess =
-          await orderPlaceApi.postTableStatus(mTableStatusRequest);
-
-          if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
-            // onPlaceOrder();
-          } else {
-            // AppAlert.showSnackBar(
-            //     Get.context!, mWebResponseSuccess.statusMessage ?? '');
-          }
-        } else {
-          // AppAlert.showSnackBar(
-          //     Get.context!, MessageConstants.noInternetConnection);
-        }
-      });
-    }
-
-    ///update table status Available
-    callUpdateTableStatusAvailable(
-        TablesByTableStatusData mTablesByTableStatusData) async {
-      ///api product call
-      final orderPlaceApi = locator.get<OrderPlaceApi>();
-      await NetworkUtils()
-          .checkInternetConnection()
-          .then((isInternetAvailable) async {
-        if (isInternetAvailable) {
-          TableStatusRequest mTableStatusRequest = TableStatusRequest(
-              trackingOrderID:
-              mTablesByTableStatusData.occupiedTrackingOrderID ?? '',
-              tableStatus: 'A',
-              seatIDP: mTablesByTableStatusData.seatIDP,
-              userIDF: await SharedPrefs().getUserId());
-
-          WebResponseSuccess mWebResponseSuccess =
-          await orderPlaceApi.postTableStatus(mTableStatusRequest);
-
-          if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
-            await mTopBarController.callGetAllTableStatus();
-          } else {
-            AppAlert.showSnackBar(
                 Get.context!, mWebResponseSuccess.statusMessage ?? '');
           }
         } else {
+          ///offline save
+          var mOfflinePlaceOrderSaleLocalApi =
+              locator.get<OfflinePlaceOrderSaleLocalApi>();
+          ProcessMultipleOrdersRequest mProcessMultipleOrders =
+              await mOfflinePlaceOrderSaleLocalApi.getAllPlaceOrderSale() ??
+                  ProcessMultipleOrdersRequest();
+          if ((mProcessMultipleOrders.orderDetailList ?? []).isEmpty) {
+            await mOfflinePlaceOrderSaleLocalApi
+                .save(mProcessMultipleOrdersRequest);
+          } else {
+            if ((mProcessMultipleOrdersRequest.orderDetailList ?? [])
+                .isNotEmpty) {
+              await mOfflinePlaceOrderSaleLocalApi.getPlaceOrderAdd(
+                  (mProcessMultipleOrdersRequest.orderDetailList ?? []).first);
+            }
+          }
+          if (isPayment) {
+            ///remove
+            var mPlaceOrderSaleLocalApi = locator.get<PlaceOrderSaleLocalApi>();
+            await mPlaceOrderSaleLocalApi
+                .getPlaceOrderDelete(mOrderDetailList.trackingOrderID ?? '');
+          }
           AppAlert.showSnackBar(
               Get.context!, MessageConstants.noInternetConnection);
         }
       });
-    }
-
-    printOrderPayment(OrderDetailList mOrderDetailList, OrderPlace mOrderPlace,
-        {bool placeOrder = false, bool isPayment = false}) async {
-      final myPrinterService = locator.get<MyPrinterService>();
-      if (placeOrder) {
-        await myPrinterService.salePlaceOrder(
-            mOrderDetailList, mOrderPlace, cartItemKot);
-        await myPrinterService.salePlaceOrder(
-            mOrderDetailList, mOrderPlace, cartItemKot);
-      }
-      if (isPayment) {
-        await myPrinterService.saleOrderPayment(mOrderDetailList, mOrderPlace);
-      }
-    }
-
-    ///select table
-    void selectTable() async {
-      await showTableBottomSheet(mTopBarController.mGetAllTablesList.toList(),
-          (mTopBarController.mGetAllTablesStatus.value?.data ?? []).toList(),
-              (GetAllTablesResponseData value) {
-            mOrderPlace.value?.seatIDP = value.seatIDP ?? '--';
-            mOrderPlace.value?.tableNo = value.seatNumber ?? '--';
-            mOrderPlace.refresh();
-          });
+    } catch (e) {
+      AppAlert.showSnackBar(
+          Get.context!, 'downloadTableList failed with exception $e');
     }
   }
+
+  ///update table status
+  callUpdateTableStatus(OrderPlace mOrderPlace) async {
+    ///api product call
+    final orderPlaceApi = locator.get<OrderPlaceApi>();
+    await NetworkUtils()
+        .checkInternetConnection()
+        .then((isInternetAvailable) async {
+      if (isInternetAvailable) {
+        TableStatusRequest mTableStatusRequest = TableStatusRequest(
+            trackingOrderID: mOrderPlace.sOrderNo ?? '',
+            tableStatus: 'O',
+            seatIDP: mOrderPlace.seatIDP,
+            userIDF: await SharedPrefs().getUserId());
+
+        WebResponseSuccess mWebResponseSuccess =
+            await orderPlaceApi.postTableStatus(mTableStatusRequest);
+
+        if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
+          // onPlaceOrder();
+        } else {
+          // AppAlert.showSnackBar(
+          //     Get.context!, mWebResponseSuccess.statusMessage ?? '');
+        }
+      } else {
+        // AppAlert.showSnackBar(
+        //     Get.context!, MessageConstants.noInternetConnection);
+      }
+    });
+  }
+
+  ///update table status Available
+  callUpdateTableStatusAvailable(
+      TablesByTableStatusData mTablesByTableStatusData) async {
+    ///api product call
+    final orderPlaceApi = locator.get<OrderPlaceApi>();
+    await NetworkUtils()
+        .checkInternetConnection()
+        .then((isInternetAvailable) async {
+      if (isInternetAvailable) {
+        TableStatusRequest mTableStatusRequest = TableStatusRequest(
+            trackingOrderID:
+                mTablesByTableStatusData.occupiedTrackingOrderID ?? '',
+            tableStatus: 'A',
+            seatIDP: mTablesByTableStatusData.seatIDP,
+            userIDF: await SharedPrefs().getUserId());
+
+        WebResponseSuccess mWebResponseSuccess =
+            await orderPlaceApi.postTableStatus(mTableStatusRequest);
+
+        if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
+          await mTopBarController.callGetAllTableStatus();
+        } else {
+          AppAlert.showSnackBar(
+              Get.context!, mWebResponseSuccess.statusMessage ?? '');
+        }
+      } else {
+        AppAlert.showSnackBar(
+            Get.context!, MessageConstants.noInternetConnection);
+      }
+    });
+  }
+
+  printOrderPayment(OrderDetailList mOrderDetailList, OrderPlace mOrderPlace,
+      {bool placeOrder = false, bool isPayment = false}) async {
+    final myPrinterService = locator.get<MyPrinterService>();
+    if (placeOrder) {
+      ///Customer printCopies
+      if (mDashboardScreenController.mPrinterSettingsDataCustomer.printCopies ==
+          null) {
+        await myPrinterService.salePlaceOrder(
+            mOrderDetailList, mOrderPlace, cartItemKot);
+      } else {
+        for (int i = 0;
+            i <
+                (mDashboardScreenController
+                        .mPrinterSettingsDataCustomer.printCopies ??
+                    0);
+            i++) {
+          await myPrinterService.salePlaceOrder(
+              mOrderDetailList, mOrderPlace, cartItemKot);
+        }
+      }
+
+      ///Kitchen printCopies
+      if (mDashboardScreenController.mPrinterSettingsDataKitchen.printCopies ==
+          null) {
+        await myPrinterService.salePlaceOrder(
+            mOrderDetailList, mOrderPlace, cartItemKot);
+      } else {
+        for (int i = 0;
+        i <
+            (mDashboardScreenController
+                .mPrinterSettingsDataKitchen.printCopies ??
+                0);
+        i++) {
+          await myPrinterService.salePlaceOrder(
+              mOrderDetailList, mOrderPlace, cartItemKot);
+        }
+      }
+    }
+    if (isPayment) {
+      await myPrinterService.saleOrderPayment(mOrderDetailList, mOrderPlace);
+    }
+  }
+
+  ///select table
+  void selectTable() async {
+    await showTableBottomSheet(mTopBarController.mGetAllTablesList.toList(),
+        (mTopBarController.mGetAllTablesStatus.value?.data ?? []).toList(),
+        (GetAllTablesResponseData value) {
+      mOrderPlace.value?.seatIDP = value.seatIDP ?? '--';
+      mOrderPlace.value?.tableNo = value.seatNumber ?? '--';
+      mOrderPlace.refresh();
+    });
+  }
+}

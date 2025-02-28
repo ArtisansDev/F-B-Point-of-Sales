@@ -204,6 +204,7 @@ class AppAlert {
         bool? barrierDismissible,
         // String? leftText,
         // String? rightText,
+        Function? onCall,
       }) async {
     await showDialog(
         context: context,
@@ -275,6 +276,9 @@ class AppAlert {
                                       child: rectangleCornerButtonText600(
                                           'Close', () {
                                         Navigator.pop(context);
+                                        if(onCall!=null){
+                                          onCall();
+                                        }
                                       },
                                           bgColor: ColorConstants
                                               .cAppButtonColour,

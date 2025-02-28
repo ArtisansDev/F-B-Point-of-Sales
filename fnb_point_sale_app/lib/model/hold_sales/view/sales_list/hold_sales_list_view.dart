@@ -203,6 +203,7 @@ class HoldSalesListView extends StatelessWidget {
               height: 17.5.sp,
               textSize: 10.5.sp,
               () {
+                controller.cancel.value = true;
                 Get.back();
               },
             ),

@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fnb_point_sale_app/model/menu_home/home_base_controller/home_base_controller.dart';
@@ -281,19 +282,54 @@ class DashboardScreenController extends GetxController {
     getTexList();
   }
 
+  PrinterSettingsData mPrinterSettingsDataKitchen = PrinterSettingsData();
+  PrinterSettingsData mPrinterSettingsDataCustomer = PrinterSettingsData();
+
+  getPrinterSettingsData() async {
+    mPrinterSettingsDataKitchen = PrinterSettingsData();
+    mPrinterSettingsDataCustomer = PrinterSettingsData();
+    List<PrinterSettingsData> mPrinterSettingsDataList =
+        (await configurationLocalApi.getConfigurationResponse())
+                ?.configurationData
+                ?.printerSettingsData ??
+            [];
+    if (mPrinterSettingsDataList.isNotEmpty) {
+      for (PrinterSettingsData mPrinterSettingsData
+          in mPrinterSettingsDataList) {
+        if ((mPrinterSettingsData.printType ?? "").toUpperCase() == 'K' &&
+            (mPrinterSettingsDataKitchen.printType ?? '').isEmpty) {
+          mPrinterSettingsDataKitchen =
+              PrinterSettingsData.fromJson(mPrinterSettingsData.toJson());
+        }
+
+        if ((mPrinterSettingsData.printType ?? "").toUpperCase() == 'C' &&
+            (mPrinterSettingsDataCustomer.printType ?? '').isEmpty) {
+          mPrinterSettingsDataCustomer =
+              PrinterSettingsData.fromJson(mPrinterSettingsData.toJson());
+        }
+      }
+    }
+
+    MyLogUtils.logDebug(
+        'mPrinterSettingsDataCustomer ${jsonEncode(mPrinterSettingsDataCustomer)}');
+    MyLogUtils.logDebug(
+        'mPrinterSettingsDataKitchen ${jsonEncode(mPrinterSettingsDataKitchen)}');
+  }
+
   RxList<TaxData> taxData = <TaxData>[].obs;
   Rxn<ConfigurationResponse> mConfigurationResponse =
       Rxn<ConfigurationResponse>();
+
   // String orderIDPrefixCode = "";
-  Rxn<RestaurantData> mRestaurantData=    Rxn<RestaurantData>();
+  Rxn<RestaurantData> mRestaurantData = Rxn<RestaurantData>();
 
   getTexList() async {
     mConfigurationResponse.value =
         await configurationLocalApi.getConfigurationResponse() ??
             ConfigurationResponse();
 
-    mRestaurantData.value = mConfigurationResponse.value?.configurationData
-            ?.restaurantData?.first;
+    mRestaurantData.value =
+        mConfigurationResponse.value?.configurationData?.restaurantData?.first;
 
     taxData.clear();
     taxData
@@ -301,16 +337,17 @@ class DashboardScreenController extends GetxController {
   }
 
   ///onSync
-  fastTimeSync() {
-    getCurrencyData();
+  fastTimeSync() async{
     if (WebConstants.isFastTimeLogin) {
       WebConstants.isFastTimeLogin = false;
       unawaited(DownloadDataViewModel().startDownloading((value) {
         sDownloadText.value = value;
         sDownloadText.refresh();
-      }, () {
+      }, () async {
         sDownloadText.value = '';
         sDownloadText.refresh();
+        await getCurrencyData();
+        await getPrinterSettingsData();
         if (onUpdateDate.value != null) {
           onUpdateDate.value!();
         }
@@ -326,6 +363,9 @@ class DashboardScreenController extends GetxController {
         sDownloadText.value = '';
         sDownloadText.refresh();
       }, DownloadDataMenu.values, onlyLatestChange: false));
+    } else {
+      await getCurrencyData();
+      await getPrinterSettingsData();
     }
   }
 
@@ -373,9 +413,11 @@ class DashboardScreenController extends GetxController {
                   sDownloadText.value = value;
                   sDownloadText.refresh();
                 },
-                onCompleted: () {
+                onCompleted: () async{
                   sDownloadText.value = '';
                   sDownloadText.refresh();
+                  await getCurrencyData();
+                  await getPrinterSettingsData();
                   getTexList();
                   if (onUpdateDate.value != null) {
                     onUpdateDate.value!();

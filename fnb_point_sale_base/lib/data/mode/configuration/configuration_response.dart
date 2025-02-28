@@ -63,6 +63,7 @@ class ConfigurationData {
     List<CurrencyData>? currencyData,
     List<TaxData>? taxData,
     List<LoggedInUserDetails>? loggedInUserDetails,
+    List<PrinterSettingsData>? printerSettingsData,
     List<CounterData>? counterData,}) {
     _restaurantData = restaurantData;
     _branchData = branchData;
@@ -70,6 +71,7 @@ class ConfigurationData {
     _taxData = taxData;
     _counterData = counterData;
     _loggedInUserDetails = loggedInUserDetails;
+    _printerSettingsData = printerSettingsData;
   }
 
   ConfigurationData.fromJson(dynamic json) {
@@ -103,6 +105,12 @@ class ConfigurationData {
         _loggedInUserDetails?.add(LoggedInUserDetails.fromJson(v));
       });
     }
+    if (json['PrinterSettingsData'] != null) {
+      _printerSettingsData = [];
+      json['PrinterSettingsData'].forEach((v) {
+        _printerSettingsData?.add(PrinterSettingsData.fromJson(v));
+      });
+    }
     if (json['CounterData'] != null) {
       _counterData = [];
       json['CounterData'].forEach((v) {
@@ -117,6 +125,7 @@ class ConfigurationData {
   List<TaxData>? _taxData;
   List<CounterData>? _counterData;
   List<LoggedInUserDetails>? _loggedInUserDetails;
+  List<PrinterSettingsData>? _printerSettingsData;
 
   List<RestaurantData>? get restaurantData => _restaurantData;
 
@@ -127,6 +136,8 @@ class ConfigurationData {
   List<TaxData>? get taxData => _taxData;
 
   List<LoggedInUserDetails>? get loggedInUserDetails => _loggedInUserDetails;
+
+  List<PrinterSettingsData>? get printerSettingsData => _printerSettingsData;
 
   List<CounterData>? get counterData => _counterData;
 
@@ -146,6 +157,9 @@ class ConfigurationData {
     }
     if (_loggedInUserDetails != null) {
       map['LoggedInUserDetails'] = _loggedInUserDetails?.map((v) => v.toJson()).toList();
+    }
+    if (_printerSettingsData != null) {
+      map['PrinterSettingsData'] = _printerSettingsData?.map((v) => v.toJson()).toList();
     }
     if (_counterData != null) {
       map['CounterData'] = _counterData?.map((v) => v.toJson()).toList();
@@ -464,6 +478,162 @@ class RestaurantData {
     map['TermsAndConditions'] = _termsAndConditions;
     map['OrderIDPrefixCode'] = _orderIDPrefixCode;
     map['TagLine'] = _tagLine;
+    return map;
+  }
+
+}
+
+/// PrintType : "K"
+/// PrintTypeText : "Kitchen"
+/// PrintCopies : 2
+/// EnableBranchName : false
+/// EnableBranchAddress : false
+/// EnableOrderTrackingID : true
+/// EnableTaxInfo : false
+/// EnableDateTime : true
+/// EnableLogo : false
+/// EnableHeader : false
+/// EnableFooter : false
+/// EnableTitleText : false
+/// EnableCustomText : false
+/// CustomTitleText : ""
+/// CustomHeaderText : ""
+/// CustomFooterText : ""
+/// CustomMessageText : ""
+/// EnableAdditionalNotes : true
+/// EnableItemWiseNotes : true
+/// EnablePackagingInfo : true
+
+class PrinterSettingsData {
+  PrinterSettingsData({
+    String? printType,
+    String? printTypeText,
+    int? printCopies,
+    bool? enableBranchName,
+    bool? enableBranchAddress,
+    bool? enableOrderTrackingID,
+    bool? enableTaxInfo,
+    bool? enableDateTime,
+    bool? enableLogo,
+    bool? enableHeader,
+    bool? enableFooter,
+    bool? enableTitleText,
+    bool? enableCustomText,
+    String? customTitleText,
+    String? customHeaderText,
+    String? customFooterText,
+    String? customMessageText,
+    bool? enableAdditionalNotes,
+    bool? enableItemWiseNotes,
+    bool? enablePackagingInfo,}){
+    _printType = printType;
+    _printTypeText = printTypeText;
+    _printCopies = printCopies;
+    _enableBranchName = enableBranchName;
+    _enableBranchAddress = enableBranchAddress;
+    _enableOrderTrackingID = enableOrderTrackingID;
+    _enableTaxInfo = enableTaxInfo;
+    _enableDateTime = enableDateTime;
+    _enableLogo = enableLogo;
+    _enableHeader = enableHeader;
+    _enableFooter = enableFooter;
+    _enableTitleText = enableTitleText;
+    _enableCustomText = enableCustomText;
+    _customTitleText = customTitleText;
+    _customHeaderText = customHeaderText;
+    _customFooterText = customFooterText;
+    _customMessageText = customMessageText;
+    _enableAdditionalNotes = enableAdditionalNotes;
+    _enableItemWiseNotes = enableItemWiseNotes;
+    _enablePackagingInfo = enablePackagingInfo;
+  }
+
+  PrinterSettingsData.fromJson(dynamic json) {
+    _printType = json['PrintType'];
+    _printTypeText = json['PrintTypeText'];
+    _printCopies = json['PrintCopies'];
+    _enableBranchName = json['EnableBranchName'];
+    _enableBranchAddress = json['EnableBranchAddress'];
+    _enableOrderTrackingID = json['EnableOrderTrackingID'];
+    _enableTaxInfo = json['EnableTaxInfo'];
+    _enableDateTime = json['EnableDateTime'];
+    _enableLogo = json['EnableLogo'];
+    _enableHeader = json['EnableHeader'];
+    _enableFooter = json['EnableFooter'];
+    _enableTitleText = json['EnableTitleText'];
+    _enableCustomText = json['EnableCustomText'];
+    _customTitleText = json['CustomTitleText'];
+    _customHeaderText = json['CustomHeaderText'];
+    _customFooterText = json['CustomFooterText'];
+    _customMessageText = json['CustomMessageText'];
+    _enableAdditionalNotes = json['EnableAdditionalNotes'];
+    _enableItemWiseNotes = json['EnableItemWiseNotes'];
+    _enablePackagingInfo = json['EnablePackagingInfo'];
+  }
+  String? _printType;
+  String? _printTypeText;
+  int? _printCopies;
+  bool? _enableBranchName;
+  bool? _enableBranchAddress;
+  bool? _enableOrderTrackingID;
+  bool? _enableTaxInfo;
+  bool? _enableDateTime;
+  bool? _enableLogo;
+  bool? _enableHeader;
+  bool? _enableFooter;
+  bool? _enableTitleText;
+  bool? _enableCustomText;
+  String? _customTitleText;
+  String? _customHeaderText;
+  String? _customFooterText;
+  String? _customMessageText;
+  bool? _enableAdditionalNotes;
+  bool? _enableItemWiseNotes;
+  bool? _enablePackagingInfo;
+
+  String? get printType => _printType;
+  String? get printTypeText => _printTypeText;
+  int? get printCopies => _printCopies;
+  bool? get enableBranchName => _enableBranchName;
+  bool? get enableBranchAddress => _enableBranchAddress;
+  bool? get enableOrderTrackingID => _enableOrderTrackingID;
+  bool? get enableTaxInfo => _enableTaxInfo;
+  bool? get enableDateTime => _enableDateTime;
+  bool? get enableLogo => _enableLogo;
+  bool? get enableHeader => _enableHeader;
+  bool? get enableFooter => _enableFooter;
+  bool? get enableTitleText => _enableTitleText;
+  bool? get enableCustomText => _enableCustomText;
+  String? get customTitleText => _customTitleText;
+  String? get customHeaderText => _customHeaderText;
+  String? get customFooterText => _customFooterText;
+  String? get customMessageText => _customMessageText;
+  bool? get enableAdditionalNotes => _enableAdditionalNotes;
+  bool? get enableItemWiseNotes => _enableItemWiseNotes;
+  bool? get enablePackagingInfo => _enablePackagingInfo;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['PrintType'] = _printType;
+    map['PrintTypeText'] = _printTypeText;
+    map['PrintCopies'] = _printCopies;
+    map['EnableBranchName'] = _enableBranchName;
+    map['EnableBranchAddress'] = _enableBranchAddress;
+    map['EnableOrderTrackingID'] = _enableOrderTrackingID;
+    map['EnableTaxInfo'] = _enableTaxInfo;
+    map['EnableDateTime'] = _enableDateTime;
+    map['EnableLogo'] = _enableLogo;
+    map['EnableHeader'] = _enableHeader;
+    map['EnableFooter'] = _enableFooter;
+    map['EnableTitleText'] = _enableTitleText;
+    map['EnableCustomText'] = _enableCustomText;
+    map['CustomTitleText'] = _customTitleText;
+    map['CustomHeaderText'] = _customHeaderText;
+    map['CustomFooterText'] = _customFooterText;
+    map['CustomMessageText'] = _customMessageText;
+    map['EnableAdditionalNotes'] = _enableAdditionalNotes;
+    map['EnableItemWiseNotes'] = _enableItemWiseNotes;
+    map['EnablePackagingInfo'] = _enablePackagingInfo;
     return map;
   }
 

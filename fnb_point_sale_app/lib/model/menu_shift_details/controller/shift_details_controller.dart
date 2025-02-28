@@ -26,6 +26,8 @@ import 'package:get/get.dart';
 
 import '../../../common_view/logout_expired.dart';
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
+import '../../hold_sales/controller/hold_sales_controller.dart';
+import '../../hold_sales/view/hold_sales_screen.dart';
 import '../view/details/controller/details_screen_controller.dart';
 import '../view/open_cash_drawer/controller/open_cash_drawer_screen_controller.dart';
 
@@ -58,9 +60,11 @@ class ShiftDetailsController extends GetxController {
 
   onDeleteHoldSale() {
     mDashboardScreenController.onUpdate(() async {}, updateHoldSale: () async {
-      sMessage.value = "Loading...";
-      sMessage.refresh();
-      postShiftDetailsApiCall();
+      if (Get.isRegistered<ShiftDetailsController>()) {
+        sMessage.value = "Loading...";
+        sMessage.refresh();
+        postShiftDetailsApiCall();
+      }
     });
   }
 
@@ -106,7 +110,13 @@ class ShiftDetailsController extends GetxController {
               mShiftDetailsResponse.value.data?.hasPendingPayments ?? false;
           if (isShiftClose.value) {
             sMessage.value =
-                "Please complete your sale then you can go for shift close";
+                "Please ensure all the tables are cleared and/or no outstanding orders before performing the shift close.";
+            AppAlert.showCustomDialogOk(Get.context!, 'Alert',
+                'Please ensure all the tables are cleared and/or no outstanding orders before performing the shift close.',
+                onCall: () {
+              // mDashboardScreenController.selectMenu.value = 2;
+              // mDashboardScreenController.deleteController();
+            });
           }
           // else if ((mPlaceOrderSaleModel.value?.mOrderPlace ?? [])
           //     .isNotEmpty) {
@@ -118,6 +128,22 @@ class ShiftDetailsController extends GetxController {
               0) {
             sMessage.value =
                 "Please clear all hold sale then you can go for shift close";
+            AppAlert.showCustomDialogOk(Get.context!, 'Alert',
+                'Please clear all hold sale then you can go for shift close',
+                onCall: () async {
+              // await AppAlert.showView(Get.context!, const HoldSalesScreen(),
+              //     barrierDismissible: true);
+              // bool isCancel = false;
+              // if (Get.isRegistered<HoldSalesController>()) {
+              //   isCancel = Get.find<HoldSalesController>().cancel.value;
+              //   Get.delete<HoldSalesController>();
+              // }
+              // if (!isCancel) {
+              //   sMessage.value = "Loading...";
+              //   sMessage.refresh();
+              //   postShiftDetailsApiCall();
+              // }
+            });
           } else {
             sMessage.value = "";
             sMessage.refresh();
@@ -211,15 +237,17 @@ class ShiftDetailsController extends GetxController {
           mCashCounterList.add(mCashCounter);
         }
       }
-      if (!isCheckAmount.value && reasonController.value.text.isEmpty) {
-        AppAlert.showSnackBar(Get.context!,
-            'cash payment not match. Please check cash from your cash drawer or put your reason');
-      } else {
-        closeBalanceApiCall(amount, mCashCounterList);
-      }
-    } else {
-      AppAlert.showSnackBar(Get.context!, 'please select the calculate amount');
     }
+    if (!isCheckAmount.value && reasonController.value.text.isEmpty) {
+      AppAlert.showSnackBar(Get.context!,
+          'cash payment not match. Please check cash from your cash drawer or put your reason');
+    } else {
+      closeBalanceApiCall(amount, mCashCounterList);
+    }
+    // }
+    // else {
+    //   AppAlert.showSnackBar(Get.context!, 'please select the calculate amount');
+    // }
   }
 
   ///closeBalanceApiCall
@@ -261,6 +289,7 @@ class ShiftDetailsController extends GetxController {
                         mShiftDetailsResponse.value.data?.cashPayment ?? 0) -
                     getDoubleValue(totalCashCollected.value))
                 .toStringAsFixed(2));
+
         ///print
         // await onPrintShiftClose(amount, mClosingBalanceRequest,mCashModelList);
         WebResponseSuccess mWebResponseSuccess =
@@ -270,8 +299,8 @@ class ShiftDetailsController extends GetxController {
               Get.context!, mWebResponseSuccess.statusMessage ?? '');
 
           ///print
-          await onPrintShiftClose(amount, mClosingBalanceRequest,mCashModelList);
-
+          await onPrintShiftClose(
+              amount, mClosingBalanceRequest, mCashModelList);
 
           ///open counter
           openCounter();
@@ -286,17 +315,19 @@ class ShiftDetailsController extends GetxController {
     });
   }
 
-  void sPrintOpeningBalance() async{
+  void sPrintOpeningBalance() async {
     // await onPrintShiftClose("0.0", ClosingBalanceRequest(),mCashModelList);
-    await onPrintShiftClose("0.0", ClosingBalanceRequest(),[]);
+    await onPrintShiftClose("0.0", ClosingBalanceRequest(), []);
   }
 
-  onPrintShiftClose(
-      String amount, ClosingBalanceRequest mClosingBalanceRequest,List<CashModel> mCashModelList) async {
+  onPrintShiftClose(String amount, ClosingBalanceRequest mClosingBalanceRequest,
+      List<CashModel> mCashModelList) async {
     final myPrinterService = locator.get<MyPrinterService>();
-    await myPrinterService.shiftDetails(amount, mClosingBalanceRequest,
-        mCashModelList, mConfigurationResponse.value,mShiftDetailsResponse.value);
+    await myPrinterService.shiftDetails(
+        amount,
+        mClosingBalanceRequest,
+        mCashModelList,
+        mConfigurationResponse.value,
+        mShiftDetailsResponse.value);
   }
-
-
 }

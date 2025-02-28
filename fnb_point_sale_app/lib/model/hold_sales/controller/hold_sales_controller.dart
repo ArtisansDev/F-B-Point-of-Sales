@@ -13,6 +13,7 @@ class HoldSalesController extends GetxController {
       Get.find<DashboardScreenController>();
   Rxn<HoldSaleModel> mHoldSaleModel = Rxn<HoldSaleModel>();
   var holdSaleLocalApi = locator.get<HoldSaleLocalApi>();
+  RxBool cancel = false.obs;
   getAllHoldSale() async {
     mHoldSaleModel.value =
         await holdSaleLocalApi.getAllHoldSale() ?? HoldSaleModel();

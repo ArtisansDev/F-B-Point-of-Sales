@@ -33,7 +33,6 @@ class OpenCounterController extends GetxController {
   Rx<TextEditingController> openCounterController = TextEditingController().obs;
 
   OpenCounterController() {
-    openCounterController.value.text = "";
     getPackageInfo();
   }
 
