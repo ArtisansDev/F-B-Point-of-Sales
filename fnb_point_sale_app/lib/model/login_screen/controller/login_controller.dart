@@ -31,6 +31,7 @@ import '../../../routes/route_constants.dart';
 class LoginScreenController extends GetxController {
   Rx<TextEditingController> userNameController = TextEditingController().obs;
   Rx<TextEditingController> passwordController = TextEditingController().obs;
+  RxBool hidePassword = true.obs;
   RxBool isLogin = true.obs;
 
   LoginScreenController() {

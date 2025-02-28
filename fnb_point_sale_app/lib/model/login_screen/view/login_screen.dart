@@ -69,7 +69,8 @@ class LoginScreen extends GetView<LoginScreenController> {
                             ),
                             Container(
                               width: 30.w,
-                              margin: EdgeInsets.only(top: 10.sp,bottom: 10.sp),
+                              margin:
+                                  EdgeInsets.only(top: 10.sp, bottom: 10.sp),
                               alignment: Alignment.center,
                               child: Text(
                                 'Elevated Dining.',
@@ -93,10 +94,14 @@ class LoginScreen extends GetView<LoginScreenController> {
                         child: SingleChildScrollView(
                           child: Container(
                             width: 30.w,
-                            padding: EdgeInsets.only(top:14.sp,bottom:14.sp,left: 19.sp,right: 19.sp),
+                            padding: EdgeInsets.only(
+                                top: 14.sp,
+                                bottom: 14.sp,
+                                left: 19.sp,
+                                right: 19.sp),
                             decoration: BoxDecoration(
-                              color:
-                              ColorConstants.cAppButtonColour.withOpacity(0.50),
+                              color: ColorConstants.cAppButtonColour
+                                  .withOpacity(0.50),
                               borderRadius: BorderRadius.circular(11.sp),
                               // Rounded corners
                               boxShadow: [
@@ -120,7 +125,8 @@ class LoginScreen extends GetView<LoginScreenController> {
                                 Text(
                                   'Welcome Back',
                                   style: getText600(
-                                      colors: ColorConstants.white, size: 14.sp),
+                                      colors: ColorConstants.white,
+                                      size: 14.sp),
                                 ),
                                 SizedBox(
                                   height: 18.sp,
@@ -145,17 +151,18 @@ class LoginScreen extends GetView<LoginScreenController> {
                                   ),
                                   child: TextInputWidget(
                                     placeHolder: sUsername.tr,
-                                    controller: controller.userNameController.value,
+                                    controller:
+                                        controller.userNameController.value,
                                     errorText: null,
                                     textInputType: TextInputType.emailAddress,
                                     hintText: sUsernameHint.tr,
                                     showFloatingLabel: false,
                                     prefixIcon: Icons.person_rounded,
                                     topPadding: 5.sp,
-
                                     onFilteringTextInputFormatter: [
                                       FilteringTextInputFormatter.allow(RegExp(
-                                          AppUtilConstants.patternEmailStringAtDot)),
+                                          AppUtilConstants
+                                              .patternEmailStringAtDot)),
                                     ],
                                   ),
                                 ),
@@ -183,21 +190,33 @@ class LoginScreen extends GetView<LoginScreenController> {
                                     child: TextInputWidget(
                                         placeHolder: sPassword.tr,
                                         controller:
-                                        controller.passwordController.value,
+                                            controller.passwordController.value,
                                         errorText: null,
                                         textInputType: TextInputType.text,
                                         hintText: sPasswordHint.tr,
                                         showFloatingLabel: false,
                                         prefixIcon: Icons.password,
+                                        suffixIcon:
+                                            controller.hidePassword.value
+                                                ? Icons.visibility
+                                                : Icons.visibility_off,
+                                        onClick: (value) {
+                                          if (value == "suffixIcon") {
+                                            controller.hidePassword.value =
+                                                !controller.hidePassword.value;
+                                            controller.hidePassword.refresh();
+                                          }
+                                        },
                                         topPadding: 5.sp,
-                                        hidePassword: true)),
+                                        hidePassword:
+                                            controller.hidePassword.value)),
                                 SizedBox(
                                   height: 15.sp,
                                 ),
                                 rectangleCornerButtonText600(
                                   sLogin.tr,
                                   textSize: 12.5.sp,
-                                      () {
+                                  () {
                                     controller.isLoginCheck();
                                   },
                                 ),
@@ -220,13 +239,12 @@ class LoginScreen extends GetView<LoginScreenController> {
                   GestureDetector(
                     onTap: () {
                       controller.logOutConfiguration();
-
                     },
                     child: Container(
                       width: 22.5.w,
                       height: 4.5.h,
                       alignment: Alignment.center,
-                      margin: EdgeInsets.only(top:18.sp,right:18.sp),
+                      margin: EdgeInsets.only(top: 18.sp, right: 18.sp),
                       padding: EdgeInsets.only(left: 13.sp, right: 13.sp),
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -239,7 +257,8 @@ class LoginScreen extends GetView<LoginScreenController> {
                           Text(
                             'Logout & Clear Configuration',
                             style: getText500(
-                                size: 12.5.sp, colors: ColorConstants.cAppColors),
+                                size: 12.5.sp,
+                                colors: ColorConstants.cAppColors),
                           ),
                           Icon(
                             Icons.logout,
@@ -251,12 +270,9 @@ class LoginScreen extends GetView<LoginScreenController> {
                     ),
                   )
                 ],
-              )
-
-          ),
+              )),
         ],
-      )
-      ,
+      ),
     );
   }
 }
