@@ -20,11 +20,14 @@ mixin MyPrinterService {
       OrderPlace mOrderPlace, List<CartItem> cartItemKot,
       PrinterSettingsData? mPrinterSettingsData);
 
+  ///payment
   Future<bool> saleOrderPayment(OrderDetailList mOrderDetailList,
-      OrderPlace mOrderPlace);
+      OrderPlace mOrderPlace,
+      PrinterSettingsData? mPrinterSettingsData);
 
+  ///payment
   Future<bool> saleAfterPayment(OrderDetailList mOrderDetailList,
-      OrderHistoryData mOrderPlace);
+      OrderHistoryData mOrderPlace, PrinterSettingsData? mPrinterSettingsData);
 
   Future<bool> salePayment(OrderHistoryData mOrderDetailList);
 

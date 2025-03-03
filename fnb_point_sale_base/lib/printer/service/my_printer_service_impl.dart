@@ -37,16 +37,21 @@ class MyPrinterServiceImpl with MyPrinterService {
         mOrderDetailList, mOrderPlace, cartItemKot, mPrinterSettingsData);
   }
 
+  ///payment
   @override
-  Future<bool> saleOrderPayment(
-      OrderDetailList mOrderDetailList, OrderPlace mOrderPlace) async {
-    return await printOrderPayment(mOrderDetailList, mOrderPlace);
+  Future<bool> saleOrderPayment(OrderDetailList mOrderDetailList,
+      OrderPlace mOrderPlace, PrinterSettingsData? mPrinterSettingsData) async {
+    return await printOrderPayment(
+        mOrderDetailList, mOrderPlace, mPrinterSettingsData);
   }
 
+  ///payment
   @override
   Future<bool> saleAfterPayment(
-      OrderDetailList mOrderDetailList, OrderHistoryData mOrderPlace) async {
-    return await printAftrePayment(mOrderDetailList, mOrderPlace);
+      OrderDetailList mOrderDetailList,
+      OrderHistoryData mOrderPlace,
+      PrinterSettingsData? mPrinterSettingsData) async {
+    return await printAftrePayment(mOrderDetailList, mOrderPlace,mPrinterSettingsData);
   }
 
   @override

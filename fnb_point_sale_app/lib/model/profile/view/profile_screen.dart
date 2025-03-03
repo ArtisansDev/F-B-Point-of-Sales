@@ -21,8 +21,8 @@ class ProfileScreen extends GetView<ProfileController> {
         onVisibilityGained: () {},
         onVisibilityLost: () {},
         child: Obx(() => Container(
-              height: 58.h,
-              width: 35.w,
+              height: 65.h,
+              width: 40.w,
               alignment: Alignment.topCenter,
               decoration: BoxDecoration(
                 color: ColorConstants.white,
@@ -249,15 +249,10 @@ class ProfileScreen extends GetView<ProfileController> {
                       width: 40.w,
                       alignment: Alignment.centerLeft,
                       padding:
-                      EdgeInsets.only(top: 5.sp, left: 14.sp, right: 14.sp),
+                          EdgeInsets.only(top: 5.sp, left: 14.sp, right: 14.sp),
                       child: Text(
-                        controller
-                            .mConfigurationResponse
-                            .value
-                            .configurationData
-                            ?.branchData
-                            ?.first
-                            .email ??
+                        controller.mConfigurationResponse.value
+                                .configurationData?.branchData?.first.email ??
                             '',
                         style: getText500(
                           size: 11.8.sp,
@@ -268,27 +263,47 @@ class ProfileScreen extends GetView<ProfileController> {
                       width: 40.w,
                       alignment: Alignment.centerLeft,
                       padding:
-                      EdgeInsets.only(top: 5.sp, left: 14.sp, right: 14.sp),
+                          EdgeInsets.only(top: 5.sp, left: 14.sp, right: 14.sp),
                       child: Text(
                         controller
-                            .mConfigurationResponse
-                            .value
-                            .configurationData
-                            ?.branchData
-                            ?.first
-                            .mobileNumber ??
+                                .mConfigurationResponse
+                                .value
+                                .configurationData
+                                ?.branchData
+                                ?.first
+                                .mobileNumber ??
                             '',
                         style: getText500(
                           size: 11.8.sp,
                           colors: ColorConstants.appTextSalesHader,
                         ),
                       )),
+                  Container(
+                      width: 40.w,
+                      alignment: Alignment.centerLeft,
+                      padding:
+                          EdgeInsets.only(top: 5.sp, left: 14.sp, right: 14.sp),
+                      child: Text(
+                        controller
+                                .mConfigurationResponse
+                                .value
+                                .configurationData
+                                ?.branchData
+                                ?.first
+                                .branchAddress ??
+                            '',
+                        style: getText500(
+                          size: 11.8.sp,
+                          colors: ColorConstants.appTextSalesHader,
+                        ),
+                      )),
+
                   ///counter
                   Container(
                       width: 40.w,
                       alignment: Alignment.centerLeft,
                       padding:
-                      EdgeInsets.only(top: 8.sp, left: 14.sp, right: 14.sp),
+                          EdgeInsets.only(top: 8.sp, left: 14.sp, right: 14.sp),
                       child: Text(
                         'Counter Details',
                         style: getText600(
@@ -321,7 +336,7 @@ class ProfileScreen extends GetView<ProfileController> {
                   ///button
                   Container(
                       margin: EdgeInsets.only(
-                          left: 25.sp, right: 25.sp, top: 12.sp, bottom: 13.sp),
+                          left: 35.sp, right: 35.sp, top: 12.sp, bottom: 13.sp),
                       child: rectangleCornerButtonText600(
                         height: 19.5.sp,
                         textSize: 11.7.sp,

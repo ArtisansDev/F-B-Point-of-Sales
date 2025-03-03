@@ -33,6 +33,13 @@ Future<bool> printPlaceOrder(
                   .first
                   .branchName ??
               '';
+  String branchAddress =
+      (mConfigurationResponse.configurationData?.branchData ?? []).isEmpty
+          ? ""
+          : (mConfigurationResponse.configurationData?.branchData ?? [])
+                  .first
+                  .branchAddress ??
+              '';
   List<pw.Widget> widgets = List.empty(growable: true);
 
   if (mPrinterSettingsData == null) {
@@ -127,11 +134,11 @@ Future<bool> printPlaceOrder(
       widgets.add(pw.Center(
           child: pw.Text(branchName, style: getBoldTextStyleMedium())));
       widgets.add(pw.Container(height: 4));
-      // if ((mPrinterSettingsData.enableBranchAddress ?? false)){
-      //   widgets.add(
-      //       pw.Center(child: pw.Text(branchName, style: getBoldTextStyleMedium())));
-      //   widgets.add(pw.Container(height: 4));
-      // }
+      if ((mPrinterSettingsData.enableBranchAddress ?? false)){
+        widgets.add(
+            pw.Center(child: pw.Text(branchAddress,textAlign: pw.TextAlign.center, style: getBoldTextStyle())));
+        widgets.add(pw.Container(height: 4));
+      }
       widgets.add(mySeparator());
       widgets.add(pw.Container(height: 4));
     }
@@ -165,6 +172,7 @@ Future<bool> printPlaceOrder(
         (mPrinterSettingsData.customHeaderText ?? '').isNotEmpty) {
       widgets.add(pw.Center(
           child: pw.Text((mPrinterSettingsData.customHeaderText ?? ''),
+              textAlign: pw.TextAlign.center,
               style: getBoldTextStyle())));
       widgets.add(pw.Container(height: 4));
       widgets.add(mySeparator());
@@ -221,6 +229,7 @@ Future<bool> printPlaceOrder(
         (mPrinterSettingsData.customFooterText ?? '').isNotEmpty) {
       widgets.add(pw.Center(
           child: pw.Text((mPrinterSettingsData.customFooterText ?? ''),
+              textAlign: pw.TextAlign.center,
               style: getBoldTextStyle())));
     }
   }

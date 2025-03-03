@@ -792,7 +792,22 @@ class SelectedOrderController extends HomeBaseController {
       }
     }
     if (isPayment) {
-      await myPrinterService.saleOrderPayment(mOrderDetailList, mOrderPlace);
+
+      if (mDashboardScreenController.mPrinterSettingsDataCustomer.printCopies ==
+          null) {
+        await myPrinterService.saleOrderPayment(mOrderDetailList, mOrderPlace,null);
+        await myPrinterService.saleOrderPayment(mOrderDetailList, mOrderPlace,null);
+      } else {
+        for (int i = 0;
+            i <
+                (mDashboardScreenController
+                        .mPrinterSettingsDataCustomer.printCopies ??
+                    0);
+            i++) {
+          await myPrinterService.saleOrderPayment(mOrderDetailList, mOrderPlace,mDashboardScreenController.mPrinterSettingsDataCustomer);
+        }
+      }
+
     }
   }
 

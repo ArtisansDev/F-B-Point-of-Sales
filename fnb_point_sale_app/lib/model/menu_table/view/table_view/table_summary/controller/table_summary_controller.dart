@@ -162,8 +162,8 @@ class TableSummaryController extends GetxController {
   }
 
   printOrderPayment(OrderDetailList mOrderDetailList,OrderPlace mOrderPlace) async {
-    final myPrinterService = locator.get<MyPrinterService>();
-      await myPrinterService.saleOrderPayment(mOrderDetailList, mOrderPlace);
+    // final myPrinterService = locator.get<MyPrinterService>();
+    //   await myPrinterService.saleOrderPayment(mOrderDetailList, mOrderPlace);
   }
 
 }

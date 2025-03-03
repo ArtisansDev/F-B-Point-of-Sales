@@ -11,9 +11,10 @@ import '../../data/mode/configuration/configuration_response.dart';
 import '../../data/mode/order_place/process_multiple_orders_request.dart';
 import '../../data/mode/product/get_all_modifier/get_all_modifier_response.dart';
 import '../../locator.dart';
+import '../../utils/date_time_utils.dart';
 
 Future<bool> printOrderPayment(OrderDetailList mOrderDetailList,
-    OrderPlace mOrderPlace) async {
+    OrderPlace mOrderPlace,PrinterSettingsData? mPrinterSettingsData) async {
   CurrencyData mCurrencyData = CurrencyData();
 
   var configurationLocalApi = locator.get<ConfigurationLocalApi>();
@@ -33,100 +34,265 @@ Future<bool> printOrderPayment(OrderDetailList mOrderDetailList,
       .first
       .branchName ??
       '';
+
+  String branchAddress =
+  (mConfigurationResponse.configurationData?.branchData ?? []).isEmpty
+      ? ""
+      : (mConfigurationResponse.configurationData?.branchData ?? [])
+      .first
+      .branchAddress ??
+      '';
   List<pw.Widget> widgets = List.empty(growable: true);
-  widgets.add(pw.Center(
-      child: pw.Text('Payment Receipt', style: getBoldTextStyleMedium())));
-  widgets.add(pw.Container(height: 4));
-  widgets.add(
-      pw.Center(child: pw.Text(branchName, style: getBoldTextStyleMedium())));
-  widgets.add(pw.Container(height: 4));
-  widgets.add(mySeparator());
-  widgets.add(pw.Container(height: 4));
-  widgets.add(
-      pw.Center(child: pw.Text('Order Number', style: getBoldTextStyle())));
-  widgets.add(pw.Center(
-      child: pw.Text('${mRestaurantData.orderIDPrefixCode}${mOrderDetailList.trackingOrderID}',
-          style: getNormalTextStyle())));
-  widgets.add(pw.Container(height: 4));
-  widgets.add(mySeparator());
-  widgets.add(pw.Container(height: 4));
 
-  ///table
-  widgets.add(getTableRow(mOrderDetailList));
-
-  ///user details
-  if ((mOrderDetailList.phoneNumber ?? '').isNotEmpty) {
-    widgets.add(getUserDetailsRow(mOrderDetailList));
-  }
-  widgets.add(pw.Container(height: 4));
-  widgets.add(mySeparator());
-  widgets.add(pw.Container(height: 4));
-
-  ///menu order
-  int value = 0;
-  for (OrderMenu element in (mOrderDetailList.orderMenu ?? [])) {
-    CartItem mCartItem = mOrderPlace.cartItem?[value] ?? CartItem();
-    widgets.add(
-        getItemRow(element, mCurrencyData.currencySymbol ?? '', mCartItem));
-    value++;
-  }
-  widgets.add(pw.Container(height: 4));
-  widgets.add(mySeparator());
-  widgets.add(pw.Container(height: 4));
-
-  ///SubTotal
-  widgets.add(
-      getSubTotalRow(mOrderDetailList, mCurrencyData.currencySymbol ?? ''));
-  widgets.add(pw.Container(height: 2));
-
-  ///tax
-  for (OrderTax element in (mOrderDetailList.orderTax ?? [])) {
-    if ((element.taxPercentage ?? 0) > 0) {
-      widgets.add(getTax(element, mCurrencyData.currencySymbol ?? ''));
-      widgets.add(pw.Container(height: 2));
-    }
-  }
-
-  ///Total
-  widgets
-      .add(getTotalRow(mOrderDetailList, mCurrencyData.currencySymbol ?? ''));
-
-  ///Rounding
-  widgets.add(
-      getRoundingRow(mOrderDetailList, mCurrencyData.currencySymbol ?? ''));
-
-  ///Total Pay
-  widgets.add(
-      getTotalPayRow(mOrderDetailList, mCurrencyData.currencySymbol ?? ''));
-  widgets.add(pw.Container(height: 4));
-  widgets.add(mySeparator());
-  widgets.add(pw.Container(height: 4));
-
-  ///payment
-  widgets.add(pw.Container(
-      padding: const pw.EdgeInsets.only(left: 2.0),
-      child: pw.Text('Payment Type', style: getBoldTextStyle())));
-  widgets.add(pw.Container(height: 3));
-  widgets
-      .add(getPaymentRow(mOrderDetailList, mCurrencyData.currencySymbol ?? ''));
-  widgets.add(pw.Container(height: 4));
-  widgets.add(mySeparator());
-  widgets.add(pw.Container(height: 4));
-
-  ///remark
-  if ((mOrderDetailList.additionalNotes ?? "").isNotEmpty) {
-    widgets.add(
-        pw.Center(child: pw.Text('Order Remark', style: getBoldTextStyle())));
+  if(mPrinterSettingsData==null){
     widgets.add(pw.Center(
-        child: pw.Text('${mOrderDetailList.additionalNotes}',
+        child: pw.Text('Payment Receipt', style: getBoldTextStyleMedium())));
+    widgets.add(pw.Container(height: 4));
+    widgets.add(
+        pw.Center(child: pw.Text(branchName, style: getBoldTextStyleMedium())));
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
+    widgets.add(
+        pw.Center(child: pw.Text('Order Number', style: getBoldTextStyle())));
+    widgets.add(pw.Center(
+        child: pw.Text('${mRestaurantData.orderIDPrefixCode}${mOrderDetailList.trackingOrderID}',
             style: getNormalTextStyle())));
     widgets.add(pw.Container(height: 4));
     widgets.add(mySeparator());
     widgets.add(pw.Container(height: 4));
+
+    ///Order Date and Time
+      widgets.add(pw.Center(
+          child: pw.Text('Order Date and Time', style: getBoldTextStyle())));
+      widgets.add(pw.Center(
+          child: pw.Text('${getUTCToLocalDateTime(mOrderDetailList.orderDate.toString())}',
+              style: getNormalTextStyle())));
+      widgets.add(pw.Container(height: 4));
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
+
+    ///table
+    widgets.add(getTableRow(mOrderDetailList));
+
+    ///user details
+    if ((mOrderDetailList.phoneNumber ?? '').isNotEmpty) {
+      widgets.add(getUserDetailsRow(mOrderDetailList));
+    }
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
+
+    ///menu order
+    int value = 0;
+    for (OrderMenu element in (mOrderDetailList.orderMenu ?? [])) {
+      CartItem mCartItem = mOrderPlace.cartItem?[value] ?? CartItem();
+      widgets.add(
+          getItemRow(element, mCurrencyData.currencySymbol ?? '', mCartItem));
+      value++;
+    }
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
+
+    ///SubTotal
+    widgets.add(
+        getSubTotalRow(mOrderDetailList, mCurrencyData.currencySymbol ?? ''));
+    widgets.add(pw.Container(height: 2));
+
+    ///tax
+    for (OrderTax element in (mOrderDetailList.orderTax ?? [])) {
+      if ((element.taxPercentage ?? 0) > 0) {
+        widgets.add(getTax(element, mCurrencyData.currencySymbol ?? ''));
+        widgets.add(pw.Container(height: 2));
+      }
+    }
+
+    ///Total
+    widgets
+        .add(getTotalRow(mOrderDetailList, mCurrencyData.currencySymbol ?? ''));
+
+    ///Rounding
+    widgets.add(
+        getRoundingRow(mOrderDetailList, mCurrencyData.currencySymbol ?? ''));
+
+    ///Total Pay
+    widgets.add(
+        getTotalPayRow(mOrderDetailList, mCurrencyData.currencySymbol ?? ''));
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
+
+    ///payment
+    widgets.add(pw.Container(
+        padding: const pw.EdgeInsets.only(left: 2.0),
+        child: pw.Text('Payment Type', style: getBoldTextStyle())));
+    widgets.add(pw.Container(height: 3));
+    widgets
+        .add(getPaymentRow(mOrderDetailList, mCurrencyData.currencySymbol ?? ''));
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
+
+    ///remark
+    if ((mOrderDetailList.additionalNotes ?? "").isNotEmpty) {
+      widgets.add(
+          pw.Center(child: pw.Text('Order Remark', style: getBoldTextStyle())));
+      widgets.add(pw.Center(
+          child: pw.Text('${mOrderDetailList.additionalNotes}',
+              style: getNormalTextStyle())));
+      widgets.add(pw.Container(height: 4));
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
+    }
+    widgets.add(pw.Center(
+        child:
+        pw.Text(mRestaurantData.tagLine ?? '', style: getBoldTextStyle())));
+  }else {
+    if ((mPrinterSettingsData.enableTitleText ?? false) &&
+        (mPrinterSettingsData.customTitleText ?? '').isNotEmpty) {
+      widgets.add(pw.Center(
+          child: pw.Text((mPrinterSettingsData.customTitleText ?? ''),
+              style: getBoldTextStyleMedium())));
+    } else {
+      widgets.add(pw.Center(
+          child: pw.Text('Payment Receipt', style: getBoldTextStyleMedium())));
+    }
+    widgets.add(pw.Container(height: 4));
+    if ((mPrinterSettingsData.enableBranchName ?? false)) {
+      widgets.add(pw.Center(
+          child: pw.Text(branchName, style: getBoldTextStyleMedium())));
+      widgets.add(pw.Container(height: 4));
+      if ((mPrinterSettingsData.enableBranchAddress ?? false)){
+        widgets.add(
+            pw.Center(child: pw.Text(branchAddress,textAlign: pw.TextAlign.center, style: getBoldTextStyle())));
+        widgets.add(pw.Container(height: 4));
+      }
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
+    }
+
+    if ((mPrinterSettingsData.enableOrderTrackingID ?? false)) {
+      widgets.add(
+          pw.Center(child: pw.Text('Order Number', style: getBoldTextStyle())));
+      widgets.add(pw.Center(
+          child: pw.Text('${mRestaurantData.orderIDPrefixCode}${mOrderDetailList
+              .trackingOrderID}',
+              style: getNormalTextStyle())));
+      widgets.add(pw.Container(height: 4));
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
+    }
+    ///Order Date and Time
+    if ((mPrinterSettingsData.enableDateTime ?? false)) {
+      widgets.add(pw.Center(
+          child: pw.Text('Order Date and Time', style: getBoldTextStyle())));
+      widgets.add(pw.Center(
+          child: pw.Text('${getUTCToLocalDateTime(mOrderDetailList.orderDate.toString())}',
+              style: getNormalTextStyle())));
+      widgets.add(pw.Container(height: 4));
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
+    }
+    ///enableHeader
+    if ((mPrinterSettingsData.enableHeader ?? false) &&
+        (mPrinterSettingsData.customHeaderText ?? '').isNotEmpty) {
+      widgets.add(pw.Center(
+          child: pw.Text((mPrinterSettingsData.customHeaderText ?? ''),
+              textAlign: pw.TextAlign.center,
+              style: getBoldTextStyle())));
+      widgets.add(pw.Container(height: 4));
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
+    }
+
+    ///table
+    widgets.add(getTableRow(mOrderDetailList));
+
+    ///user details
+    if ((mOrderDetailList.phoneNumber ?? '').isNotEmpty) {
+      widgets.add(getUserDetailsRow(mOrderDetailList));
+    }
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
+
+    ///menu order
+    int value = 0;
+    for (OrderMenu element in (mOrderDetailList.orderMenu ?? [])) {
+      CartItem mCartItem = mOrderPlace.cartItem?[value] ?? CartItem();
+      widgets.add(
+          getItemRow(element, mCurrencyData.currencySymbol ?? '', mCartItem));
+      value++;
+    }
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
+
+    ///SubTotal
+    widgets.add(
+        getSubTotalRow(mOrderDetailList, mCurrencyData.currencySymbol ?? ''));
+    widgets.add(pw.Container(height: 2));
+
+    ///tax
+    for (OrderTax element in (mOrderDetailList.orderTax ?? [])) {
+      if ((element.taxPercentage ?? 0) > 0) {
+        widgets.add(getTax(element, mCurrencyData.currencySymbol ?? ''));
+        widgets.add(pw.Container(height: 2));
+      }
+    }
+
+    ///Total
+    widgets
+        .add(getTotalRow(mOrderDetailList, mCurrencyData.currencySymbol ?? ''));
+
+    ///Rounding
+    widgets.add(
+        getRoundingRow(mOrderDetailList, mCurrencyData.currencySymbol ?? ''));
+
+    ///Total Pay
+    widgets.add(
+        getTotalPayRow(mOrderDetailList, mCurrencyData.currencySymbol ?? ''));
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
+
+    ///payment
+    widgets.add(pw.Container(
+        padding: const pw.EdgeInsets.only(left: 2.0),
+        child: pw.Text('Payment Type', style: getBoldTextStyle())));
+    widgets.add(pw.Container(height: 3));
+    widgets
+        .add(getPaymentRow(mOrderDetailList, mCurrencyData.currencySymbol ?? ''));
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
+
+    ///remark
+    if ((mOrderDetailList.additionalNotes ?? "").isNotEmpty) {
+      widgets.add(
+          pw.Center(child: pw.Text('Order Remark', style: getBoldTextStyle())));
+      widgets.add(pw.Center(
+          child: pw.Text('${mOrderDetailList.additionalNotes}',
+              style: getNormalTextStyle())));
+      widgets.add(pw.Container(height: 4));
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
+    }
+
+    ///enableFooter
+    if ((mPrinterSettingsData.enableFooter ?? false) &&
+        (mPrinterSettingsData.customFooterText ?? '').isNotEmpty) {
+      widgets.add(pw.Center(
+          child: pw.Text((mPrinterSettingsData.customFooterText ?? ''),
+              textAlign: pw.TextAlign.center,
+              style: getBoldTextStyle())));
+    }
+    // widgets.add(pw.Center(
+    //     child:
+    //     pw.Text(mRestaurantData.tagLine ?? '', style: getBoldTextStyle())));
   }
-  widgets.add(pw.Center(
-      child:
-      pw.Text(mRestaurantData.tagLine ?? '', style: getBoldTextStyle())));
+
   return printWidgets(widgets, true, false);
 }
 
