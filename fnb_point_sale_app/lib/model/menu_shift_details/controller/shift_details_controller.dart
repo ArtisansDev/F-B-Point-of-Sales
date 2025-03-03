@@ -317,13 +317,13 @@ class ShiftDetailsController extends GetxController {
 
   void sPrintOpeningBalance() async {
     // await onPrintShiftClose("0.0", ClosingBalanceRequest(),mCashModelList);
-    await onPrintShiftClose("0.0", ClosingBalanceRequest(), []);
+    await onPrintShiftClose((mShiftDetailsResponse.value.data?.openingBalance??0.0).toString(), ClosingBalanceRequest(), []);
   }
 
   onPrintShiftClose(String amount, ClosingBalanceRequest mClosingBalanceRequest,
       List<CashModel> mCashModelList) async {
     final myPrinterService = locator.get<MyPrinterService>();
-    await myPrinterService.shiftDetails(
+    await myPrinterService.shiftDetailsOpeningBalance(
         amount,
         mClosingBalanceRequest,
         mCashModelList,

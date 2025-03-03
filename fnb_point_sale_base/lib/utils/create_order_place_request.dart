@@ -87,14 +87,17 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
     debugPrint("\ntax calculation:   ${jsonEncode(mOrderTax)}\n");
     orderTaxList.add(mOrderTax);
   }
-
+  double grandTotal = (mOrderPlace?.grandTotal ?? 0) > 0
+      ? getDoubleValue(mOrderPlace?.grandTotal)
+      : getDoubleValue(mOrderPlace?.totalAmount);
+  double adjustedAmount = getDoubleValue(roundToNearestPossible(grandTotal));
   ///payment
   PaymentResponse mPaymentResponse = PaymentResponse();
   if (printOrderPayment != null) {
     if (printOrderPayment.paymentGatewayNo.toString() == "0") {
       mPaymentResponse = PaymentResponse(
         transactionID: "",
-        paidAmount: getDoubleValue(mOrderPlace?.totalAmount),
+        paidAmount: adjustedAmount,
         paymentGatewayNo: printOrderPayment.paymentGatewayNo,
         paymentStatus: "S",
         responseCode: "200",
@@ -104,7 +107,7 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
     } else if (printOrderPayment.paymentGatewayNo.toString() == "5") {
       mPaymentResponse = PaymentResponse(
           transactionID: "",
-          paidAmount: getDoubleValue(mOrderPlace?.totalAmount),
+          paidAmount: adjustedAmount,
           paymentGatewayNo: printOrderPayment.paymentGatewayNo,
           paymentStatus: "S",
           responseCode: "200",
@@ -115,7 +118,7 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
     } else if (printOrderPayment.paymentGatewayNo.toString() == "6") {
       mPaymentResponse = PaymentResponse(
           transactionID: "",
-          paidAmount: getDoubleValue(mOrderPlace?.totalAmount),
+          paidAmount: adjustedAmount,
           paymentGatewayNo: printOrderPayment.paymentGatewayNo,
           paymentStatus: "S",
           responseCode: "200",
@@ -126,7 +129,7 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
     } else if (printOrderPayment.paymentGatewayNo.toString() == "7") {
       mPaymentResponse = PaymentResponse(
           transactionID: "",
-          paidAmount: getDoubleValue(mOrderPlace?.totalAmount),
+          paidAmount:adjustedAmount,
           paymentGatewayNo: printOrderPayment.paymentGatewayNo,
           paymentStatus: "S",
           responseCode: "200",
@@ -151,10 +154,7 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
 
   /// sUserId
   String sCounterBalanceHistoryIDF = await SharedPrefs().getHistoryID();
-  double grandTotal = (mOrderPlace?.grandTotal ?? 0) > 0
-      ? getDoubleValue(mOrderPlace?.grandTotal)
-      : getDoubleValue(mOrderPlace?.totalAmount);
-  double adjustedAmount = getDoubleValue(roundToNearestPossible(grandTotal));
+
 
   ///OrderPlaceRequest
   OrderDetailList mOrderDetailList = OrderDetailList(

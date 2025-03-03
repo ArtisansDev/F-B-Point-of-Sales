@@ -23,6 +23,7 @@ import '../types/sale_aftre_payment_print.dart';
 import '../types/sale_payment_kot_print.dart';
 import '../types/sale_payment_print.dart';
 import '../types/shift_details_print.dart';
+import '../types/shift_details_print_opening_balance.dart';
 import '../types/test_printing.dart';
 
 class MyPrinterServiceImpl with MyPrinterService {
@@ -63,6 +64,17 @@ class MyPrinterServiceImpl with MyPrinterService {
       ConfigurationResponse mConfigurationResponse,
       ShiftDetailsResponse mShiftDetailsResponse) async {
     return await printShiftClose(amount, mClosingBalanceRequest, mCashModelList,
+        mConfigurationResponse, mShiftDetailsResponse);
+  }
+
+  @override
+  Future<bool> shiftDetailsOpeningBalance(
+      String amount,
+      ClosingBalanceRequest mClosingBalanceRequest,
+      List<CashModel> mCashModelList,
+      ConfigurationResponse mConfigurationResponse,
+      ShiftDetailsResponse mShiftDetailsResponse) async {
+    return await printShiftCloseOpeningBalance(amount, mClosingBalanceRequest, mCashModelList,
         mConfigurationResponse, mShiftDetailsResponse);
   }
 

@@ -37,5 +37,12 @@ mixin MyPrinterService {
       ConfigurationResponse mConfigurationResponse,
       ShiftDetailsResponse mShiftDetailsResponse);
 
+  Future<bool> shiftDetailsOpeningBalance(
+      String amount,
+      ClosingBalanceRequest mClosingBalanceRequest,
+      List<CashModel> mCashModelList,
+      ConfigurationResponse mConfigurationResponse,
+      ShiftDetailsResponse mShiftDetailsResponse);
+
   Future<bool> openCashDrawer();
 }
