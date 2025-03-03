@@ -10,9 +10,13 @@ import '../../data/mode/configuration/configuration_response.dart';
 import '../../data/mode/order_place/process_multiple_orders_request.dart';
 import '../../data/mode/product/get_all_modifier/get_all_modifier_response.dart';
 import '../../locator.dart';
+import '../../utils/date_time_utils.dart';
 
-Future<bool> printPlaceOrder(OrderDetailList mOrderDetailList,
-    OrderPlace mOrderPlace, List<CartItem> cartItemKot) async {
+Future<bool> printPlaceOrder(
+    OrderDetailList mOrderDetailList,
+    OrderPlace mOrderPlace,
+    List<CartItem> cartItemKot,
+    PrinterSettingsData? mPrinterSettingsData) async {
   var configurationLocalApi = locator.get<ConfigurationLocalApi>();
   ConfigurationResponse mConfigurationResponse =
       await configurationLocalApi.getConfigurationResponse() ??
@@ -30,71 +34,197 @@ Future<bool> printPlaceOrder(OrderDetailList mOrderDetailList,
                   .branchName ??
               '';
   List<pw.Widget> widgets = List.empty(growable: true);
-  widgets.add(pw.Center(
-      child: pw.Text('Order Confirmation', style: getBoldTextStyleMedium())));
-  widgets.add(pw.Container(height: 4));
-  widgets.add(
-      pw.Center(child: pw.Text(branchName, style: getBoldTextStyleMedium())));
-  widgets.add(pw.Container(height: 4));
-  widgets.add(mySeparator());
-  widgets.add(pw.Container(height: 4));
-  widgets.add(
-      pw.Center(child: pw.Text('Order Number', style: getBoldTextStyle())));
-  widgets.add(pw.Center(
-      child: pw.Text(
-          '${mRestaurantData.orderIDPrefixCode}${mOrderDetailList.trackingOrderID}',
-          style: getNormalTextStyle())));
-  widgets.add(pw.Container(height: 4));
-  widgets.add(mySeparator());
-  widgets.add(pw.Container(height: 4));
 
-  ///table
-  widgets.add(getTableRow(mOrderDetailList));
-
-  ///user details
-  // if((mOrderDetailList.phoneNumber??'').isNotEmpty) {
-  //   widgets.add(getUserDetailsRow(mOrderDetailList));
-  // }
-
-  widgets.add(pw.Container(height: 4));
-  widgets.add(mySeparator());
-  widgets.add(pw.Container(height: 5));
-
-  ///new order
-  CartItem mCartItem = cartItemKot.firstWhere((element) => element.count > 0,
-      orElse: () => CartItem());
-  if (mCartItem.mMenuItemData != null) {
-    widgets
-        .add(pw.Center(child: pw.Text('New Order', style: getBoldTextStyle())));
-    widgets.add(pw.Container(height: 5));
-  }
-
-  for (CartItem element in cartItemKot) {
-    if (element.count > 0) {
-      widgets.add(getItemRow(element));
-    }
-  }
-  // widgets.add(pw.Container(height: 4));
-
-  ///cancel
-  CartItem mCartItemCancel = cartItemKot
-      .firstWhere((element) => element.count < 0, orElse: () => CartItem());
-  if (mCartItemCancel.mMenuItemData != null) {
+  if (mPrinterSettingsData == null) {
+    widgets.add(pw.Center(
+        child: pw.Text('Order Confirmation', style: getBoldTextStyleMedium())));
+    widgets.add(pw.Container(height: 4));
     widgets.add(
-        pw.Center(child: pw.Text('Cancel Order', style: getBoldTextStyle())));
+        pw.Center(child: pw.Text(branchName, style: getBoldTextStyleMedium())));
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
+    widgets.add(
+        pw.Center(child: pw.Text('Order Number', style: getBoldTextStyle())));
+    widgets.add(pw.Center(
+        child: pw.Text(
+            '${mRestaurantData.orderIDPrefixCode}${mOrderDetailList.trackingOrderID}',
+            style: getNormalTextStyle())));
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
+
+    ///Order Date and Time
+    widgets.add(pw.Center(
+        child: pw.Text('Order Date and Time', style: getBoldTextStyle())));
+    widgets.add(pw.Center(
+        child: pw.Text('${getUTCToLocalDateTime(mOrderDetailList.orderDate.toString())}',
+            style: getNormalTextStyle())));
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
+
+    ///table
+    widgets.add(getTableRow(mOrderDetailList));
+
+    ///user details
+    // if((mOrderDetailList.phoneNumber??'').isNotEmpty) {
+    //   widgets.add(getUserDetailsRow(mOrderDetailList));
+    // }
+
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
     widgets.add(pw.Container(height: 5));
-  }
-  for (CartItem element in cartItemKot) {
-    if (element.count < 0) {
-      widgets.add(getItemRowCancel(element));
+
+    ///new order
+    CartItem mCartItem = cartItemKot.firstWhere((element) => element.count > 0,
+        orElse: () => CartItem());
+    if (mCartItem.mMenuItemData != null) {
+      widgets.add(
+          pw.Center(child: pw.Text('New Order', style: getBoldTextStyle())));
+      widgets.add(pw.Container(height: 5));
+    }
+
+    for (CartItem element in cartItemKot) {
+      if (element.count > 0) {
+        widgets.add(getItemRow(element));
+      }
+    }
+    // widgets.add(pw.Container(height: 4));
+
+    ///cancel
+    CartItem mCartItemCancel = cartItemKot
+        .firstWhere((element) => element.count < 0, orElse: () => CartItem());
+    if (mCartItemCancel.mMenuItemData != null) {
+      widgets.add(
+          pw.Center(child: pw.Text('Cancel Order', style: getBoldTextStyle())));
+      widgets.add(pw.Container(height: 5));
+    }
+    for (CartItem element in cartItemKot) {
+      if (element.count < 0) {
+        widgets.add(getItemRowCancel(element));
+      }
+    }
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
+    // widgets.add(pw.Center(
+    //     child:
+    //         pw.Text(mRestaurantData.tagLine ?? '', style: getBoldTextStyle())));
+  } else {
+    if ((mPrinterSettingsData.enableTitleText ?? false) &&
+        (mPrinterSettingsData.customTitleText ?? '').isNotEmpty) {
+      widgets.add(pw.Center(
+          child: pw.Text((mPrinterSettingsData.customTitleText ?? ''),
+              style: getBoldTextStyleMedium())));
+    } else {
+      widgets.add(pw.Center(
+          child:
+              pw.Text('Order Confirmation', style: getBoldTextStyleMedium())));
+    }
+    widgets.add(pw.Container(height: 4));
+    if ((mPrinterSettingsData.enableBranchName ?? false)) {
+      widgets.add(pw.Center(
+          child: pw.Text(branchName, style: getBoldTextStyleMedium())));
+      widgets.add(pw.Container(height: 4));
+      // if ((mPrinterSettingsData.enableBranchAddress ?? false)){
+      //   widgets.add(
+      //       pw.Center(child: pw.Text(branchName, style: getBoldTextStyleMedium())));
+      //   widgets.add(pw.Container(height: 4));
+      // }
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
+    }
+
+    if ((mPrinterSettingsData.enableOrderTrackingID ?? false)) {
+      widgets.add(
+          pw.Center(child: pw.Text('Order Number', style: getBoldTextStyle())));
+      widgets.add(pw.Center(
+          child: pw.Text(
+              '${mRestaurantData.orderIDPrefixCode}${mOrderDetailList.trackingOrderID}',
+              style: getNormalTextStyle())));
+      widgets.add(pw.Container(height: 4));
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
+    }
+
+    ///Order Date and Time
+    if ((mPrinterSettingsData.enableDateTime ?? false)) {
+      widgets.add(pw.Center(
+          child: pw.Text('Order Date and Time', style: getBoldTextStyle())));
+      widgets.add(pw.Center(
+          child: pw.Text('${getUTCToLocalDateTime(mOrderDetailList.orderDate.toString())}',
+              style: getNormalTextStyle())));
+      widgets.add(pw.Container(height: 4));
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
+    }
+
+    ///enableHeader
+    if ((mPrinterSettingsData.enableHeader ?? false) &&
+        (mPrinterSettingsData.customHeaderText ?? '').isNotEmpty) {
+      widgets.add(pw.Center(
+          child: pw.Text((mPrinterSettingsData.customHeaderText ?? ''),
+              style: getBoldTextStyle())));
+      widgets.add(pw.Container(height: 4));
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
+    }
+
+    ///table
+    widgets.add(getTableRow(mOrderDetailList));
+
+    ///user details
+    // if((mOrderDetailList.phoneNumber??'').isNotEmpty) {
+    //   widgets.add(getUserDetailsRow(mOrderDetailList));
+    // }
+
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 5));
+
+    ///new order
+    CartItem mCartItem = cartItemKot.firstWhere((element) => element.count > 0,
+        orElse: () => CartItem());
+    if (mCartItem.mMenuItemData != null) {
+      widgets.add(
+          pw.Center(child: pw.Text('New Order', style: getBoldTextStyle())));
+      widgets.add(pw.Container(height: 5));
+    }
+
+    for (CartItem element in cartItemKot) {
+      if (element.count > 0) {
+        widgets.add(getItemRow(element));
+      }
+    }
+    // widgets.add(pw.Container(height: 4));
+
+    ///cancel
+    CartItem mCartItemCancel = cartItemKot
+        .firstWhere((element) => element.count < 0, orElse: () => CartItem());
+    if (mCartItemCancel.mMenuItemData != null) {
+      widgets.add(
+          pw.Center(child: pw.Text('Cancel Order', style: getBoldTextStyle())));
+      widgets.add(pw.Container(height: 5));
+    }
+    for (CartItem element in cartItemKot) {
+      if (element.count < 0) {
+        widgets.add(getItemRowCancel(element));
+      }
+    }
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
+
+    ///enableFooter
+    if ((mPrinterSettingsData.enableFooter ?? false) &&
+        (mPrinterSettingsData.customFooterText ?? '').isNotEmpty) {
+      widgets.add(pw.Center(
+          child: pw.Text((mPrinterSettingsData.customFooterText ?? ''),
+              style: getBoldTextStyle())));
     }
   }
-  widgets.add(pw.Container(height: 4));
-  widgets.add(mySeparator());
-  widgets.add(pw.Container(height: 4));
-  // widgets.add(pw.Center(
-  //     child:
-  //         pw.Text(mRestaurantData.tagLine ?? '', style: getBoldTextStyle())));
+
   return printWidgets(widgets, true, false);
 }
 

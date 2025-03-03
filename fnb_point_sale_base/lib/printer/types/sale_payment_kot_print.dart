@@ -8,9 +8,10 @@ import '../../data/mode/configuration/configuration_response.dart';
 import '../../data/mode/order_history/order_history_response.dart';
 import '../../lang/translation_service_key.dart';
 import '../../locator.dart';
+import '../../utils/date_time_utils.dart';
 
 Future<bool> printSalePaymentKot(OrderHistoryData mOrderHistoryData,
-    bool duplicate) async {
+    bool duplicate,PrinterSettingsData? mPrinterSettingsData) async {
   CurrencyData mCurrencyData = CurrencyData();
   var configurationLocalApi = locator.get<ConfigurationLocalApi>();
   ConfigurationResponse mConfigurationResponse =
@@ -31,100 +32,246 @@ Future<bool> printSalePaymentKot(OrderHistoryData mOrderHistoryData,
       '';
 
   List<pw.Widget> widgets = List.empty(growable: true);
-  widgets.add(pw.Center(
-      child: pw.Text('Order Confirmation', style: getBoldTextStyleMedium())));
-  widgets.add(pw.Container(height: 4));
-  widgets.add(
-      pw.Center(child: pw.Text(branchName, style: getBoldTextStyleMedium())));
-  widgets.add(pw.Container(height: 4));
-  widgets.add(mySeparator());
-  widgets.add(pw.Container(height: 4));
-  if (duplicate) {
+
+  if(mPrinterSettingsData==null){
     widgets.add(pw.Center(
-        child: pw.Text('Duplicate Copy',
-            style: getNormalTextStyle())));
-  }
-  widgets.add(
-      pw.Center(child: pw.Text('Order Number', style: getBoldTextStyle())));
-  widgets.add(pw.Center(
-      child: pw.Text('${mRestaurantData.orderIDPrefixCode}${mOrderHistoryData.trackingOrderID}',
-          style: getNormalTextStyle())));
-  widgets.add(pw.Container(height: 4));
-  widgets.add(mySeparator());
-  widgets.add(pw.Container(height: 4));
-
-  ///table
-  widgets.add(getTableRow(mOrderHistoryData));
-  // ///user details
-  // if((mOrderHistoryData.phoneNumber??'').isNotEmpty) {
-  //   widgets.add(getUserDetailsRow(mOrderHistoryData));
-  // }
-  widgets.add(pw.Container(height: 4));
-  widgets.add(mySeparator());
-  widgets.add(pw.Container(height: 4));
-
-  ///menu order
-  for (OrderHistoryMenu element in (mOrderHistoryData.orderMenu ?? [])) {
-    widgets.add(getItemRow(element, mCurrencyData.currencySymbol ?? ''));
-  }
-  widgets.add(pw.Container(height: 4));
-  widgets.add(mySeparator());
-  widgets.add(pw.Container(height: 4));
-
-  // ///SubTotal
-  // widgets.add(
-  //     getSubTotalRow(mOrderHistoryData, mCurrencyData.currencySymbol ?? ''));
-  // widgets.add(pw.Container(height: 2));
-  //
-  // ///tax
-  // for (OrderHistoryTax element in (mOrderHistoryData.orderTax ?? [])) {
-  //   if ((element.taxPercentage ?? 0) > 0) {
-  //     widgets.add(getTax(element, mCurrencyData.currencySymbol ?? ''));
-  //     widgets.add(pw.Container(height: 2));
-  //   }
-  // }
-  //
-  // ///Total
-  // widgets
-  //     .add(getTotalRow(mOrderHistoryData, mCurrencyData.currencySymbol ?? ''));
-  //
-  // ///Rounding
-  // widgets.add(
-  //     getRoundingRow(mOrderHistoryData, mCurrencyData.currencySymbol ?? ''));
-  //
-  // ///Total Pay
-  // widgets.add(
-  //     getTotalPayRow(mOrderHistoryData, mCurrencyData.currencySymbol ?? ''));
-  // widgets.add(pw.Container(height: 4));
-  // widgets.add(mySeparator());
-  // widgets.add(pw.Container(height: 4));
-  //
-  // ///payment
-  // widgets.add(pw.Container(
-  //     padding: const pw.EdgeInsets.only(left: 2.0),
-  //     child: pw.Text('Payment', style: getBoldTextStyle())));
-  // widgets.add(pw.Container(height: 3));
-  // widgets.add(
-  //     getPaymentRow(mOrderHistoryData, mCurrencyData.currencySymbol ?? ''));
-  // widgets.add(pw.Container(height: 4));
-  // widgets.add(mySeparator());
-  // widgets.add(pw.Container(height: 4));
-
-  ///remark
-  if ((mOrderHistoryData.additionalNotes ?? "").isNotEmpty) {
+        child: pw.Text('Order Confirmation', style: getBoldTextStyleMedium())));
+    widgets.add(pw.Container(height: 4));
     widgets.add(
-        pw.Center(child: pw.Text('Order Remark', style: getBoldTextStyle())));
+        pw.Center(child: pw.Text(branchName, style: getBoldTextStyleMedium())));
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
+    if (duplicate) {
+      widgets.add(pw.Center(
+          child: pw.Text('Duplicate Copy',
+              style: getNormalTextStyle())));
+    }
+    widgets.add(
+        pw.Center(child: pw.Text('Order Number', style: getBoldTextStyle())));
     widgets.add(pw.Center(
-        child: pw.Text('${mOrderHistoryData.additionalNotes}',
+        child: pw.Text('${mRestaurantData.orderIDPrefixCode}${mOrderHistoryData.trackingOrderID}',
             style: getNormalTextStyle())));
     widgets.add(pw.Container(height: 4));
     widgets.add(mySeparator());
     widgets.add(pw.Container(height: 4));
+
+    ///table
+    widgets.add(getTableRow(mOrderHistoryData));
+    // ///user details
+    // if((mOrderHistoryData.phoneNumber??'').isNotEmpty) {
+    //   widgets.add(getUserDetailsRow(mOrderHistoryData));
+    // }
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
+
+    ///menu order
+    for (OrderHistoryMenu element in (mOrderHistoryData.orderMenu ?? [])) {
+      widgets.add(getItemRow(element, mCurrencyData.currencySymbol ?? ''));
+    }
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
+
+    // ///SubTotal
+    // widgets.add(
+    //     getSubTotalRow(mOrderHistoryData, mCurrencyData.currencySymbol ?? ''));
+    // widgets.add(pw.Container(height: 2));
+    //
+    // ///tax
+    // for (OrderHistoryTax element in (mOrderHistoryData.orderTax ?? [])) {
+    //   if ((element.taxPercentage ?? 0) > 0) {
+    //     widgets.add(getTax(element, mCurrencyData.currencySymbol ?? ''));
+    //     widgets.add(pw.Container(height: 2));
+    //   }
+    // }
+    //
+    // ///Total
+    // widgets
+    //     .add(getTotalRow(mOrderHistoryData, mCurrencyData.currencySymbol ?? ''));
+    //
+    // ///Rounding
+    // widgets.add(
+    //     getRoundingRow(mOrderHistoryData, mCurrencyData.currencySymbol ?? ''));
+    //
+    // ///Total Pay
+    // widgets.add(
+    //     getTotalPayRow(mOrderHistoryData, mCurrencyData.currencySymbol ?? ''));
+    // widgets.add(pw.Container(height: 4));
+    // widgets.add(mySeparator());
+    // widgets.add(pw.Container(height: 4));
+    //
+    // ///payment
+    // widgets.add(pw.Container(
+    //     padding: const pw.EdgeInsets.only(left: 2.0),
+    //     child: pw.Text('Payment', style: getBoldTextStyle())));
+    // widgets.add(pw.Container(height: 3));
+    // widgets.add(
+    //     getPaymentRow(mOrderHistoryData, mCurrencyData.currencySymbol ?? ''));
+    // widgets.add(pw.Container(height: 4));
+    // widgets.add(mySeparator());
+    // widgets.add(pw.Container(height: 4));
+
+    ///remark
+    if ((mOrderHistoryData.additionalNotes ?? "").isNotEmpty) {
+      widgets.add(
+          pw.Center(child: pw.Text('Order Remark', style: getBoldTextStyle())));
+      widgets.add(pw.Center(
+          child: pw.Text('${mOrderHistoryData.additionalNotes}',
+              style: getNormalTextStyle())));
+      widgets.add(pw.Container(height: 4));
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
+    }
+
+    // widgets.add(pw.Center(
+    //     child:
+    //     pw.Text(mRestaurantData.tagLine ?? '', style: getBoldTextStyle())));
+  }else {
+    if ((mPrinterSettingsData.enableTitleText ?? false) &&
+        (mPrinterSettingsData.customTitleText ?? '').isNotEmpty) {
+      widgets.add(pw.Center(
+          child: pw.Text((mPrinterSettingsData.customTitleText ?? ''),
+              style: getBoldTextStyleMedium())));
+    } else {
+      widgets.add(pw.Center(
+          child: pw.Text(
+              'Order Confirmation', style: getBoldTextStyleMedium())));
+    }
+    widgets.add(pw.Container(height: 4));
+
+    ///enableBranchName
+    if ((mPrinterSettingsData.enableBranchName ?? false)) {
+      widgets.add(
+          pw.Center(
+              child: pw.Text(branchName, style: getBoldTextStyleMedium())));
+      widgets.add(pw.Container(height: 4));
+      // if ((mPrinterSettingsData.enableBranchAddress ?? false)){
+      //   widgets.add(
+      //       pw.Center(child: pw.Text(branchName, style: getBoldTextStyleMedium())));
+      //   widgets.add(pw.Container(height: 4));
+      // }
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
+    }
+    if (duplicate) {
+      widgets.add(pw.Center(
+          child: pw.Text('Duplicate Copy',
+              style: getNormalTextStyle())));
+    }
+
+    if ((mPrinterSettingsData.enableOrderTrackingID ?? false)) {
+      widgets.add(
+          pw.Center(child: pw.Text('Order Number', style: getBoldTextStyle())));
+      widgets.add(pw.Center(
+          child: pw.Text(
+              '${mRestaurantData.orderIDPrefixCode}${mOrderHistoryData
+                  .trackingOrderID}',
+              style: getNormalTextStyle())));
+      widgets.add(pw.Container(height: 4));
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
+    }
+    ///Order Date and Time
+    if ((mPrinterSettingsData.enableDateTime ?? false)) {
+      widgets.add(pw.Center(
+          child: pw.Text('Order Date and Time', style: getBoldTextStyle())));
+      widgets.add(pw.Center(
+          child: pw.Text('${getUTCToLocalDateOrderHistory(mOrderHistoryData.orderDate.toString())}',
+              style: getNormalTextStyle())));
+      widgets.add(pw.Container(height: 4));
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
+    }
+    ///enableHeader
+    if ((mPrinterSettingsData.enableHeader ?? false) &&
+        (mPrinterSettingsData.customHeaderText ?? '').isNotEmpty) {
+      widgets.add(pw.Center(
+          child: pw.Text((mPrinterSettingsData.customHeaderText ?? ''),
+              style: getBoldTextStyle())));
+      widgets.add(pw.Container(height: 4));
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
+    }
+    ///table
+    widgets.add(getTableRow(mOrderHistoryData));
+    // ///user details
+    // if((mOrderHistoryData.phoneNumber??'').isNotEmpty) {
+    //   widgets.add(getUserDetailsRow(mOrderHistoryData));
+    // }
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
+
+    ///menu order
+    for (OrderHistoryMenu element in (mOrderHistoryData.orderMenu ?? [])) {
+      widgets.add(getItemRow(element, mCurrencyData.currencySymbol ?? ''));
+    }
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
+
+    // ///SubTotal
+    // widgets.add(
+    //     getSubTotalRow(mOrderHistoryData, mCurrencyData.currencySymbol ?? ''));
+    // widgets.add(pw.Container(height: 2));
+    //
+    // ///tax
+    // for (OrderHistoryTax element in (mOrderHistoryData.orderTax ?? [])) {
+    //   if ((element.taxPercentage ?? 0) > 0) {
+    //     widgets.add(getTax(element, mCurrencyData.currencySymbol ?? ''));
+    //     widgets.add(pw.Container(height: 2));
+    //   }
+    // }
+    //
+    // ///Total
+    // widgets
+    //     .add(getTotalRow(mOrderHistoryData, mCurrencyData.currencySymbol ?? ''));
+    //
+    // ///Rounding
+    // widgets.add(
+    //     getRoundingRow(mOrderHistoryData, mCurrencyData.currencySymbol ?? ''));
+    //
+    // ///Total Pay
+    // widgets.add(
+    //     getTotalPayRow(mOrderHistoryData, mCurrencyData.currencySymbol ?? ''));
+    // widgets.add(pw.Container(height: 4));
+    // widgets.add(mySeparator());
+    // widgets.add(pw.Container(height: 4));
+    //
+    // ///payment
+    // widgets.add(pw.Container(
+    //     padding: const pw.EdgeInsets.only(left: 2.0),
+    //     child: pw.Text('Payment', style: getBoldTextStyle())));
+    // widgets.add(pw.Container(height: 3));
+    // widgets.add(
+    //     getPaymentRow(mOrderHistoryData, mCurrencyData.currencySymbol ?? ''));
+    // widgets.add(pw.Container(height: 4));
+    // widgets.add(mySeparator());
+    // widgets.add(pw.Container(height: 4));
+
+    ///remark
+    if ((mOrderHistoryData.additionalNotes ?? "").isNotEmpty) {
+      widgets.add(
+          pw.Center(child: pw.Text('Order Remark', style: getBoldTextStyle())));
+      widgets.add(pw.Center(
+          child: pw.Text('${mOrderHistoryData.additionalNotes}',
+              style: getNormalTextStyle())));
+      widgets.add(pw.Container(height: 4));
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
+    }
+
+    ///enableFooter
+    if ((mPrinterSettingsData.enableFooter ?? false) &&
+        (mPrinterSettingsData.customFooterText ?? '').isNotEmpty) {
+      widgets.add(pw.Center(
+          child: pw.Text((mPrinterSettingsData.customFooterText ?? ''),
+              style: getBoldTextStyle())));
+    }
   }
 
-  // widgets.add(pw.Center(
-  //     child:
-  //     pw.Text(mRestaurantData.tagLine ?? '', style: getBoldTextStyle())));
   return printWidgets(widgets, true, false);
 }
 

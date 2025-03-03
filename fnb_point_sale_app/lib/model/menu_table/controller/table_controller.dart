@@ -388,22 +388,26 @@ class TableController extends GetxController {
   void onPrintKot(int index) async {
     OrderHistoryData mOrderData = mOrderHistoryData[index];
     final myPrinterService = locator.get<MyPrinterService>();
+
     ///Kitchen printCopies
     if (mDashboardScreenController.mPrinterSettingsDataKitchen.printCopies ==
         null) {
-      await myPrinterService.salePaymentKot(mOrderData);
-      await myPrinterService.salePaymentKot(mOrderData, duplicate: true);
+      await myPrinterService.salePaymentKot(mOrderData, null);
+      await myPrinterService.salePaymentKot(mOrderData, null, duplicate: true);
     } else {
       for (int i = 0;
-      i <
-          (mDashboardScreenController
-              .mPrinterSettingsDataKitchen.printCopies ??
-              0);
-      i++) {
-        if(i==0) {
-          await myPrinterService.salePaymentKot(mOrderData);
-        }else {
-          await myPrinterService.salePaymentKot(mOrderData, duplicate: true);
+          i <
+              (mDashboardScreenController
+                      .mPrinterSettingsDataKitchen.printCopies ??
+                  0);
+          i++) {
+        if (i == 0) {
+          await myPrinterService.salePaymentKot(mOrderData,
+              mDashboardScreenController.mPrinterSettingsDataKitchen);
+        } else {
+          await myPrinterService.salePaymentKot(mOrderData,
+              mDashboardScreenController.mPrinterSettingsDataKitchen,
+              duplicate: true);
         }
       }
     }

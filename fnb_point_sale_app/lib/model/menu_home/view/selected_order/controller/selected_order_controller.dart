@@ -755,28 +755,30 @@ class SelectedOrderController extends HomeBaseController {
       {bool placeOrder = false, bool isPayment = false}) async {
     final myPrinterService = locator.get<MyPrinterService>();
     if (placeOrder) {
-      ///Customer printCopies
-      if (mDashboardScreenController.mPrinterSettingsDataCustomer.printCopies ==
-          null) {
-        await myPrinterService.salePlaceOrder(
-            mOrderDetailList, mOrderPlace, cartItemKot);
-      } else {
-        for (int i = 0;
-            i <
-                (mDashboardScreenController
-                        .mPrinterSettingsDataCustomer.printCopies ??
-                    0);
-            i++) {
-          await myPrinterService.salePlaceOrder(
-              mOrderDetailList, mOrderPlace, cartItemKot);
-        }
-      }
+      // ///Customer printCopies
+      // if (mDashboardScreenController.mPrinterSettingsDataCustomer.printCopies ==
+      //     null) {
+      //   await myPrinterService.salePlaceOrder(
+      //       mOrderDetailList, mOrderPlace, cartItemKot);
+      // } else {
+      //   for (int i = 0;
+      //       i <
+      //           (mDashboardScreenController
+      //                   .mPrinterSettingsDataCustomer.printCopies ??
+      //               0);
+      //       i++) {
+      //     await myPrinterService.salePlaceOrder(
+      //         mOrderDetailList, mOrderPlace, cartItemKot);
+      //   }
+      // }
 
       ///Kitchen printCopies
       if (mDashboardScreenController.mPrinterSettingsDataKitchen.printCopies ==
           null) {
         await myPrinterService.salePlaceOrder(
-            mOrderDetailList, mOrderPlace, cartItemKot);
+            mOrderDetailList, mOrderPlace, cartItemKot,null);
+        await myPrinterService.salePlaceOrder(
+            mOrderDetailList, mOrderPlace, cartItemKot,null);
       } else {
         for (int i = 0;
         i <
@@ -785,7 +787,7 @@ class SelectedOrderController extends HomeBaseController {
                 0);
         i++) {
           await myPrinterService.salePlaceOrder(
-              mOrderDetailList, mOrderPlace, cartItemKot);
+              mOrderDetailList, mOrderPlace, cartItemKot,mDashboardScreenController.mPrinterSettingsDataKitchen);
         }
       }
     }

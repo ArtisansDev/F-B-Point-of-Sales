@@ -17,28 +17,28 @@ mixin MyPrinterService {
   void testAutoMaticPrint(Printer printer);
 
   Future<bool> salePlaceOrder(OrderDetailList mOrderDetailList,
-      OrderPlace mOrderPlace, List<CartItem> cartItemKot);
+      OrderPlace mOrderPlace, List<CartItem> cartItemKot,
+      PrinterSettingsData? mPrinterSettingsData);
 
-  Future<bool> saleOrderPayment(
-      OrderDetailList mOrderDetailList, OrderPlace mOrderPlace);
+  Future<bool> saleOrderPayment(OrderDetailList mOrderDetailList,
+      OrderPlace mOrderPlace);
 
-  Future<bool> saleAfterPayment(
-      OrderDetailList mOrderDetailList, OrderHistoryData mOrderPlace);
+  Future<bool> saleAfterPayment(OrderDetailList mOrderDetailList,
+      OrderHistoryData mOrderPlace);
 
   Future<bool> salePayment(OrderHistoryData mOrderDetailList);
 
   Future<bool> salePaymentKot(OrderHistoryData mOrderDetailList,
+      PrinterSettingsData? mPrinterSettingsDataKitchen,
       {bool duplicate = false});
 
-  Future<bool> shiftDetails(
-      String amount,
+  Future<bool> shiftDetails(String amount,
       ClosingBalanceRequest mClosingBalanceRequest,
       List<CashModel> mCashModelList,
       ConfigurationResponse mConfigurationResponse,
       ShiftDetailsResponse mShiftDetailsResponse);
 
-  Future<bool> shiftDetailsOpeningBalance(
-      String amount,
+  Future<bool> shiftDetailsOpeningBalance(String amount,
       ClosingBalanceRequest mClosingBalanceRequest,
       List<CashModel> mCashModelList,
       ConfigurationResponse mConfigurationResponse,

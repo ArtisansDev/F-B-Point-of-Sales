@@ -152,9 +152,10 @@ class MenuSalesController extends GetxController {
         '${DateFormat('dd/MM/yyyy').format(selectedDateRange?.start ?? DateTime.now())} - ${DateFormat('dd/MM/yyyy').format(selectedDateRange?.end ?? DateTime.now())}';
     sSelectDateRangeController.refresh();
 
-
-    MyLogUtils.logDebug("######## ${selectedDateRange?.start ?? DateTime.now()}");
+    MyLogUtils.logDebug(
+        "######## ${selectedDateRange?.start ?? DateTime.now()}");
     MyLogUtils.logDebug("######## ${selectedDateRange?.end ?? DateTime.now()}");
+
     ///api call
     pageNumber.value = 1;
     sLoading.value = 'Loading...';
@@ -548,25 +549,28 @@ class MenuSalesController extends GetxController {
   void onPrintKot(int index) async {
     OrderHistoryData mOrderData = mOrderHistoryData[index];
     final myPrinterService = locator.get<MyPrinterService>();
+
     ///Kitchen printCopies
     if (mDashboardScreenController.mPrinterSettingsDataKitchen.printCopies ==
         null) {
-      await myPrinterService.salePaymentKot(mOrderData);
-      await myPrinterService.salePaymentKot(mOrderData, duplicate: true);
+      await myPrinterService.salePaymentKot(mOrderData, null);
+      await myPrinterService.salePaymentKot(mOrderData, null, duplicate: true);
     } else {
       for (int i = 0;
-      i <
-          (mDashboardScreenController
-              .mPrinterSettingsDataKitchen.printCopies ??
-              0);
-      i++) {
-        if(i==0) {
-          await myPrinterService.salePaymentKot(mOrderData);
-        }else {
-          await myPrinterService.salePaymentKot(mOrderData, duplicate: true);
+          i <
+              (mDashboardScreenController
+                      .mPrinterSettingsDataKitchen.printCopies ??
+                  0);
+          i++) {
+        if (i == 0) {
+          await myPrinterService.salePaymentKot(mOrderData,
+              mDashboardScreenController.mPrinterSettingsDataKitchen);
+        } else {
+          await myPrinterService.salePaymentKot(mOrderData,
+              mDashboardScreenController.mPrinterSettingsDataKitchen,
+              duplicate: true);
         }
       }
     }
-
   }
 }

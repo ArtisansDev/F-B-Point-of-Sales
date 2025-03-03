@@ -28,9 +28,13 @@ import '../types/test_printing.dart';
 
 class MyPrinterServiceImpl with MyPrinterService {
   @override
-  Future<bool> salePlaceOrder(OrderDetailList mOrderDetailList,
-      OrderPlace mOrderPlace, List<CartItem> cartItemKot) async {
-    return await printPlaceOrder(mOrderDetailList, mOrderPlace, cartItemKot);
+  Future<bool> salePlaceOrder(
+      OrderDetailList mOrderDetailList,
+      OrderPlace mOrderPlace,
+      List<CartItem> cartItemKot,
+      PrinterSettingsData? mPrinterSettingsData) async {
+    return await printPlaceOrder(
+        mOrderDetailList, mOrderPlace, cartItemKot, mPrinterSettingsData);
   }
 
   @override
@@ -52,8 +56,10 @@ class MyPrinterServiceImpl with MyPrinterService {
 
   @override
   Future<bool> salePaymentKot(OrderHistoryData mOrderDetailList,
+      PrinterSettingsData? mPrinterSettingsDataKitchen,
       {bool duplicate = false}) async {
-    return await printSalePaymentKot(mOrderDetailList, duplicate);
+    return await printSalePaymentKot(
+        mOrderDetailList, duplicate, mPrinterSettingsDataKitchen);
   }
 
   @override
@@ -74,8 +80,8 @@ class MyPrinterServiceImpl with MyPrinterService {
       List<CashModel> mCashModelList,
       ConfigurationResponse mConfigurationResponse,
       ShiftDetailsResponse mShiftDetailsResponse) async {
-    return await printShiftCloseOpeningBalance(amount, mClosingBalanceRequest, mCashModelList,
-        mConfigurationResponse, mShiftDetailsResponse);
+    return await printShiftCloseOpeningBalance(amount, mClosingBalanceRequest,
+        mCashModelList, mConfigurationResponse, mShiftDetailsResponse);
   }
 
   // @override
