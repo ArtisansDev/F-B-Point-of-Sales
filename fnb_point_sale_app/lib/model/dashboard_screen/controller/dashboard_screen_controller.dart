@@ -348,8 +348,14 @@ class DashboardScreenController extends GetxController {
         sDownloadText.refresh();
         await getCurrencyData();
         await getPrinterSettingsData();
+
         if (onUpdateDate.value != null) {
           onUpdateDate.value!();
+        }
+        if (Get.isRegistered<TableController>()) {
+          if (onUpdateTable.value != null) {
+            onUpdateTable.value!();
+          }
         }
         if (Get.isRegistered<HomeBaseController>()) {
           if (updateHomeMenu.value != null) {
@@ -419,6 +425,11 @@ class DashboardScreenController extends GetxController {
                   await getCurrencyData();
                   await getPrinterSettingsData();
                   getTexList();
+                  if (Get.isRegistered<TableController>()) {
+                    if (onUpdateTable.value != null) {
+                      onUpdateTable.value!();
+                    }
+                  }
                   if (onUpdateDate.value != null) {
                     onUpdateDate.value!();
                   }

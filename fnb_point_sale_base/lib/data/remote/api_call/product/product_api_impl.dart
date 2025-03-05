@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../../../alert/app_alert.dart';
 import '../../../../constants/web_constants.dart';
+import '../../../mode/get_menu_stock/get_menu_stock_response.dart';
 import '../../../mode/product/get_all_category/get_all_category_response.dart';
 import '../../../mode/product/get_all_menu_item/menu_item_response.dart';
 import '../../../mode/product/get_all_modifier/get_all_modifier_response.dart';
@@ -68,6 +69,85 @@ class ProductApiImpl extends AllApiImpl with ProductApi {
         statusCode: cases.statusCode,
         data: mMenuItemResponse,
         statusMessage: "Get all menu item downloaded successfully",
+        error: false,
+      );
+    } else if (cases.statusCode == WebConstants.statusCode401) {
+      mWebResponseFailed =
+          WebResponseFailed.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        // data: mLoginFailedResponse,
+        statusMessage: mWebResponseFailed.statusMessage,
+        error: false,
+      );
+    } else {
+      mWebResponseFailed =
+          WebResponseFailed.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        // data: mWebResponseFailed,
+        statusMessage: mWebResponseFailed.statusMessage,
+        error: true,
+      );
+    }
+    return mWebResponseSuccess;
+  }
+
+  ///post UpdateStockStatus
+  @override
+  Future<WebResponseSuccess> postUpdateStockStatus(
+      exhibitorsListRequest) async {
+    AppAlert.showProgressDialog(Get.context!);
+    WebConstants.auth = true;
+    final cases = await mWebProvider.postWithRequest(
+        WebConstants.actionPostUpdateStockStatus, exhibitorsListRequest);
+    AppAlert.hideLoadingDialog(Get.context!);
+    if (cases.statusCode == WebConstants.statusCode200) {
+      // MenuItemResponse mMenuItemResponse =
+      //     MenuItemResponse.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        //data: mMenuItemResponse,
+        statusMessage: "Update Stock Status successfully",
+        error: false,
+      );
+    } else if (cases.statusCode == WebConstants.statusCode401) {
+      mWebResponseFailed =
+          WebResponseFailed.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        // data: mLoginFailedResponse,
+        statusMessage: mWebResponseFailed.statusMessage,
+        error: false,
+      );
+    } else {
+      mWebResponseFailed =
+          WebResponseFailed.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        // data: mWebResponseFailed,
+        statusMessage: mWebResponseFailed.statusMessage,
+        error: true,
+      );
+    }
+    return mWebResponseSuccess;
+  }
+
+  ///post GetStockData
+  @override
+  Future<WebResponseSuccess> postGetStockData(exhibitorsListRequest) async {
+    AppAlert.showProgressDialog(Get.context!);
+    WebConstants.auth = true;
+    final cases = await mWebProvider.postWithRequest(
+        WebConstants.actionPostGetStockData, exhibitorsListRequest);
+    AppAlert.hideLoadingDialog(Get.context!);
+    if (cases.statusCode == WebConstants.statusCode200) {
+      GetMenuStockResponse mGetMenuStockResponse =
+          GetMenuStockResponse.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        data: mGetMenuStockResponse,
+        statusMessage: "Get Stock Status successfully",
         error: false,
       );
     } else if (cases.statusCode == WebConstants.statusCode401) {
@@ -178,7 +258,7 @@ class ProductApiImpl extends AllApiImpl with ProductApi {
     // AppAlert.hideLoadingDialog(Get.context!);
     if (cases.statusCode == WebConstants.statusCode200) {
       GetAllTablesResponse mGetAllTablesResponse =
-      GetAllTablesResponse.fromJson(processResponseToJson(cases));
+          GetAllTablesResponse.fromJson(processResponseToJson(cases));
       mWebResponseSuccess = WebResponseSuccess(
         statusCode: cases.statusCode,
         data: mGetAllTablesResponse,
@@ -208,7 +288,8 @@ class ProductApiImpl extends AllApiImpl with ProductApi {
 
   ///post GetAllPaymentType
   @override
-  Future<WebResponseSuccess> postGetAllPaymentType(exhibitorsListRequest) async {
+  Future<WebResponseSuccess> postGetAllPaymentType(
+      exhibitorsListRequest) async {
     // AppAlert.showProgressDialog(Get.context!);
     WebConstants.auth = true;
     final cases = await mWebProvider.postWithRequest(
@@ -216,7 +297,7 @@ class ProductApiImpl extends AllApiImpl with ProductApi {
     // AppAlert.hideLoadingDialog(Get.context!);
     if (cases.statusCode == WebConstants.statusCode200) {
       GetAllPaymentTypeResponse mGetAllPaymentTypeResponse =
-      GetAllPaymentTypeResponse.fromJson(processResponseToJson(cases));
+          GetAllPaymentTypeResponse.fromJson(processResponseToJson(cases));
       mWebResponseSuccess = WebResponseSuccess(
         statusCode: cases.statusCode,
         data: mGetAllPaymentTypeResponse,

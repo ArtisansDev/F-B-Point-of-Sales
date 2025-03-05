@@ -58,6 +58,8 @@ class WebConstants {
   static String actionGetAllMenuItem =  "Menu/getAllMenuItem";  //post
   static String actionGetAllModifier =  "Menu/getAllModifier";  //post
   static String actionGetAllVariant =  "Menu/getAllVariant";  //post
+  static String actionPostUpdateStockStatus =  "Menu/UpdateStockStatus";  //post
+  static String actionPostGetStockData =  "Menu/GetStockData";  //post
 
   ///
   static String actionGetAllTables =  "Seat/getAllTables";  //post

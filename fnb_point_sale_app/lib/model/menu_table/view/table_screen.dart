@@ -20,9 +20,9 @@ class TableScreen extends GetView<TableController> {
         onVisibilityLost: () {},
         child: Container(
           margin: EdgeInsets.only(
-            top: 11.sp,
-            left: 11.sp,
-            right: 11.sp,
+            top: 10.5.sp,
+            left: 10.5.sp,
+            right: 10.5.sp,
           ),
           alignment: Alignment.center,
           child: Column(

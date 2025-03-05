@@ -100,6 +100,7 @@ class MenuItemData {
     int? approxCookingMinute,
     bool? isDeleted,
     String? archiveDate,
+    bool? isStockOut,
   }) {
     _menuItemIDP = menuItemIDP;
     _restaurantIDF = restaurantIDF;
@@ -121,6 +122,7 @@ class MenuItemData {
     _approxCookingHour = approxCookingHour;
     _approxCookingMinute = approxCookingMinute;
     _isDeleted = isDeleted;
+    _isStockOut = isStockOut;
     _archiveDate = archiveDate;
   }
 
@@ -165,6 +167,7 @@ class MenuItemData {
     _approxCookingHour = json['ApproxCookingHour'];
     _approxCookingMinute = json['ApproxCookingMinute'];
     _isDeleted = json['IsDeleted'];
+    _isStockOut = json['IsStockOut'];
     _archiveDate = json['ArchiveDate'];
   }
 
@@ -188,6 +191,7 @@ class MenuItemData {
   int? _approxCookingHour;
   int? _approxCookingMinute;
   bool? _isDeleted;
+  bool? _isStockOut;
   String? _archiveDate;
 
   String? get menuItemIDP => _menuItemIDP;
@@ -230,6 +234,8 @@ class MenuItemData {
 
   bool? get isDeleted => _isDeleted;
 
+  bool? get isStockOut => _isStockOut;
+
   String? get archiveDate => _archiveDate;
 
   Map<String, dynamic> toJson() {
@@ -262,6 +268,7 @@ class MenuItemData {
     map['ApproxCookingHour'] = _approxCookingHour;
     map['ApproxCookingMinute'] = _approxCookingMinute;
     map['IsDeleted'] = _isDeleted;
+    map['IsStockOut'] = _isStockOut;
     map['ArchiveDate'] = _archiveDate;
     return map;
   }

@@ -22,6 +22,8 @@ import '../../dashboard_screen/view/top_bar/controller/top_bar_controller.dart';
 import '../view/add_item/controller/add_item_controller.dart';
 import '../view/add_item/view/add_item_screen.dart';
 import '../view/selected_order/controller/selected_order_controller.dart';
+import '../view/stock_item/controller/stock_item_controller.dart';
+import '../view/stock_item/view/stock_item_screen.dart';
 
 class HomeBaseController extends GetxController {
   ///Dashboard
@@ -171,11 +173,26 @@ class HomeBaseController extends GetxController {
     mMenuItemData.refresh();
   }
 
+  onLongPressMenu(int index) async {
+    mMenuItemSelected.value = mMenuItemData[index];
+    await getVariantItems(mMenuItemSelected.value ?? MenuItemData());
+    await getModifierItems(mMenuItemSelected.value ?? MenuItemData());
+    await showStockView();
+  }
+
+  showStockView() async {
+    await AppAlert.showView(Get.context!, StockItemScreen(this),
+        barrierDismissible: true);
+    if (Get.isRegistered<StockItemController>()) {
+      await Get.delete<StockItemController>();
+      getAllCategoryList();
+    }
+  }
+
   onMenuSelect(int index) async {
     mMenuItemSelected.value = mMenuItemData[index];
     await getVariantItems(mMenuItemSelected.value ?? MenuItemData());
     await getModifierItems(mMenuItemSelected.value ?? MenuItemData());
-    // onItemClick(index);
     await addItemView();
   }
 

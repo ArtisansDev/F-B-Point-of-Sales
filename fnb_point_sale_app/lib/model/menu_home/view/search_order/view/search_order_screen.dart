@@ -22,7 +22,7 @@ class SearchOrderScreen extends StatelessWidget {
         onVisibilityGained: () {},
         onVisibilityLost: () {},
         child: Container(
-            margin: EdgeInsets.only(top: 7.sp, left: 11.sp, right: 8.sp),
+            margin: EdgeInsets.only(top: 7.5.sp, left: 11.sp, right: 8.sp),
             child: Column(
               children: [
                 ///search
