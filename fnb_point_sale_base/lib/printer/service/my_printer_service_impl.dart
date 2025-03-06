@@ -55,8 +55,8 @@ class MyPrinterServiceImpl with MyPrinterService {
   }
 
   @override
-  Future<bool> salePayment(OrderHistoryData mOrderDetailList) async {
-    return await printSalePayment(mOrderDetailList);
+  Future<bool> salePayment(OrderHistoryData mOrderDetailList,PrinterSettingsData? mPrinterSettingsData) async {
+    return await printSalePayment(mOrderDetailList,mPrinterSettingsData);
   }
 
   @override

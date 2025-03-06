@@ -29,12 +29,15 @@ mixin MyPrinterService {
   Future<bool> saleAfterPayment(OrderDetailList mOrderDetailList,
       OrderHistoryData mOrderPlace, PrinterSettingsData? mPrinterSettingsData);
 
-  Future<bool> salePayment(OrderHistoryData mOrderDetailList);
+  Future<bool> salePayment(OrderHistoryData mOrderDetailList,
+      PrinterSettingsData? mPrinterSettingsData);
 
+  ///
   Future<bool> salePaymentKot(OrderHistoryData mOrderDetailList,
       PrinterSettingsData? mPrinterSettingsDataKitchen,
       {bool duplicate = false});
 
+  
   Future<bool> shiftDetails(String amount,
       ClosingBalanceRequest mClosingBalanceRequest,
       List<CashModel> mCashModelList,

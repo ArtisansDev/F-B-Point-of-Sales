@@ -163,15 +163,15 @@ Future<bool> printOrderPayment(OrderDetailList mOrderDetailList,
       widgets.add(pw.Center(
           child: pw.Text(branchName, style: getBoldTextStyleMedium())));
       widgets.add(pw.Container(height: 4));
-      if ((mPrinterSettingsData.enableBranchAddress ?? false)){
-        widgets.add(
-            pw.Center(child: pw.Text(branchAddress,textAlign: pw.TextAlign.center, style: getBoldTextStyle())));
-        widgets.add(pw.Container(height: 4));
-      }
-      widgets.add(mySeparator());
+
+    }
+    if ((mPrinterSettingsData.enableBranchAddress ?? false)){
+      widgets.add(
+          pw.Center(child: pw.Text(branchAddress,textAlign: pw.TextAlign.center, style: getBoldTextStyle())));
       widgets.add(pw.Container(height: 4));
     }
-
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
     if ((mPrinterSettingsData.enableOrderTrackingID ?? false)) {
       widgets.add(
           pw.Center(child: pw.Text('Order Number', style: getBoldTextStyle())));
@@ -287,6 +287,16 @@ Future<bool> printOrderPayment(OrderDetailList mOrderDetailList,
           child: pw.Text((mPrinterSettingsData.customFooterText ?? ''),
               textAlign: pw.TextAlign.center,
               style: getBoldTextStyle())));
+    }
+
+    ///enableCustomText
+    if ((mPrinterSettingsData.enableCustomText ?? false) &&
+        (mPrinterSettingsData.customMessageText ?? '').isNotEmpty) {
+      widgets.add(pw.Container(height: 2));
+      widgets.add(pw.Center(
+          child: pw.Text((mPrinterSettingsData.customMessageText ?? ''),
+              textAlign: pw.TextAlign.center,
+              style: getNormalTextStyle())));
     }
     // widgets.add(pw.Center(
     //     child:
