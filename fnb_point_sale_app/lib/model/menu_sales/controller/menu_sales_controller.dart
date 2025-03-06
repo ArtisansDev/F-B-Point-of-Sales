@@ -539,16 +539,19 @@ class MenuSalesController extends GetxController {
     final myPrinterService = locator.get<MyPrinterService>();
     if (mDashboardScreenController.mPrinterSettingsDataCustomer.printCopies ==
         null) {
-      await myPrinterService.saleAfterPayment(mOrderDetailList, mOrderHistory,null);
-      await myPrinterService.saleAfterPayment(mOrderDetailList, mOrderHistory,null);
-    }else {
+      await myPrinterService.saleAfterPayment(
+          mOrderDetailList, mOrderHistory, null);
+      await myPrinterService.saleAfterPayment(
+          mOrderDetailList, mOrderHistory, null);
+    } else {
       for (int i = 0;
-      i <
-          (mDashboardScreenController
-              .mPrinterSettingsDataCustomer.printCopies ??
-              0);
-      i++) {
-        await myPrinterService.saleAfterPayment(mOrderDetailList, mOrderHistory,mDashboardScreenController.mPrinterSettingsDataCustomer);
+          i <
+              (mDashboardScreenController
+                      .mPrinterSettingsDataCustomer.printCopies ??
+                  0);
+          i++) {
+        await myPrinterService.saleAfterPayment(mOrderDetailList, mOrderHistory,
+            mDashboardScreenController.mPrinterSettingsDataCustomer);
       }
     }
   }
@@ -556,7 +559,15 @@ class MenuSalesController extends GetxController {
   void onPrint(int index) async {
     OrderHistoryData mOrderData = mOrderHistoryData[index];
     final myPrinterService = locator.get<MyPrinterService>();
-    await myPrinterService.salePayment(mOrderData);
+    for (int i = 0;
+        i <
+            (mDashboardScreenController
+                    .mPrinterSettingsDataCustomer.printCopies ??
+                0);
+        i++) {
+      await myPrinterService.salePayment(
+          mOrderData, mDashboardScreenController.mPrinterSettingsDataCustomer);
+    }
   }
 
   void onPrintKot(int index) async {

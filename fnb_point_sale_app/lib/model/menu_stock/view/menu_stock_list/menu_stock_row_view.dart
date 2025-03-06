@@ -9,6 +9,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:fnb_point_sale_base/alert/app_alert.dart';
 import 'package:fnb_point_sale_base/common/button_constants.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
@@ -99,7 +100,11 @@ class MenuStockRowView extends StatelessWidget {
                     ? sStockIn.tr
                     : sStockOut.tr,
                 () async {
-                  await controller.onStockInOutItem(mGetMenuStockData);
+                  AppAlert.showCustomDialogYesNoLogout(Get.context!, 'Alert!',
+                      'Do you want to update this item to ${(mGetMenuStockData.isStockOut ?? false)?sStockIn.tr:sStockOut.tr}?', () async{
+                        await controller.onStockInOutItem(mGetMenuStockData);
+                      }, rightText: 'Yes');
+
                   // await controller.onStockItem();
                 },
               )),

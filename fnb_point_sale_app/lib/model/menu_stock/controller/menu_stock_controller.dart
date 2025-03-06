@@ -143,6 +143,8 @@ class MenuStockController extends GetxController {
           sLoading.value = '';
           sLoading.refresh();
         } else {
+          mGetMenuStockData.clear();
+          mGetMenuStockData.refresh();
           AppAlert.showSnackBar(
               Get.context!, mWebResponseSuccess.statusMessage ?? '');
         }
