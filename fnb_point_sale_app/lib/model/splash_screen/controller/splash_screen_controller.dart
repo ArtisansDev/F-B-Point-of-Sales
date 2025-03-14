@@ -54,4 +54,33 @@ class SplashScreenController extends GetxController {
       }
     }
   }
+
+  Rx<ConfigurationResponse> mConfigurationResponse =
+      ConfigurationResponse().obs;
+  Rx<RestaurantData> mRestaurantData = RestaurantData().obs;
+  Rx<BranchData> mBranchData = BranchData().obs;
+
+  getConfigurationInfo() async {
+    var configurationLocalApi = locator.get<ConfigurationLocalApi>();
+    mConfigurationResponse.value =
+        await configurationLocalApi.getConfigurationResponse() ??
+            ConfigurationResponse();
+    mRestaurantData.value =
+    (mConfigurationResponse.value.configurationData?.restaurantData ?? [])
+        .isNotEmpty
+        ? mConfigurationResponse
+        .value.configurationData!.restaurantData!.first
+        : RestaurantData();
+    mBranchData.value =
+    (mConfigurationResponse.value.configurationData?.branchData ?? [])
+        .isNotEmpty
+        ? mConfigurationResponse.value.configurationData!.branchData!.first
+        : BranchData();
+
+
+
+    mConfigurationResponse.refresh();
+    mRestaurantData.refresh();
+    mBranchData.refresh();
+  }
 }

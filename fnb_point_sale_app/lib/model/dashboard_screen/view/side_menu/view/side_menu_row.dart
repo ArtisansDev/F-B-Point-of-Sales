@@ -12,6 +12,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fnb_point_sale_base/common/custom_image.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/image_assets_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
@@ -40,7 +41,8 @@ class SideMenuRow extends StatelessWidget {
               Container(
                   margin: EdgeInsets.only(
                       left: 14.sp, right: 14.sp, bottom: 6.sp, top: 11.sp),
-                  child: Image.asset(
+                  child:
+                  Image.asset(
                     controller.sideMenuImage[index],
                     fit: BoxFit.fitWidth,
                     color: controller

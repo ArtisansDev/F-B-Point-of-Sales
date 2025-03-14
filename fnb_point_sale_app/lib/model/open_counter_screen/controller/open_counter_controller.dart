@@ -32,6 +32,9 @@ import '../../../routes/route_constants.dart';
 class OpenCounterController extends GetxController {
   Rx<TextEditingController> openCounterController = TextEditingController().obs;
 
+  Rx<RestaurantData> mRestaurantData = RestaurantData().obs;
+  Rx<BranchData> mBranchData = BranchData().obs;
+
   OpenCounterController() {
     getPackageInfo();
   }
@@ -62,6 +65,22 @@ class OpenCounterController extends GetxController {
             : (mConfigurationResponse.value?.configurationData?.currencyData ??
                     [])
                 .first;
+
+    mRestaurantData.value =
+        (mConfigurationResponse.value?.configurationData?.restaurantData ?? [])
+                .isNotEmpty
+            ? mConfigurationResponse
+                .value!.configurationData!.restaurantData!.first
+            : RestaurantData();
+    mBranchData.value =
+        (mConfigurationResponse.value?.configurationData?.branchData ?? [])
+                .isNotEmpty
+            ? mConfigurationResponse.value!.configurationData!.branchData!.first
+            : BranchData();
+
+    mConfigurationResponse.refresh();
+    mRestaurantData.refresh();
+    mBranchData.refresh();
   }
 
   openingBalanceApiCall() async {
@@ -128,7 +147,7 @@ class OpenCounterController extends GetxController {
     AppAlert.showCustomDialogYesNoLogout(
         Get.context!,
         'Logout & Clear Configuration!',
-        'Do you want to Logout & Clear Configuration?', ()  {
+        'Do you want to Logout & Clear Configuration?', () {
       updateLoginStatusApiCall(false);
     });
   }

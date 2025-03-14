@@ -6,7 +6,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import '../constants/color_constants.dart';
 import '../constants/image_assets_constants.dart';
 
-cacheCoursesImage(String imageUrl, String placeHolderImagePath,double size) {
+cacheCoursesImage(String imageUrl, String placeHolderImagePath, double size) {
   debugPrint("image Url $imageUrl");
   return CachedNetworkImage(
     imageUrl: imageUrl,
@@ -28,10 +28,46 @@ cacheCoursesImage(String imageUrl, String placeHolderImagePath,double size) {
         fit: BoxFit.fitWidth,
       );
     },
-    imageBuilder: (context, imageProvider) => Container(
-        decoration: BoxDecoration(
-      image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
-    )),
+    imageBuilder: (context, imageProvider) =>
+        Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+            )),
+  );
+}
+
+cacheCoursesImageAppLogo(String imageUrl, String placeHolderImagePath,
+    double size) {
+  debugPrint("image Url $imageUrl");
+  return CachedNetworkImage(
+    imageUrl: imageUrl,
+    key: UniqueKey(),
+    width: size,
+    height: size,
+    fit: BoxFit.cover,
+    placeholder: (context, url) {
+      return Image.asset(
+        placeHolderImagePath,
+        width: size,
+        fit: BoxFit.fitWidth,
+      );
+    },
+    errorWidget: (context, url, error) {
+      return Image.asset(
+        placeHolderImagePath,
+        width: size,
+        fit: BoxFit.fitWidth,
+      );
+    },
+    imageBuilder: (context, imageProvider) =>
+        ClipRRect(
+            borderRadius: BorderRadius.circular(8.sp), // Image border
+            child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: imageProvider, fit: BoxFit.cover),
+                )))
+    ,
   );
 }
 
@@ -88,7 +124,7 @@ editIcon(Function onTab) {
   );
 }
 
-setImage(String image){
+setImage(String image) {
   return Image.asset(
     image,
     fit: BoxFit.fitWidth,

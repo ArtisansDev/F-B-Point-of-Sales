@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fnb_point_sale_base/common/button_constants.dart';
+import 'package:fnb_point_sale_base/common/custom_image.dart';
 import 'package:fnb_point_sale_base/common/text_input_widget.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/image_assets_constants.dart';
@@ -29,7 +30,7 @@ class LoginScreen extends GetView<LoginScreenController> {
   loginView() {
     return FocusDetector(
       onVisibilityGained: () {
-        // controller.getPackageInfo();
+        // controller.getConfigurationInfo();
       },
       onVisibilityLost: () {},
       child: Stack(
@@ -54,10 +55,28 @@ class LoginScreen extends GetView<LoginScreenController> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              ImageAssetsConstants.appLogo,
-                              fit: BoxFit.fitWidth,
-                              width: 23.w,
+                            (controller.mRestaurantData.value
+                                            .restaurantLogoPath ??
+                                        '')
+                                    .isEmpty
+                                ? Image.asset(
+                                    ImageAssetsConstants.appLogo,
+                                    fit: BoxFit.fitWidth,
+                                    width: 23.w,
+                                  )
+                                : cacheCoursesImageAppLogo(
+                                    (controller.mRestaurantData.value
+                                            .restaurantLogoPath ??
+                                        ''),
+                                    ImageAssetsConstants.appLogo,
+                                    18.w),
+                            SizedBox(
+                              height: (controller.mRestaurantData.value
+                                              .restaurantLogoPath ??
+                                          '')
+                                      .isEmpty
+                                  ? 0
+                                  : 15.sp,
                             ),
                             Container(
                               width: 30.w,
@@ -124,6 +143,7 @@ class LoginScreen extends GetView<LoginScreenController> {
                                 ),
                                 Text(
                                   'Welcome Back',
+                                  // ${controller.mRestaurantData.value.restaurantName}',
                                   style: getText600(
                                       colors: ColorConstants.white,
                                       size: 14.sp),

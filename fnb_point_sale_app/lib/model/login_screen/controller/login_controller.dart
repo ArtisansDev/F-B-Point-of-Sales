@@ -31,11 +31,16 @@ import '../../../routes/route_constants.dart';
 class LoginScreenController extends GetxController {
   Rx<TextEditingController> userNameController = TextEditingController().obs;
   Rx<TextEditingController> passwordController = TextEditingController().obs;
+  Rx<ConfigurationResponse> mConfigurationResponse =
+      ConfigurationResponse().obs;
+  Rx<RestaurantData> mRestaurantData = RestaurantData().obs;
+  Rx<BranchData> mBranchData = BranchData().obs;
   RxBool hidePassword = true.obs;
   RxBool isLogin = true.obs;
 
   LoginScreenController() {
     getPackageInfo();
+    getConfigurationInfo();
     // userNameController.value.text = 'balajikanna456@gmail.com';
     // passwordController.value.text = 'Password123';
     //getToken();
@@ -45,6 +50,30 @@ class LoginScreenController extends GetxController {
 
   getPackageInfo() async {
     version.value = dotenv.env['APP_VERSION'] ?? '';
+  }
+
+  getConfigurationInfo() async {
+    var configurationLocalApi = locator.get<ConfigurationLocalApi>();
+    mConfigurationResponse.value =
+        await configurationLocalApi.getConfigurationResponse() ??
+            ConfigurationResponse();
+    mRestaurantData.value =
+        (mConfigurationResponse.value.configurationData?.restaurantData ?? [])
+                .isNotEmpty
+            ? mConfigurationResponse
+                .value.configurationData!.restaurantData!.first
+            : RestaurantData();
+    mBranchData.value =
+        (mConfigurationResponse.value.configurationData?.branchData ?? [])
+                .isNotEmpty
+            ? mConfigurationResponse.value.configurationData!.branchData!.first
+            : BranchData();
+
+
+
+    mConfigurationResponse.refresh();
+    mRestaurantData.refresh();
+    mBranchData.refresh();
   }
 
   isLoginCheck() {
@@ -169,9 +198,8 @@ class LoginScreenController extends GetxController {
     AppAlert.showCustomDialogYesNoLogout(
         Get.context!,
         'Logout & Clear Configuration!',
-        'Do you want to Logout & Clear Configuration?', ()  {
+        'Do you want to Logout & Clear Configuration?', () {
       clearConfiguration();
     });
   }
-
 }
