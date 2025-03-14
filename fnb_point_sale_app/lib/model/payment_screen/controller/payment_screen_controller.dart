@@ -7,6 +7,7 @@ import 'package:fnb_point_sale_base/data/local/database/payment_type/payment_typ
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 import 'package:fnb_point_sale_base/data/mode/customer/get_all_customer/get_all_customer_response.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_payment_type/get_all_payment_type_response.dart';
+import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:fnb_point_sale_base/locator.dart';
 import 'package:get/get.dart';
 import '../../../common_view/customer_drop_down.dart';
@@ -87,16 +88,25 @@ class PaymentScreenController extends GetxController {
 
     if(mSelectCustomer.value!=null){
       if(mSelectCustomer.value?.name.toString()=='_new_') {
-        AddCustomer mAddCustomer = AddCustomer(
-            name: nameController.value.text,
-            phoneCode: phoneCode.value,
-            phone: phoneNumberController.value.text,
-            onSelectCustomer: (GetAllCustomerList mGetAllCustomerList) {
-              mSelectCustomer.value = mGetAllCustomerList;
-              onPaymentClick.value!(
-                  mGetAllPaymentType.value, mSelectCustomer.value);
-            });
-        await mAddCustomer.onSubmit();
+        if (nameController.value.text.trim().isEmpty) {
+          AppAlert.showSnackBar(Get.context!, sPleaseEnterName.tr);
+          return;
+        } else if (nameController.value.text.trim().length < 2) {
+          AppAlert.showSnackBar(
+              Get.context!, 'The name must be more than 1 character');
+          return;
+        } else {
+          AddCustomer mAddCustomer = AddCustomer(
+              name: nameController.value.text,
+              phoneCode: phoneCode.value,
+              phone: phoneNumberController.value.text,
+              onSelectCustomer: (GetAllCustomerList mGetAllCustomerList) {
+                mSelectCustomer.value = mGetAllCustomerList;
+                onPaymentClick.value!(
+                    mGetAllPaymentType.value, mSelectCustomer.value);
+              });
+          await mAddCustomer.onSubmit();
+        }
       }else {
         onPaymentClick.value!(mGetAllPaymentType.value, mSelectCustomer.value);
       }

@@ -51,15 +51,24 @@ class TableSelectController extends GetxController {
   void onCreateOrder() async {
     if (mSelectCustomer.value != null) {
       if (mSelectCustomer.value?.name.toString() == '_new_') {
-        AddCustomer mAddCustomer = AddCustomer(
-            name: enterNameController.value.text,
-            phoneCode: phoneCode.value,
-            phone: sPhoneNumberController.value.text,
-            onSelectCustomer: (GetAllCustomerList mGetAllCustomerList) {
-              mSelectCustomer.value = mGetAllCustomerList;
-              createOrder();
-            });
-        await mAddCustomer.onSubmit();
+        if (enterNameController.value.text.trim().isEmpty) {
+          AppAlert.showSnackBar(Get.context!, sPleaseEnterName.tr);
+          return;
+        } else if (enterNameController.value.text.trim().length < 2) {
+          AppAlert.showSnackBar(
+              Get.context!, 'The name must be more than 1 character');
+          return;
+        } else {
+          AddCustomer mAddCustomer = AddCustomer(
+              name: enterNameController.value.text,
+              phoneCode: phoneCode.value,
+              phone: sPhoneNumberController.value.text,
+              onSelectCustomer: (GetAllCustomerList mGetAllCustomerList) {
+                mSelectCustomer.value = mGetAllCustomerList;
+                createOrder();
+              });
+          await mAddCustomer.onSubmit();
+        }
       } else {
         createOrder();
       }

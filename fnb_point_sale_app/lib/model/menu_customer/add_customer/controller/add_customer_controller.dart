@@ -78,6 +78,8 @@ class AddCustomerController extends GetxController {
       AppAlert.showSnackBar(Get.context!, sPleaseEnterValidMobileNumber.tr);
     } else if (enterNameController.value.text.trim().isEmpty) {
       AppAlert.showSnackBar(Get.context!, sPleaseEnterName.tr);
+    }else if (enterNameController.value.text.trim().length<2) {
+      AppAlert.showSnackBar(Get.context!, 'The name must be more than 1 character');
     } else {
       callSaveCustomer();
     }

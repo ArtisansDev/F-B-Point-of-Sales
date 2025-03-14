@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fnb_point_sale_base/alert/app_alert.dart';
 import 'package:fnb_point_sale_base/common/text_input_widget.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/pattern_constants.dart';
@@ -78,16 +79,25 @@ class ItemPaymentScreenController extends GetxController {
   void onPrint() async {
     if (mSelectCustomer.value != null) {
       if (mSelectCustomer.value?.name.toString() == '_new_') {
-        AddCustomer mAddCustomer = AddCustomer(
-            name: nameController.value.text,
-            phoneCode: phoneCode.value,
-            phone: phoneNumberController.value.text,
-            onSelectCustomer: (GetAllCustomerList mGetAllCustomerList) {
-              mSelectCustomer.value = mGetAllCustomerList;
-              onPaymentClick.value!(
-                  mGetAllPaymentType.value, mSelectCustomer.value);
-            });
-        await mAddCustomer.onSubmit();
+        if (nameController.value.text.trim().isEmpty) {
+          AppAlert.showSnackBar(Get.context!, sPleaseEnterName.tr);
+          return;
+        } else if (nameController.value.text.trim().length < 2) {
+          AppAlert.showSnackBar(
+              Get.context!, 'The name must be more than 1 character');
+          return;
+        } else {
+          AddCustomer mAddCustomer = AddCustomer(
+              name: nameController.value.text,
+              phoneCode: phoneCode.value,
+              phone: phoneNumberController.value.text,
+              onSelectCustomer: (GetAllCustomerList mGetAllCustomerList) {
+                mSelectCustomer.value = mGetAllCustomerList;
+                onPaymentClick.value!(
+                    mGetAllPaymentType.value, mSelectCustomer.value);
+              });
+          await mAddCustomer.onSubmit();
+        }
       } else {
         onPaymentClick.value!(mGetAllPaymentType.value, mSelectCustomer.value);
       }
