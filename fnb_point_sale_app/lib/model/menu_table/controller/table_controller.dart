@@ -256,8 +256,14 @@ class TableController extends GetxController {
   ///clear table
   void onClear(TablesByTableStatusData mTablesByTableStatusData) {
     AppAlert.showCustomDialogYesNoLogout(Get.context!, 'Clear Table!',
-        'Are you sure you want to clear this table?', () {
+        'Are you sure you want to clear this table?', () async {
       Get.back();
+
+      ///remove hold
+      await mTopBarController.removeHoldSale(
+        mTablesByTableStatusData.occupiedTrackingOrderID ?? '',
+      );
+
       callUpdateTableStatus(mTablesByTableStatusData);
     }, rightText: 'Yes');
   }
@@ -464,8 +470,14 @@ class TableController extends GetxController {
     await mDashboardScreenController.onUpdateHoldSale();
     await mTopBarController.allOrderPlace();
 
+    ///remove hold
+    await mTopBarController.removeHoldSale(
+      mOrderDetailList.trackingOrderID ?? '',
+    );
+
     ///clear table
     TablesByTableStatusData mTablesByTableStatusData = TablesByTableStatusData(
+      occupiedTrackingOrderID: mOrderDetailList.trackingOrderID ?? '',
       occupiedOrderID: mOrderDetailList.trackingOrderID ?? '',
       seatIDP: mOrderDetailList.seatIDF ?? '',
     );
@@ -504,8 +516,14 @@ class TableController extends GetxController {
     await mDashboardScreenController.onUpdateHoldSale();
     await mTopBarController.allOrderPlace();
 
+    ///remove hold
+    await mTopBarController.removeHoldSale(
+      mOrderDetailList.trackingOrderID ?? '',
+    );
+
     ///clear table
     TablesByTableStatusData mTablesByTableStatusData = TablesByTableStatusData(
+      occupiedTrackingOrderID: mOrderDetailList.trackingOrderID ?? '',
       occupiedOrderID: mOrderDetailList.trackingOrderID ?? '',
       seatIDP: mOrderDetailList.seatIDF ?? '',
     );
@@ -594,16 +612,19 @@ class TableController extends GetxController {
     final myPrinterService = locator.get<MyPrinterService>();
     if (mDashboardScreenController.mPrinterSettingsDataCustomer.printCopies ==
         null) {
-      await myPrinterService.saleAfterPayment(mOrderDetailList, mOrderHistory,null);
-      await myPrinterService.saleAfterPayment(mOrderDetailList, mOrderHistory,null);
-    }else {
+      await myPrinterService.saleAfterPayment(
+          mOrderDetailList, mOrderHistory, null);
+      await myPrinterService.saleAfterPayment(
+          mOrderDetailList, mOrderHistory, null);
+    } else {
       for (int i = 0;
-      i <
-          (mDashboardScreenController
-              .mPrinterSettingsDataCustomer.printCopies ??
-              0);
-      i++) {
-        await myPrinterService.saleAfterPayment(mOrderDetailList, mOrderHistory,mDashboardScreenController.mPrinterSettingsDataCustomer);
+          i <
+              (mDashboardScreenController
+                      .mPrinterSettingsDataCustomer.printCopies ??
+                  0);
+          i++) {
+        await myPrinterService.saleAfterPayment(mOrderDetailList, mOrderHistory,
+            mDashboardScreenController.mPrinterSettingsDataCustomer);
       }
     }
   }

@@ -9,6 +9,7 @@ import 'package:fnb_point_sale_base/alert/app_alert.dart';
 import 'package:fnb_point_sale_base/constants/message_constants.dart';
 import 'package:fnb_point_sale_base/constants/web_constants.dart';
 import 'package:fnb_point_sale_base/data/local/database/configuration/configuration_local_api.dart';
+import 'package:fnb_point_sale_base/data/local/database/hold_sale/hold_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_model.dart';
 import 'package:fnb_point_sale_base/data/local/database/table_list/table_list_local_api.dart';
@@ -195,8 +196,16 @@ class TopBarController extends GetxController {
   var mPlaceOrderSaleLocalApi = locator.get<PlaceOrderSaleLocalApi>();
 
   allOrderPlace() async {
-    print("######### allOrderPlace");
+    debugPrint("allOrderPlace");
     await callGetAllTableStatus();
+  }
+
+  removeHoldSale(String sOrderNo) async{
+    debugPrint("removeHoldSale $sOrderNo");
+    var holdSaleLocalApi = locator.get<HoldSaleLocalApi>();
+    await holdSaleLocalApi
+        .getHoldSaleDelete(sOrderNo ?? '');
+    await mDashboardScreenController.onUpdateHoldSale();
   }
 
   ///all table

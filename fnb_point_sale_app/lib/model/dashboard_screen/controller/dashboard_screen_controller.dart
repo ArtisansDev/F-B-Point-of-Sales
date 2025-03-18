@@ -75,6 +75,8 @@ class DashboardScreenController extends GetxController {
         selectMenu.value = 1;
         selectMenu.refresh();
       }
+    }else if (index == 3){
+
     }
   }
 

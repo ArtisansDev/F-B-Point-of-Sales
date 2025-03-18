@@ -325,10 +325,16 @@ class MenuSalesController extends GetxController {
     await mDashboardScreenController.onUpdateHoldSale();
     await callOrderHistory();
 
+    ///remove hold
+    await mTopBarController.removeHoldSale(
+      mOrderDetailList.trackingOrderID ?? '',
+    );
+
     ///clear table
     if ((mOrderDetailList.tableNo ?? "").isNotEmpty) {
       TablesByTableStatusData mTablesByTableStatusData =
           TablesByTableStatusData(
+        occupiedTrackingOrderID: mOrderDetailList.trackingOrderID ?? '',
         occupiedOrderID: mOrderDetailList.trackingOrderID ?? '',
         seatIDP: mOrderDetailList.seatIDF ?? '',
       );
@@ -414,10 +420,16 @@ class MenuSalesController extends GetxController {
     await mDashboardScreenController.onUpdateHoldSale();
     await callOrderHistory();
 
+    ///remove hold
+    await mTopBarController.removeHoldSale(
+      mOrderDetailList.trackingOrderID ?? '',
+    );
+
     ///clear table
     if ((mOrderDetailList.tableNo ?? "").isNotEmpty) {
       TablesByTableStatusData mTablesByTableStatusData =
           TablesByTableStatusData(
+        occupiedTrackingOrderID: mOrderDetailList.trackingOrderID ?? '',
         occupiedOrderID: mOrderDetailList.trackingOrderID ?? '',
         seatIDP: mOrderDetailList.seatIDF ?? '',
       );

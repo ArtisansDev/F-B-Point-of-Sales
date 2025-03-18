@@ -45,7 +45,9 @@ class TableRowView extends StatelessWidget {
         .getTablesByTableStatusData(mGetAllTablesResponseData.seatIDP ?? '');
     return GestureDetector(
       onTap: () {
-        controller.onTableSelectClick(mGetAllTablesResponseData, mOrderPlace);
+        if(!(mOrderPlace.isOnHold ?? false)) {
+          controller.onTableSelectClick(mGetAllTablesResponseData, mOrderPlace);
+        }
       },
       child: Container(
         height: 24.h,
@@ -61,14 +63,18 @@ class TableRowView extends StatelessWidget {
               padding: EdgeInsets.only(
                   top: 11.sp, left: 11.sp, right: 11.sp, bottom: 11.sp),
               decoration: BoxDecoration(
-                color: (mOrderPlace.paymentStatus == 'C')
-                    ? Colors.red.withOpacity(0.25)
-                    : (mOrderPlace.seatIDP ?? '').isNotEmpty
-                        ? Colors.green.withOpacity(0.15)
-                        : (!(mGetAllTablesResponseData.isDeleted ?? false) &&
-                                (mGetAllTablesResponseData.isActive ?? false))
-                            ? ColorConstants.cAppButtonLightColour
-                            : Colors.red.withOpacity(0.15),
+                color: (mOrderPlace.isOnHold ?? false)
+                    ? Colors.purple.withOpacity(0.15)
+                    : (mOrderPlace.paymentStatus == 'C')
+                        ? Colors.red.withOpacity(0.25)
+                        : (mOrderPlace.seatIDP ?? '').isNotEmpty
+                            ? Colors.green.withOpacity(0.15)
+                            : (!(mGetAllTablesResponseData.isDeleted ??
+                                        false) &&
+                                    (mGetAllTablesResponseData.isActive ??
+                                        false))
+                                ? ColorConstants.cAppButtonLightColour
+                                : Colors.red.withOpacity(0.15),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(8.sp),
                   topRight: Radius.circular(8.sp),
@@ -81,16 +87,19 @@ class TableRowView extends StatelessWidget {
                     '${sSeatingNo.tr} ${mGetAllTablesResponseData.seatNumber ?? ''}',
                     style: getText500(
                         size: 11.6.sp,
-                        colors: (mOrderPlace.paymentStatus == 'C')
-                            ? Colors.red
-                            : (mOrderPlace.seatIDP ?? '').isNotEmpty
-                                ? Colors.green
-                                : (!(mGetAllTablesResponseData.isDeleted ??
-                                            false) &&
-                                        (mGetAllTablesResponseData.isActive ??
-                                            false))
-                                    ? ColorConstants.cAppButtonColour
-                                    : Colors.red),
+                        colors: (mOrderPlace.isOnHold ?? false)
+                            ? Colors.purple
+                            : (mOrderPlace.paymentStatus == 'C')
+                                ? Colors.red
+                                : (mOrderPlace.seatIDP ?? '').isNotEmpty
+                                    ? Colors.green
+                                    : (!(mGetAllTablesResponseData.isDeleted ??
+                                                false) &&
+                                            (mGetAllTablesResponseData
+                                                    .isActive ??
+                                                false))
+                                        ? ColorConstants.cAppButtonColour
+                                        : Colors.red),
                   )),
                   Align(
                       alignment: Alignment.centerRight,
@@ -140,161 +149,215 @@ class TableRowView extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Container(
-                            padding: EdgeInsets.only(
-                              left: 11.sp,
-                              right: 11.sp,
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    'Time ',
-                                    style: getText300(
-                                        size: 11.sp,
-                                        colors: ColorConstants.black),
+                          Visibility(
+                              visible: !(mOrderPlace.isOnHold ?? false),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                      left: 11.sp,
+                                      right: 11.sp,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          child: Text(
+                                            'Time ',
+                                            style: getText300(
+                                                size: 11.sp,
+                                                colors: ColorConstants.black),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: Text(
+                                            (mOrderPlace.orderDate ?? '')
+                                                    .isEmpty
+                                                ? ""
+                                                : getUTCToLocalDateTime(
+                                                    mOrderPlace.orderDate ??
+                                                        ''),
+                                            style: getText500(
+                                                size: 11.5.sp,
+                                                colors: ColorConstants
+                                                    .cAppTaxColour),
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    (mOrderPlace.orderDate ?? '').isEmpty
-                                        ? ""
-                                        : getUTCToLocalDateTime(
-                                            mOrderPlace.orderDate ?? ''),
-                                    style: getText500(
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                        top: 8.sp,
+                                        left: 11.sp,
+                                        right: 11.sp,
+                                        bottom: 8.sp),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          child: Text(
+                                            'Amount ',
+                                            style: getText300(
+                                                size: 11.sp,
+                                                colors: ColorConstants.black),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: Text(
+                                            '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(mOrderPlace.totalPayableAmount ?? 0).toStringAsFixed(2)}',
+                                            style: getText500(
+                                                size: 11.5.sp,
+                                                colors: ColorConstants
+                                                    .cAppTaxColour),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                        left: 11.sp,
+                                        right: 11.sp,
+                                        bottom: 9.sp),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          child: Text(
+                                            'Order From',
+                                            style: getText300(
+                                                size: 11.sp,
+                                                colors: ColorConstants.black),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: Text(
+                                            (mOrderPlace.orderSource ?? '1') ==
+                                                    '1'
+                                                ? 'APP'
+                                                : (mOrderPlace.orderSource ??
+                                                            '1') ==
+                                                        '2'
+                                                    ? 'POS'
+                                                    : 'WEB',
+                                            style: getText500(
+                                                size: 11.5.sp,
+                                                colors: ColorConstants
+                                                    .cAppTaxColour),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          Visibility(
+                            visible: (mOrderPlace.isOnHold ?? false),
+                            child: Expanded(
+                                flex: 2,
+                                child: Container(
+                                  margin: EdgeInsets.only(bottom: 12.sp),
+                                  alignment: Alignment.center,
+                                  child: Text('ON HOLD',
+                                      style: getText500(
                                         size: 11.5.sp,
-                                        colors: ColorConstants.cAppTaxColour),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(
-                                top: 8.sp,
-                                left: 11.sp,
-                                right: 11.sp,
-                                bottom: 8.sp),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    'Amount ',
-                                    style: getText300(
-                                        size: 11.sp,
-                                        colors: ColorConstants.black),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(mOrderPlace.totalPayableAmount ?? 0).toStringAsFixed(2)}',
-                                    style: getText500(
-                                        size: 11.5.sp,
-                                        colors: ColorConstants.cAppTaxColour),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(
-                                left: 11.sp, right: 11.sp, bottom: 9.sp),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    'Order From',
-                                    style: getText300(
-                                        size: 11.sp,
-                                        colors: ColorConstants.black),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    (mOrderPlace.orderSource ?? '1') == '1'
-                                        ? 'APP'
-                                        : (mOrderPlace.orderSource ?? '1') ==
-                                                '2'
-                                            ? 'POS'
-                                            : 'WEB',
-                                    style: getText500(
-                                        size: 11.5.sp,
-                                        colors: ColorConstants.cAppTaxColour),
-                                  ),
-                                )
-                              ],
-                            ),
+                                        colors: Colors.purple,
+                                      )),
+                                )),
                           ),
                           Expanded(
+                              flex: 1,
                               child: Container(
-                            decoration: BoxDecoration(
-                              color: (mOrderPlace.paymentStatus == 'C')
-                                  ? Colors.red.withOpacity(0.25)
-                                  : (mOrderPlace.seatIDP ?? '').isNotEmpty
-                                      ? Colors.green.withOpacity(0.15)
-                                      : (!(mGetAllTablesResponseData
-                                                      .isDeleted ??
-                                                  false) &&
-                                              (mGetAllTablesResponseData
-                                                      .isActive ??
-                                                  false))
-                                          ? ColorConstants.cAppButtonLightColour
-                                          : Colors.red.withOpacity(0.15),
-                              borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(8.sp),
-                                bottomLeft: Radius.circular(8.sp),
-                              ),
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                    child: Container(
-                                  child: (mOrderPlace.paymentStatus == 'C')
-                                      ? Text('Order Cancel')
-                                      : SizedBox(),
-                                  padding: EdgeInsets.only(left: 10.sp),
-                                )),
-                                Visibility(
-                                    visible: mOrderPlace.paymentStatus != 'P',
-                                    child: Container(
-                                        width: 6.w,
-                                        margin: EdgeInsets.only(
-                                            left: 8.sp,
-                                            right: 8.sp,
-                                            top: 8.sp,
-                                            bottom: 8.sp),
-                                        child: rectangleCornerButtonText500(
-                                          boderColor:
-                                              (mOrderPlace.paymentStatus == 'C')
-                                                  ? Colors.red.withOpacity(0.05)
-                                                  : ColorConstants
-                                                      .cAppButtonInviceColour,
-                                          bgColor:
-                                              (mOrderPlace.paymentStatus == 'C')
-                                                  ? Colors.red.withOpacity(0.35)
-                                                  : ColorConstants
-                                                      .cAppButtonInviceColour,
-                                          textColor:
-                                              (mOrderPlace.paymentStatus == 'C')
-                                                  ? Colors.red
-                                                  : ColorConstants
-                                                      .cAppTextInviceColour,
-                                          height: 17.5.sp,
-                                          textSize: 10.sp,
-                                          sClear.tr,
-                                          () {
-                                            controller.onClear(mOrderPlace);
-                                          },
-                                        ))),
-                              ],
-                            ),
-                          ))
+                                decoration: BoxDecoration(
+                                  color: (mOrderPlace.isOnHold ?? false)
+                                      ? Colors.purple.withOpacity(0.25)
+                                      : (mOrderPlace.paymentStatus == 'C')
+                                          ? Colors.red.withOpacity(0.25)
+                                          : (mOrderPlace.seatIDP ?? '')
+                                                  .isNotEmpty
+                                              ? Colors.green.withOpacity(0.15)
+                                              : (!(mGetAllTablesResponseData
+                                                              .isDeleted ??
+                                                          false) &&
+                                                      (mGetAllTablesResponseData
+                                                              .isActive ??
+                                                          false))
+                                                  ? ColorConstants
+                                                      .cAppButtonLightColour
+                                                  : Colors.red
+                                                      .withOpacity(0.15),
+                                  borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(8.sp),
+                                    bottomLeft: Radius.circular(8.sp),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: Container(
+                                      padding: EdgeInsets.only(left: 10.sp),
+                                      child: (mOrderPlace.paymentStatus == 'C')
+                                          ? Text('Order Cancel')
+                                          : SizedBox(),
+                                    )),
+                                    Visibility(
+                                        visible:
+                                            mOrderPlace.paymentStatus != 'P',
+                                        child: Container(
+                                            width: 6.w,
+                                            margin: EdgeInsets.only(
+                                                left: 8.sp,
+                                                right: 8.sp,
+                                                top: 8.sp,
+                                                bottom: 8.sp),
+                                            child: rectangleCornerButtonText500(
+                                              boderColor: (mOrderPlace
+                                                          .isOnHold ??
+                                                      false)
+                                                  ? Colors.purple
+                                                      .withOpacity(0.05)
+                                                  : (mOrderPlace
+                                                              .paymentStatus ==
+                                                          'C')
+                                                      ? Colors.red
+                                                          .withOpacity(0.05)
+                                                      : ColorConstants
+                                                          .cAppButtonInviceColour,
+                                              bgColor: (mOrderPlace.isOnHold ??
+                                                      false)
+                                                  ? Colors.purple
+                                                      .withOpacity(0.35)
+                                                  : (mOrderPlace
+                                                              .paymentStatus ==
+                                                          'C')
+                                                      ? Colors.red
+                                                          .withOpacity(0.35)
+                                                      : ColorConstants
+                                                          .cAppButtonInviceColour,
+                                              textColor: (mOrderPlace
+                                                          .isOnHold ??
+                                                      false)
+                                                  ? Colors.purple
+                                                  : (mOrderPlace
+                                                              .paymentStatus ==
+                                                          'C')
+                                                      ? Colors.red
+                                                      : ColorConstants
+                                                          .cAppTextInviceColour,
+                                              height: 17.5.sp,
+                                              textSize: 10.sp,
+                                              sClear.tr,
+                                              () {
+                                                controller.onClear(mOrderPlace);
+                                              },
+                                            ))),
+                                  ],
+                                ),
+                              ))
                         ],
                       )
                     : Container(

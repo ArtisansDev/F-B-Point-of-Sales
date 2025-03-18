@@ -72,6 +72,7 @@ class GetAllTablesByTableStatusResponse {
 /// PaymentStatus : ""
 /// OrderStatus : ""
 /// OrderSource : ""
+/// IsOnHold : true
 
 class TablesByTableStatusData {
   TablesByTableStatusData({
@@ -84,7 +85,8 @@ class TablesByTableStatusData {
       String? modificationDate, 
       String? seatType, 
       bool? isActive, 
-      bool? isDeleted, 
+      bool? isOnHold,
+      bool? isDeleted,
       String? updationDate, 
       String? locationIDF, 
       String? seatingType, 
@@ -108,6 +110,7 @@ class TablesByTableStatusData {
     _modificationDate = modificationDate;
     _seatType = seatType;
     _isActive = isActive;
+    _isOnHold = isOnHold;
     _isDeleted = isDeleted;
     _updationDate = updationDate;
     _locationIDF = locationIDF;
@@ -134,6 +137,7 @@ class TablesByTableStatusData {
     _modificationDate = json['ModificationDate'];
     _seatType = json['SeatType'];
     _isActive = json['IsActive'];
+    _isOnHold = json['IsOnHold'];
     _isDeleted = json['IsDeleted'];
     _updationDate = json['UpdationDate'];
     _locationIDF = json['LocationIDF'];
@@ -158,6 +162,7 @@ class TablesByTableStatusData {
   String? _modificationDate;
   String? _seatType;
   bool? _isActive;
+  bool? _isOnHold;
   bool? _isDeleted;
   String? _updationDate;
   String? _locationIDF;
@@ -182,6 +187,7 @@ class TablesByTableStatusData {
   String? get modificationDate => _modificationDate;
   String? get seatType => _seatType;
   bool? get isActive => _isActive;
+  bool? get isOnHold => _isOnHold;
   bool? get isDeleted => _isDeleted;
   String? get updationDate => _updationDate;
   String? get locationIDF => _locationIDF;
@@ -208,6 +214,7 @@ class TablesByTableStatusData {
     map['ModificationDate'] = _modificationDate;
     map['SeatType'] = _seatType;
     map['IsActive'] = _isActive;
+    map['IsOnHold'] = _isOnHold;
     map['IsDeleted'] = _isDeleted;
     map['UpdationDate'] = _updationDate;
     map['LocationIDF'] = _locationIDF;

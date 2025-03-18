@@ -177,6 +177,10 @@ class SelectedOrderController extends HomeBaseController {
         }
       }
     }
+
+    if ((mOrderPlace.value?.cartItem ?? []).isEmpty) {
+      isOrderHistory.value = false;
+    }
   }
 
   ///onCalculateTotal
@@ -311,11 +315,19 @@ class SelectedOrderController extends HomeBaseController {
     HoldSaleModel mHoldSaleModel =
         await holdSaleLocalApi.getAllHoldSale() ?? HoldSaleModel();
 
+    mOrderPlace.value?.orderHistory = isOrderHistory.value ?? false;
+
     if ((mHoldSaleModel.mOrderPlace ?? []).isEmpty) {
       mHoldSaleModel = HoldSaleModel(mOrderPlace: [mOrderPlace.value!]);
       await holdSaleLocalApi.save(mHoldSaleModel);
     } else {
       await holdSaleLocalApi.getHoldSaleEdit(mOrderPlace.value!);
+    }
+
+    ///hold sale
+    if (!(mOrderPlace.value?.orderHistory ?? false) &&
+        (mOrderPlace.value?.seatIDP ?? '').isNotEmpty) {
+      await callUpdateTableStatusHold(mOrderPlace.value!);
     }
 
     ///clear data
@@ -324,6 +336,37 @@ class SelectedOrderController extends HomeBaseController {
     mOrderPlace.value = null;
     mOrderPlace.refresh();
     await mDashboardScreenController.onUpdateHoldSale();
+  }
+
+  ///update table status hold
+  callUpdateTableStatusHold(OrderPlace mOrderPlace) async {
+    ///api product call
+    final orderPlaceApi = locator.get<OrderPlaceApi>();
+    await NetworkUtils()
+        .checkInternetConnection()
+        .then((isInternetAvailable) async {
+      if (isInternetAvailable) {
+        TableStatusRequest mTableStatusRequest = TableStatusRequest(
+            trackingOrderID: mOrderPlace.sOrderNo ?? '',
+            tableStatus: 'O',
+            seatIDP: mOrderPlace.seatIDP,
+            isOnHold: true,
+            userIDF: await SharedPrefs().getUserId());
+
+        WebResponseSuccess mWebResponseSuccess =
+            await orderPlaceApi.postTableStatus(mTableStatusRequest);
+
+        if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
+          // onPlaceOrder();
+        } else {
+          // AppAlert.showSnackBar(
+          //     Get.context!, mWebResponseSuccess.statusMessage ?? '');
+        }
+      } else {
+        // AppAlert.showSnackBar(
+        //     Get.context!, MessageConstants.noInternetConnection);
+      }
+    });
   }
 
   ///getCartItemKot
@@ -582,10 +625,16 @@ class SelectedOrderController extends HomeBaseController {
             mOrderPlaceHistory.value = null;
             isOrderHistory.value = false;
 
+            ///remove hold
+            await mTopBarController.removeHoldSale(
+              mOrderDetailList.trackingOrderID ?? '',
+            );
+
             ///clear table
             if ((mOrderDetailList.seatIDF ?? '').isNotEmpty) {
               TablesByTableStatusData mTablesByTableStatusData =
                   TablesByTableStatusData(
+                occupiedTrackingOrderID: mOrderDetailList.trackingOrderID ?? '',
                 occupiedOrderID: mOrderDetailList.trackingOrderID ?? '',
                 seatIDP: mOrderDetailList.seatIDF ?? '',
               );
@@ -776,27 +825,31 @@ class SelectedOrderController extends HomeBaseController {
       if (mDashboardScreenController.mPrinterSettingsDataKitchen.printCopies ==
           null) {
         await myPrinterService.salePlaceOrder(
-            mOrderDetailList, mOrderPlace, cartItemKot,null);
+            mOrderDetailList, mOrderPlace, cartItemKot, null);
         await myPrinterService.salePlaceOrder(
-            mOrderDetailList, mOrderPlace, cartItemKot,null);
+            mOrderDetailList, mOrderPlace, cartItemKot, null);
       } else {
         for (int i = 0;
-        i <
-            (mDashboardScreenController
-                .mPrinterSettingsDataKitchen.printCopies ??
-                0);
-        i++) {
+            i <
+                (mDashboardScreenController
+                        .mPrinterSettingsDataKitchen.printCopies ??
+                    0);
+            i++) {
           await myPrinterService.salePlaceOrder(
-              mOrderDetailList, mOrderPlace, cartItemKot,mDashboardScreenController.mPrinterSettingsDataKitchen);
+              mOrderDetailList,
+              mOrderPlace,
+              cartItemKot,
+              mDashboardScreenController.mPrinterSettingsDataKitchen);
         }
       }
     }
     if (isPayment) {
-
       if (mDashboardScreenController.mPrinterSettingsDataCustomer.printCopies ==
           null) {
-        await myPrinterService.saleOrderPayment(mOrderDetailList, mOrderPlace,null);
-        await myPrinterService.saleOrderPayment(mOrderDetailList, mOrderPlace,null);
+        await myPrinterService.saleOrderPayment(
+            mOrderDetailList, mOrderPlace, null);
+        await myPrinterService.saleOrderPayment(
+            mOrderDetailList, mOrderPlace, null);
       } else {
         for (int i = 0;
             i <
@@ -804,15 +857,16 @@ class SelectedOrderController extends HomeBaseController {
                         .mPrinterSettingsDataCustomer.printCopies ??
                     0);
             i++) {
-          await myPrinterService.saleOrderPayment(mOrderDetailList, mOrderPlace,mDashboardScreenController.mPrinterSettingsDataCustomer);
+          await myPrinterService.saleOrderPayment(mOrderDetailList, mOrderPlace,
+              mDashboardScreenController.mPrinterSettingsDataCustomer);
         }
       }
-
     }
   }
 
   ///select table
   void selectTable() async {
+    await mTopBarController.callGetAllTableStatus();
     await showTableBottomSheet(mTopBarController.mGetAllTablesList.toList(),
         (mTopBarController.mGetAllTablesStatus.value?.data ?? []).toList(),
         (GetAllTablesResponseData value) {
