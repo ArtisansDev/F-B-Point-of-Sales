@@ -28,24 +28,28 @@ import '../locator.dart';
 import 'date_time_utils.dart';
 import 'num_utils.dart';
 
-createOrderPlaceRequest({String? remarksController,
-  // String? orderDate,
-  OrderPlace? mOrderPlace,
-  OrderHistoryData? mOrderHistoryData,
-  GetAllPaymentTypeData? printOrderPayment,
-  List<CartItem>? kotCartItem}) async {
+createOrderPlaceRequest(
+    {String? remarksController,
+    // String? orderDate,
+    OrderPlace? mOrderPlace,
+    OrderHistoryData? mOrderHistoryData,
+    GetAllPaymentTypeData? printOrderPayment,
+    bool? isDineInView,
+    List<CartItem>? kotCartItem}) async {
   List<OrderMenu> kOTMenu = [];
+
   ///Item calculation kOTMenu
-  if((kotCartItem??[]).isNotEmpty) {
-    for (CartItem mCartItem in (kotCartItem??[])) {
+  if ((kotCartItem ?? []).isNotEmpty) {
+    for (CartItem mCartItem in (kotCartItem ?? [])) {
       ///original total
       var subTotalAmount = 0.0;
       subTotalAmount = (mCartItem.mSelectVariantListData?.price ?? 0);
+
       ///discount
       var subDiscountTotal = 0.0;
       if ((mCartItem.mSelectVariantListData?.discountPercentage ?? 0) > 0) {
         subDiscountTotal =
-        (mCartItem.mSelectVariantListData?.discountedPrice ?? 0);
+            (mCartItem.mSelectVariantListData?.discountedPrice ?? 0);
         subDiscountTotal = (subTotalAmount - subDiscountTotal);
         subTotalAmount = subTotalAmount - subDiscountTotal;
       }
@@ -73,7 +77,6 @@ createOrderPlaceRequest({String? remarksController,
         subTotalTax = mCartItem.taxAmount;
       }
 
-
       ///Item add
       OrderMenu mOrderMenu = OrderMenu(
           menuItemIDF: mCartItem.mMenuItemData?.menuItemIDP ?? '',
@@ -84,17 +87,17 @@ createOrderPlaceRequest({String? remarksController,
           ///variant
           variantPrice: mCartItem.mSelectVariantListData?.price,
           itemVariantName:
-          mCartItem.mSelectVariantListData?.quantitySpecification ?? '',
+              mCartItem.mSelectVariantListData?.quantitySpecification ?? '',
           itemTotal: (mCartItem.mSelectVariantListData?.price ?? 0) *
               (mCartItem.count ?? 0),
           itemDiscountPrice: mCartItem.mSelectVariantListData?.discountedPrice,
           discountedItemAmount: (mCartItem.mSelectVariantListData?.price ?? 0) -
               (mCartItem.mSelectVariantListData?.discountedPrice ?? 0),
           itemDiscountPriceTotal:
-          (mCartItem.mSelectVariantListData?.discountedPrice ?? 0) *
-              (mCartItem.count ?? 0),
+              (mCartItem.mSelectVariantListData?.discountedPrice ?? 0) *
+                  (mCartItem.count ?? 0),
           discountPercentage:
-          mCartItem.mSelectVariantListData?.discountPercentage,
+              mCartItem.mSelectVariantListData?.discountPercentage,
           discountedItemTotalAmount: subDiscountTotal * (mCartItem.count ?? 0),
 
           ///Modifier
@@ -109,8 +112,8 @@ createOrderPlaceRequest({String? remarksController,
 
           ///Total
           totalItemAmount:
-          ((subTotalAmount + subTotalTax) * (mCartItem.count ?? 0)) +
-              subModifierTotal,
+              ((subTotalAmount + subTotalTax) * (mCartItem.count ?? 0)) +
+                  subModifierTotal,
 
           ///ItemAdditionalNotes
           itemAdditionalNotes: mCartItem.textRemarks);
@@ -144,7 +147,7 @@ createOrderPlaceRequest({String? remarksController,
     var subDiscountTotal = 0.0;
     if ((mCartItem.mSelectVariantListData?.discountPercentage ?? 0) > 0) {
       subDiscountTotal =
-      (mCartItem.mSelectVariantListData?.discountedPrice ?? 0);
+          (mCartItem.mSelectVariantListData?.discountedPrice ?? 0);
       subDiscountTotal = (subTotalAmount - subDiscountTotal);
       discountTotal =
           discountTotal + (subDiscountTotal * (mCartItem.count ?? 0));
@@ -191,17 +194,17 @@ createOrderPlaceRequest({String? remarksController,
         ///variant
         variantPrice: mCartItem.mSelectVariantListData?.price,
         itemVariantName:
-        mCartItem.mSelectVariantListData?.quantitySpecification ?? '',
+            mCartItem.mSelectVariantListData?.quantitySpecification ?? '',
         itemTotal: (mCartItem.mSelectVariantListData?.price ?? 0) *
             (mCartItem.count ?? 0),
         itemDiscountPrice: mCartItem.mSelectVariantListData?.discountedPrice,
         discountedItemAmount: (mCartItem.mSelectVariantListData?.price ?? 0) -
             (mCartItem.mSelectVariantListData?.discountedPrice ?? 0),
         itemDiscountPriceTotal:
-        (mCartItem.mSelectVariantListData?.discountedPrice ?? 0) *
-            (mCartItem.count ?? 0),
+            (mCartItem.mSelectVariantListData?.discountedPrice ?? 0) *
+                (mCartItem.count ?? 0),
         discountPercentage:
-        mCartItem.mSelectVariantListData?.discountPercentage,
+            mCartItem.mSelectVariantListData?.discountPercentage,
         discountedItemTotalAmount: subDiscountTotal * (mCartItem.count ?? 0),
 
         ///Modifier
@@ -216,17 +219,14 @@ createOrderPlaceRequest({String? remarksController,
 
         ///Total
         totalItemAmount:
-        ((subTotalAmount + subTotalTax) * (mCartItem.count ?? 0)) +
-            subModifierTotal,
+            ((subTotalAmount + subTotalTax) * (mCartItem.count ?? 0)) +
+                subModifierTotal,
 
         ///ItemAdditionalNotes
         itemAdditionalNotes: mCartItem.textRemarks);
     debugPrint("\nmOrderMenu:   ${jsonEncode(mOrderMenu)}\n");
     orderMenu.add(mOrderMenu);
   }
-
-
-
 
   ///subTotal calculation
   double subTotal = totalAmount + modifierTotal + itemTaxTotal - discountTotal;
@@ -235,9 +235,9 @@ createOrderPlaceRequest({String? remarksController,
   double taxTotal = 0.0;
   List<OrderTax> orderTaxList = [];
   for (TaxData mTaxData
-  in mConfigurationResponse.configurationData?.taxData ?? []) {
+      in mConfigurationResponse.configurationData?.taxData ?? []) {
     double subTaxTotal =
-    calculatePercentageOf(subTotal, mTaxData.taxPercentage ?? 0.0);
+        calculatePercentageOf(subTotal, mTaxData.taxPercentage ?? 0.0);
     taxTotal = taxTotal + subTaxTotal;
     OrderTax mOrderTax = OrderTax(
         taxIDF: mTaxData.taxIDP ?? '',
@@ -251,6 +251,7 @@ createOrderPlaceRequest({String? remarksController,
   }
   double grandTotal = getDoubleValue(subTotal + taxTotal);
   double adjustedAmount = getDoubleValue(roundToNearestPossible(grandTotal));
+
   ///payment
   PaymentResponse mPaymentResponse = PaymentResponse();
   if (printOrderPayment != null) {
@@ -303,8 +304,6 @@ createOrderPlaceRequest({String? remarksController,
 
   String sCounterBalanceHistoryIDF = await SharedPrefs().getHistoryID();
 
-
-
   ///OrderPlaceRequest
   OrderDetailList mOrderDetailList = OrderDetailList(
       sequentialOrderID: (mOrderHistoryData?.sequentialOrderID ?? "").isEmpty
@@ -312,27 +311,25 @@ createOrderPlaceRequest({String? remarksController,
           : (mOrderHistoryData?.sequentialOrderID ?? ""),
       trackingOrderID: mOrderPlace?.sOrderNo ?? '',
       counterBalanceHistoryIDF: sCounterBalanceHistoryIDF,
-      counterIDF:
-      (mConfigurationResponse.configurationData?.counterData ?? []).isEmpty
+      counterIDF: (mConfigurationResponse.configurationData?.counterData ?? []).isEmpty
           ? ""
           : (mConfigurationResponse.configurationData?.counterData ?? [])
-          .first
-          .counterIDP,
+              .first
+              .counterIDP,
       orderSource: (mOrderHistoryData?.orderSource ?? 2).toString(),
-      orderType: (mOrderHistoryData?.orderType ?? 1).toString(),
-      branchIDF:
-      (mConfigurationResponse.configurationData?.branchData ?? []).isEmpty
+      orderType: (mOrderHistoryData?.orderType ?? ((isDineInView ?? true) ? 1 : 2))
+          .toString(),
+      branchIDF: (mConfigurationResponse.configurationData?.branchData ?? []).isEmpty
           ? ""
           : (mConfigurationResponse.configurationData?.branchData ?? [])
-          .first
-          .branchIDP,
+              .first
+              .branchIDP,
       userIDF: (mOrderHistoryData?.userIDF ?? sUserId.toString()),
-      restaurantIDF:
-      (mConfigurationResponse.configurationData?.restaurantData ?? []).isEmpty
+      restaurantIDF: (mConfigurationResponse.configurationData?.restaurantData ?? []).isEmpty
           ? ""
           : (mConfigurationResponse.configurationData?.restaurantData ?? [])
-          .first
-          .restaurantIDP,
+              .first
+              .restaurantIDP,
       additionalNotes: remarksController ?? '',
       orderDate: getUTCValue(mOrderPlace!.dateTime.isEmpty
           ? DateTime.now()
@@ -363,26 +360,24 @@ createOrderPlaceRequest({String? remarksController,
 
       ///orderMenu
       orderMenu: orderMenu,
+
       ///kot
       kOTMenu: kOTMenu,
 
       ///payment_service
       paymentGatewayNo: (printOrderPayment?.paymentGatewayNo ?? '').isEmpty
-          ? (mOrderHistoryData?.paymentGatewayNo ??
-          printOrderPayment?.paymentGatewayNo ??
-          '')
-          .toString()
+          ? (mOrderHistoryData?.paymentGatewayNo ?? printOrderPayment?.paymentGatewayNo ?? '')
+              .toString()
           : (printOrderPayment?.paymentGatewayNo ?? ''),
       paymentGatewayIDF: (printOrderPayment?.paymentGatewayIDP ?? '').isEmpty
           ? (mOrderHistoryData?.paymentGatewayIDF ??
-          printOrderPayment?.paymentGatewayIDP ??
-          '')
+              printOrderPayment?.paymentGatewayIDP ??
+              '')
           : (printOrderPayment?.paymentGatewayIDP ?? ''),
-      paymentGatewaySettingIDF:
-      (printOrderPayment?.paymentGatewaySettingIDP ?? '').isEmpty
+      paymentGatewaySettingIDF: (printOrderPayment?.paymentGatewaySettingIDP ?? '').isEmpty
           ? (mOrderHistoryData?.paymentGatewaySettingIDF ??
-          printOrderPayment?.paymentGatewaySettingIDP ??
-          '')
+              printOrderPayment?.paymentGatewaySettingIDP ??
+              '')
           : (printOrderPayment?.paymentGatewaySettingIDP ?? ''),
       paymentStatus: printOrderPayment == null ? "P" : "S",
       orderStatus: printOrderPayment == null ? "A" : "D",
@@ -395,10 +390,8 @@ createOrderPlaceRequest({String? remarksController,
       email: (mOrderHistoryData?.email ?? mOrderPlace.mSelectCustomer?.email),
       phoneCountryCode: (mOrderHistoryData?.phoneCountryCode ??
           mOrderPlace.mSelectCustomer?.phoneCountryCode),
-      phoneNumber: (mOrderHistoryData?.phoneNumber ??
-          mOrderPlace.mSelectCustomer?.phoneNumber),
-      customerIDF: (mOrderHistoryData?.userIDF ?? "").isEmpty ? mOrderPlace
-          .mSelectCustomer?.customerIDP : "");
+      phoneNumber: (mOrderHistoryData?.phoneNumber ?? mOrderPlace.mSelectCustomer?.phoneNumber),
+      customerIDF: (mOrderHistoryData?.userIDF ?? "").isEmpty ? mOrderPlace.mSelectCustomer?.customerIDP : "");
 
   return mOrderDetailList;
 }

@@ -97,8 +97,8 @@ class MenuStockRowView extends StatelessWidget {
                 height: 19.5.sp,
                 textSize: 11.5.sp,
                 (mGetMenuStockData.isStockOut ?? false)
-                    ? sStockIn.tr
-                    : sStockOut.tr,
+                    ? sAvailable.tr
+                    : sSoldOut.tr,
                 () async {
                   AppAlert.showCustomDialogYesNoLogout(Get.context!, 'Alert!',
                       'Do you want to update this item to ${(mGetMenuStockData.isStockOut ?? false)?sStockIn.tr:sStockOut.tr}?', () async{

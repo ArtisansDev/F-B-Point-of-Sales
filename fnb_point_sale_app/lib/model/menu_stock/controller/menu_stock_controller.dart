@@ -14,6 +14,7 @@ import 'package:fnb_point_sale_base/data/mode/get_menu_stock/get_menu_stock_resp
 import 'package:fnb_point_sale_base/data/mode/menu_stock/menu_request.dart';
 import 'package:fnb_point_sale_base/data/remote/api_call/product/product_api.dart';
 import 'package:fnb_point_sale_base/data/remote/web_response.dart';
+import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:fnb_point_sale_base/locator.dart';
 import 'package:fnb_point_sale_base/utils/network_utils.dart';
 import 'package:get/get.dart';
@@ -26,8 +27,8 @@ class MenuStockController extends GetxController {
 
   ///"StockStatus": null, // nullable, null for all, 1 for stoke in data, 2 for stoke out data
   RxString sLoading = 'Loading...'.obs;
-  RxString selectStockStatus = 'Stock Out'.obs;
-  RxList<String> stockStatusList = <String>['Stock In', 'Stock Out'].obs;
+  RxString selectStockStatus = 'Sold Out'.obs;
+  RxList<String> stockStatusList = <String>[sAvailable.tr, sSoldOut.tr].obs;
   Rx<TextEditingController> searchController = TextEditingController().obs;
 
 
@@ -131,7 +132,7 @@ class MenuStockController extends GetxController {
                 : (mConfigurationResponse.configurationData?.branchData ?? [])
                     .first
                     .branchIDP,
-            stockStatus: selectStockStatus.value == "Stock Out" ? "2" : "1");
+            stockStatus: selectStockStatus.value == "Sold Out" ? "2" : "1");
         debugPrint("mGetMenuStockRequest ${jsonEncode(mGetMenuStockRequest)}");
         WebResponseSuccess mWebResponseSuccess =
             await productApiImpl.postGetStockData(mGetMenuStockRequest);

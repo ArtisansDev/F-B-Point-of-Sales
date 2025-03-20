@@ -36,7 +36,7 @@ class ItemSummaryOrderList extends StatelessWidget {
           margin: EdgeInsets.only(
               top: 10.sp, left: 8.sp, right: 8.sp, bottom: 0.sp),
           padding: EdgeInsets.only(
-              left: 11.sp, right: 11.sp, top: 10.sp, bottom: 10.sp),
+              left: 11.sp, right: 11.sp, top: 8.sp, bottom: 8.sp),
           decoration: BoxDecoration(
             color: ColorConstants.cAppButtonLightColour,
             borderRadius: BorderRadius.all(
@@ -50,7 +50,7 @@ class ItemSummaryOrderList extends StatelessWidget {
                 child: Text(
                   sItems.tr,
                   style:
-                      getText500(size: 11.5.sp, colors: ColorConstants.black),
+                      getText500(size: 11.sp, colors: ColorConstants.black),
                 ),
               ),
               Expanded(
@@ -60,7 +60,7 @@ class ItemSummaryOrderList extends StatelessWidget {
                     child: Text(
                       sQty.tr,
                       style: getText500(
-                          size: 11.5.sp, colors: ColorConstants.black),
+                          size: 11.sp, colors: ColorConstants.black),
                     ),
                   )),
               Expanded(
@@ -70,7 +70,7 @@ class ItemSummaryOrderList extends StatelessWidget {
                       child: Text(
                         sPrice.tr,
                         style: getText500(
-                            size: 11.5.sp, colors: ColorConstants.black),
+                            size: 11.sp, colors: ColorConstants.black),
                       ))),
             ],
           ),

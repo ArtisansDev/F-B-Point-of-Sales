@@ -150,77 +150,91 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
                           child: Row(
                             children: [
                               Expanded(
-                                flex: 10,
+                                  flex: 10,
                                   child: Row(
-                                children: [
-                                  Text(
-                                    'Order No:',
-                                    style: getText300(
-                                        size: 11.2.sp,
-                                        colors: ColorConstants.black),
-                                  ),
-                                  SizedBox(
-                                    width: 7.sp,
-                                  ),
-                                  Expanded(
-                                      child: Text(
-                                    '${controller.mDashboardScreenController.mRestaurantData.value?.orderIDPrefixCode ?? ''}${controller.mOrderPlace.value?.sOrderNo ?? ''}',
-                                    style: getText500(
-                                        size: 11.2.sp,
-                                        colors: ColorConstants.black),
-                                  )),
-                                ],
-                              )),
-                              Expanded(
-                                  flex: 9,
-                                  child: GestureDetector(
-                                onTap: () {
-                                  if (!controller.isOrderHistory.value ||
-                                      (controller.mOrderPlace.value?.tableNo ??
-                                              '--') ==
-                                          '--') {
-                                    controller.selectTable();
-                                  }
-                                },
-                                child: Container(
-                                  height: 18.sp,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(8.sp),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.15),
-                                        spreadRadius: 1,
-                                        blurRadius: 3,
-                                        offset: const Offset(
-                                            0, 0), // changes position of shadow
-                                      ),
-                                    ], // use instead of BorderRadius.all(Radius.circular(20))
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        sSeatingNo.tr,
+                                        'Order No:',
                                         style: getText300(
                                             size: 11.2.sp,
                                             colors: ColorConstants.black),
                                       ),
                                       SizedBox(
-                                        width: 6.sp,
+                                        width: 7.sp,
                                       ),
-                                       Text(
-                                        controller.mOrderPlace.value?.tableNo ??
-                                            '',
+                                      Expanded(
+                                          child: Text(
+                                        '${controller.mDashboardScreenController.mRestaurantData.value?.orderIDPrefixCode ?? ''}${controller.mOrderPlace.value?.sOrderNo ?? ''}',
                                         style: getText500(
                                             size: 11.2.sp,
                                             colors: ColorConstants.black),
-                                      )
-                                      ,
+                                      )),
                                     ],
-                                  ),
-                                ),
-                              )),
+                                  )),
+                              Expanded(
+                                  flex: 9,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      if ((!controller.isOrderHistory.value ||
+                                              (controller.mOrderPlace.value
+                                                          ?.tableNo ??
+                                                      '--') ==
+                                                  '--') &&
+                                          controller.isDineInView.value) {
+                                        controller.selectTable();
+                                      }
+                                    },
+                                    child: (!controller.isDineInView.value)
+                                        ? Container(
+                                            height: 17.sp,
+                                          )
+                                        : Visibility(
+                                            visible:
+                                                controller.isDineInView.value,
+                                            child: Container(
+                                              height: 17.sp,
+                                              decoration: BoxDecoration(
+                                                color: ColorConstants.cAppButtonColour.withOpacity(0.15),
+                                                borderRadius:
+                                                    BorderRadius.circular(8.sp),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.15),
+                                                    spreadRadius: 1,
+                                                    blurRadius: 3,
+                                                    offset: const Offset(0,
+                                                        0), // changes position of shadow
+                                                  ),
+                                                ], // use instead of BorderRadius.all(Radius.circular(20))
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    sSeatingNo.tr,
+                                                    style: getText300(
+                                                        size: 11.1.sp,
+                                                        colors: ColorConstants
+                                                            .black),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 6.sp,
+                                                  ),
+                                                  Text(
+                                                    controller.mOrderPlace.value
+                                                            ?.tableNo ??
+                                                        '',
+                                                    style: getText500(
+                                                        size: 11.1.sp,
+                                                        colors: ColorConstants
+                                                            .black),
+                                                  ),
+                                                ],
+                                              ),
+                                            )),
+                                  )),
                             ],
                           ),
                         ),
@@ -235,7 +249,7 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
                           margin: EdgeInsets.all(
                             8.sp,
                           ),
-                          padding: EdgeInsets.all(8.sp),
+                          padding: EdgeInsets.only(left: 8.sp, right: 8.sp),
                           decoration: BoxDecoration(
                             color: ColorConstants.white,
                             borderRadius: BorderRadius.all(
@@ -252,27 +266,78 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
                                       colors: ColorConstants.black),
                                 ),
                               ),
-                              const Expanded(
-                                  child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  // Text(
-                                  //   'Attendant:',
-                                  //   style: getText300(
-                                  //       size: 11.5.sp,
-                                  //       colors: ColorConstants.black),
-                                  // ),
-                                  // SizedBox(
-                                  //   width: 8.sp,
-                                  // ),
-                                  // Text(
-                                  //   'Denny',
-                                  //   style: getText500(
-                                  //       size: 11.5.sp,
-                                  //       colors: ColorConstants.black),
-                                  // ),
-                                ],
-                              )),
+                              Expanded(
+                                child: Container(
+                                    padding: EdgeInsets.all(5.sp),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(30),
+                                        color: ColorConstants.cAppColors
+                                            .withOpacity(0.80)),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                            child: GestureDetector(
+                                                onTap: () {
+                                                  if (!controller
+                                                      .isOrderHistory.value) {
+                                                    controller.isDineInView
+                                                        .value = true;
+                                                  }
+                                                },
+                                                child: Container(
+                                                  height: 17.sp,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              30),
+                                                      color: controller
+                                                              .isDineInView
+                                                              .value
+                                                          ? ColorConstants
+                                                              .cAppButtonColour
+                                                          : Colors.transparent),
+                                                  child: Center(
+                                                      child: Text('DINE - IN',
+                                                          style: getText500(
+                                                              size: 10.3.sp,
+                                                              colors: Colors
+                                                                  .white))),
+                                                ))),
+                                        Expanded(
+                                          child: GestureDetector(
+                                              onTap: () {
+                                                if (!controller
+                                                    .isOrderHistory.value) {
+                                                  controller.isDineInView
+                                                      .value = false;
+                                                  controller.clearTable();
+                                                }
+                                              },
+                                              child: Container(
+                                                height: 17.sp,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30),
+                                                    color: controller
+                                                            .isDineInView.value
+                                                        ? Colors.transparent
+                                                        : ColorConstants
+                                                            .cAppButtonColour),
+                                                child: Center(
+                                                    child: Text(
+                                                  'PICKUP',
+                                                  style: getText500(
+                                                      size: 10.3.sp,
+                                                      colors: Colors.white),
+                                                )),
+                                              )),
+                                        )
+                                      ],
+                                    )),
+                              ),
                             ],
                           ),
                         ),

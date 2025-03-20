@@ -216,7 +216,7 @@ class ItemSummaryOrderScreen extends GetView<ItemSummaryController> {
                                       bgColor:
                                           ColorConstants.red.withOpacity(0.2),
                                       textColor: ColorConstants.red,
-                                      height: 17.5.sp,
+                                      height: 17.sp,
                                       textSize: 11.sp,
                                       sCancel.tr.toUpperCase(),
                                       () {

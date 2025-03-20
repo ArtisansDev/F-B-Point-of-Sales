@@ -54,7 +54,7 @@ class MenuStockScreen extends GetView<MenuStockController> {
                     ),
                     Expanded(
                         child: Text(
-                      sStockInOut.tr,
+                      sStockAvailability.tr,
                       style: getText600(
                           colors: ColorConstants.appTextSalesHader,
                           size: 12.sp),

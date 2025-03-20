@@ -34,50 +34,50 @@ class SelectedOrderBottomView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Visibility(
         visible: (controller.mOrderPlace.value?.cartItem ?? []).isNotEmpty,
-        child: Column(children: [
-          ///Sub Total
-          Container(
-              margin: EdgeInsets.all(
-                8.sp,
-              ),
-              padding: EdgeInsets.only(
-                  left: 8.sp, right: 8.sp, top: 3.sp, bottom: 5.sp),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    sSubTotal.tr,
-                    style: getTextRegular(
-                        size: 11.sp, colors: ColorConstants.cAppTaxColour),
-                  ),
-                  Text(
-                    '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${(controller.mOrderPlace.value?.subTotalPrice ?? 0).toStringAsFixed(2)}',
-                    style: getTextRegular(
-                        size: 11.sp, colors: ColorConstants.cAppTaxColour),
-                  ),
-                ],
-              )),
-          Container(
-            height: 3.sp,
-            margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
-            color: Colors.grey.shade300,
+        child: Container(
+          decoration: BoxDecoration(
+            color: ColorConstants.cAppButtonColour.withOpacity(0.18),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(8.sp),
+                topRight: Radius.circular(8.sp),
+                bottomRight: Radius.circular(8.sp),
+                bottomLeft: Radius.circular(8.sp)),
           ),
-
-          ///Tax
-          ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.zero,
-              itemCount:
-                  (controller.mDashboardScreenController.taxData ?? []).length,
-              itemBuilder: (BuildContext context, int index) {
-                TaxData mTaxData =
-                    (controller.mDashboardScreenController.taxData ??
-                        [])[index];
-                return Visibility(
-                    visible: (mTaxData.taxPercentage ?? 0) > 0,
-                    child: Column(
-                      children: [
+          child: Obx(() => Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      controller.isOrderBottomView.value =
+                          !controller.isOrderBottomView.value;
+                      controller.isOrderBottomView.refresh();
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 17.sp,
+                      decoration: BoxDecoration(
+                        color:
+                            ColorConstants.cAppButtonColour.withOpacity(0.18),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8.sp),
+                            topRight: Radius.circular(8.sp),
+                            bottomRight: Radius.circular(controller.isOrderBottomView.value
+                                ?0:8.sp),
+                            bottomLeft: Radius.circular(controller.isOrderBottomView.value
+                                ?0:8.sp)
+                        ),
+                      ),
+                      child: Icon(
+                        controller.isOrderBottomView.value
+                            ? Icons.arrow_drop_down_outlined
+                            : Icons.arrow_drop_up,
+                        color: ColorConstants.cAppColors,
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                      visible: controller.isOrderBottomView.value,
+                      child: Column(children: [
+                        ///Sub Total
                         Container(
                             margin: EdgeInsets.all(
                               8.sp,
@@ -85,19 +85,19 @@ class SelectedOrderBottomView extends StatelessWidget {
                             padding: EdgeInsets.only(
                                 left: 8.sp,
                                 right: 8.sp,
-                                top: 5.sp,
-                                bottom: 5.sp),
+                                top: 3.sp,
+                                bottom: 3.sp),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  '${mTaxData.taxName ?? ''} (${mTaxData.taxPercentage}%)',
+                                  sSubTotal.tr,
                                   style: getTextRegular(
                                       size: 11.sp,
                                       colors: ColorConstants.cAppTaxColour),
                                 ),
                                 Text(
-                                  '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${calculatePercentageOf(getDoubleValue(controller.mOrderPlace.value?.subTotalPrice ?? 0), getDoubleValue(mTaxData.taxPercentage)).toStringAsFixed(2)}',
+                                  '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${(controller.mOrderPlace.value?.subTotalPrice ?? 0).toStringAsFixed(2)}',
                                   style: getTextRegular(
                                       size: 11.sp,
                                       colors: ColorConstants.cAppTaxColour),
@@ -109,154 +109,235 @@ class SelectedOrderBottomView extends StatelessWidget {
                           margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
                           color: Colors.grey.shade300,
                         ),
-                      ],
-                    ));
-              }),
 
-          ///total
-          Container(
-              margin: EdgeInsets.all(
-                8.sp,
-              ),
-              padding: EdgeInsets.only(
-                  left: 8.sp, right: 8.sp, top: 3.sp, bottom: 3.sp),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    sTotal.tr,
-                    style: getTextRegular(
-                        size: 11.5.sp, colors: ColorConstants.cAppButtonColour),
-                  ),
-                  Text(
-                    '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(controller.mOrderPlace.value?.totalPrice ?? 0).toStringAsFixed(2)}',
-                    style: getTextRegular(
-                        size: 11.5.sp, colors: ColorConstants.cAppButtonColour),
-                  ),
+                        ///Tax
+                        ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.zero,
+                            itemCount: (controller
+                                        .mDashboardScreenController.taxData ??
+                                    [])
+                                .length,
+                            itemBuilder: (BuildContext context, int index) {
+                              TaxData mTaxData = (controller
+                                      .mDashboardScreenController.taxData ??
+                                  [])[index];
+                              return Visibility(
+                                  visible: (mTaxData.taxPercentage ?? 0) > 0,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                          margin: EdgeInsets.all(
+                                            8.sp,
+                                          ),
+                                          padding: EdgeInsets.only(
+                                              left: 8.sp,
+                                              right: 8.sp,
+                                              top: 3.5.sp,
+                                              bottom: 3.5.sp),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                '${mTaxData.taxName ?? ''} (${mTaxData.taxPercentage}%)',
+                                                style: getTextRegular(
+                                                    size: 11.sp,
+                                                    colors: ColorConstants
+                                                        .cAppTaxColour),
+                                              ),
+                                              Text(
+                                                '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${calculatePercentageOf(getDoubleValue(controller.mOrderPlace.value?.subTotalPrice ?? 0), getDoubleValue(mTaxData.taxPercentage)).toStringAsFixed(2)}',
+                                                style: getTextRegular(
+                                                    size: 11.sp,
+                                                    colors: ColorConstants
+                                                        .cAppTaxColour),
+                                              ),
+                                            ],
+                                          )),
+                                      Container(
+                                        height: 3.sp,
+                                        margin: EdgeInsets.only(
+                                            left: 8.sp, right: 8.sp),
+                                        color: Colors.grey.shade300,
+                                      ),
+                                    ],
+                                  ));
+                            }),
+
+                        ///total
+                        Container(
+                            margin: EdgeInsets.all(
+                              8.sp,
+                            ),
+                            padding: EdgeInsets.only(
+                                left: 8.sp,
+                                right: 8.sp,
+                                top: 2.sp,
+                                bottom: 2.sp),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  sTotal.tr,
+                                  style: getTextRegular(
+                                      size: 11.5.sp,
+                                      colors: ColorConstants.cAppButtonColour),
+                                ),
+                                Text(
+                                  '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(controller.mOrderPlace.value?.totalPrice ?? 0).toStringAsFixed(2)}',
+                                  style: getTextRegular(
+                                      size: 11.5.sp,
+                                      colors: ColorConstants.cAppButtonColour),
+                                ),
+                              ],
+                            )),
+                        Container(
+                          height: 3.sp,
+                          margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
+                          color: Colors.grey.shade300,
+                        ),
+
+                        ///Rounding
+                        Container(
+                            margin: EdgeInsets.all(
+                              8.sp,
+                            ),
+                            padding: EdgeInsets.only(
+                                left: 8.sp,
+                                right: 8.sp,
+                                top: 2.sp,
+                                bottom: 2.sp),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  sRounding.tr,
+                                  style: getTextRegular(
+                                      size: 11.5.sp,
+                                      colors: ColorConstants.cAppTaxColour),
+                                ),
+                                Text(
+                                  '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${(getDoubleValue(controller.mOrderPlace.value?.rounOffPrice ?? 0) - getDoubleValue(controller.mOrderPlace.value?.totalPrice ?? 0)).toStringAsFixed(2)}',
+                                  style: getTextRegular(
+                                      size: 11.5.sp,
+                                      colors: ColorConstants.cAppTaxColour),
+                                ),
+                              ],
+                            )),
+                        Container(
+                          height: 3.sp,
+                          margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
+                          color: Colors.grey.shade300,
+                        ),
+
+                        ///total pay
+                        Container(
+                            margin: EdgeInsets.all(
+                              8.sp,
+                            ),
+                            padding: EdgeInsets.only(
+                                left: 8.sp,
+                                right: 8.sp,
+                                top: 2.sp,
+                                bottom: 2.sp),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  sPayableAmount.tr,
+                                  style: getText500(
+                                      size: 12.sp,
+                                      colors: ColorConstants.cAppButtonColour),
+                                ),
+                                Text(
+                                  '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(controller.mOrderPlace.value?.rounOffPrice ?? 0).toStringAsFixed(2)}',
+                                  style: getText500(
+                                      size: 12.sp,
+                                      colors: ColorConstants.cAppButtonColour),
+                                ),
+                              ],
+                            )),
+                        Container(
+                          height: 3.sp,
+                          margin: EdgeInsets.only(
+                              left: 8.sp, right: 8.sp, bottom: 10.sp),
+                          color: Colors.grey.shade300,
+                        ),
+
+                        ///remark
+                        Container(
+                            margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
+                            height: 19.5.sp,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8
+                                    .sp) // use instead of BorderRadius.all(Radius.circular(20))
+                                ),
+                            child: TextInputWidget(
+                              // isReadOnly: controller.remarkController.value.text.isNotEmpty,
+                              textColor: Colors.black,
+                              // controller.remarkController.value.text.isEmpty
+                              //     ? Colors.black
+                              //     : Colors.grey,
+                              placeHolder: sRemark.tr,
+                              controller: controller.remarkController.value,
+                              errorText: null,
+                              textInputType: TextInputType.emailAddress,
+                              hintText: sRemark.tr,
+                              showFloatingLabel: false,
+                              topPadding: 5.sp,
+                              hintTextColor:
+                                  ColorConstants.black.withOpacity(0.50),
+                              hintTextSize: 11.sp,
+                              textSize: 11.5.sp,
+                              onFilteringTextInputFormatter: [
+                                FilteringTextInputFormatter.allow(RegExp(
+                                    AppUtilConstants.patternStringAndSpace)),
+                              ],
+                            )),
+
+                        ///button Place Order
+                        Visibility(
+                            visible:
+                                (controller.mOrderPlace.value?.tableNo ?? '') !=
+                                    '--',
+                            child: Visibility(
+                                visible: controller.placeOrder.value,
+                                child: Container(
+                                    margin: EdgeInsets.only(
+                                        left: 8.sp, right: 8.sp, top: 8.sp),
+                                    child: rectangleCornerButtonText600(
+                                      height: 19.5.sp,
+                                      textSize: 11.5.sp,
+                                      sPlaceOrder.tr,
+                                      () {
+                                        controller.onPlaceOrder();
+                                      },
+                                    )))),
+
+                        ///button Pay and Invoice
+                        Container(
+                            margin: EdgeInsets.only(
+                                left: 8.sp, right: 8.sp, top: 8.sp),
+                            child: rectangleCornerButtonText600(
+                              boderColor: ColorConstants.cAppButtonInviceColour,
+                              bgColor: ColorConstants.cAppButtonInviceColour,
+                              textColor: ColorConstants.cAppTextInviceColour,
+                              height: 19.5.sp,
+                              textSize: 11.5.sp,
+                              sPayInvoice.tr,
+                              () {
+                                controller.onPayment();
+                              },
+                            )),
+                        SizedBox(
+                          height: 8.sp,
+                        )
+                      ]))
                 ],
               )),
-          Container(
-            height: 3.sp,
-            margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
-            color: Colors.grey.shade300,
-          ),
-
-          ///Rounding
-          Container(
-              margin: EdgeInsets.all(
-                8.sp,
-              ),
-              padding: EdgeInsets.only(
-                  left: 8.sp, right: 8.sp, top: 3.sp, bottom: 3.sp),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    sRounding.tr,
-                    style: getTextRegular(
-                        size: 11.5.sp, colors: ColorConstants.cAppTaxColour),
-                  ),
-                  Text(
-                    '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${(getDoubleValue(controller.mOrderPlace.value?.rounOffPrice ?? 0) - getDoubleValue(controller.mOrderPlace.value?.totalPrice ?? 0)).toStringAsFixed(2)}',
-                    style: getTextRegular(
-                        size: 11.5.sp, colors: ColorConstants.cAppTaxColour),
-                  ),
-                ],
-              )),
-          Container(
-            height: 3.sp,
-            margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
-            color: Colors.grey.shade300,
-          ),
-
-          ///total pay
-          Container(
-              margin: EdgeInsets.all(
-                8.sp,
-              ),
-              padding: EdgeInsets.only(
-                  left: 8.sp, right: 8.sp, top: 3.sp, bottom: 3.sp),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    sPayableAmount.tr,
-                    style: getText500(
-                        size: 12.5.sp, colors: ColorConstants.cAppButtonColour),
-                  ),
-                  Text(
-                    '${controller.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''} ${getDoubleValue(controller.mOrderPlace.value?.rounOffPrice ?? 0).toStringAsFixed(2)}',
-                    style: getText500(
-                        size: 12.5.sp, colors: ColorConstants.cAppButtonColour),
-                  ),
-                ],
-              )),
-          Container(
-            height: 3.sp,
-            margin: EdgeInsets.only(left: 8.sp, right: 8.sp, bottom: 12.sp),
-            color: Colors.grey.shade300,
-          ),
-
-          ///remark
-          Container(
-              margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
-              height: 19.5.sp,
-              child: TextInputWidget(
-                // isReadOnly: controller.remarkController.value.text.isNotEmpty,
-                textColor: Colors.black,
-                // controller.remarkController.value.text.isEmpty
-                //     ? Colors.black
-                //     : Colors.grey,
-                placeHolder: sRemark.tr,
-                controller: controller.remarkController.value,
-                errorText: null,
-                textInputType: TextInputType.emailAddress,
-                hintText: sRemark.tr,
-                showFloatingLabel: false,
-                topPadding: 5.sp,
-                hintTextColor: ColorConstants.black.withOpacity(0.50),
-                hintTextSize: 11.sp,
-                textSize: 11.5.sp,
-                onFilteringTextInputFormatter: [
-                  FilteringTextInputFormatter.allow(
-                      RegExp(AppUtilConstants.patternStringAndSpace)),
-                ],
-              )),
-
-          ///button Place Order
-          Visibility(
-              visible: (controller.mOrderPlace.value?.tableNo ?? '') != '--',
-              child: Visibility(
-                  visible: controller.placeOrder.value,
-                  child: Container(
-                      margin:
-                          EdgeInsets.only(left: 8.sp, right: 8.sp, top: 8.sp),
-                      child: rectangleCornerButtonText600(
-                        height: 19.5.sp,
-                        textSize: 11.5.sp,
-                        sPlaceOrder.tr,
-                        () {
-                          controller.onPlaceOrder();
-                        },
-                      )))),
-
-          ///button Pay and Invoice
-          Container(
-              margin: EdgeInsets.only(left: 8.sp, right: 8.sp, top: 8.sp),
-              child: rectangleCornerButtonText600(
-                boderColor: ColorConstants.cAppButtonInviceColour,
-                bgColor: ColorConstants.cAppButtonInviceColour,
-                textColor: ColorConstants.cAppTextInviceColour,
-                height: 19.5.sp,
-                textSize: 11.5.sp,
-                sPayInvoice.tr,
-                () {
-                  controller.onPayment();
-                },
-              )),
-          SizedBox(
-            height: 8.sp,
-          )
-        ]));
+        ));
   }
 }

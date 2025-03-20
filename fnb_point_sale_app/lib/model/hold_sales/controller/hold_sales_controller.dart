@@ -42,7 +42,11 @@ class HoldSalesController extends GetxController {
     for (OrderPlace mOrderPlace in mHoldSaleModelValue.mOrderPlace ?? []) {
       ///clear table
       if ((mOrderPlace.tableNo ?? "").isNotEmpty &&
+          (mOrderPlace.tableNo ?? "") != '--' &&
           !(mOrderPlace.orderHistory)) {
+        print("#####");
+        print("##### ${(mOrderPlace.tableNo ?? "")}");
+        print("##### ${!(mOrderPlace.orderHistory)}");
         TablesByTableStatusData mTablesByTableStatusData =
             TablesByTableStatusData(
           occupiedTrackingOrderID: mOrderPlace.sOrderNo ?? '',
@@ -68,7 +72,9 @@ class HoldSalesController extends GetxController {
 
   void onDeleteHoldSale(int index, OrderPlace mOrderPlace) async {
     ///clear table
-    if ((mOrderPlace.tableNo ?? "").isNotEmpty && !(mOrderPlace.orderHistory)) {
+    if ((mOrderPlace.tableNo ?? "").isNotEmpty &&
+        (mOrderPlace.tableNo ?? "") != '--' &&
+        !(mOrderPlace.orderHistory)) {
       TablesByTableStatusData mTablesByTableStatusData =
           TablesByTableStatusData(
         occupiedTrackingOrderID: mOrderPlace.sOrderNo ?? '',

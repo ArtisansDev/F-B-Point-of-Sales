@@ -55,16 +55,17 @@ class SelectedOrderController extends HomeBaseController {
   Rxn<OrderPlace> mOrderPlacePrint = Rxn<OrderPlace>();
   RxBool placeOrder = false.obs;
   RxBool isOrderHistory = false.obs;
+  RxBool isOrderBottomView = true.obs;
+  RxBool isDineInView = true.obs;
 
   SelectedOrderController() {
     mSelectedOrderController.value = this;
-
     mOrderPlace.value = null;
     mOrderPlaceHistory.value = null;
     mOrderPlacePrint.value = null;
-
     placeOrder.value = false;
     isOrderHistory.value = false;
+    isDineInView.value = true;
   }
 
   ///Order Place from Another page
@@ -74,8 +75,9 @@ class SelectedOrderController extends HomeBaseController {
       remarkController.value.text = mOrderPlace.value?.remarkController ?? '';
       mOrderPlace.refresh();
       getCalculateSubTotal();
-      isOrderHistory.value = true;
+      isOrderHistory.value = mOrderPlace.value?.orderHistory ?? true;
       mDashboardScreenController.mOrderPlace.value = null;
+      isDineInView.value = mOrderPlace.value?.isDineIn ?? true;
     } else if (mDashboardScreenController.mOrderHistoryPlace.value != null) {
       isOrderHistory.value = true;
       mOrderPlace.value = OrderPlace();
@@ -304,6 +306,7 @@ class SelectedOrderController extends HomeBaseController {
       ///History.value
       mOrderPlaceHistory.value = null;
       isOrderHistory.value = false;
+      isOrderBottomView.value = true;
     }
   }
 
@@ -316,7 +319,7 @@ class SelectedOrderController extends HomeBaseController {
         await holdSaleLocalApi.getAllHoldSale() ?? HoldSaleModel();
 
     mOrderPlace.value?.orderHistory = isOrderHistory.value ?? false;
-
+    mOrderPlace.value?.isDineIn = isDineInView.value ?? true;
     if ((mHoldSaleModel.mOrderPlace ?? []).isEmpty) {
       mHoldSaleModel = HoldSaleModel(mOrderPlace: [mOrderPlace.value!]);
       await holdSaleLocalApi.save(mHoldSaleModel);
@@ -326,13 +329,16 @@ class SelectedOrderController extends HomeBaseController {
 
     ///hold sale
     if (!(mOrderPlace.value?.orderHistory ?? false) &&
-        (mOrderPlace.value?.seatIDP ?? '').isNotEmpty) {
+        (mOrderPlace.value?.seatIDP ?? '').isNotEmpty &&
+        (mOrderPlace.value?.seatIDP ?? '') != '--') {
       await callUpdateTableStatusHold(mOrderPlace.value!);
     }
 
     ///clear data
+    isOrderBottomView.value = true;
     isOrderHistory.value = false;
     placeOrder.value = false;
+    isDineInView.value = true;
     mOrderPlace.value = null;
     mOrderPlace.refresh();
     await mDashboardScreenController.onUpdateHoldSale();
@@ -480,7 +486,8 @@ class SelectedOrderController extends HomeBaseController {
           mOrderPlace: mOrderPlace.value,
           kotCartItem: cartItemKot,
           mOrderHistoryData:
-              mDashboardScreenController.mOrderHistoryPlace.value);
+              mDashboardScreenController.mOrderHistoryPlace.value,
+          isDineInView: isDineInView.value);
 
       debugPrint("OrderDetail ----- ${jsonEncode(mOrderDetailList)}");
 
@@ -494,6 +501,7 @@ class SelectedOrderController extends HomeBaseController {
 
       ///clear data
       placeOrder.value = false;
+      isDineInView.value = true;
       mOrderPlace.value = null;
       mOrderPlace.refresh();
       await mDashboardScreenController.onUpdateHoldSale();
@@ -600,6 +608,7 @@ class SelectedOrderController extends HomeBaseController {
                 mOrderPlace: mOrderPlace.value,
                 kotCartItem: cartItemKot,
                 printOrderPayment: mSelectPaymentType,
+                isDineInView: isDineInView.value,
                 mOrderHistoryData:
                     mDashboardScreenController.mOrderHistoryPlace.value);
             debugPrint("OrderDetail ----- ${jsonEncode(mOrderDetailList)}");
@@ -615,6 +624,7 @@ class SelectedOrderController extends HomeBaseController {
 
             await callSaveOrder(mOrderDetailList, isPayment: true);
             placeOrder.value = false;
+            isDineInView.value = true;
             mOrderPlace.value = null;
             mOrderPlace.refresh();
             await mDashboardScreenController.onUpdateHoldSale();
@@ -631,7 +641,8 @@ class SelectedOrderController extends HomeBaseController {
             );
 
             ///clear table
-            if ((mOrderDetailList.seatIDF ?? '').isNotEmpty) {
+            if ((mOrderDetailList.seatIDF ?? '').isNotEmpty &&
+                (mOrderDetailList.seatIDF ?? '') != '--') {
               TablesByTableStatusData mTablesByTableStatusData =
                   TablesByTableStatusData(
                 occupiedTrackingOrderID: mOrderDetailList.trackingOrderID ?? '',
@@ -804,23 +815,6 @@ class SelectedOrderController extends HomeBaseController {
       {bool placeOrder = false, bool isPayment = false}) async {
     final myPrinterService = locator.get<MyPrinterService>();
     if (placeOrder) {
-      // ///Customer printCopies
-      // if (mDashboardScreenController.mPrinterSettingsDataCustomer.printCopies ==
-      //     null) {
-      //   await myPrinterService.salePlaceOrder(
-      //       mOrderDetailList, mOrderPlace, cartItemKot);
-      // } else {
-      //   for (int i = 0;
-      //       i <
-      //           (mDashboardScreenController
-      //                   .mPrinterSettingsDataCustomer.printCopies ??
-      //               0);
-      //       i++) {
-      //     await myPrinterService.salePlaceOrder(
-      //         mOrderDetailList, mOrderPlace, cartItemKot);
-      //   }
-      // }
-
       ///Kitchen printCopies
       if (mDashboardScreenController.mPrinterSettingsDataKitchen.printCopies ==
           null) {
@@ -874,5 +868,11 @@ class SelectedOrderController extends HomeBaseController {
       mOrderPlace.value?.tableNo = value.seatNumber ?? '--';
       mOrderPlace.refresh();
     });
+  }
+
+  void clearTable() {
+    mOrderPlace.value?.seatIDP = '--';
+    mOrderPlace.value?.tableNo = '--';
+    mOrderPlace.refresh();
   }
 }

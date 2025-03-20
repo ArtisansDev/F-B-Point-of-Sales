@@ -21,6 +21,7 @@ class ItemSummaryController extends GetxController {
   Rx<TextEditingController> remarkController = TextEditingController().obs;
   Rx<OrderHistoryData> mOrderPlace = OrderHistoryData().obs;
   RxInt index = (-1).obs;
+  RxBool isOrderBottomView = true.obs;
 
   ItemSummaryController(OrderHistoryData mOrder, int iIndex) {
     index.value = iIndex;

@@ -36,7 +36,7 @@ class TableItemSummaryOrderList extends StatelessWidget {
           margin: EdgeInsets.only(
               top: 10.sp, left: 8.sp, right: 8.sp, bottom: 0.sp),
           padding: EdgeInsets.only(
-              left: 11.sp, right: 11.sp, top: 10.sp, bottom: 10.sp),
+              left: 11.sp, right: 11.sp, top: 8.sp, bottom: 8.sp),
           decoration: BoxDecoration(
             color: ColorConstants.cAppButtonLightColour,
             borderRadius: BorderRadius.all(
@@ -49,8 +49,7 @@ class TableItemSummaryOrderList extends StatelessWidget {
                 flex: 7,
                 child: Text(
                   sItems.tr,
-                  style:
-                      getText500(size: 11.5.sp, colors: ColorConstants.black),
+                  style: getText500(size: 11.sp, colors: ColorConstants.black),
                 ),
               ),
               Expanded(
@@ -59,8 +58,8 @@ class TableItemSummaryOrderList extends StatelessWidget {
                     alignment: Alignment.center,
                     child: Text(
                       sQty.tr,
-                      style: getText500(
-                          size: 11.5.sp, colors: ColorConstants.black),
+                      style:
+                          getText500(size: 11.sp, colors: ColorConstants.black),
                     ),
                   )),
               Expanded(
@@ -70,7 +69,7 @@ class TableItemSummaryOrderList extends StatelessWidget {
                       child: Text(
                         sPrice.tr,
                         style: getText500(
-                            size: 11.5.sp, colors: ColorConstants.black),
+                            size: 11.sp, colors: ColorConstants.black),
                       ))),
             ],
           ),
@@ -151,34 +150,6 @@ class TableItemSummaryOrderList extends StatelessWidget {
                   },
                 ))),
 
-        /// Add More Items
-        // GestureDetector(
-        //   onTap: () {
-        //     // controller.addMore();
-        //   },
-        //   child: Container(
-        //     margin: EdgeInsets.only(top: 8.sp, left: 8.sp, right: 8.sp),
-        //     padding: EdgeInsets.all(8.sp),
-        //     decoration: BoxDecoration(
-        //       color: ColorConstants.cAppButtonLightColour,
-        //       borderRadius: BorderRadius.all(
-        //         Radius.circular(8.sp),
-        //       ),
-        //     ),
-        //     child: Row(
-        //       children: [
-        //         SizedBox(
-        //           width: 13.sp,
-        //         ),
-        //         Text(
-        //           sAddMoreItems.tr,
-        //           style: getText600(
-        //               size: 12.sp, colors: ColorConstants.cAppButtonColour),
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
       ],
     );
   }
@@ -212,7 +183,7 @@ class TableItemSummaryOrderList extends StatelessWidget {
               ),
             ),
 
-// Counter display
+            /// Counter display
             Text(
               '$count',
               style: getText500(colors: ColorConstants.black, size: 11.sp),

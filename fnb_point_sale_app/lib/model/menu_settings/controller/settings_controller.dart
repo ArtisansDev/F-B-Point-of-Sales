@@ -19,7 +19,7 @@ class SettingsMenuController extends GetxController {
   void onSettingSelect(int index) {
     String value = settingsMenu[index];
     switch(value){
-      case "Stock IN-OUT":
+      case "Stock Availability":
         stockInOutView();
         break;
     }

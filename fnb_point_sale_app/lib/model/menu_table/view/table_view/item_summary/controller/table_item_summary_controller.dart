@@ -25,6 +25,7 @@ class TableItemSummaryController extends GetxController {
   Rxn<DashboardScreenController> mDashboardScreenController =
       Rxn<DashboardScreenController>();
   TableController mTableController = Get.find<TableController>();
+  RxBool isOrderBottomView = true.obs;
 
   // MenuSalesController mMenuSalesController = Get.find<MenuSalesController>();
   Rx<TextEditingController> remarkController = TextEditingController().obs;

@@ -10,6 +10,7 @@ import 'cart_item.dart';
 ///21/12/24
 class OrderPlace {
   bool orderHistory = false;
+  bool isDineIn = true;
   String userName = "";
   String userPhone = "";
   String seatIDP = "";
@@ -31,6 +32,7 @@ class OrderPlace {
 
   OrderPlace.fromJson(dynamic json) {
     remarkController = json['remarkController'] ?? '';
+    isDineIn = json['isDineIn'] ?? true;
     orderHistory = json['orderHistory'] ?? false;
     userName = json['userName'] ?? '';
     userPhone = json['userPhone'] ?? '';
@@ -56,6 +58,7 @@ class OrderPlace {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['remarkController'] = remarkController;
+    map['isDineIn'] = isDineIn;
     map['orderHistory'] = orderHistory;
     map['userName'] = userName;
     map['userPhone'] = userPhone;

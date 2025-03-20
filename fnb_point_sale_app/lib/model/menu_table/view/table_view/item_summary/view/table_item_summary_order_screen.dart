@@ -217,7 +217,7 @@ class TableItemSummaryOrderScreen extends GetView<TableItemSummaryController> {
                                       bgColor:
                                           ColorConstants.red.withOpacity(0.2),
                                       textColor: ColorConstants.red,
-                                      height: 17.5.sp,
+                                      height: 17.sp,
                                       textSize: 11.sp,
                                       sCancel.tr.toUpperCase(),
                                       () {
@@ -251,8 +251,8 @@ class TableItemSummaryOrderScreen extends GetView<TableItemSummaryController> {
                     },
                     child: Container(
                       margin:
-                          EdgeInsets.only(top: 8.sp, left: 8.sp, right: 8.sp),
-                      padding: EdgeInsets.all(8.sp),
+                          EdgeInsets.only(top: 8.sp, left: 8.sp, right: 8.sp,bottom: 7.sp),
+                      padding: EdgeInsets.only(left:8.sp,right:8.sp,top: 7.sp,bottom: 7.sp),
                       decoration: BoxDecoration(
                         color: ColorConstants.cAppButtonLightColour,
                         borderRadius: BorderRadius.all(
@@ -267,7 +267,7 @@ class TableItemSummaryOrderScreen extends GetView<TableItemSummaryController> {
                           Text(
                             sAddMoreItems.tr,
                             style: getText500(
-                                size: 11.5.sp,
+                                size: 11.sp,
                                 colors: ColorConstants.cAppButtonColour),
                           ),
                         ],
