@@ -326,26 +326,41 @@ Future<bool> printAftrePayment(OrderDetailList mOrderDetailList,
 
 ///table
 pw.Widget getTableRow(OrderDetailList mOrderDetailList) {
-  return pw.Row(children: [
-    pw.Expanded(
-        flex: 1,
-        child: pw.Container(
-          padding: const pw.EdgeInsets.all(2.0),
-          child: pw.Align(
-            alignment: pw.Alignment.centerLeft,
-            child: pw.Text("${sSeatingNo.tr}:-", style: getNormalTextStyle()),
-          ),
-        )),
-    pw.Expanded(
-        flex: 2,
-        child: pw.Container(
-          padding: const pw.EdgeInsets.all(2.0),
-          child: pw.Align(
-            alignment: pw.Alignment.centerRight,
-            child: pw.Text(mOrderDetailList.tableNo ?? '--',
-                style: getBoldTextStyle()),
-          ),
-        )),
+  return pw.Column(children: [
+    pw.Center(
+        child: pw.Text(
+            ((mOrderDetailList.orderType ?? '1').toString().trim() == '1')
+                ? 'Dine-In '
+                : 'Take Away',
+            textAlign: pw.TextAlign.center,
+            style: getBoldTextStyle())),
+    ((mOrderDetailList.tableNo ?? '--') != '--' &&
+        (mOrderDetailList.tableNo ?? '--').isNotEmpty)
+        ? pw.Row(
+      children: [
+        pw.Expanded(
+            flex: 1,
+            child: pw.Container(
+              padding: const pw.EdgeInsets.all(2.0),
+              child: pw.Align(
+                alignment: pw.Alignment.centerLeft,
+                child: pw.Text("${sSeatingNo.tr}:-",
+                    style: getNormalTextStyle()),
+              ),
+            )),
+        pw.Expanded(
+            flex: 2,
+            child: pw.Container(
+              padding: const pw.EdgeInsets.all(2.0),
+              child: pw.Align(
+                alignment: pw.Alignment.centerRight,
+                child: pw.Text(mOrderDetailList.tableNo ?? '--',
+                    style: getBoldTextStyle()),
+              ),
+            )),
+      ],
+    )
+        : pw.SizedBox()
   ]);
 }
 

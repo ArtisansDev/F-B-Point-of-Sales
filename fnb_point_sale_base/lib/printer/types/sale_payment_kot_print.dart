@@ -297,27 +297,42 @@ Future<bool> printSalePaymentKot(OrderHistoryData mOrderHistoryData,
 }
 
 ///table
-pw.Widget getTableRow(OrderHistoryData mOrderHistoryData) {
-  return pw.Row(children: [
-    pw.Expanded(
-        flex: 1,
-        child: pw.Container(
-          padding: const pw.EdgeInsets.all(2.0),
-          child: pw.Align(
-            alignment: pw.Alignment.centerLeft,
-            child: pw.Text("${sSeatingNo.tr}:-", style: getNormalTextStyle()),
-          ),
-        )),
-    pw.Expanded(
-        flex: 2,
-        child: pw.Container(
-          padding: const pw.EdgeInsets.all(2.0),
-          child: pw.Align(
-            alignment: pw.Alignment.centerRight,
-            child: pw.Text(mOrderHistoryData.tableNo ?? '--',
-                style: getBoldTextStyle()),
-          ),
-        )),
+pw.Widget getTableRow(OrderHistoryData mOrderDetailList) {
+  return pw.Column(children: [
+    pw.Center(
+        child: pw.Text(
+            ((mOrderDetailList.orderType ?? '1').toString().trim() == '1')
+                ? 'Dine-In '
+                : 'Take Away',
+            textAlign: pw.TextAlign.center,
+            style: getBoldTextStyle())),
+    ((mOrderDetailList.tableNo ?? '--') != '--' &&
+        (mOrderDetailList.tableNo ?? '--').isNotEmpty)
+        ? pw.Row(
+      children: [
+        pw.Expanded(
+            flex: 1,
+            child: pw.Container(
+              padding: const pw.EdgeInsets.all(2.0),
+              child: pw.Align(
+                alignment: pw.Alignment.centerLeft,
+                child: pw.Text("${sSeatingNo.tr}:-",
+                    style: getNormalTextStyle()),
+              ),
+            )),
+        pw.Expanded(
+            flex: 2,
+            child: pw.Container(
+              padding: const pw.EdgeInsets.all(2.0),
+              child: pw.Align(
+                alignment: pw.Alignment.centerRight,
+                child: pw.Text(mOrderDetailList.tableNo ?? '--',
+                    style: getBoldTextStyle()),
+              ),
+            )),
+      ],
+    )
+        : pw.SizedBox()
   ]);
 }
 

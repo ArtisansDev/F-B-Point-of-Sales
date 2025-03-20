@@ -65,7 +65,8 @@ Future<bool> printPlaceOrder(
     widgets.add(pw.Center(
         child: pw.Text('Order Date and Time', style: getBoldTextStyle())));
     widgets.add(pw.Center(
-        child: pw.Text('${getUTCToLocalDateTime(mOrderDetailList.orderDate.toString())}',
+        child: pw.Text(
+            '${getUTCToLocalDateTime(mOrderDetailList.orderDate.toString())}',
             style: getNormalTextStyle())));
     widgets.add(pw.Container(height: 4));
     widgets.add(mySeparator());
@@ -134,11 +135,11 @@ Future<bool> printPlaceOrder(
       widgets.add(pw.Center(
           child: pw.Text(branchName, style: getBoldTextStyleMedium())));
       widgets.add(pw.Container(height: 4));
-      
     }
-    if ((mPrinterSettingsData.enableBranchAddress ?? false)){
-      widgets.add(
-          pw.Center(child: pw.Text(branchAddress,textAlign: pw.TextAlign.center, style: getBoldTextStyle())));
+    if ((mPrinterSettingsData.enableBranchAddress ?? false)) {
+      widgets.add(pw.Center(
+          child: pw.Text(branchAddress,
+              textAlign: pw.TextAlign.center, style: getBoldTextStyle())));
       widgets.add(pw.Container(height: 4));
     }
     widgets.add(mySeparator());
@@ -160,7 +161,8 @@ Future<bool> printPlaceOrder(
       widgets.add(pw.Center(
           child: pw.Text('Order Date and Time', style: getBoldTextStyle())));
       widgets.add(pw.Center(
-          child: pw.Text('${getUTCToLocalDateTime(mOrderDetailList.orderDate.toString())}',
+          child: pw.Text(
+              '${getUTCToLocalDateTime(mOrderDetailList.orderDate.toString())}',
               style: getNormalTextStyle())));
       widgets.add(pw.Container(height: 4));
       widgets.add(mySeparator());
@@ -172,8 +174,7 @@ Future<bool> printPlaceOrder(
         (mPrinterSettingsData.customHeaderText ?? '').isNotEmpty) {
       widgets.add(pw.Center(
           child: pw.Text((mPrinterSettingsData.customHeaderText ?? ''),
-              textAlign: pw.TextAlign.center,
-              style: getBoldTextStyle())));
+              textAlign: pw.TextAlign.center, style: getBoldTextStyle())));
       widgets.add(pw.Container(height: 4));
       widgets.add(mySeparator());
       widgets.add(pw.Container(height: 4));
@@ -229,8 +230,7 @@ Future<bool> printPlaceOrder(
         (mPrinterSettingsData.customFooterText ?? '').isNotEmpty) {
       widgets.add(pw.Center(
           child: pw.Text((mPrinterSettingsData.customFooterText ?? ''),
-              textAlign: pw.TextAlign.center,
-              style: getBoldTextStyle())));
+              textAlign: pw.TextAlign.center, style: getBoldTextStyle())));
     }
 
     ///enableCustomText
@@ -240,8 +240,7 @@ Future<bool> printPlaceOrder(
 
       widgets.add(pw.Center(
           child: pw.Text((mPrinterSettingsData.customMessageText ?? ''),
-              textAlign: pw.TextAlign.center,
-              style: getNormalTextStyle())));
+              textAlign: pw.TextAlign.center, style: getNormalTextStyle())));
     }
   }
 
@@ -249,29 +248,42 @@ Future<bool> printPlaceOrder(
 }
 
 pw.Widget getTableRow(OrderDetailList mOrderDetailList) {
-  return pw.Row(
-    children: [
-      pw.Expanded(
-          flex: 1,
-          child: pw.Container(
-            padding: const pw.EdgeInsets.all(2.0),
-            child: pw.Align(
-              alignment: pw.Alignment.centerLeft,
-              child: pw.Text("${sSeatingNo.tr}:-", style: getNormalTextStyle()),
-            ),
-          )),
-      pw.Expanded(
-          flex: 2,
-          child: pw.Container(
-            padding: const pw.EdgeInsets.all(2.0),
-            child: pw.Align(
-              alignment: pw.Alignment.centerRight,
-              child: pw.Text(mOrderDetailList.tableNo ?? '--',
-                  style: getBoldTextStyle()),
-            ),
-          )),
-    ],
-  );
+  return pw.Column(children: [
+    pw.Center(
+        child: pw.Text(
+            ((mOrderDetailList.orderType ?? '1').toString().trim() == '1')
+                ? 'Dine-In '
+                : 'Take Away',
+            textAlign: pw.TextAlign.center,
+            style: getBoldTextStyle())),
+    ((mOrderDetailList.tableNo ?? '--') != '--' &&
+        (mOrderDetailList.tableNo ?? '--').isNotEmpty)
+        ? pw.Row(
+            children: [
+              pw.Expanded(
+                  flex: 1,
+                  child: pw.Container(
+                    padding: const pw.EdgeInsets.all(2.0),
+                    child: pw.Align(
+                      alignment: pw.Alignment.centerLeft,
+                      child: pw.Text("${sSeatingNo.tr}:-",
+                          style: getNormalTextStyle()),
+                    ),
+                  )),
+              pw.Expanded(
+                  flex: 2,
+                  child: pw.Container(
+                    padding: const pw.EdgeInsets.all(2.0),
+                    child: pw.Align(
+                      alignment: pw.Alignment.centerRight,
+                      child: pw.Text(mOrderDetailList.tableNo ?? '--',
+                          style: getBoldTextStyle()),
+                    ),
+                  )),
+            ],
+          )
+        : pw.SizedBox()
+  ]);
 }
 
 pw.Widget getUserDetailsRow(OrderDetailList mOrderDetailList) {
