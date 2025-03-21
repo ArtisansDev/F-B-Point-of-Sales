@@ -253,4 +253,25 @@ class HomeBaseController extends GetxController {
     mSelectedOrderController.value ??= Get.find<SelectedOrderController>();
     mSelectedOrderController.value?.onSelectOrder(mCartItem);
   }
+
+  void switchCategory(int index) {
+    if (selectGetAllCategory.length - 1 != index) {
+      selectGetAllCategory.removeRange(index + 1, selectGetAllCategory.length);
+      selectGetAllCategory.refresh();
+      if ((selectGetAllCategory.last.subCategories ?? []).isNotEmpty) {
+        ///GetAllCategoryView
+        mGetAllCategoryView.clear();
+        mGetAllCategoryView
+            .addAll((selectGetAllCategory.last.subCategories ?? []).toList());
+        mGetAllCategoryView.refresh();
+
+        ///GetAllCategory
+        mGetAllCategoryData.clear();
+        mGetAllCategoryData.addAll(mGetAllCategoryView.toList());
+        mGetAllCategoryData.refresh();
+      }
+
+      getMenuItems(selectGetAllCategory.last ?? GetAllCategoryData());
+    }
+  }
 }

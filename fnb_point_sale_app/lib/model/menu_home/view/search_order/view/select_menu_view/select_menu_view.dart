@@ -64,28 +64,33 @@ class SelectMenuView extends StatelessWidget {
                             scrollDirection: Axis.horizontal,
                             itemCount: controller.selectGetAllCategory.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                  padding: EdgeInsets.only(
-                                      left: 15.sp, right: 15.sp),
-                                  margin: EdgeInsets.only(left: 5.sp),
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      color: (controller.selectGetAllCategory
-                                                      .length -
-                                                  1 ==
-                                              index)
-                                          ? ColorConstants.cAppColors
-                                          : ColorConstants.cAppButtonColour,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(7.sp))),
-                                  child: Text(
-                                    controller.selectGetAllCategory[index]
-                                            .categoryName ??
-                                        '',
-                                    style: getText500(
-                                      size: 11.sp,
-                                    ),
-                                  ));
+                              return GestureDetector(
+                                onTap: (){
+                                  controller.switchCategory(index);
+                                },
+                                child: Container(
+                                    padding: EdgeInsets.only(
+                                        left: 15.sp, right: 15.sp),
+                                    margin: EdgeInsets.only(left: 5.sp),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        color: (controller.selectGetAllCategory
+                                            .length -
+                                            1 ==
+                                            index)
+                                            ? ColorConstants.cAppColors
+                                            : ColorConstants.cAppButtonColour,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(7.sp))),
+                                    child: Text(
+                                      controller.selectGetAllCategory[index]
+                                          .categoryName ??
+                                          '',
+                                      style: getText500(
+                                        size: 11.sp,
+                                      ),
+                                    )),
+                              );
                             })))
               ],
             ));
