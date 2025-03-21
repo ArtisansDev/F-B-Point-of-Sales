@@ -301,7 +301,7 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
                                                   child: Center(
                                                       child: Text('DINE - IN',
                                                           style: getText500(
-                                                              size: 10.3.sp,
+                                                              size: 10.1.sp,
                                                               colors: Colors
                                                                   .white))),
                                                 ))),
@@ -328,9 +328,9 @@ class SelectedOrderScreen extends GetView<SelectedOrderController> {
                                                             .cAppButtonColour),
                                                 child: Center(
                                                     child: Text(
-                                                  'PICKUP',
+                                                  'TAKE AWAY',
                                                   style: getText500(
-                                                      size: 10.3.sp,
+                                                      size: 10.1.sp,
                                                       colors: Colors.white),
                                                 )),
                                               )),

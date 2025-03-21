@@ -73,6 +73,14 @@ Future<bool> printSalePaymentKot(OrderHistoryData mOrderHistoryData,
     widgets.add(mySeparator());
     widgets.add(pw.Container(height: 4));
 
+    ///packagingName
+    if ((mOrderHistoryData.packagingName ?? '').isNotEmpty) {
+      widgets.add(getPackagingNameRow(mOrderHistoryData));
+      widgets.add(pw.Container(height: 4));
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
+    }
+
     ///menu order
     for (OrderHistoryMenu element in (mOrderHistoryData.orderMenu ?? [])) {
       widgets.add(getItemRow(element, mCurrencyData.currencySymbol ?? ''));
@@ -153,7 +161,6 @@ Future<bool> printSalePaymentKot(OrderHistoryData mOrderHistoryData,
       widgets.add(pw.Center(
           child: pw.Text(branchName, style: getBoldTextStyleMedium())));
       widgets.add(pw.Container(height: 4));
-     
     }
     if ((mPrinterSettingsData.enableBranchAddress ?? false)) {
       widgets.add(pw.Center(
@@ -213,6 +220,14 @@ Future<bool> printSalePaymentKot(OrderHistoryData mOrderHistoryData,
     widgets.add(pw.Container(height: 4));
     widgets.add(mySeparator());
     widgets.add(pw.Container(height: 4));
+
+    ///packagingName
+    if ((mOrderHistoryData.packagingName ?? '').isNotEmpty) {
+      widgets.add(getPackagingNameRow(mOrderHistoryData));
+      widgets.add(pw.Container(height: 4));
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
+    }
 
     ///menu order
     for (OrderHistoryMenu element in (mOrderHistoryData.orderMenu ?? [])) {
@@ -278,8 +293,7 @@ Future<bool> printSalePaymentKot(OrderHistoryData mOrderHistoryData,
         (mPrinterSettingsData.customFooterText ?? '').isNotEmpty) {
       widgets.add(pw.Center(
           child: pw.Text((mPrinterSettingsData.customFooterText ?? ''),
-              textAlign: pw.TextAlign.center,
-              style: getBoldTextStyle())));
+              textAlign: pw.TextAlign.center, style: getBoldTextStyle())));
     }
 
     ///enableCustomText
@@ -288,8 +302,7 @@ Future<bool> printSalePaymentKot(OrderHistoryData mOrderHistoryData,
       widgets.add(pw.Container(height: 2));
       widgets.add(pw.Center(
           child: pw.Text((mPrinterSettingsData.customMessageText ?? ''),
-              textAlign: pw.TextAlign.center,
-              style: getNormalTextStyle())));
+              textAlign: pw.TextAlign.center, style: getNormalTextStyle())));
     }
   }
 
@@ -307,33 +320,60 @@ pw.Widget getTableRow(OrderHistoryData mOrderDetailList) {
             textAlign: pw.TextAlign.center,
             style: getBoldTextStyle())),
     ((mOrderDetailList.tableNo ?? '--') != '--' &&
-        (mOrderDetailList.tableNo ?? '--').isNotEmpty)
+            (mOrderDetailList.tableNo ?? '--').isNotEmpty)
         ? pw.Row(
-      children: [
-        pw.Expanded(
-            flex: 1,
-            child: pw.Container(
-              padding: const pw.EdgeInsets.all(2.0),
-              child: pw.Align(
-                alignment: pw.Alignment.centerLeft,
-                child: pw.Text("${sSeatingNo.tr}:-",
-                    style: getNormalTextStyle()),
-              ),
-            )),
-        pw.Expanded(
-            flex: 2,
-            child: pw.Container(
-              padding: const pw.EdgeInsets.all(2.0),
-              child: pw.Align(
-                alignment: pw.Alignment.centerRight,
-                child: pw.Text(mOrderDetailList.tableNo ?? '--',
-                    style: getBoldTextStyle()),
-              ),
-            )),
-      ],
-    )
+            children: [
+              pw.Expanded(
+                  flex: 1,
+                  child: pw.Container(
+                    padding: const pw.EdgeInsets.all(2.0),
+                    child: pw.Align(
+                      alignment: pw.Alignment.centerLeft,
+                      child: pw.Text("${sSeatingNo.tr}:-",
+                          style: getNormalTextStyle()),
+                    ),
+                  )),
+              pw.Expanded(
+                  flex: 2,
+                  child: pw.Container(
+                    padding: const pw.EdgeInsets.all(2.0),
+                    child: pw.Align(
+                      alignment: pw.Alignment.centerRight,
+                      child: pw.Text(mOrderDetailList.tableNo ?? '--',
+                          style: getBoldTextStyle()),
+                    ),
+                  )),
+            ],
+          )
         : pw.SizedBox()
   ]);
+}
+
+///packagingName
+pw.Widget getPackagingNameRow(OrderHistoryData mOrderDetailList) {
+  return pw.Row(
+    children: [
+      pw.Expanded(
+          flex: 1,
+          child: pw.Container(
+            padding: const pw.EdgeInsets.all(2.0),
+            child: pw.Align(
+              alignment: pw.Alignment.centerLeft,
+              child: pw.Text("Packaging Type", style: getNormalTextStyle()),
+            ),
+          )),
+      pw.Expanded(
+          flex: 2,
+          child: pw.Container(
+            padding: const pw.EdgeInsets.all(2.0),
+            child: pw.Align(
+              alignment: pw.Alignment.centerRight,
+              child: pw.Text(mOrderDetailList.packagingName ?? '',
+                  style: getBoldTextStyle()),
+            ),
+          )),
+    ],
+  );
 }
 
 ///UserDetails

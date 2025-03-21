@@ -68,7 +68,17 @@ Future<bool> printSalePayment(OrderHistoryData mOrderHistoryData,
 
     ///table
     widgets.add(getTableRow(mOrderHistoryData));
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
 
+    ///packagingName
+    if ((mOrderHistoryData.packagingName ?? '').isNotEmpty) {
+      widgets.add(getPackagingNameRow(mOrderHistoryData));
+      widgets.add(pw.Container(height: 4));
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
+    }
     ///user details
     if ((mOrderHistoryData.phoneNumber ?? '').isNotEmpty) {
       widgets.add(getUserDetailsRow(mOrderHistoryData));
@@ -211,7 +221,17 @@ Future<bool> printSalePayment(OrderHistoryData mOrderHistoryData,
 
     ///table
     widgets.add(getTableRow(mOrderHistoryData));
+    widgets.add(pw.Container(height: 4));
+    widgets.add(mySeparator());
+    widgets.add(pw.Container(height: 4));
 
+    ///packagingName
+    if ((mOrderHistoryData.packagingName ?? '').isNotEmpty) {
+      widgets.add(getPackagingNameRow(mOrderHistoryData));
+      widgets.add(pw.Container(height: 4));
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
+    }
     ///user details
     if ((mOrderHistoryData.phoneNumber ?? '').isNotEmpty) {
       widgets.add(getUserDetailsRow(mOrderHistoryData));
@@ -342,6 +362,33 @@ pw.Widget getTableRow(OrderHistoryData mOrderHistoryData) {
     )
         : pw.SizedBox()
   ]);
+}
+
+///packagingName
+pw.Widget getPackagingNameRow(OrderHistoryData mOrderDetailList) {
+  return pw.Row(
+    children: [
+      pw.Expanded(
+          flex: 1,
+          child: pw.Container(
+            padding: const pw.EdgeInsets.all(2.0),
+            child: pw.Align(
+              alignment: pw.Alignment.centerLeft,
+              child: pw.Text("Packaging Type", style: getNormalTextStyle()),
+            ),
+          )),
+      pw.Expanded(
+          flex: 2,
+          child: pw.Container(
+            padding: const pw.EdgeInsets.all(2.0),
+            child: pw.Align(
+              alignment: pw.Alignment.centerRight,
+              child: pw.Text(mOrderDetailList.packagingName ?? '',
+                  style: getBoldTextStyle()),
+            ),
+          )),
+    ],
+  );
 }
 
 ///UserDetails
