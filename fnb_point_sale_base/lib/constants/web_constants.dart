@@ -52,6 +52,7 @@ class WebConstants {
   static String actionLogin =  "Account/operatorLogin";  //post
   static String actionConfiguration =  "Configuration/getConfiguration";  //post
   static String actionUpdatePOSLoginStatus =  "Account/updatePOSLoginStatus";  //post
+  static String actionManagerCredentialsStatus =  "Account/validateBranchManagerCredentials";  //post
 
   ///product
   static String actionGetAllCategory =  "Category/GetAllCategory";  //post
@@ -74,6 +75,7 @@ class WebConstants {
   /// order place
   static String actionPOSOrder =  "POSOrder/ProcessMultipleOrders";
   static String actionPOSOrderHistory =  "POSOrder/GetOrderHistory";
+  static String actionPOSUpdatePaymentType =  "POSOrder/UpdatePaymentType";
 
   /// Balance
   static String actionUpdateOpeningBalance =  "Counter/UpdateOpeningBalance";

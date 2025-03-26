@@ -141,4 +141,36 @@ class LoginApiImpl extends AllApiImpl with LoginApi {
 
     return mWebResponseSuccess;
   }
+
+  ///post actionManagerCredentialsStatus
+  @override
+  Future<WebResponseSuccess> postManagerCredentials(dynamic exhibitorsListRequest) async {
+    AppAlert.showProgressDialog(Get.context!);
+    WebConstants.auth = true;
+    final cases = await mWebProvider.postWithRequest(
+        WebConstants.actionManagerCredentialsStatus, exhibitorsListRequest);
+    debugPrint(
+        "plainJsonRequest statusCode ==  ${jsonEncode(cases.statusCode)}");
+    debugPrint("plainJsonRequest ==  ${jsonEncode(cases.body)}");
+    AppAlert.hideLoadingDialog(Get.context!);
+    if (cases.statusCode == WebConstants.statusCode200) {
+      mWebResponseSuccess =
+      WebResponseSuccess.fromJson(processResponseToJson(cases));
+    } else if (cases.statusCode == WebConstants.statusCode401) {
+      mWebResponseSuccess =
+          WebResponseSuccess.fromJson(processResponseToJson(cases));
+    } else {
+      mWebResponseFailed =
+          WebResponseFailed.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        // data: mWebResponseFailed,
+        statusMessage: mWebResponseFailed.statusMessage,
+        error: true,
+      );
+    }
+
+    return mWebResponseSuccess;
+  }
+
 }

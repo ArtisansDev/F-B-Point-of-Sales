@@ -38,7 +38,9 @@ class SalesListRowView extends StatelessWidget {
     OrderHistoryData mOrderHistoryData = controller.mOrderHistoryData[index];
     String orderSource = (mOrderHistoryData.orderSource ?? 1) == 1
         ? 'App'
-        :(mOrderHistoryData.orderSource ?? 1) == 2? 'Pos':'Web';
+        : (mOrderHistoryData.orderSource ?? 1) == 2
+            ? 'Pos'
+            : 'Web';
     return Container(
       padding:
           EdgeInsets.only(top: 11.sp, left: 11.sp, right: 11.sp, bottom: 11.sp),
@@ -52,7 +54,7 @@ class SalesListRowView extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                 '${controller.mDashboardScreenController.mRestaurantData.value?.orderIDPrefixCode ?? ''}${mOrderHistoryData.trackingOrderID ?? ''}',
+                  '${controller.mDashboardScreenController.mRestaurantData.value?.orderIDPrefixCode ?? ''}${mOrderHistoryData.trackingOrderID ?? ''}',
                   style: getTextRegular(
                       colors: ColorConstants.appTextSalesHader, size: 10.5.sp),
                 ),
@@ -62,8 +64,7 @@ class SalesListRowView extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-
-                    (mOrderHistoryData.orderType ?? 1) == 1
+                  (mOrderHistoryData.orderType ?? 1) == 1
                       ? '${orderSource}\nDine In'
                       : '${orderSource}\nTake Away',
                   textAlign: TextAlign.center,
@@ -105,7 +106,6 @@ class SalesListRowView extends StatelessWidget {
                       colors: ColorConstants.appTextSalesHader, size: 11.sp),
                 ),
               )),
-
           Expanded(
               flex: 4,
               child: Align(
@@ -118,13 +118,34 @@ class SalesListRowView extends StatelessWidget {
               )),
           Expanded(
               flex: 4,
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                 (mOrderHistoryData.paymentGatewayName??"").isEmpty? '--':(mOrderHistoryData.paymentGatewayName??""),
-                 textAlign: TextAlign.center,
-                  style: getTextRegular(
-                      colors: ColorConstants.appTextSalesHader, size: 11.sp),
+              child: GestureDetector(
+                onTap: () {
+                  controller.clickPaymentType(index);
+                },
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    (mOrderHistoryData.paymentGatewayName ?? "").isEmpty
+                        ? '--'
+                        : (mOrderHistoryData.paymentGatewayName ?? ""),
+                    textAlign: TextAlign.center,
+                    style: (mOrderHistoryData.counterBalanceHistoryIDF ?? "")
+                                    .toUpperCase()
+                                    .toString() !=
+                                controller.sCounterBalanceHistoryIDF.value
+                                    .toString()
+                                    .trim()
+                                    .toUpperCase() ||
+                            (mOrderHistoryData.paymentGatewayName ?? "")
+                                .isEmpty ||
+                            (mOrderHistoryData.isPaymentTypeChanged ?? false)
+                        ? getTextRegular(
+                            colors: ColorConstants.appTextSalesHader,
+                            size: 11.sp)
+                        : getText600(
+                            colors: ColorConstants.appTextSalesHader,
+                            size: 11.sp),
+                  ),
                 ),
               )),
           Expanded(
@@ -209,14 +230,16 @@ class SalesListRowView extends StatelessWidget {
                                       controller.onPayNow(index);
                                     },
                                   )
-                            :Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Success',
-                        style:
-                        getText500(size: 11.sp, colors: ColorConstants.cAppTextInviceColour),
-                      ),
-                    ),
+                            : Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'Success',
+                                  style: getText500(
+                                      size: 11.sp,
+                                      colors:
+                                          ColorConstants.cAppTextInviceColour),
+                                ),
+                              ),
                   ),
                   GestureDetector(
                     onTap: () {

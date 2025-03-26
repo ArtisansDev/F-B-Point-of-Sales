@@ -57,13 +57,6 @@ Future<bool> printPlaceOrder(
         child: pw.Text(
             '${mRestaurantData.orderIDPrefixCode}${mOrderDetailList.trackingOrderID}',
             style: getNormalTextStyle())));
-    widgets.add(pw.Container(height: 4));
-    widgets.add(mySeparator());
-    widgets.add(pw.Container(height: 4));
-
-    ///Order Date and Time
-    widgets.add(pw.Center(
-        child: pw.Text('Order Date and Time', style: getBoldTextStyle())));
     widgets.add(pw.Center(
         child: pw.Text(
             '${getUTCToLocalDateTime(mOrderDetailList.orderDate.toString())}',
@@ -72,13 +65,24 @@ Future<bool> printPlaceOrder(
     widgets.add(mySeparator());
     widgets.add(pw.Container(height: 4));
 
+    ///Order Date and Time
+    // widgets.add(pw.Center(
+    //     child: pw.Text('Order Date and Time', style: getBoldTextStyle())));
+    // widgets.add(pw.Center(
+    //     child: pw.Text(
+    //         '${getUTCToLocalDateTime(mOrderDetailList.orderDate.toString())}',
+    //         style: getNormalTextStyle())));
+    // widgets.add(pw.Container(height: 4));
+    // widgets.add(mySeparator());
+    // widgets.add(pw.Container(height: 4));
+
     ///table
     widgets.add(getTableRow(mOrderDetailList));
 
     ///user details
-    // if((mOrderDetailList.phoneNumber??'').isNotEmpty) {
-    //   widgets.add(getUserDetailsRow(mOrderDetailList));
-    // }
+    if ((mOrderDetailList.phoneNumber ?? '').isNotEmpty) {
+      widgets.add(getUserDetailsRow(mOrderDetailList));
+    }
 
     widgets.add(pw.Container(height: 4));
     widgets.add(mySeparator());
@@ -151,15 +155,17 @@ Future<bool> printPlaceOrder(
           child: pw.Text(
               '${mRestaurantData.orderIDPrefixCode}${mOrderDetailList.trackingOrderID}',
               style: getNormalTextStyle())));
-      widgets.add(pw.Container(height: 4));
-      widgets.add(mySeparator());
-      widgets.add(pw.Container(height: 4));
+      if (!(mPrinterSettingsData.enableDateTime ?? false)) {
+        widgets.add(pw.Container(height: 4));
+        widgets.add(mySeparator());
+        widgets.add(pw.Container(height: 4));
+      }
     }
 
     ///Order Date and Time
     if ((mPrinterSettingsData.enableDateTime ?? false)) {
-      widgets.add(pw.Center(
-          child: pw.Text('Order Date and Time', style: getBoldTextStyle())));
+      // widgets.add(pw.Center(
+      //     child: pw.Text('Order Date and Time', style: getBoldTextStyle())));
       widgets.add(pw.Center(
           child: pw.Text(
               '${getUTCToLocalDateTime(mOrderDetailList.orderDate.toString())}',
@@ -184,13 +190,15 @@ Future<bool> printPlaceOrder(
     widgets.add(getTableRow(mOrderDetailList));
 
     ///user details
-    // if((mOrderDetailList.phoneNumber??'').isNotEmpty) {
-    //   widgets.add(getUserDetailsRow(mOrderDetailList));
-    // }
+    if (mPrinterSettingsData.enableCustomerInfo ?? false) {
+      if ((mOrderDetailList.phoneNumber ?? '').isNotEmpty) {
+        widgets.add(getUserDetailsRow(mOrderDetailList));
 
-    widgets.add(pw.Container(height: 4));
-    widgets.add(mySeparator());
-    widgets.add(pw.Container(height: 5));
+        widgets.add(pw.Container(height: 4));
+        widgets.add(mySeparator());
+        widgets.add(pw.Container(height: 5));
+      }
+    }
 
     ///new order
     CartItem mCartItem = cartItemKot.firstWhere((element) => element.count > 0,
@@ -257,7 +265,7 @@ pw.Widget getTableRow(OrderDetailList mOrderDetailList) {
             textAlign: pw.TextAlign.center,
             style: getBoldTextStyle())),
     ((mOrderDetailList.tableNo ?? '--') != '--' &&
-        (mOrderDetailList.tableNo ?? '--').isNotEmpty)
+            (mOrderDetailList.tableNo ?? '--').isNotEmpty)
         ? pw.Row(
             children: [
               pw.Expanded(
@@ -312,30 +320,30 @@ pw.Widget getUserDetailsRow(OrderDetailList mOrderDetailList) {
             )),
       ],
     ),
-    pw.Row(
-      children: [
-        pw.Expanded(
-            flex: 2,
-            child: pw.Container(
-              padding: const pw.EdgeInsets.all(2.0),
-              child: pw.Align(
-                alignment: pw.Alignment.centerLeft,
-                child: pw.Text("${sPhoneNumber.tr}:-",
-                    style: getNormalTextStyle()),
-              ),
-            )),
-        pw.Expanded(
-            flex: 3,
-            child: pw.Container(
-              padding: const pw.EdgeInsets.all(2.0),
-              child: pw.Align(
-                alignment: pw.Alignment.centerRight,
-                child: pw.Text(mOrderDetailList.phoneNumber ?? '--',
-                    style: getBoldTextStyle()),
-              ),
-            )),
-      ],
-    )
+    // pw.Row(
+    //   children: [
+    //     pw.Expanded(
+    //         flex: 2,
+    //         child: pw.Container(
+    //           padding: const pw.EdgeInsets.all(2.0),
+    //           child: pw.Align(
+    //             alignment: pw.Alignment.centerLeft,
+    //             child: pw.Text("${sPhoneNumber.tr}:-",
+    //                 style: getNormalTextStyle()),
+    //           ),
+    //         )),
+    //     pw.Expanded(
+    //         flex: 3,
+    //         child: pw.Container(
+    //           padding: const pw.EdgeInsets.all(2.0),
+    //           child: pw.Align(
+    //             alignment: pw.Alignment.centerRight,
+    //             child: pw.Text(mOrderDetailList.phoneNumber ?? '--',
+    //                 style: getBoldTextStyle()),
+    //           ),
+    //         )),
+    //   ],
+    // )
   ]);
 }
 

@@ -84,7 +84,39 @@ class OrderPlaceApiImpl extends AllApiImpl with OrderPlaceApi {
     return mWebResponseSuccess;
   }
 
- ///post post Table Status
+
+  ///post UpdatePaymentType
+  @override
+  Future<WebResponseSuccess> postUpdatePaymentType(
+      exhibitorsListRequest) async {
+    AppAlert.showProgressDialog(Get.context!);
+    WebConstants.auth = true;
+    final cases = await mWebProvider.postWithRequest(
+        WebConstants.actionPOSUpdatePaymentType, exhibitorsListRequest);
+    AppAlert.hideLoadingDialog(Get.context!);
+    if (cases.statusCode == WebConstants.statusCode200) {
+      mWebResponseSuccess =
+          WebResponseSuccess.fromJson(processResponseToJson(cases));
+    } else if (cases.statusCode == WebConstants.statusCode400) {
+      mWebResponseSuccess =
+          WebResponseSuccess.fromJson(processResponseToJson(cases));
+    } else if (cases.statusCode == WebConstants.statusCode409) {
+      mWebResponseSuccess =
+          WebResponseSuccess.fromJson(processResponseToJson(cases));
+    } else {
+      mWebResponseFailed =
+          WebResponseFailed.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        // data: mWebResponseFailed,
+        statusMessage: mWebResponseFailed.statusMessage,
+        error: true,
+      );
+    }
+    return mWebResponseSuccess;
+  }
+
+  ///post post Table Status
   @override
   Future<WebResponseSuccess> postTableStatus(exhibitorsListRequest) async {
     AppAlert.showProgressDialog(Get.context!);
@@ -107,7 +139,7 @@ class OrderPlaceApiImpl extends AllApiImpl with OrderPlaceApi {
       mWebResponseSuccess = WebResponseSuccess(
         statusCode: cases.statusCode,
         // data: mLoginFailedResponse,
-        statusMessage:mWebResponseFailed.statusMessage,
+        statusMessage: mWebResponseFailed.statusMessage,
         error: false,
       );
     } else if (cases.statusCode == WebConstants.statusCode400) {
@@ -134,7 +166,8 @@ class OrderPlaceApiImpl extends AllApiImpl with OrderPlaceApi {
 
   ///post GetAll TablesByTableStatus
   @override
-  Future<WebResponseSuccess> postGetAllTablesByTableStatus(exhibitorsListRequest) async {
+  Future<WebResponseSuccess> postGetAllTablesByTableStatus(
+      exhibitorsListRequest) async {
     // AppAlert.showProgressDialog(Get.context!);
     WebConstants.auth = true;
     final cases = await mWebProvider.postWithRequest(
@@ -155,7 +188,7 @@ class OrderPlaceApiImpl extends AllApiImpl with OrderPlaceApi {
       mWebResponseSuccess = WebResponseSuccess(
         statusCode: cases.statusCode,
         // data: mLoginFailedResponse,
-        statusMessage:mWebResponseFailed.statusMessage,
+        statusMessage: mWebResponseFailed.statusMessage,
         error: false,
       );
     } else if (cases.statusCode == WebConstants.statusCode400) {

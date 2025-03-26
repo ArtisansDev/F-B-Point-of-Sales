@@ -12,7 +12,6 @@ import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import '../../../common_view/logout_expired.dart';
 import '../controller/open_counter_controller.dart';
 
 class OpenCounterScreen extends GetView<OpenCounterController> {

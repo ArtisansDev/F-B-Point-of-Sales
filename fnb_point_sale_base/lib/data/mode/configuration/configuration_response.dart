@@ -8,7 +8,8 @@ class ConfigurationResponse {
     bool? error,
     int? statusCode,
     String? statusMessage,
-    ConfigurationData? configurationData,}) {
+    ConfigurationData? configurationData,
+  }) {
     _error = error;
     _statusCode = statusCode;
     _statusMessage = statusMessage;
@@ -20,7 +21,7 @@ class ConfigurationResponse {
     _statusCode = json['statusCode'];
     _statusMessage = json['statusMessage'];
     _configurationData =
-    json['data'] != null ? ConfigurationData.fromJson(json['data']) : null;
+        json['data'] != null ? ConfigurationData.fromJson(json['data']) : null;
   }
 
   bool? _error;
@@ -46,7 +47,6 @@ class ConfigurationResponse {
     }
     return map;
   }
-
 }
 
 /// RestaurantData : [{"RestaurantIDP":"0d74bfa1-af7d-4182-835b-b815c2972591","RestaurantName":"Apple Cinemas","RestaurantLogoPath":"638678016950230894-images.jpg","Pincode":"360001","Address":"test,gujrat","ContactEmail":"test@gmail.com","ContactNumber":"9988776655","TermsAndConditions":"<ul><li><i>test1</i></li><li><i>test2</i><ul><li><i>test3</i></li><li><i>test4</i></li><li><i>test5</i></li><li><i>test6</i></li><li><i>test7</i></li><li><i>test9</i></li><li><i>test10</i></li></ul></li></ul>"}]
@@ -64,7 +64,8 @@ class ConfigurationData {
     List<TaxData>? taxData,
     List<LoggedInUserDetails>? loggedInUserDetails,
     List<PrinterSettingsData>? printerSettingsData,
-    List<CounterData>? counterData,}) {
+    List<CounterData>? counterData,
+  }) {
     _restaurantData = restaurantData;
     _branchData = branchData;
     _currencyData = currencyData;
@@ -156,17 +157,18 @@ class ConfigurationData {
       map['TaxData'] = _taxData?.map((v) => v.toJson()).toList();
     }
     if (_loggedInUserDetails != null) {
-      map['LoggedInUserDetails'] = _loggedInUserDetails?.map((v) => v.toJson()).toList();
+      map['LoggedInUserDetails'] =
+          _loggedInUserDetails?.map((v) => v.toJson()).toList();
     }
     if (_printerSettingsData != null) {
-      map['PrinterSettingsData'] = _printerSettingsData?.map((v) => v.toJson()).toList();
+      map['PrinterSettingsData'] =
+          _printerSettingsData?.map((v) => v.toJson()).toList();
     }
     if (_counterData != null) {
       map['CounterData'] = _counterData?.map((v) => v.toJson()).toList();
     }
     return map;
   }
-
 }
 
 /// CounterIDP : "0ac73a88-8f99-4a4e-931b-9351f29df177"
@@ -175,7 +177,8 @@ class ConfigurationData {
 class CounterData {
   CounterData({
     String? counterIDP,
-    String? counterName,}) {
+    String? counterName,
+  }) {
     _counterIDP = counterIDP;
     _counterName = counterName;
   }
@@ -198,7 +201,6 @@ class CounterData {
     map['CounterName'] = _counterName;
     return map;
   }
-
 }
 
 /// TaxPercentage : 5.00
@@ -209,7 +211,8 @@ class TaxData {
   TaxData({
     double? taxPercentage,
     String? taxName,
-    String? taxIDP,}) {
+    String? taxIDP,
+  }) {
     _taxPercentage = taxPercentage;
     _taxName = taxName;
     _taxIDP = taxIDP;
@@ -238,7 +241,6 @@ class TaxData {
     map['TaxIDP'] = _taxIDP;
     return map;
   }
-
 }
 
 /// CurrencyIDP : "28ae5e45-12c6-42e0-933c-68bb9fce97ff"
@@ -249,7 +251,8 @@ class CurrencyData {
   CurrencyData({
     String? currencyIDP,
     String? currencyCode,
-    String? currencySymbol,}) {
+    String? currencySymbol,
+  }) {
     _currencyIDP = currencyIDP;
     _currencyCode = currencyCode;
     _currencySymbol = currencySymbol;
@@ -278,7 +281,6 @@ class CurrencyData {
     map['CurrencySymbol'] = _currencySymbol;
     return map;
   }
-
 }
 
 /// BranchIDP : "8281f828-2f99-457e-ac27-06914abbe720"
@@ -299,7 +301,8 @@ class BranchData {
     String? customerSupportNumber,
     String? mobileNumber,
     bool? dineIn,
-    bool? takeaway,}){
+    bool? takeaway,
+  }) {
     _branchIDP = branchIDP;
     _branchName = branchName;
     _branchAddress = branchAddress;
@@ -320,6 +323,7 @@ class BranchData {
     _dineIn = json['DineIn'];
     _takeaway = json['Takeaway'];
   }
+
   String? _branchIDP;
   String? _branchName;
   String? _branchAddress;
@@ -330,12 +334,19 @@ class BranchData {
   bool? _takeaway;
 
   String? get branchIDP => _branchIDP;
+
   String? get branchName => _branchName;
+
   String? get branchAddress => _branchAddress;
+
   String? get email => _email;
+
   String? get customerSupportNumber => _customerSupportNumber;
+
   String? get mobileNumber => _mobileNumber;
+
   bool? get dineIn => _dineIn;
+
   bool? get takeaway => _takeaway;
 
   Map<String, dynamic> toJson() {
@@ -350,7 +361,6 @@ class BranchData {
     map['Takeaway'] = _takeaway;
     return map;
   }
-
 }
 
 ///"Id": "bdbb6d98-068a-4b96-8c55-63ecf3c554d9",
@@ -391,7 +401,6 @@ class LoggedInUserDetails {
     map['Name'] = _name;
     return map;
   }
-
 }
 
 /// RestaurantIDP : "0d74bfa1-af7d-4182-835b-b815c2972591"
@@ -416,7 +425,8 @@ class RestaurantData {
     String? contactNumber,
     String? orderIDPrefixCode,
     String? tagLine,
-    String? termsAndConditions,}) {
+    String? termsAndConditions,
+  }) {
     _restaurantIDP = restaurantIDP;
     _restaurantName = restaurantName;
     _restaurantLogoPath = restaurantLogoPath;
@@ -487,7 +497,6 @@ class RestaurantData {
     map['TagLine'] = _tagLine;
     return map;
   }
-
 }
 
 /// PrintType : "K"
@@ -512,27 +521,28 @@ class RestaurantData {
 /// EnablePackagingInfo : true
 
 class PrinterSettingsData {
-  PrinterSettingsData({
-    String? printType,
-    String? printTypeText,
-    int? printCopies,
-    bool? enableBranchName,
-    bool? enableBranchAddress,
-    bool? enableOrderTrackingID,
-    bool? enableTaxInfo,
-    bool? enableDateTime,
-    bool? enableLogo,
-    bool? enableHeader,
-    bool? enableFooter,
-    bool? enableTitleText,
-    bool? enableCustomText,
-    String? customTitleText,
-    String? customHeaderText,
-    String? customFooterText,
-    String? customMessageText,
-    bool? enableAdditionalNotes,
-    bool? enableItemWiseNotes,
-    bool? enablePackagingInfo,}){
+  PrinterSettingsData(
+      {String? printType,
+      String? printTypeText,
+      int? printCopies,
+      bool? enableBranchName,
+      bool? enableBranchAddress,
+      bool? enableOrderTrackingID,
+      bool? enableTaxInfo,
+      bool? enableDateTime,
+      bool? enableLogo,
+      bool? enableHeader,
+      bool? enableFooter,
+      bool? enableTitleText,
+      bool? enableCustomText,
+      String? customTitleText,
+      String? customHeaderText,
+      String? customFooterText,
+      String? customMessageText,
+      bool? enableAdditionalNotes,
+      bool? enableItemWiseNotes,
+      bool? enablePackagingInfo,
+      bool? enableCustomerInfo}) {
     _printType = printType;
     _printTypeText = printTypeText;
     _printCopies = printCopies;
@@ -553,6 +563,7 @@ class PrinterSettingsData {
     _enableAdditionalNotes = enableAdditionalNotes;
     _enableItemWiseNotes = enableItemWiseNotes;
     _enablePackagingInfo = enablePackagingInfo;
+    _enableCustomerInfo = enableCustomerInfo;
   }
 
   PrinterSettingsData.fromJson(dynamic json) {
@@ -576,7 +587,9 @@ class PrinterSettingsData {
     _enableAdditionalNotes = json['EnableAdditionalNotes'];
     _enableItemWiseNotes = json['EnableItemWiseNotes'];
     _enablePackagingInfo = json['EnablePackagingInfo'];
+    _enableCustomerInfo = json['EnableCustomerInfo'];
   }
+
   String? _printType;
   String? _printTypeText;
   int? _printCopies;
@@ -597,27 +610,49 @@ class PrinterSettingsData {
   bool? _enableAdditionalNotes;
   bool? _enableItemWiseNotes;
   bool? _enablePackagingInfo;
+  bool? _enableCustomerInfo;
 
   String? get printType => _printType;
+
   String? get printTypeText => _printTypeText;
+
   int? get printCopies => _printCopies;
+
   bool? get enableBranchName => _enableBranchName;
+
   bool? get enableBranchAddress => _enableBranchAddress;
+
   bool? get enableOrderTrackingID => _enableOrderTrackingID;
+
   bool? get enableTaxInfo => _enableTaxInfo;
+
   bool? get enableDateTime => _enableDateTime;
+
   bool? get enableLogo => _enableLogo;
+
   bool? get enableHeader => _enableHeader;
+
   bool? get enableFooter => _enableFooter;
+
   bool? get enableTitleText => _enableTitleText;
+
   bool? get enableCustomText => _enableCustomText;
+
   String? get customTitleText => _customTitleText;
+
   String? get customHeaderText => _customHeaderText;
+
   String? get customFooterText => _customFooterText;
+
   String? get customMessageText => _customMessageText;
+
   bool? get enableAdditionalNotes => _enableAdditionalNotes;
+
   bool? get enableItemWiseNotes => _enableItemWiseNotes;
+
   bool? get enablePackagingInfo => _enablePackagingInfo;
+
+  bool? get enableCustomerInfo => _enableCustomerInfo;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -641,7 +676,7 @@ class PrinterSettingsData {
     map['EnableAdditionalNotes'] = _enableAdditionalNotes;
     map['EnableItemWiseNotes'] = _enableItemWiseNotes;
     map['EnablePackagingInfo'] = _enablePackagingInfo;
+    map['EnableCustomerInfo'] = _enableCustomerInfo;
     return map;
   }
-
 }

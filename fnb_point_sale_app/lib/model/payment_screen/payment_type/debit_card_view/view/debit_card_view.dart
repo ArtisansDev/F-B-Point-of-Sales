@@ -124,7 +124,7 @@ class DebitCardView extends GetView<DebitCardViewController> {
                       width: 15.sp,
                     ),
                     Expanded(
-                        child: Container(
+                        child: SizedBox(
                             width: 10.w,
                             child: rectangleCornerButtonText600(
                               height: 19.5.sp,
@@ -138,7 +138,7 @@ class DebitCardView extends GetView<DebitCardViewController> {
                       width: 13.sp,
                     ),
                     Expanded(
-                        child: Container(
+                        child: SizedBox(
                             width: 10.w,
                             child: rectangleCornerButtonText600(
                               height: 19.5.sp,

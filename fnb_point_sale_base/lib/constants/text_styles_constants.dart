@@ -117,6 +117,18 @@ TextStyle getText600({Color colors = Colors.white, size = 14.0,}) {
   );
 }
 
+TextStyle getText600UnderLine(
+    {Color colors = Colors.white, size = 14.0, heights = 1.2}) {
+  return GoogleFonts.poppins(
+    decoration: TextDecoration.underline,
+    color: colors,
+    fontSize: size,
+    fontWeight: FontWeight.w600,
+    letterSpacing: -0.2,
+    height: heights,
+  );
+}
+
 TextStyle getTextHeights600(
     {Color colors = Colors.white, size = 14.0, heights = 1.2}) {
   return GoogleFonts.poppins(

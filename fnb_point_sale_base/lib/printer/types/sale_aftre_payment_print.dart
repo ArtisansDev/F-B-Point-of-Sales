@@ -67,12 +67,6 @@ Future<bool> printAftrePayment(
         child: pw.Text(
             '${mRestaurantData.orderIDPrefixCode}${mOrderDetailList.trackingOrderID}',
             style: getNormalTextStyle())));
-    widgets.add(pw.Container(height: 4));
-    widgets.add(mySeparator());
-    widgets.add(pw.Container(height: 4));
-
-    widgets.add(pw.Center(
-        child: pw.Text('Order Date and Time', style: getBoldTextStyle())));
     widgets.add(pw.Center(
         child: pw.Text(
             '${getUTCToLocalDateOrderHistory(mOrderDetailList.orderDate.toString())}',
@@ -80,6 +74,16 @@ Future<bool> printAftrePayment(
     widgets.add(pw.Container(height: 4));
     widgets.add(mySeparator());
     widgets.add(pw.Container(height: 4));
+
+    // widgets.add(pw.Center(
+    //     child: pw.Text('Order Date and Time', style: getBoldTextStyle())));
+    // widgets.add(pw.Center(
+    //     child: pw.Text(
+    //         '${getUTCToLocalDateOrderHistory(mOrderDetailList.orderDate.toString())}',
+    //         style: getNormalTextStyle())));
+    // widgets.add(pw.Container(height: 4));
+    // widgets.add(mySeparator());
+    // widgets.add(pw.Container(height: 4));
 
     ///table
     widgets.add(getTableRow(mOrderDetailList));
@@ -209,15 +213,17 @@ Future<bool> printAftrePayment(
           child: pw.Text(
               '${mRestaurantData.orderIDPrefixCode}${mOrderDetailList.trackingOrderID}',
               style: getNormalTextStyle())));
-      widgets.add(pw.Container(height: 4));
-      widgets.add(mySeparator());
-      widgets.add(pw.Container(height: 4));
+      if (!(mPrinterSettingsData.enableDateTime ?? false)) {
+        widgets.add(pw.Container(height: 4));
+        widgets.add(mySeparator());
+        widgets.add(pw.Container(height: 4));
+      }
     }
 
     ///Order Date and Time
     if ((mPrinterSettingsData.enableDateTime ?? false)) {
-      widgets.add(pw.Center(
-          child: pw.Text('Order Date and Time', style: getBoldTextStyle())));
+      // widgets.add(pw.Center(
+      //     child: pw.Text('Order Date and Time', style: getBoldTextStyle())));
       widgets.add(pw.Center(
           child: pw.Text(
               '${getUTCToLocalDateOrderHistory(mOrderDetailList.orderDate.toString())}',
@@ -253,12 +259,12 @@ Future<bool> printAftrePayment(
     }
 
     ///user details
-    if ((mOrderDetailList.phoneNumber ?? '').isNotEmpty) {
+    if ((mPrinterSettingsData.enableCustomerInfo ?? false) && (mOrderDetailList.phoneNumber ?? '').isNotEmpty) {
       widgets.add(getUserDetailsRow(mOrderDetailList));
-    }
     widgets.add(pw.Container(height: 4));
     widgets.add(mySeparator());
     widgets.add(pw.Container(height: 4));
+    }
 
     ///menu order
     int value = 0;
@@ -441,30 +447,30 @@ pw.Widget getUserDetailsRow(OrderDetailList mOrderDetailList) {
             )),
       ],
     ),
-    pw.Row(
-      children: [
-        pw.Expanded(
-            flex: 2,
-            child: pw.Container(
-              padding: const pw.EdgeInsets.all(2.0),
-              child: pw.Align(
-                alignment: pw.Alignment.centerLeft,
-                child: pw.Text("${sPhoneNumber.tr}:-",
-                    style: getNormalTextStyle()),
-              ),
-            )),
-        pw.Expanded(
-            flex: 3,
-            child: pw.Container(
-              padding: const pw.EdgeInsets.all(2.0),
-              child: pw.Align(
-                alignment: pw.Alignment.centerRight,
-                child: pw.Text(mOrderDetailList.phoneNumber ?? '--',
-                    style: getBoldTextStyle()),
-              ),
-            )),
-      ],
-    )
+    // pw.Row(
+    //   children: [
+    //     pw.Expanded(
+    //         flex: 2,
+    //         child: pw.Container(
+    //           padding: const pw.EdgeInsets.all(2.0),
+    //           child: pw.Align(
+    //             alignment: pw.Alignment.centerLeft,
+    //             child: pw.Text("${sPhoneNumber.tr}:-",
+    //                 style: getNormalTextStyle()),
+    //           ),
+    //         )),
+    //     pw.Expanded(
+    //         flex: 3,
+    //         child: pw.Container(
+    //           padding: const pw.EdgeInsets.all(2.0),
+    //           child: pw.Align(
+    //             alignment: pw.Alignment.centerRight,
+    //             child: pw.Text(mOrderDetailList.phoneNumber ?? '--',
+    //                 style: getBoldTextStyle()),
+    //           ),
+    //         )),
+    //   ],
+    // )
   ]);
 }
 

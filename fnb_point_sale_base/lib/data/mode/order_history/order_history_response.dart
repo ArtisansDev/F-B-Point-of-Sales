@@ -159,7 +159,10 @@ class OrderHistoryResponseData {
 /// TableNo : "Table-541"
 /// EnvironmentType : 0 or 1
 /// PackagingName : ""
-
+/// "IsPaymentTypeChanged":true,
+///"PaymentTypeChangedBy":"a35ca135-4c38-42a2-8aec-da4d4746aad9",
+///"ReasonForChangingPaymentType":"mistake select payment type"
+///"CounterBalanceHistoryIDF":"mistake select payment type"
 class OrderHistoryData {
   OrderHistoryData({
     String? orderIDP,
@@ -208,6 +211,10 @@ class OrderHistoryData {
     String? packagingName,
     String? environmentType,
     String? sequentialOrderID,
+    String? paymentTypeChangedBy,
+    String? reasonForChangingPaymentType,
+    String? counterBalanceHistoryIDF,
+    bool? isPaymentTypeChanged,
   }) {
     _sequentialOrderID = sequentialOrderID;
     _orderIDP = orderIDP;
@@ -255,6 +262,10 @@ class OrderHistoryData {
     _tableNo = tableNo;
     _packagingName = packagingName;
     _environmentType = environmentType;
+    _isPaymentTypeChanged = isPaymentTypeChanged;
+    _paymentTypeChangedBy = paymentTypeChangedBy;
+    _reasonForChangingPaymentType = reasonForChangingPaymentType;
+    _counterBalanceHistoryIDF = counterBalanceHistoryIDF;
   }
 
   OrderHistoryData.fromJson(dynamic json) {
@@ -313,6 +324,10 @@ class OrderHistoryData {
     _paymentGatewaySettingID = json['PaymentGatewaySettingID'];
     _tableNo = json['TableNo'];
     _packagingName = json['PackagingName'];
+    _paymentTypeChangedBy = json['PaymentTypeChangedBy']??'';
+    _reasonForChangingPaymentType = json['ReasonForChangingPaymentType']??'';
+    _counterBalanceHistoryIDF = json['CounterBalanceHistoryIDF']??'';
+    _isPaymentTypeChanged = json['IsPaymentTypeChanged']??false;
     _environmentType = (json['EnvironmentType']??0).toString();
   }
 
@@ -362,6 +377,10 @@ class OrderHistoryData {
   String? _tableNo;
   String? _packagingName;
   String? _environmentType;
+  String? _paymentTypeChangedBy;
+  String? _reasonForChangingPaymentType;
+  String? _counterBalanceHistoryIDF;
+  bool? _isPaymentTypeChanged;
 
   String? get sequentialOrderID => _sequentialOrderID;
   
@@ -455,6 +474,14 @@ class OrderHistoryData {
 
   String? get environmentType => _environmentType;
 
+  String? get paymentTypeChangedBy => _paymentTypeChangedBy;
+
+  String? get reasonForChangingPaymentType => _reasonForChangingPaymentType;
+
+  String? get counterBalanceHistoryIDF => _counterBalanceHistoryIDF;
+
+  bool? get isPaymentTypeChanged => _isPaymentTypeChanged;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['SequentialOrderID'] = _sequentialOrderID;
@@ -507,6 +534,10 @@ class OrderHistoryData {
     map['TableNo'] = _tableNo;
     map['PackagingName'] = _packagingName;
     map['EnvironmentType'] = _environmentType;
+    map['IsPaymentTypeChanged'] = _isPaymentTypeChanged;
+    map['PaymentTypeChangedBy'] = _paymentTypeChangedBy;
+    map['ReasonForChangingPaymentType'] = _reasonForChangingPaymentType;
+    map['CounterBalanceHistoryIDF'] = _counterBalanceHistoryIDF;
     return map;
   }
 }
