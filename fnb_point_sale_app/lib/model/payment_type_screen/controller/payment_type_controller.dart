@@ -48,6 +48,7 @@ class PaymentTypeController extends GetxController {
   RxList<GetAllPaymentTypeData> mGetAllPaymentTypeData =
       <GetAllPaymentTypeData>[].obs;
   RxBool isSuccess = false.obs;
+
   PaymentTypeController(OrderHistoryData mSelectOrderHistoryData) {
     mOrderHistoryData.value = mSelectOrderHistoryData;
   }
@@ -131,6 +132,7 @@ class PaymentTypeController extends GetxController {
           }
           break;
       }
+      debugPrint("###### ${jsonEncode(mGetAllPaymentType.value)}");
       await callUpdatePaymentType();
     }
   }
