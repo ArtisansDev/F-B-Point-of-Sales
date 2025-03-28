@@ -41,6 +41,7 @@ class CashViewController extends GetxController {
     mAmount.value = getDoubleValue(roundToNearestPossible(
         getDoubleValue(mOrderPlace.value?.totalPrice.toStringAsFixed(2))));
     amountController.value.text = "";
+    onTextChangeAmount();
   }
 
   void onDone() {
