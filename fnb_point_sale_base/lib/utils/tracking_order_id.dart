@@ -22,6 +22,7 @@ import '../data/mode/configuration/configuration_response.dart';
 import '../data/mode/customer/get_all_customer/get_all_customer_response.dart';
 import '../data/mode/order_history/order_history_response.dart';
 import '../data/mode/order_place/process_multiple_orders_request.dart';
+import '../data/mode/payment_type/cash_payment_type.dart';
 import '../data/mode/product/get_all_modifier/get_all_modifier_response.dart';
 import '../data/mode/product/get_all_payment_type/get_all_payment_type_response.dart';
 import '../locator.dart';
@@ -251,11 +252,22 @@ createOrderPlaceRequest(
   }
   double grandTotal = getDoubleValue(subTotal + taxTotal);
   double adjustedAmount = getDoubleValue(roundToNearestPossible(grandTotal));
-
+  String? sPayAmountCash;
+  String? sDueAmountCash;
+  String? sReturnAmountCash;
   ///payment
   PaymentResponse mPaymentResponse = PaymentResponse();
   if (printOrderPayment != null) {
     if (printOrderPayment.paymentGatewayNo.toString() == "0") {
+      CashPaymentType mCashPaymentType = CashPaymentType.fromJson(jsonDecode(printOrderPayment.requestData ?? ''));
+      sPayAmountCash =
+          (mCashPaymentType.cash?.payAmount ?? 0.0).toString();
+      sDueAmountCash =
+          (mCashPaymentType.cash?.dueAmount ?? 0.0).toString();
+      sReturnAmountCash =
+          (mCashPaymentType.cash?.returnAmount ?? 0.0).toString();
+
+
       mPaymentResponse = PaymentResponse(
         transactionID: "",
         paidAmount: adjustedAmount,
@@ -264,7 +276,10 @@ createOrderPlaceRequest(
         responseCode: "200",
         responseData: "",
         responseMessage: "",
-        requestData: "",
+        requestData: printOrderPayment.requestData ?? '',
+        payAmountCash:( mCashPaymentType.cash?.payAmount??0.0).toString(),
+        dueAmountCash:( mCashPaymentType.cash?.dueAmount??0.0).toString(),
+        returnAmountCash:( mCashPaymentType.cash?.returnAmount??0.0).toString(),
       );
     } else if (printOrderPayment.paymentGatewayNo.toString() == "5") {
       mPaymentResponse = PaymentResponse(
@@ -384,7 +399,9 @@ createOrderPlaceRequest(
 
       ///orderPlaceGuestInfoRequest
       paymentResponse: printOrderPayment == null ? null : [mPaymentResponse],
-
+      payAmountCash: sPayAmountCash,
+      dueAmountCash: sDueAmountCash,
+      returnAmountCash: sReturnAmountCash,
       ///customer
       name: (mOrderHistoryData?.name ?? mOrderPlace.mSelectCustomer?.name),
       email: (mOrderHistoryData?.email ?? mOrderPlace.mSelectCustomer?.email),

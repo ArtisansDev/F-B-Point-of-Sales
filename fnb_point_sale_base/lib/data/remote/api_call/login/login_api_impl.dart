@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import '../../../../constants/web_constants.dart';
 import '../../../mode/configuration/configuration_response.dart';
 import '../../../mode/login/login_response.dart';
+import '../../../mode/manager_credentials/manager_credentials_response.dart';
 import '../../web_response_failed.dart';
 import 'login_api.dart';
 
@@ -144,7 +145,8 @@ class LoginApiImpl extends AllApiImpl with LoginApi {
 
   ///post actionManagerCredentialsStatus
   @override
-  Future<WebResponseSuccess> postManagerCredentials(dynamic exhibitorsListRequest) async {
+  Future<WebResponseSuccess> postManagerCredentials(
+      dynamic exhibitorsListRequest) async {
     AppAlert.showProgressDialog(Get.context!);
     WebConstants.auth = true;
     final cases = await mWebProvider.postWithRequest(
@@ -154,8 +156,14 @@ class LoginApiImpl extends AllApiImpl with LoginApi {
     debugPrint("plainJsonRequest ==  ${jsonEncode(cases.body)}");
     AppAlert.hideLoadingDialog(Get.context!);
     if (cases.statusCode == WebConstants.statusCode200) {
-      mWebResponseSuccess =
-      WebResponseSuccess.fromJson(processResponseToJson(cases));
+      ManagerCredentialsResponse mManagerCredentialsResponse =
+          ManagerCredentialsResponse.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        data: mManagerCredentialsResponse,
+        statusMessage: mManagerCredentialsResponse.statusMessage,
+        error: false,
+      );
     } else if (cases.statusCode == WebConstants.statusCode401) {
       mWebResponseSuccess =
           WebResponseSuccess.fromJson(processResponseToJson(cases));
@@ -172,5 +180,4 @@ class LoginApiImpl extends AllApiImpl with LoginApi {
 
     return mWebResponseSuccess;
   }
-
 }

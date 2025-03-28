@@ -215,6 +215,9 @@ class OrderHistoryData {
     String? reasonForChangingPaymentType,
     String? counterBalanceHistoryIDF,
     bool? isPaymentTypeChanged,
+    String? payAmountCash,
+    String? dueAmountCash,
+    String? returnAmountCash,
   }) {
     _sequentialOrderID = sequentialOrderID;
     _orderIDP = orderIDP;
@@ -266,6 +269,9 @@ class OrderHistoryData {
     _paymentTypeChangedBy = paymentTypeChangedBy;
     _reasonForChangingPaymentType = reasonForChangingPaymentType;
     _counterBalanceHistoryIDF = counterBalanceHistoryIDF;
+    _payAmountCash = payAmountCash;
+    _dueAmountCash = dueAmountCash;
+    _returnAmountCash = returnAmountCash;
   }
 
   OrderHistoryData.fromJson(dynamic json) {
@@ -329,6 +335,9 @@ class OrderHistoryData {
     _counterBalanceHistoryIDF = json['CounterBalanceHistoryIDF']??'';
     _isPaymentTypeChanged = json['IsPaymentTypeChanged']??false;
     _environmentType = (json['EnvironmentType']??0).toString();
+    _payAmountCash = (json['PayAmountCash']??0.00).toString();
+    _dueAmountCash = (json['DueAmountCash']??0.00).toString();
+    _returnAmountCash = (json['ReturnAmountCash']??0.00).toString();
   }
 
   String? _sequentialOrderID;
@@ -381,6 +390,9 @@ class OrderHistoryData {
   String? _reasonForChangingPaymentType;
   String? _counterBalanceHistoryIDF;
   bool? _isPaymentTypeChanged;
+  String? _payAmountCash;
+  String? _dueAmountCash;
+  String? _returnAmountCash;
 
   String? get sequentialOrderID => _sequentialOrderID;
   
@@ -482,6 +494,12 @@ class OrderHistoryData {
 
   bool? get isPaymentTypeChanged => _isPaymentTypeChanged;
 
+  String? get payAmountCash => _payAmountCash;
+
+  String? get dueAmountCash => _dueAmountCash;
+
+  String? get returnAmountCash => _returnAmountCash;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['SequentialOrderID'] = _sequentialOrderID;
@@ -538,6 +556,9 @@ class OrderHistoryData {
     map['PaymentTypeChangedBy'] = _paymentTypeChangedBy;
     map['ReasonForChangingPaymentType'] = _reasonForChangingPaymentType;
     map['CounterBalanceHistoryIDF'] = _counterBalanceHistoryIDF;
+    map['PayAmountCash'] = _payAmountCash;
+    map['DueAmountCash'] = _dueAmountCash;
+    map['ReturnAmountCash'] = _returnAmountCash;
     return map;
   }
 }

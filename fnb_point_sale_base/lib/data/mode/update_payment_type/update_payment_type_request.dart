@@ -16,7 +16,12 @@ class UpdatePaymentTypeRequest {
     String? paymentGatewaySettingIDF,
     String? userIDF,
     String? reasonForChangingPaymentType,
-    String? requestData,}) {
+    String? requestData,
+    String? generalManagerUserID,
+    String? payAmountCash,
+    String? dueAmountCash,
+    String? returnAmountCash,
+  }) {
     _restaurantIDF = restaurantIDF;
     _branchIDF = branchIDF;
     _trackingOrderID = trackingOrderID;
@@ -25,6 +30,10 @@ class UpdatePaymentTypeRequest {
     _userIDF = userIDF;
     _reasonForChangingPaymentType = reasonForChangingPaymentType;
     _requestData = requestData;
+    _payAmountCash = payAmountCash;
+    _dueAmountCash = dueAmountCash;
+    _returnAmountCash = returnAmountCash;
+    _generalManagerUserID = generalManagerUserID;
   }
 
   UpdatePaymentTypeRequest.fromJson(dynamic json) {
@@ -36,9 +45,10 @@ class UpdatePaymentTypeRequest {
     _userIDF = json['UserIDF'];
     _reasonForChangingPaymentType = json['ReasonForChangingPaymentType'];
     _requestData = json['RequestData'];
-    // _requestData = json['RequestData'] != null
-    //     ? RequestData.fromJson(json['RequestData'])
-    //     : null;
+    _payAmountCash = json['PayAmountCash'];
+    _dueAmountCash = json['DueAmountCash'];
+    _returnAmountCash = json['ReturnAmountCash'];
+    _generalManagerUserID = json['GeneralManagerUserID'];
   }
 
   String? _restaurantIDF;
@@ -49,6 +59,10 @@ class UpdatePaymentTypeRequest {
   String? _userIDF;
   String? _reasonForChangingPaymentType;
   String? _requestData;
+  String? _payAmountCash;
+  String? _dueAmountCash;
+  String? _returnAmountCash;
+  String? _generalManagerUserID;
 
   String? get restaurantIDF => _restaurantIDF;
 
@@ -66,6 +80,14 @@ class UpdatePaymentTypeRequest {
 
   String? get requestData => _requestData;
 
+  String? get payAmountCash => _payAmountCash;
+
+  String? get dueAmountCash => _dueAmountCash;
+
+  String? get returnAmountCash => _returnAmountCash;
+
+  String? get generalManagerUserID => _generalManagerUserID;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['RestaurantIDF'] = _restaurantIDF;
@@ -76,45 +98,20 @@ class UpdatePaymentTypeRequest {
     map['UserIDF'] = _userIDF;
     map['ReasonForChangingPaymentType'] = _reasonForChangingPaymentType;
     map['RequestData'] = _requestData;
-
-    // if (_requestData != null) {
-    //   map['RequestData'] = RequestData?.toJson();
-    // }
+    map['PayAmountCash'] = _payAmountCash;
+    map['DueAmountCash'] = _dueAmountCash;
+    map['ReturnAmountCash'] = _returnAmountCash;
+    map['GeneralManagerUserID'] = _generalManagerUserID;
     return map;
   }
-
 }
-
-// /// DebitCard : {"CardNumber":5544}
-//
-// class RequestData {
-//   RequestData({
-//       DebitCard? debitCard,}){
-//     _debitCard = debitCard;
-// }
-//
-//   RequestData.fromJson(dynamic json) {
-//     _debitCard = json['DebitCard'] != null ? DebitCard.fromJson(json['DebitCard']) : null;
-//   }
-//   DebitCard? _debitCard;
-//
-//   DebitCard? get debitCard => _debitCard;
-//
-//   Map<String, dynamic> toJson() {
-//     final map = <String, dynamic>{};
-//     if (_debitCard != null) {
-//       map['DebitCard'] = _debitCard?.toJson();
-//     }
-//     return map;
-//   }
-//
-// }
 
 /// CardNumber : 5544
 
 class DebitCard {
   DebitCard({
-    int? cardNumber,}) {
+    int? cardNumber,
+  }) {
     _cardNumber = cardNumber;
   }
 
@@ -131,5 +128,4 @@ class DebitCard {
     map['CardNumber'] = _cardNumber;
     return map;
   }
-
 }

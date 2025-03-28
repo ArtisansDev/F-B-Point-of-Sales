@@ -11,15 +11,17 @@ import '../data/mode/configuration/configuration_response.dart';
 import '../data/mode/customer/get_all_customer/get_all_customer_response.dart';
 import '../data/mode/order_history/order_history_response.dart';
 import '../data/mode/order_place/process_multiple_orders_request.dart';
+import '../data/mode/payment_type/cash_payment_type.dart';
 import '../data/mode/product/get_all_payment_type/get_all_payment_type_response.dart';
 import '../locator.dart';
 import 'num_utils.dart';
 
-createOrderPlaceRequestFromOrderHistory({String? remarksController,
-  // String? orderDate,
-  OrderHistoryData? mOrderPlace,
-  GetAllPaymentTypeData? printOrderPayment,
-  GetAllCustomerList? mGetAllCustomerList}) async {
+createOrderPlaceRequestFromOrderHistory(
+    {String? remarksController,
+    // String? orderDate,
+    OrderHistoryData? mOrderPlace,
+    GetAllPaymentTypeData? printOrderPayment,
+    GetAllCustomerList? mGetAllCustomerList}) async {
   var configurationLocalApi = locator.get<ConfigurationLocalApi>();
   ConfigurationResponse mConfigurationResponse =
       await configurationLocalApi.getConfigurationResponse() ??
@@ -91,10 +93,21 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
       ? getDoubleValue(mOrderPlace?.grandTotal)
       : getDoubleValue(mOrderPlace?.totalAmount);
   double adjustedAmount = getDoubleValue(roundToNearestPossible(grandTotal));
+
+  String? sPayAmountCash;
+  String? sDueAmountCash;
+  String? sReturnAmountCash;
+
   ///payment
   PaymentResponse mPaymentResponse = PaymentResponse();
   if (printOrderPayment != null) {
     if (printOrderPayment.paymentGatewayNo.toString() == "0") {
+      CashPaymentType mCashPaymentType = CashPaymentType.fromJson(
+          jsonDecode(printOrderPayment.requestData ?? ''));
+      sPayAmountCash = (mCashPaymentType.cash?.payAmount ?? 0.0).toString();
+      sDueAmountCash = (mCashPaymentType.cash?.dueAmount ?? 0.0).toString();
+      sReturnAmountCash =
+          (mCashPaymentType.cash?.returnAmount ?? 0.0).toString();
       mPaymentResponse = PaymentResponse(
         transactionID: "",
         paidAmount: adjustedAmount,
@@ -102,7 +115,11 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
         paymentStatus: "S",
         responseCode: "200",
         responseData: "",
-        responseMessage: "",
+        responseMessage: printOrderPayment.requestData ?? '',
+        payAmountCash: (mCashPaymentType.cash?.payAmount ?? 0.0).toString(),
+        dueAmountCash: (mCashPaymentType.cash?.dueAmount ?? 0.0).toString(),
+        returnAmountCash:
+            (mCashPaymentType.cash?.returnAmount ?? 0.0).toString(),
       );
     } else if (printOrderPayment.paymentGatewayNo.toString() == "5") {
       mPaymentResponse = PaymentResponse(
@@ -113,8 +130,7 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
           responseCode: "200",
           responseData: "",
           responseMessage: "",
-          requestData: printOrderPayment.requestData ?? ''
-      );
+          requestData: printOrderPayment.requestData ?? '');
     } else if (printOrderPayment.paymentGatewayNo.toString() == "6") {
       mPaymentResponse = PaymentResponse(
           transactionID: "",
@@ -123,20 +139,16 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
           paymentStatus: "S",
           responseCode: "200",
           responseData: "",
-          requestData: printOrderPayment.requestData ?? ''
-
-      );
+          requestData: printOrderPayment.requestData ?? '');
     } else if (printOrderPayment.paymentGatewayNo.toString() == "7") {
       mPaymentResponse = PaymentResponse(
           transactionID: "",
-          paidAmount:adjustedAmount,
+          paidAmount: adjustedAmount,
           paymentGatewayNo: printOrderPayment.paymentGatewayNo,
           paymentStatus: "S",
           responseCode: "200",
           responseData: "",
-          requestData: printOrderPayment.requestData ?? ''
-
-      );
+          requestData: printOrderPayment.requestData ?? '');
     }
   }
 
@@ -155,7 +167,6 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
   /// sUserId
   String sCounterBalanceHistoryIDF = await SharedPrefs().getHistoryID();
 
-
   ///OrderPlaceRequest
   OrderDetailList mOrderDetailList = OrderDetailList(
     sequentialOrderID: (mOrderPlace?.sequentialOrderID ?? '').isEmpty
@@ -163,11 +174,11 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
         : (mOrderPlace?.sequentialOrderID ?? ''),
     trackingOrderID: mOrderPlace?.trackingOrderID ?? '',
     counterIDF:
-    (mConfigurationResponse.configurationData?.counterData ?? []).isEmpty
-        ? ""
-        : (mConfigurationResponse.configurationData?.counterData ?? [])
-        .first
-        .counterIDP,
+        (mConfigurationResponse.configurationData?.counterData ?? []).isEmpty
+            ? ""
+            : (mConfigurationResponse.configurationData?.counterData ?? [])
+                .first
+                .counterIDP,
     orderSource: (mOrderPlace?.orderSource ?? 2).toString(),
     orderType: (mOrderPlace?.orderType ?? 2).toString(),
     branchIDF: mOrderPlace?.branchIDF,
@@ -196,7 +207,7 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
     adjustedAmount: grandTotal == adjustedAmount
         ? null
         : getDoubleValue(
-        roundToNearestPossible(getDoubleValue(mOrderPlace?.grandTotal))),
+            roundToNearestPossible(getDoubleValue(mOrderPlace?.grandTotal))),
 
     ///table no
     tableNo: mOrderPlace?.tableNo ?? '',
@@ -209,7 +220,7 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
     orderMenu: orderMenu,
 
     ///payment_service
-    paymentGatewayNo:printOrderPayment?.paymentGatewayNo??'',
+    paymentGatewayNo: printOrderPayment?.paymentGatewayNo ?? '',
     paymentGatewayIDF: printOrderPayment?.paymentGatewayIDP ?? '',
     paymentGatewaySettingIDF: printOrderPayment?.paymentGatewaySettingIDP ?? '',
     paymentStatus: printOrderPayment == null ? "P" : "S",
@@ -217,6 +228,9 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
 
     ///orderPlaceGuestInfoRequest
     paymentResponse: printOrderPayment == null ? null : [mPaymentResponse],
+    payAmountCash: sPayAmountCash,
+    dueAmountCash: sDueAmountCash,
+    returnAmountCash: sReturnAmountCash,
 
     ///customer
     name: mGetAllCustomerList.name,
@@ -233,13 +247,12 @@ createOrderPlaceRequestFromOrderHistory({String? remarksController,
   return mOrderDetailList;
 }
 
-
-cancelOrder({String? remarksController,
-  // String? orderDate,
-  OrderHistoryData? mOrderPlace,
-  // GetAllPaymentTypeData? printOrderPayment,
-  GetAllCustomerList? mGetAllCustomerList
-}) async {
+cancelOrder(
+    {String? remarksController,
+    // String? orderDate,
+    OrderHistoryData? mOrderPlace,
+    // GetAllPaymentTypeData? printOrderPayment,
+    GetAllCustomerList? mGetAllCustomerList}) async {
   var configurationLocalApi = locator.get<ConfigurationLocalApi>();
   ConfigurationResponse mConfigurationResponse =
       await configurationLocalApi.getConfigurationResponse() ??
@@ -343,9 +356,8 @@ cancelOrder({String? remarksController,
       : getDoubleValue(mOrderPlace?.totalAmount);
   double adjustedAmount = getDoubleValue(roundToNearestPossible(grandTotal));
 
-  print("###### ${(mOrderPlace?.sequentialOrderID ?? '').isEmpty
-      ? null
-      : (mOrderPlace?.sequentialOrderID ?? '')}");
+  debugPrint(
+      "${(mOrderPlace?.sequentialOrderID ?? '').isEmpty ? null : (mOrderPlace?.sequentialOrderID ?? '')}");
 
   ///OrderPlaceRequest
   OrderDetailList mOrderDetailList = OrderDetailList(
@@ -354,11 +366,11 @@ cancelOrder({String? remarksController,
         : (mOrderPlace?.sequentialOrderID ?? ''),
     trackingOrderID: mOrderPlace?.trackingOrderID ?? '',
     counterIDF:
-    (mConfigurationResponse.configurationData?.counterData ?? []).isEmpty
-        ? ""
-        : (mConfigurationResponse.configurationData?.counterData ?? [])
-        .first
-        .counterIDP,
+        (mConfigurationResponse.configurationData?.counterData ?? []).isEmpty
+            ? ""
+            : (mConfigurationResponse.configurationData?.counterData ?? [])
+                .first
+                .counterIDP,
     orderSource: (mOrderPlace?.orderSource ?? 2).toString(),
     orderType: (mOrderPlace?.orderType ?? 2).toString(),
     branchIDF: mOrderPlace?.branchIDF,
@@ -387,7 +399,7 @@ cancelOrder({String? remarksController,
     adjustedAmount: grandTotal == adjustedAmount
         ? null
         : getDoubleValue(
-        roundToNearestPossible(getDoubleValue(mOrderPlace?.grandTotal))),
+            roundToNearestPossible(getDoubleValue(mOrderPlace?.grandTotal))),
 
     ///table no
     tableNo: mOrderPlace?.tableNo ?? '',

@@ -1,4 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/alert/app_alert.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
@@ -13,6 +15,8 @@ import 'package:get/get.dart';
 import '../../../../../dashboard_screen/controller/dashboard_screen_controller.dart';
 import '../../../../../menu_sales/view/item_payment_screen/controller/item_payment_screen_controller.dart';
 import '../../../../../menu_sales/view/item_payment_screen/view/item_payment_screen.dart';
+import '../../../../../payment_screen/payment_type/cash_view/controller/cash_view_controller.dart';
+import '../../../../../payment_screen/payment_type/cash_view/view/cash_view.dart';
 import '../../../../../payment_screen/payment_type/credit_card_view/controller/credit_card_view_controller.dart';
 import '../../../../../payment_screen/payment_type/credit_card_view/view/credit_card_view.dart';
 import '../../../../../payment_screen/payment_type/debit_card_view/controller/debit_card_view_controller.dart';
@@ -64,6 +68,31 @@ class TableItemSummaryController extends GetxController {
             Get.back();
 
             switch (mGetAllPaymentTypeData.paymentGatewayNo) {
+              case "0":
+                OrderPlace orderPlace = OrderPlace();
+                orderPlace.totalPrice = mOrderPlace.value.totalAmount ?? 0.0;
+
+                ///Cash
+                await AppAlert.showViewWithoutBlur(
+                    Get.context!,
+                    CashViewScreen(
+                      mOrderPlace: orderPlace,
+                      onPayment: (String sValue) {
+                        mGetAllPaymentTypeData.setRequestData(sValue);
+                      },
+                    ));
+                bool isSuccess = false;
+                if (Get.isRegistered<CashViewController>()) {
+                  isSuccess = Get.find<CashViewController>().isSuccess.value;
+                  await Get.delete<CashViewController>();
+                }
+                debugPrint(
+                    "## mGetAllPaymentTypeData ----- ${jsonEncode(mGetAllPaymentTypeData)}");
+                if (!isSuccess) {
+                  return;
+                }
+                break;
+
               case "5":
 
                 ///Debit Card

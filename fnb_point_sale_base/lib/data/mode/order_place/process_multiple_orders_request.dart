@@ -79,6 +79,9 @@ class OrderDetailList {
     List<OrderMenu>? kOTMenu,
     List<OrderTax>? orderTax,
     List<PaymentResponse>? paymentResponse,
+    String? payAmountCash,
+    String? dueAmountCash,
+    String? returnAmountCash,
     int? quantityTotal,
     double? itemTotal,
     double? modifierTotal,
@@ -145,6 +148,9 @@ class OrderDetailList {
     _packagingName = packagingName;
     _environmentType = environmentType;
     _sequentialOrderID = sequentialOrderID;
+    _payAmountCash = payAmountCash;
+    _dueAmountCash = dueAmountCash;
+    _returnAmountCash = returnAmountCash;
   }
 
   OrderDetailList.fromJson(dynamic json) {
@@ -207,6 +213,9 @@ class OrderDetailList {
     _packagingName = json['PackagingName'];
     _environmentType = json['EnvironmentType'];
     _sequentialOrderID = json['SequentialOrderID'];
+    _payAmountCash = json['PayAmountCash'];
+    _dueAmountCash = json['DueAmountCash'];
+    _returnAmountCash = json['ReturnAmountCash'];
   }
 
   String? _sequentialOrderID;
@@ -248,6 +257,9 @@ class OrderDetailList {
   String? _customerIDF;
   String? _packagingName;
   String? _environmentType;
+  String? _payAmountCash;
+  String? _dueAmountCash;
+  String? _returnAmountCash;
 
   String? get sequentialOrderID => _sequentialOrderID;
   
@@ -327,6 +339,12 @@ class OrderDetailList {
 
   String? get environmentType => _environmentType;
 
+  String? get payAmountCash => _payAmountCash;
+
+  String? get dueAmountCash => _dueAmountCash;
+
+  String? get returnAmountCash => _returnAmountCash;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['SequentialOrderID'] = _sequentialOrderID;
@@ -377,6 +395,9 @@ class OrderDetailList {
     map['CustomerIDF'] = _customerIDF;
     map['PackagingName'] = _packagingName;
     map['EnvironmentType'] = _environmentType;
+    map['PayAmountCash'] = _payAmountCash;
+    map['DueAmountCash'] = _dueAmountCash;
+    map['ReturnAmountCash'] = _returnAmountCash;
     return map;
   }
 }
@@ -400,6 +421,9 @@ class PaymentResponse {
     String? responseData,
     String? paymentGatewayNo,
     String? requestData,
+    String? payAmountCash,
+    String? dueAmountCash,
+    String? returnAmountCash,
   }) {
     _transactionID = transactionID;
     _responseCode = responseCode;
@@ -409,6 +433,9 @@ class PaymentResponse {
     _responseData = responseData;
     _paymentGatewayNo = paymentGatewayNo;
     _requestData = requestData;
+    _payAmountCash = payAmountCash;
+    _dueAmountCash = dueAmountCash;
+    _returnAmountCash = returnAmountCash;
   }
 
   PaymentResponse.fromJson(dynamic json) {
@@ -420,6 +447,9 @@ class PaymentResponse {
     _responseData = json['ResponseData'];
     _paymentGatewayNo = json['PaymentGatewayNo'];
     _requestData = json['RequestData'];
+    _payAmountCash = json['PayAmountCash'];
+    _dueAmountCash = json['DueAmountCash'];
+    _returnAmountCash = json['ReturnAmountCash'];
   }
 
   String? _transactionID;
@@ -430,6 +460,9 @@ class PaymentResponse {
   String? _responseData;
   String? _paymentGatewayNo;
   String? _requestData;
+  String? _payAmountCash;
+  String? _dueAmountCash;
+  String? _returnAmountCash;
 
   String? get transactionID => _transactionID;
 
@@ -447,6 +480,12 @@ class PaymentResponse {
 
   String? get requestData => _requestData;
 
+  String? get payAmountCash => _payAmountCash;
+
+  String? get dueAmountCash => _dueAmountCash;
+
+  String? get returnAmountCash => _returnAmountCash;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['TransactionID'] = _transactionID;
@@ -457,6 +496,9 @@ class PaymentResponse {
     map['ResponseData'] = _responseData;
     map['PaymentGatewayNo'] = _paymentGatewayNo;
     map['RequestData'] = _requestData;
+    map['PayAmountCash'] = _payAmountCash;
+    map['DueAmountCash'] = _dueAmountCash;
+    map['ReturnAmountCash'] = _returnAmountCash;
     return map;
   }
 }

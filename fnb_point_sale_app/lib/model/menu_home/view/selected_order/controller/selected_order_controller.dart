@@ -18,6 +18,7 @@ import 'package:fnb_point_sale_base/data/mode/configuration/configuration_respon
 import 'package:fnb_point_sale_base/data/mode/customer/get_all_customer/get_all_customer_response.dart';
 import 'package:fnb_point_sale_base/data/mode/order_history/order_history_response.dart';
 import 'package:fnb_point_sale_base/data/mode/order_place/process_multiple_orders_request.dart';
+import 'package:fnb_point_sale_base/data/mode/payment_type/cash_payment_type.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_menu_item/menu_item_response.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_modifier/get_all_modifier_response.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_payment_type/get_all_payment_type_response.dart';
@@ -39,6 +40,8 @@ import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 import '../../../../../common_view/table_drop_down.dart';
 import '../../../../cancel_order/view/cancel_order_screen.dart';
 import '../../../../payment_screen/controller/payment_screen_controller.dart';
+import '../../../../payment_screen/payment_type/cash_view/controller/cash_view_controller.dart';
+import '../../../../payment_screen/payment_type/cash_view/view/cash_view.dart';
 import '../../../../payment_screen/payment_type/credit_card_view/controller/credit_card_view_controller.dart';
 import '../../../../payment_screen/payment_type/credit_card_view/view/credit_card_view.dart';
 import '../../../../payment_screen/payment_type/debit_card_view/controller/debit_card_view_controller.dart';
@@ -546,6 +549,31 @@ class SelectedOrderController extends HomeBaseController {
             debugPrint(
                 "mSelectPaymentType ----- ${jsonEncode(mSelectPaymentType)}");
             switch (mSelectPaymentType.paymentGatewayNo) {
+              case "0":
+
+                ///Cash
+                await AppAlert.showViewWithoutBlur(
+                    Get.context!,
+                    CashViewScreen(
+                      mOrderPlace: mOrderPlace.value ?? OrderPlace(),
+                      onPayment: (String sValue) {
+                        mSelectPaymentType.setRequestData(sValue);
+                      },
+                    ));
+
+                bool isSuccess = false;
+                if (Get.isRegistered<CashViewController>()) {
+                  isSuccess = Get.find<CashViewController>().isSuccess.value;
+                  await Get.delete<CashViewController>();
+                }
+                debugPrint(
+                    "## mSelectPaymentType ----- ${jsonEncode(mSelectPaymentType)}");
+
+                if (!isSuccess) {
+                  return;
+                }
+                break;
+
               case "5":
 
                 ///Debit Card
@@ -588,7 +616,6 @@ class SelectedOrderController extends HomeBaseController {
             }
             debugPrint(
                 "## mSelectPaymentType ----- ${jsonEncode(mSelectPaymentType)}");
-
             ////
             if ((mSelectPaymentType.paymentGatewayNo == "5" ||
                     mSelectPaymentType.paymentGatewayNo == "7" ||

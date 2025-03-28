@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fnb_point_sale_base/data/local/database/configuration/configuration_local_api.dart';
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/data/mode/manager_credentials/manager_credentials_request.dart';
+import 'package:fnb_point_sale_base/data/mode/manager_credentials/manager_credentials_response.dart';
 import 'package:fnb_point_sale_base/data/mode/update_balance/opening_balance/opening_balance_request.dart';
 import 'package:fnb_point_sale_base/data/mode/update_balance/opening_balance/opening_balance_response.dart';
 import 'package:fnb_point_sale_base/data/mode/update_login_status/update_login_status_request.dart';
@@ -34,6 +35,7 @@ class BranchManagerController extends GetxController {
   Rx<TextEditingController> passwordController = TextEditingController().obs;
   RxBool hidePassword = true.obs;
   RxBool isSuccess = false.obs;
+  Rx<ManagerCredentialsResponse> mManagerCredentialsResponse = ManagerCredentialsResponse().obs;
 
   isLoginCheck() {
     if (userNameController.value.text.trim().isEmpty) {
@@ -66,6 +68,7 @@ class BranchManagerController extends GetxController {
         WebResponseSuccess mWebResponseSuccess =
             await localApi.postManagerCredentials(mManagerCredentialsRequest);
         if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
+          mManagerCredentialsResponse.value = mWebResponseSuccess.data;
           isSuccess.value = true;
           AppAlert.showSnackBar(
               Get.context!, mWebResponseSuccess.statusMessage ?? '');

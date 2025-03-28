@@ -15,8 +15,10 @@ import 'package:fnb_point_sale_base/data/local/database/configuration/configurat
 import 'package:fnb_point_sale_base/data/local/database/offline_place_order/offline_place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/shared_prefs/shared_prefs.dart';
+import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/data/mode/customer/get_all_customer/get_all_customer_response.dart';
+import 'package:fnb_point_sale_base/data/mode/manager_credentials/manager_credentials_response.dart';
 import 'package:fnb_point_sale_base/data/mode/order_history/order_history_request.dart';
 import 'package:fnb_point_sale_base/data/mode/order_history/order_history_response.dart';
 import 'package:fnb_point_sale_base/data/mode/order_place/process_multiple_orders_request.dart';
@@ -39,6 +41,8 @@ import '../../branch_manager_credentials_screen/controller/branch_manager_contro
 import '../../branch_manager_credentials_screen/view/branch_manager_screen.dart';
 import '../../dashboard_screen/controller/dashboard_screen_controller.dart';
 import '../../dashboard_screen/view/top_bar/controller/top_bar_controller.dart';
+import '../../payment_screen/payment_type/cash_view/controller/cash_view_controller.dart';
+import '../../payment_screen/payment_type/cash_view/view/cash_view.dart';
 import '../../payment_screen/payment_type/credit_card_view/controller/credit_card_view_controller.dart';
 import '../../payment_screen/payment_type/credit_card_view/view/credit_card_view.dart';
 import '../../payment_screen/payment_type/debit_card_view/controller/debit_card_view_controller.dart';
@@ -47,6 +51,8 @@ import '../../payment_screen/payment_type/qr_code_view/controller/qr_view_contro
 import '../../payment_screen/payment_type/qr_code_view/view/qr_view.dart';
 import '../../payment_type_screen/controller/payment_type_controller.dart';
 import '../../payment_type_screen/view/payment_type_screen.dart';
+import '../../refund_payment_type_screen/controller/refund_payment_type_controller.dart';
+import '../../refund_payment_type_screen/view/refund_payment_type_screen.dart';
 import '../view/item_payment_screen/controller/item_payment_screen_controller.dart';
 import '../view/item_payment_screen/view/item_payment_screen.dart';
 import '../view/item_summary/controller/item_summary_controller.dart';
@@ -356,6 +362,30 @@ class MenuSalesController extends GetxController {
       GetAllCustomerList? mGetAllCustomerList) async {
     ///payment
     switch (mGetAllPaymentTypeData.paymentGatewayNo) {
+      case "0":
+        OrderPlace orderPlace = OrderPlace();
+        orderPlace.totalPrice = mOrderHistory.totalAmount ?? 0.0;
+
+        ///Cash
+        await AppAlert.showViewWithoutBlur(
+            Get.context!,
+            CashViewScreen(
+              mOrderPlace: orderPlace,
+              onPayment: (String sValue) {
+                mGetAllPaymentTypeData.setRequestData(sValue);
+              },
+            ));
+        bool isSuccess = false;
+        if (Get.isRegistered<CashViewController>()) {
+          isSuccess = Get.find<CashViewController>().isSuccess.value;
+          await Get.delete<CashViewController>();
+        }
+        debugPrint(
+            "## mGetAllPaymentTypeData ----- ${jsonEncode(mGetAllPaymentTypeData)}");
+        if (!isSuccess) {
+          return;
+        }
+        break;
       case "5":
 
         ///Debit Card
@@ -640,10 +670,13 @@ class MenuSalesController extends GetxController {
           await AppAlert.showViewWithoutBlur(
               Get.context!, const BranchManagerScreen());
           bool isManager = false;
+          ManagerCredentialsResponse? managerCredentialsResponse;
           if (Get.isRegistered<BranchManagerController>()) {
             BranchManagerController mBranchManagerController =
                 Get.find<BranchManagerController>();
             isManager = mBranchManagerController.isSuccess.value;
+            managerCredentialsResponse =
+                mBranchManagerController.mManagerCredentialsResponse.value;
             Get.delete<BranchManagerController>();
           }
           if (isManager) {
@@ -651,6 +684,8 @@ class MenuSalesController extends GetxController {
             await AppAlert.showViewWithoutBlur(
                 Get.context!,
                 PaymentTypeScreen(
+                    mManagerCredentialsResponse: managerCredentialsResponse ??
+                        ManagerCredentialsResponse(),
                     mSelectOrderHistoryData: mSelectOrderHistoryData));
             if (Get.isRegistered<PaymentTypeController>()) {
               PaymentTypeController mPaymentTypeController =
@@ -662,6 +697,63 @@ class MenuSalesController extends GetxController {
           if (isManager) {
             callOrderHistory();
           }
+        }
+      }
+    }
+  }
+
+  void onRefund(int index) async {
+    OrderHistoryData mSelectOrderHistoryData = mOrderHistoryData[index];
+
+    debugPrint(
+        "isPaymentTypeChanged ${mSelectOrderHistoryData.paymentGatewayName}");
+    if (mSelectOrderHistoryData.paymentGatewayName
+        .toString()
+        .trim()
+        .isNotEmpty) {
+      debugPrint(
+          "isPaymentTypeChanged ${mSelectOrderHistoryData.isPaymentTypeChanged}");
+      if (!(mSelectOrderHistoryData.isPaymentTypeChanged ?? false)) {
+        debugPrint(
+            "counterBalanceHistoryIDF ${mSelectOrderHistoryData.counterBalanceHistoryIDF}");
+
+        debugPrint(
+            "sCounterBalanceHistoryIDF ${sCounterBalanceHistoryIDF.value}");
+        if ((mSelectOrderHistoryData.counterBalanceHistoryIDF ?? '')
+                .trim()
+                .toString()
+                .toUpperCase() ==
+            sCounterBalanceHistoryIDF.value.toString().trim().toUpperCase()) {
+          await AppAlert.showViewWithoutBlur(
+              Get.context!, const BranchManagerScreen());
+          bool isManager = false;
+          ManagerCredentialsResponse? managerCredentialsResponse;
+          if (Get.isRegistered<BranchManagerController>()) {
+            BranchManagerController mBranchManagerController =
+                Get.find<BranchManagerController>();
+            isManager = mBranchManagerController.isSuccess.value;
+            managerCredentialsResponse =
+                mBranchManagerController.mManagerCredentialsResponse.value;
+            Get.delete<BranchManagerController>();
+          }
+          if (isManager) {
+            isManager = false;
+            await AppAlert.showViewWithoutBlur(
+                Get.context!,
+                RefundPaymentTypeScreen(
+                    mManagerCredentialsResponse: managerCredentialsResponse ??
+                        ManagerCredentialsResponse(),
+                    mSelectOrderHistoryData: mSelectOrderHistoryData));
+            if (Get.isRegistered<RefundPaymentTypeController>()) {
+              RefundPaymentTypeController mRefundPaymentTypeController =
+                  Get.find<RefundPaymentTypeController>();
+              isManager = mRefundPaymentTypeController.isSuccess.value;
+              Get.delete<PaymentTypeController>();
+            }
+          }
+          // if (isManager) {
+          //   callOrderHistory();
+          // }
         }
       }
     }

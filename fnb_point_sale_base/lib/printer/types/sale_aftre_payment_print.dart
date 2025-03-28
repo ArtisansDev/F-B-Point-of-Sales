@@ -144,6 +144,14 @@ Future<bool> printAftrePayment(
     ///Total Pay
     widgets.add(
         getTotalPayRow(mOrderDetailList, mCurrencyData.currencySymbol ?? ''));
+
+    if (mOrderDetailList.paymentResponse?.first.paymentGatewayNo.toString() ==
+        "0") {
+      ///Change Due
+      widgets.add(getChangeDueRow(
+          mOrderDetailList, mCurrencyData.currencySymbol ?? ''));
+    }
+
     widgets.add(pw.Container(height: 4));
     widgets.add(mySeparator());
     widgets.add(pw.Container(height: 4));
@@ -259,11 +267,12 @@ Future<bool> printAftrePayment(
     }
 
     ///user details
-    if ((mPrinterSettingsData.enableCustomerInfo ?? false) && (mOrderDetailList.phoneNumber ?? '').isNotEmpty) {
+    if ((mPrinterSettingsData.enableCustomerInfo ?? false) &&
+        (mOrderDetailList.phoneNumber ?? '').isNotEmpty) {
       widgets.add(getUserDetailsRow(mOrderDetailList));
-    widgets.add(pw.Container(height: 4));
-    widgets.add(mySeparator());
-    widgets.add(pw.Container(height: 4));
+      widgets.add(pw.Container(height: 4));
+      widgets.add(mySeparator());
+      widgets.add(pw.Container(height: 4));
     }
 
     ///menu order
@@ -303,6 +312,14 @@ Future<bool> printAftrePayment(
     ///Total Pay
     widgets.add(
         getTotalPayRow(mOrderDetailList, mCurrencyData.currencySymbol ?? ''));
+
+    if (mOrderDetailList.paymentResponse?.first.paymentGatewayNo.toString() ==
+        "0") {
+      ///Change Due
+      widgets.add(getChangeDueRow(
+          mOrderDetailList, mCurrencyData.currencySymbol ?? ''));
+    }
+
     widgets.add(pw.Container(height: 4));
     widgets.add(mySeparator());
     widgets.add(pw.Container(height: 4));
@@ -734,8 +751,41 @@ pw.Widget getTotalPayRow(
           padding: const pw.EdgeInsets.all(2.0),
           child: pw.Align(
             alignment: pw.Alignment.centerRight,
+            child: (mOrderDetailList.paymentResponse?.first.paymentGatewayNo
+                        .toString() ==
+                    "0")
+                ? pw.Text(
+                    '$currencyData ${getDoubleValue(roundToNearestPossible(getDoubleValue(getDoubleValue(mOrderDetailList.paymentResponse?.first.payAmountCash).toStringAsFixed(2)))).toStringAsFixed(2)}',
+                    style: getBoldTextStyle())
+                : pw.Text(
+                    '$currencyData ${getDoubleValue((mOrderDetailList.adjustedAmount ?? 0) > 0 ? mOrderDetailList.adjustedAmount : mOrderDetailList.totalAmount).toStringAsFixed(2)}',
+                    style: getBoldTextStyle()),
+          ),
+        )),
+  ]);
+}
+
+/// Change Due
+pw.Widget getChangeDueRow(
+    OrderDetailList mOrderDetailList, String currencyData) {
+  return pw.Row(children: [
+    pw.Expanded(
+        flex: 2,
+        child: pw.Container(
+          padding: const pw.EdgeInsets.all(2.0),
+          child: pw.Align(
+            alignment: pw.Alignment.centerLeft,
+            child: pw.Text("Change Due", style: getBoldTextStyle()),
+          ),
+        )),
+    pw.Expanded(
+        flex: 1,
+        child: pw.Container(
+          padding: const pw.EdgeInsets.all(2.0),
+          child: pw.Align(
+            alignment: pw.Alignment.centerRight,
             child: pw.Text(
-                '$currencyData ${getDoubleValue((mOrderDetailList.adjustedAmount ?? 0) > 0 ? mOrderDetailList.adjustedAmount : mOrderDetailList.totalAmount).toStringAsFixed(2)}',
+                '$currencyData ${getDoubleValue(roundToNearestPossible(getDoubleValue(getDoubleValue(mOrderDetailList.paymentResponse?.first.returnAmountCash).toStringAsFixed(2)))).toStringAsFixed(2)}',
                 style: getBoldTextStyle()),
           ),
         )),
@@ -780,9 +830,15 @@ pw.Widget getPaymentRow(OrderDetailList mOrderDetailList, String currencyData) {
           padding: const pw.EdgeInsets.all(2.0),
           child: pw.Align(
             alignment: pw.Alignment.centerRight,
-            child: pw.Text(
-                '$currencyData ${getDoubleValue((mOrderDetailList.adjustedAmount ?? 0) > 0 ? mOrderDetailList.adjustedAmount : mOrderDetailList.totalAmount).toStringAsFixed(2)}',
-                style: getBoldTextStyle()),
+            child: mOrderDetailList.paymentResponse?.first.paymentGatewayNo
+                        .toString() ==
+                    "0"
+                ? pw.Text(
+                    '$currencyData ${getDoubleValue(roundToNearestPossible(getDoubleValue(getDoubleValue(mOrderDetailList.paymentResponse?.first.payAmountCash).toStringAsFixed(2)))).toStringAsFixed(2)}',
+                    style: getBoldTextStyle())
+                : pw.Text(
+                    '$currencyData ${getDoubleValue((mOrderDetailList.adjustedAmount ?? 0) > 0 ? mOrderDetailList.adjustedAmount : mOrderDetailList.totalAmount).toStringAsFixed(2)}',
+                    style: getBoldTextStyle()),
           ),
         )),
   ]);

@@ -14,20 +14,20 @@ import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../controller/payment_type_controller.dart';
+import '../controller/refund_payment_type_controller.dart';
 
-class PaymentTypeScreen extends GetView<PaymentTypeController> {
+class RefundPaymentTypeScreen extends GetView<RefundPaymentTypeController> {
   final OrderHistoryData mSelectOrderHistoryData;
   final ManagerCredentialsResponse mManagerCredentialsResponse;
 
-  const PaymentTypeScreen(
+  const RefundPaymentTypeScreen(
       {super.key,
       required this.mSelectOrderHistoryData,
       required this.mManagerCredentialsResponse});
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => PaymentTypeController(mSelectOrderHistoryData,mManagerCredentialsResponse));
+    Get.lazyPut(() => RefundPaymentTypeController(mSelectOrderHistoryData,mManagerCredentialsResponse));
     controller.loadPaymentType();
     return Obx(
       () {
@@ -163,6 +163,29 @@ class PaymentTypeScreen extends GetView<PaymentTypeController> {
                         errorText: null,
                         textInputType: TextInputType.emailAddress,
                         hintText: sReason.tr,
+                        showFloatingLabel: false,
+                        topPadding: 5.sp,
+                        hintTextColor: ColorConstants.black.withOpacity(0.50),
+                        hintTextSize: 11.sp,
+                        textSize: 11.5.sp,
+                        onFilteringTextInputFormatter: [
+                          FilteringTextInputFormatter.allow(
+                              RegExp(AppUtilConstants.patternStringAndSpace)),
+                        ],
+                      )),
+                  SizedBox(
+                    height: 11.sp,
+                  ),
+                  Container(
+                      margin: EdgeInsets.only(left: 8.sp, right: 8.sp),
+                      height: 19.5.sp,
+                      child: TextInputWidget(
+                        textColor: Colors.black,
+                        placeHolder: sTrackingId.tr,
+                        controller: controller.trackingController.value,
+                        errorText: null,
+                        textInputType: TextInputType.emailAddress,
+                        hintText: sTrackingId.tr,
                         showFloatingLabel: false,
                         topPadding: 5.sp,
                         hintTextColor: ColorConstants.black.withOpacity(0.50),

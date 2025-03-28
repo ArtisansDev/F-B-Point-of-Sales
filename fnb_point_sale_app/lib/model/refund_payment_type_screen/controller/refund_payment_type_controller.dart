@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fnb_point_sale_base/data/local/database/configuration/configuration_local_api.dart';
 import 'package:fnb_point_sale_base/data/local/database/payment_type/payment_type_local_api.dart';
-import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_local_api.dart';
-import 'package:fnb_point_sale_base/data/local/database/place_order/place_order_sale_model.dart';
 import 'package:fnb_point_sale_base/data/mode/cart_item/order_place.dart';
 import 'package:fnb_point_sale_base/data/mode/configuration/configuration_response.dart';
 import 'package:fnb_point_sale_base/data/mode/manager_credentials/manager_credentials_request.dart';
@@ -15,8 +13,6 @@ import 'package:fnb_point_sale_base/data/mode/payment_type/cash_payment_type.dar
 import 'package:fnb_point_sale_base/data/mode/product/get_all_payment_type/get_all_payment_type_response.dart';
 import 'package:fnb_point_sale_base/data/mode/update_balance/opening_balance/opening_balance_request.dart';
 import 'package:fnb_point_sale_base/data/mode/update_balance/opening_balance/opening_balance_response.dart';
-import 'package:fnb_point_sale_base/data/mode/update_balance/shift_details/shift_details_request.dart';
-import 'package:fnb_point_sale_base/data/mode/update_balance/shift_details/shift_details_response.dart';
 import 'package:fnb_point_sale_base/data/mode/update_login_status/update_login_status_request.dart';
 import 'package:fnb_point_sale_base/data/mode/update_payment_type/update_payment_type_request.dart';
 import 'package:fnb_point_sale_base/data/remote/api_call/balance/balance_api.dart';
@@ -49,8 +45,9 @@ import '../../payment_screen/payment_type/debit_card_view/view/debit_card_view.d
 import '../../payment_screen/payment_type/qr_code_view/controller/qr_view_controller.dart';
 import '../../payment_screen/payment_type/qr_code_view/view/qr_view.dart';
 
-class PaymentTypeController extends GetxController {
+class RefundPaymentTypeController extends GetxController {
   Rx<TextEditingController> reasonController = TextEditingController().obs;
+  Rx<TextEditingController> trackingController = TextEditingController().obs;
   Rxn<GetAllPaymentTypeResponse> mGetAllPaymentTypeResponse =
       Rxn<GetAllPaymentTypeResponse>();
   Rxn<OrderHistoryData> mOrderHistoryData = Rxn<OrderHistoryData>();
@@ -60,7 +57,7 @@ class PaymentTypeController extends GetxController {
       <GetAllPaymentTypeData>[].obs;
   RxBool isSuccess = false.obs;
 
-  PaymentTypeController(OrderHistoryData mSelectOrderHistoryData,
+  RefundPaymentTypeController(OrderHistoryData mSelectOrderHistoryData,
       ManagerCredentialsResponse managerCredentialsResponse) {
     mOrderHistoryData.value = mSelectOrderHistoryData;
     mManagerCredentialsResponse.value = managerCredentialsResponse;
@@ -73,12 +70,12 @@ class PaymentTypeController extends GetxController {
             GetAllPaymentTypeResponse();
     mGetAllPaymentTypeData.clear();
     mGetAllPaymentTypeData.addAll(mGetAllPaymentTypeResponse.value?.data ?? []);
-    mGetAllPaymentTypeData.removeWhere(
-      (element) {
-        return element.paymentGatewayNo.toString() ==
-            mOrderHistoryData.value?.paymentGatewayNo.toString();
-      },
-    );
+    // mGetAllPaymentTypeData.removeWhere(
+    //   (element) {
+    //     return element.paymentGatewayNo.toString() ==
+    //         mOrderHistoryData.value?.paymentGatewayNo.toString();
+    //   },
+    // );
     mGetAllPaymentTypeResponse.refresh();
     mGetAllPaymentTypeData.refresh();
   }
@@ -169,8 +166,9 @@ class PaymentTypeController extends GetxController {
           }
           break;
       }
-      debugPrint("callUpdatePaymentType ${jsonEncode(mGetAllPaymentType.value)}");
-      await callUpdatePaymentType();
+      debugPrint("###### ${jsonEncode(mGetAllPaymentType.value)}");
+      isSuccess.value = true;
+      // await callUpdatePaymentType();
     }
   }
 
