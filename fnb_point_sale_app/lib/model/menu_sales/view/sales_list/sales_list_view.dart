@@ -163,7 +163,7 @@ class SalesListView extends StatelessWidget {
                                         size: 11.sp),
                                   ),
                                 )),
-                            const Expanded(flex: 10, child: SizedBox()),
+                            const Expanded(flex: 9, child: SizedBox()),
                           ],
                         ),
                       ),

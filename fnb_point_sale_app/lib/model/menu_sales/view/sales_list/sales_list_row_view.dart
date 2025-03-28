@@ -159,7 +159,7 @@ class SalesListRowView extends StatelessWidget {
                 ),
               )),
           Expanded(
-              flex: 10,
+              flex: 9,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -323,33 +323,33 @@ class SalesListRowView extends StatelessWidget {
                     margin: EdgeInsets.only(right: 10.sp),
                         ),
 
-                  (mOrderHistoryData.paymentStatus == 'S' &&
-                      mOrderHistoryData.paymentStatus != 'C')
-                      ? GestureDetector(
-                    onTap: () {
-                      controller.onRefund(index);
-                    },
-                    child: Container(
-                      height: 16.5.sp,
-                      width: 16.5.sp,
-                      padding: EdgeInsets.all(6.5.sp),
-                      decoration: BoxDecoration(
-                        color: ColorConstants.red,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8.sp),
-                        ),
-                      ),
-                      child: Image.asset(
-                        ImageAssetsConstants.appRefund,
-                        fit: BoxFit.fitWidth,
-                      ),
-                    ),
-                  )
-                      : Container(
-                    height: 16.5.sp,
-                    width: 16.5.sp,
-                    padding: EdgeInsets.all(8.5.sp),
-                  ),
+                  // (mOrderHistoryData.paymentStatus == 'S' &&
+                  //     mOrderHistoryData.paymentStatus != 'C')
+                  //     ? GestureDetector(
+                  //   onTap: () {
+                  //     controller.onRefund(index);
+                  //   },
+                  //   child: Container(
+                  //     height: 16.5.sp,
+                  //     width: 16.5.sp,
+                  //     padding: EdgeInsets.all(6.5.sp),
+                  //     decoration: BoxDecoration(
+                  //       color: ColorConstants.red,
+                  //       borderRadius: BorderRadius.all(
+                  //         Radius.circular(8.sp),
+                  //       ),
+                  //     ),
+                  //     child: Image.asset(
+                  //       ImageAssetsConstants.appRefund,
+                  //       fit: BoxFit.fitWidth,
+                  //     ),
+                  //   ),
+                  // )
+                  //     : Container(
+                  //   height: 16.5.sp,
+                  //   width: 16.5.sp,
+                  //   padding: EdgeInsets.all(8.5.sp),
+                  // ),
                 ],
               )),
         ],
