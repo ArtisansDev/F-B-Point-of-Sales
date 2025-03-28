@@ -46,8 +46,7 @@ class CashViewController extends GetxController {
   void onDone() {
     if (mDueAmount.value > 0) {
       AppAlert.showSnackBar(Get.context!, 'Please enter the proper amount');
-    }
-    if (cashPaymentAmount.value < mReturnAmount.value) {
+    } else if (cashPaymentAmount.value < mReturnAmount.value) {
       AppAlert.showSnackBar(
           Get.context!, "You don't have enough cash in your counter.");
     } else {
