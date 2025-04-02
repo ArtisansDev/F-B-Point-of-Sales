@@ -161,7 +161,7 @@ class BranchManagerScreen extends GetView<BranchManagerController> {
                       Expanded(child:rectangleCornerButtonText600(
                         height: 19.5.sp,
                         textSize: 11.5.sp,
-                        sLogin.tr,
+                        sAuthorize.tr,
                             () {
                           controller.isLoginCheck();
                         },

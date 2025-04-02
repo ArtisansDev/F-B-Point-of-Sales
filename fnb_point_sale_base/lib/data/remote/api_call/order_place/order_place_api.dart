@@ -9,4 +9,5 @@ mixin OrderPlaceApi {
   Future<WebResponseSuccess> postTableStatus(dynamic exhibitorsListRequest);
   Future<WebResponseSuccess> postGetAllTablesByTableStatus(dynamic exhibitorsListRequest);
   Future<WebResponseSuccess> postUpdatePaymentType(dynamic exhibitorsListRequest);
+  Future<WebResponseSuccess> postRefundPaymentType(dynamic exhibitorsListRequest);
 }

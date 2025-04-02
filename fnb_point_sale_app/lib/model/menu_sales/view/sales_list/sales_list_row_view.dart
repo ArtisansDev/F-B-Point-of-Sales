@@ -159,87 +159,92 @@ class SalesListRowView extends StatelessWidget {
                 ),
               )),
           Expanded(
-              flex: 9,
+              flex: 10,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   SizedBox(
                     width: 6.5.w,
-                    child: (mOrderHistoryData.paymentStatus == 'C')
+                    child: (mOrderHistoryData.paymentStatus
+                                .toString()
+                                .toUpperCase() ==
+                            'R')
                         ? Align(
                             alignment: Alignment.center,
                             child: Text(
-                              'Cancel',
+                              'Refund',
                               style:
                                   getText500(size: 11.sp, colors: Colors.red),
                             ),
                           )
-                        : (mOrderHistoryData.paymentStatus == 'P' ||
-                                    mOrderHistoryData.paymentStatus == 'F') &&
-                                (mOrderHistoryData.paymentStatus != 'S')
-                            ? mOrderHistoryData.paymentGatewayNo == 1 ||
-                                    mOrderHistoryData.paymentGatewayNo == 2
-                                ? GestureDetector(
-                                    onTap: () {
-                                      controller.onAlertView(index);
-                                    },
-                                    child: Container(
-                                      height: 16.5.sp,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(8.sp),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color:
-                                                Colors.grey.withOpacity(0.15),
-                                            spreadRadius: 1,
-                                            blurRadius: 3,
-                                            offset: const Offset(0,
-                                                0), // changes position of shadow
-                                          ),
-                                        ], // use instead of BorderRadius.all(Radius.circular(20))
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
-                                            width: 8.sp,
-                                          ),
-                                          // Icon(
-                                          //   Icons.warning_rounded,
-                                          //   color: ColorConstants.red,
-                                          //   size: 12.sp,
-                                          // ),
-                                          // SizedBox(
-                                          //   width: 6.sp,
-                                          // ),
-                                          const Text('Pending'),
-                                          SizedBox(
-                                            width: 8.sp,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                : rectangleCornerButtonText600(
-                                    sPAY.tr,
-                                    height: 16.5.sp,
-                                    textSize: 10.5.sp,
-                                    () {
-                                      controller.onPayNow(index);
-                                    },
-                                  )
-                            : Align(
+                        : (mOrderHistoryData.paymentStatus == 'C')
+                            ? Align(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  'Success',
+                                  'Cancel',
                                   style: getText500(
-                                      size: 11.sp,
-                                      colors:
-                                          ColorConstants.cAppTextInviceColour),
+                                      size: 11.sp, colors: Colors.red),
                                 ),
-                              ),
+                              )
+                            : (mOrderHistoryData.paymentStatus == 'P' ||
+                                        mOrderHistoryData.paymentStatus ==
+                                            'F') &&
+                                    (mOrderHistoryData.paymentStatus != 'S')
+                                ? mOrderHistoryData.paymentGatewayNo == 1 ||
+                                        mOrderHistoryData.paymentGatewayNo == 2
+                                    ? GestureDetector(
+                                        onTap: () {
+                                          controller.onAlertView(index);
+                                        },
+                                        child: Container(
+                                          height: 16.5.sp,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(8.sp),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey
+                                                    .withOpacity(0.15),
+                                                spreadRadius: 1,
+                                                blurRadius: 3,
+                                                offset: const Offset(0,
+                                                    0), // changes position of shadow
+                                              ),
+                                            ], // use instead of BorderRadius.all(Radius.circular(20))
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                width: 8.sp,
+                                              ),
+                                              const Text('Pending'),
+                                              SizedBox(
+                                                width: 8.sp,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    : rectangleCornerButtonText600(
+                                        sPAY.tr,
+                                        height: 16.5.sp,
+                                        textSize: 10.5.sp,
+                                        () {
+                                          controller.onPayNow(index);
+                                        },
+                                      )
+                                : Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      'Success',
+                                      style: getText500(
+                                          size: 11.sp,
+                                          colors: ColorConstants
+                                              .cAppTextInviceColour),
+                                    ),
+                                  ),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -263,7 +268,8 @@ class SalesListRowView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  (mOrderHistoryData.paymentStatus != 'C')
+                  (mOrderHistoryData.paymentStatus != 'C' &&
+                          mOrderHistoryData.paymentStatus != 'R')
                       ? GestureDetector(
                           onTap: () {
                             controller.onPrintKot(index);
@@ -292,12 +298,16 @@ class SalesListRowView extends StatelessWidget {
                           margin: EdgeInsets.only(right: 10.sp),
                           padding: EdgeInsets.all(8.5.sp),
                         ),
-
-                  (mOrderHistoryData.paymentStatus == 'S' &&
-                          mOrderHistoryData.paymentStatus != 'C')
+                  ((mOrderHistoryData.paymentStatus == 'S' &&
+                              mOrderHistoryData.paymentStatus != 'C') ||
+                          mOrderHistoryData.paymentStatus == 'R')
                       ? GestureDetector(
                           onTap: () {
-                            controller.onPrint(index);
+                            if (mOrderHistoryData.paymentStatus == 'R') {
+                              controller.onPrintRefund(index);
+                            } else {
+                              controller.onPrint(index);
+                            }
                           },
                           child: Container(
                             height: 16.5.sp,
@@ -320,36 +330,41 @@ class SalesListRowView extends StatelessWidget {
                           height: 16.5.sp,
                           width: 16.5.sp,
                           padding: EdgeInsets.all(8.5.sp),
-                    margin: EdgeInsets.only(right: 10.sp),
+                          margin: EdgeInsets.only(right: 10.sp),
                         ),
-
-                  // (mOrderHistoryData.paymentStatus == 'S' &&
-                  //     mOrderHistoryData.paymentStatus != 'C')
-                  //     ? GestureDetector(
-                  //   onTap: () {
-                  //     controller.onRefund(index);
-                  //   },
-                  //   child: Container(
-                  //     height: 16.5.sp,
-                  //     width: 16.5.sp,
-                  //     padding: EdgeInsets.all(6.5.sp),
-                  //     decoration: BoxDecoration(
-                  //       color: ColorConstants.red,
-                  //       borderRadius: BorderRadius.all(
-                  //         Radius.circular(8.sp),
-                  //       ),
-                  //     ),
-                  //     child: Image.asset(
-                  //       ImageAssetsConstants.appRefund,
-                  //       fit: BoxFit.fitWidth,
-                  //     ),
-                  //   ),
-                  // )
-                  //     : Container(
-                  //   height: 16.5.sp,
-                  //   width: 16.5.sp,
-                  //   padding: EdgeInsets.all(8.5.sp),
-                  // ),
+                  (mOrderHistoryData.paymentStatus == 'S' &&
+                      (mOrderHistoryData.counterBalanceHistoryIDF ?? "")
+                          .toUpperCase()
+                          .toString() ==
+                          controller.sCounterBalanceHistoryIDF.value
+                              .toString()
+                              .trim()
+                              .toUpperCase())
+                      ? GestureDetector(
+                          onTap: () {
+                            controller.onRefund(index);
+                          },
+                          child: Container(
+                            height: 16.5.sp,
+                            width: 16.5.sp,
+                            padding: EdgeInsets.all(6.5.sp),
+                            decoration: BoxDecoration(
+                              color: ColorConstants.red,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(8.sp),
+                              ),
+                            ),
+                            child: Image.asset(
+                              ImageAssetsConstants.appRefund,
+                              fit: BoxFit.fitWidth,
+                            ),
+                          ),
+                        )
+                      : Container(
+                          height: 16.5.sp,
+                          width: 16.5.sp,
+                          padding: EdgeInsets.all(8.5.sp),
+                        ),
                 ],
               )),
         ],

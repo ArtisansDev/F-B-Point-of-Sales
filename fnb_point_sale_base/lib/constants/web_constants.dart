@@ -76,10 +76,14 @@ class WebConstants {
   static String actionPOSOrder =  "POSOrder/ProcessMultipleOrders";
   static String actionPOSOrderHistory =  "POSOrder/GetOrderHistory";
   static String actionPOSUpdatePaymentType =  "POSOrder/UpdatePaymentType";
+  static String actionPOSRefundPaymentType =  "POSPayment/ProcessRefund";
 
   /// Balance
   static String actionUpdateOpeningBalance =  "Counter/UpdateOpeningBalance";
   static String actionUpdateClosingBalance =  "Counter/updateClosingBalance";
-  static String actionGetShiftDetails =  "Counter/GetShiftDetails";
+  ///old
+  /// static String actionGetShiftDetails =  "Counter/GetShiftDetails";
+  /// new change 2-march
+  static String actionGetShiftDetails =  "Counter/GetShiftDetailsV1";
 
 }

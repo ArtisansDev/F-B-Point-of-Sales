@@ -181,11 +181,11 @@ class RefundPaymentTypeScreen extends GetView<RefundPaymentTypeController> {
                       height: 19.5.sp,
                       child: TextInputWidget(
                         textColor: Colors.black,
-                        placeHolder: sTrackingId.tr,
+                        placeHolder: sReferenceId.tr,
                         controller: controller.trackingController.value,
                         errorText: null,
                         textInputType: TextInputType.emailAddress,
-                        hintText: sTrackingId.tr,
+                        hintText: sReferenceId.tr,
                         showFloatingLabel: false,
                         topPadding: 5.sp,
                         hintTextColor: ColorConstants.black.withOpacity(0.50),
@@ -193,7 +193,8 @@ class RefundPaymentTypeScreen extends GetView<RefundPaymentTypeController> {
                         textSize: 11.5.sp,
                         onFilteringTextInputFormatter: [
                           FilteringTextInputFormatter.allow(
-                              RegExp(AppUtilConstants.patternStringAndSpace)),
+                              RegExp(AppUtilConstants.patternStringNumberRef)),
+                          LengthLimitingTextInputFormatter(20)
                         ],
                       )),
                   SizedBox(

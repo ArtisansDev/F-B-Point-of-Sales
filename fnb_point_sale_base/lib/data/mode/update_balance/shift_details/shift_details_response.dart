@@ -1,4 +1,5 @@
 import '../../../../utils/num_utils.dart';
+import 'payment_type_data.dart';
 
 /// error : false
 /// statusCode : 200
@@ -84,7 +85,7 @@ class ShiftDetailsData {
     double? qRCodePayment,
     dynamic errorMessage,
     bool? hasPendingPayments,
-    List<PaymentType>? paymentType,}){
+    List<PaymentTypeData>? paymentType,}){
     _fullName = fullName;
     _counterName = counterName;
     _openingBalanceDateTime = openingBalanceDateTime;
@@ -126,7 +127,7 @@ class ShiftDetailsData {
     if (json['PaymentType'] != null) {
       _paymentType = [];
       json['PaymentType'].forEach((v) {
-        _paymentType?.add(PaymentType.fromJson(v));
+        _paymentType?.add(PaymentTypeData.fromJson(v));
       });
     }
   }
@@ -147,7 +148,7 @@ class ShiftDetailsData {
   double? _qRCodePayment;
   dynamic _errorMessage;
   bool? _hasPendingPayments;
-  List<PaymentType>? _paymentType;
+  List<PaymentTypeData>? _paymentType;
 
   String? get fullName => _fullName;
   String? get counterName => _counterName;
@@ -166,7 +167,7 @@ class ShiftDetailsData {
   double? get qRCodePayment => _qRCodePayment;
   dynamic get errorMessage => _errorMessage;
   bool? get hasPendingPayments => _hasPendingPayments;
-  List<PaymentType>? get paymentType => _paymentType;
+  List<PaymentTypeData>? get paymentType => _paymentType;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -190,51 +191,6 @@ class ShiftDetailsData {
     if (_paymentType != null) {
       map['PaymentType'] = _paymentType?.map((v) => v.toJson()).toList();
     }
-    return map;
-  }
-
-}
-
-/// Name : "Debit Card Payment"
-/// Count : 23
-/// PaymentGatewayNo : 5
-/// Amount : 5
-
-class PaymentType {
-  PaymentType({
-    String? name,
-    int? count,
-    int? paymentGatewayNo,
-    double? amount,
-  }){
-    _name = name;
-    _count = count;
-    _paymentGatewayNo = paymentGatewayNo;
-    _amount = amount;
-  }
-
-  PaymentType.fromJson(dynamic json) {
-    _name = json['Name'];
-    _count = json['Count'];
-    _paymentGatewayNo = json['PaymentGatewayNo'];
-    _amount = getDoubleValue(json['Amount']);
-  }
-  String? _name;
-  int? _count;
-  int? _paymentGatewayNo;
-  double? _amount;
-
-  String? get name => _name;
-  int? get count => _count;
-  int? get paymentGatewayNo => _paymentGatewayNo;
-  double? get amount => _amount;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['Name'] = _name;
-    map['Count'] = _count;
-    map['PaymentGatewayNo'] = _paymentGatewayNo;
-    map['Amount'] = _amount;
     return map;
   }
 

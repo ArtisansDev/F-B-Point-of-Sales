@@ -5,6 +5,7 @@ import 'package:pdf/widgets.dart' as pw;
 import '../../data/mode/cash_model/cash_model.dart';
 import '../../data/mode/configuration/configuration_response.dart';
 import '../../data/mode/update_balance/closing_balance/closing_balance_request.dart';
+import '../../data/mode/update_balance/shift_details/payment_type_data.dart';
 import '../../data/mode/update_balance/shift_details/shift_details_response.dart';
 import '../../utils/date_time_utils.dart';
 
@@ -90,10 +91,10 @@ Future<bool> printShiftClose(
   widgets.add(pw.Container(height: 4));
   int index = 1;
   double grandTotalAmount = 0.0;
-  for (PaymentType mPaymentType
+  for (PaymentTypeData mPaymentType
       in mShiftDetailsResponse.data?.paymentType ?? []) {
     String formatted =
-        getNumberFormat(getDoubleValue(mPaymentType.amount ?? 0.0));
+        getNumberFormat(getDoubleValue(mPaymentType.netAmount ?? 0.0));
 
     widgets.add(pw.Row(children: [
       pw.Expanded(
@@ -105,7 +106,7 @@ Future<bool> printShiftClose(
               child: pw.Text('${mCurrencyData.currencySymbol ?? ''} $formatted',
                   style: getNormalTextStyle())))
     ]));
-    grandTotalAmount = grandTotalAmount + (mPaymentType.amount ?? 0);
+    grandTotalAmount = grandTotalAmount + (mPaymentType.netAmount ?? 0);
     widgets.add(pw.Container(height: 5));
     index++;
   }

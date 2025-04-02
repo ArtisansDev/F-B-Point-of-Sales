@@ -17,6 +17,7 @@ class AppUtilConstants{
   static const String patternEmailStringAtDot = "[a-zA-Z0-9-.@_]";
   static const String patternMyCroIdStringAtDot = "[a-zA-Z0-9- .@_]";
   static const String patternStringNumber = "[a-zA-Z0-9]";
+  static const String patternStringNumberRef = "[a-zA-Z0-9-_./]";
   static const String patternStringNumberSpace = "[a-zA-Z0-9 ]";
   static const String patternUrlLink = "[a-zA-Z0-9;,/?:@&=+\$-_.!~*'()#]";
   static const String patternAddress = "[a-zA-Z0-9.,/' ]";

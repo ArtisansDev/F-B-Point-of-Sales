@@ -116,6 +116,38 @@ class OrderPlaceApiImpl extends AllApiImpl with OrderPlaceApi {
     return mWebResponseSuccess;
   }
 
+
+  ///post RefundPaymentType
+  @override
+  Future<WebResponseSuccess> postRefundPaymentType(
+      exhibitorsListRequest) async {
+    AppAlert.showProgressDialog(Get.context!);
+    WebConstants.auth = true;
+    final cases = await mWebProvider.postWithRequest(
+        WebConstants.actionPOSRefundPaymentType, exhibitorsListRequest);
+    AppAlert.hideLoadingDialog(Get.context!);
+    if (cases.statusCode == WebConstants.statusCode200) {
+      mWebResponseSuccess =
+          WebResponseSuccess.fromJson(processResponseToJson(cases));
+    } else if (cases.statusCode == WebConstants.statusCode400) {
+      mWebResponseSuccess =
+          WebResponseSuccess.fromJson(processResponseToJson(cases));
+    } else if (cases.statusCode == WebConstants.statusCode409) {
+      mWebResponseSuccess =
+          WebResponseSuccess.fromJson(processResponseToJson(cases));
+    } else {
+      mWebResponseFailed =
+          WebResponseFailed.fromJson(processResponseToJson(cases));
+      mWebResponseSuccess = WebResponseSuccess(
+        statusCode: cases.statusCode,
+        // data: mWebResponseFailed,
+        statusMessage: mWebResponseFailed.statusMessage,
+        error: true,
+      );
+    }
+    return mWebResponseSuccess;
+  }
+
   ///post post Table Status
   @override
   Future<WebResponseSuccess> postTableStatus(exhibitorsListRequest) async {

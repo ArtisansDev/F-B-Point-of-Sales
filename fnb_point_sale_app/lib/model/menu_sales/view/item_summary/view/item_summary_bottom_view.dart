@@ -349,7 +349,9 @@ class ItemSummaryBottomView extends StatelessWidget {
 
                           ///button Place Order
                           Visibility(
-                              visible:
+                              visible: (controller
+                                          .mOrderPlace.value.paymentStatus !=
+                                      'R') &&
                                   (controller.mOrderPlace.value.paymentStatus !=
                                       'C'),
                               child: Container(
@@ -381,7 +383,7 @@ class ItemSummaryBottomView extends StatelessWidget {
                               child: Container(
                                   margin: EdgeInsets.only(
                                       left: 8.sp, right: 8.sp, top: 8.sp),
-                                  child: Text(
+                                  child: const Text(
                                       'You can able to change the payment type'))),
 
                           ///button Pay and Invoice

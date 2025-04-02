@@ -617,6 +617,20 @@ class MenuSalesController extends GetxController {
     }
   }
 
+  void onPrintRefund(int index) async {
+    // OrderHistoryData mOrderData = mOrderHistoryData[index];
+    // final myPrinterService = locator.get<MyPrinterService>();
+    // for (int i = 0;
+    //     i <
+    //         (mDashboardScreenController
+    //                 .mPrinterSettingsDataCustomer.printCopies ??
+    //             0);
+    //     i++) {
+    //   await myPrinterService.salePayment(
+    //       mOrderData, mDashboardScreenController.mPrinterSettingsDataCustomer);
+    // }
+  }
+
   void onPrintKot(int index) async {
     OrderHistoryData mOrderData = mOrderHistoryData[index];
     final myPrinterService = locator.get<MyPrinterService>();
@@ -704,57 +718,42 @@ class MenuSalesController extends GetxController {
 
   void onRefund(int index) async {
     OrderHistoryData mSelectOrderHistoryData = mOrderHistoryData[index];
-
     debugPrint(
         "isPaymentTypeChanged ${mSelectOrderHistoryData.paymentGatewayName}");
-    if (mSelectOrderHistoryData.paymentGatewayName
-        .toString()
+    if ((mSelectOrderHistoryData.counterBalanceHistoryIDF ?? '')
         .trim()
-        .isNotEmpty) {
-      debugPrint(
-          "isPaymentTypeChanged ${mSelectOrderHistoryData.isPaymentTypeChanged}");
-      if (!(mSelectOrderHistoryData.isPaymentTypeChanged ?? false)) {
-        debugPrint(
-            "counterBalanceHistoryIDF ${mSelectOrderHistoryData.counterBalanceHistoryIDF}");
-
-        debugPrint(
-            "sCounterBalanceHistoryIDF ${sCounterBalanceHistoryIDF.value}");
-        if ((mSelectOrderHistoryData.counterBalanceHistoryIDF ?? '')
-                .trim()
-                .toString()
-                .toUpperCase() ==
-            sCounterBalanceHistoryIDF.value.toString().trim().toUpperCase()) {
-          await AppAlert.showViewWithoutBlur(
-              Get.context!, const BranchManagerScreen());
-          bool isManager = false;
-          ManagerCredentialsResponse? managerCredentialsResponse;
-          if (Get.isRegistered<BranchManagerController>()) {
-            BranchManagerController mBranchManagerController =
-                Get.find<BranchManagerController>();
-            isManager = mBranchManagerController.isSuccess.value;
-            managerCredentialsResponse =
-                mBranchManagerController.mManagerCredentialsResponse.value;
-            Get.delete<BranchManagerController>();
-          }
-          if (isManager) {
-            isManager = false;
-            await AppAlert.showViewWithoutBlur(
-                Get.context!,
-                RefundPaymentTypeScreen(
-                    mManagerCredentialsResponse: managerCredentialsResponse ??
-                        ManagerCredentialsResponse(),
-                    mSelectOrderHistoryData: mSelectOrderHistoryData));
-            if (Get.isRegistered<RefundPaymentTypeController>()) {
-              RefundPaymentTypeController mRefundPaymentTypeController =
-                  Get.find<RefundPaymentTypeController>();
-              isManager = mRefundPaymentTypeController.isSuccess.value;
-              Get.delete<PaymentTypeController>();
-            }
-          }
-          // if (isManager) {
-          //   callOrderHistory();
-          // }
+        .toString()
+        .toUpperCase() ==
+        sCounterBalanceHistoryIDF.value.toString().trim().toUpperCase()) {
+      await AppAlert.showViewWithoutBlur(
+          Get.context!, const BranchManagerScreen());
+      bool isManager = false;
+      ManagerCredentialsResponse? managerCredentialsResponse;
+      if (Get.isRegistered<BranchManagerController>()) {
+        BranchManagerController mBranchManagerController =
+        Get.find<BranchManagerController>();
+        isManager = mBranchManagerController.isSuccess.value;
+        managerCredentialsResponse =
+            mBranchManagerController.mManagerCredentialsResponse.value;
+        Get.delete<BranchManagerController>();
+      }
+      if (isManager) {
+        isManager = false;
+        await AppAlert.showViewWithoutBlur(
+            Get.context!,
+            RefundPaymentTypeScreen(
+                mManagerCredentialsResponse: managerCredentialsResponse ??
+                    ManagerCredentialsResponse(),
+                mSelectOrderHistoryData: mSelectOrderHistoryData));
+        if (Get.isRegistered<RefundPaymentTypeController>()) {
+          RefundPaymentTypeController mRefundPaymentTypeController =
+          Get.find<RefundPaymentTypeController>();
+          isManager = mRefundPaymentTypeController.isSuccess.value;
+          Get.delete<PaymentTypeController>();
         }
+      }
+      if (isManager) {
+        callOrderHistory();
       }
     }
   }

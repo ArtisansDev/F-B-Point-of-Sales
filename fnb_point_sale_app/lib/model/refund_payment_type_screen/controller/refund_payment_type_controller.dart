@@ -11,6 +11,7 @@ import 'package:fnb_point_sale_base/data/mode/manager_credentials/manager_creden
 import 'package:fnb_point_sale_base/data/mode/order_history/order_history_response.dart';
 import 'package:fnb_point_sale_base/data/mode/payment_type/cash_payment_type.dart';
 import 'package:fnb_point_sale_base/data/mode/product/get_all_payment_type/get_all_payment_type_response.dart';
+import 'package:fnb_point_sale_base/data/mode/refund_payment_type/refund_payment_type_request.dart';
 import 'package:fnb_point_sale_base/data/mode/update_balance/opening_balance/opening_balance_request.dart';
 import 'package:fnb_point_sale_base/data/mode/update_balance/opening_balance/opening_balance_response.dart';
 import 'package:fnb_point_sale_base/data/mode/update_login_status/update_login_status_request.dart';
@@ -167,12 +168,12 @@ class RefundPaymentTypeController extends GetxController {
           break;
       }
       debugPrint("###### ${jsonEncode(mGetAllPaymentType.value)}");
-      isSuccess.value = true;
-      // await callUpdatePaymentType();
+      // isSuccess.value = true;
+      await callRefundPaymentType();
     }
   }
 
-  callUpdatePaymentType() async {
+  callRefundPaymentType() async {
     try {
       ///api product call
       final orderPlaceApi = locator.get<OrderPlaceApi>();
@@ -194,15 +195,33 @@ class RefundPaymentTypeController extends GetxController {
             sReturnAmountCash =
                 (mCashPaymentType.cash?.returnAmount ?? 0.0).toString();
           }
-          UpdatePaymentTypeRequest mUpdatePaymentTypeRequest =
-              UpdatePaymentTypeRequest(
+
+          var configurationLocalApi = locator.get<ConfigurationLocalApi>();
+          ConfigurationResponse mConfigurationResponse =
+              await configurationLocalApi.getConfigurationResponse() ??
+                  ConfigurationResponse();
+
+          String sCounterBalanceHistoryIDF = await SharedPrefs().getHistoryID();
+
+          RefundPaymentTypeRequest mRefundPaymentTypeRequest =
+          RefundPaymentTypeRequest(
                   branchIDF: mOrderHistoryData.value?.branchIDF ?? '',
                   restaurantIDF: mOrderHistoryData.value?.restaurantIDF ?? '',
+                  counterIDF:   (mConfigurationResponse.configurationData?.counterData ?? [])
+                      .isEmpty
+                      ? ""
+                      : (mConfigurationResponse
+                      .configurationData?.counterData ??
+                      [])
+                      .first
+                      .counterIDP,
+                  counterBalanceHistoryIDF: sCounterBalanceHistoryIDF,
                   trackingOrderID: mOrderHistoryData.value?.trackingOrderID,
                   paymentGatewayIDF: mGetAllPaymentType.value.paymentGatewayIDP,
                   paymentGatewaySettingIDF:
                       mGetAllPaymentType.value.paymentGatewaySettingIDP,
-                  reasonForChangingPaymentType: reasonController.value.text,
+                  reasonForRefund: reasonController.value.text,
+                  refundedReferenceID: trackingController.value.text,
                   userIDF: await SharedPrefs().getUserId(),
                   requestData: mGetAllPaymentType.value.requestData,
                   payAmountCash: sPayAmountCash,
@@ -212,7 +231,7 @@ class RefundPaymentTypeController extends GetxController {
                           .value?.data?.generalManagerUserID ??
                       '');
           WebResponseSuccess mWebResponseSuccess = await orderPlaceApi
-              .postUpdatePaymentType(mUpdatePaymentTypeRequest);
+              .postRefundPaymentType(mRefundPaymentTypeRequest);
           if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
             AppAlert.showSnackBar(
                 Get.context!, mWebResponseSuccess.statusMessage ?? '');

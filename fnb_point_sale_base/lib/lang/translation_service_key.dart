@@ -13,6 +13,7 @@ const String sPhoneNumber = "Phone Number";
 const String sRemark = "Remark";
 const String sReason = "Reason";
 const String sTrackingId = "Tracking Id";
+const String sReferenceId = "Reference Id";
 const String sSearchItems = "Search Items";
 const String sSearchOrderNo = "Search Order No / Customer Name";
 const String sSearchCustomer = "Customer Name";
@@ -30,6 +31,7 @@ const String sPassword = "password";
 const String sPasswordHint = "password hint";
 
 const String sLogin = "Login";
+const String sAuthorize = "Authorize";
 const String sOpenStore = "Open Store";
 const String sPAY = "PAY";
 const String sAll = "All";

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fnb_point_sale_base/constants/color_constants.dart';
 import 'package:fnb_point_sale_base/constants/text_styles_constants.dart';
+import 'package:fnb_point_sale_base/data/mode/update_balance/shift_details/payment_type_data.dart';
 import 'package:fnb_point_sale_base/data/mode/update_balance/shift_details/shift_details_response.dart';
 import 'package:fnb_point_sale_base/lang/translation_service_key.dart';
 import 'package:fnb_point_sale_base/utils/num_utils.dart';
@@ -39,7 +40,82 @@ class PaymentTypeScreen extends StatelessWidget {
             ),
           ),
           Container(
-              margin: EdgeInsets.only(left: 13.sp, right: 13.sp, top: 12.sp),
+            margin: EdgeInsets.only(left: 13.sp, right: 13.sp, top: 10.sp),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    'Name',
+                    style:
+                        getText500(size: 11.sp, colors: ColorConstants.black),
+                  ),
+                ),
+                SizedBox(
+                  width: 7.sp,
+                ),
+                Expanded(
+                    flex: 2,
+                    child: Container(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          'Total Count',
+                          style: getText500(
+                              size: 11.sp, colors: ColorConstants.black),
+                        ))),
+                SizedBox(
+                  width: 7.sp,
+                ),
+                Expanded(
+                    flex: 2,
+                    child: Container(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          'Refund Count',
+                          style: getText500(
+                              size: 11.sp, colors: ColorConstants.black),
+                        ))),
+                SizedBox(
+                  width: 7.sp,
+                ),
+                Expanded(
+                    flex: 2,
+                    child: Container(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          'Total Amount',
+                          style: getText500(
+                              size: 11.sp, colors: ColorConstants.black),
+                        ))),
+                SizedBox(
+                  width: 7.sp,
+                ),
+                Expanded(
+                    flex: 2,
+                    child: Container(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          'Refund Amount',
+                          style: getText500(
+                              size: 11.sp, colors: ColorConstants.black),
+                        ))),
+                SizedBox(
+                  width: 7.sp,
+                ),
+                Expanded(
+                    flex: 2,
+                    child: Container(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          'Net Amount',
+                          style: getText500(
+                              size: 11.sp, colors: ColorConstants.black),
+                        )))
+              ],
+            ),
+          ),
+          Container(
+              margin: EdgeInsets.only(left: 13.sp, right: 13.sp, top: 10.sp),
               child: ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -48,7 +124,7 @@ class PaymentTypeScreen extends StatelessWidget {
                           [])
                       .length,
                   itemBuilder: (BuildContext context, int index) {
-                    PaymentType mPaymentType = (controller
+                    PaymentTypeData mPaymentType = (controller
                             .mShiftDetailsController
                             .mShiftDetailsResponse
                             .value
@@ -59,15 +135,59 @@ class PaymentTypeScreen extends StatelessWidget {
                       margin: EdgeInsets.all(5.sp),
                       child: Row(
                         children: [
-                          SizedBox(
-                            width: 15.w,
+                          Expanded(
+                            flex: 2,
                             child: Text(mPaymentType.name ?? ''),
                           ),
                           SizedBox(
-                            width: 20.sp,
+                            width: 7.sp,
                           ),
-                          Text(
-                              '${controller.mShiftDetailsController.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''}  ${getNumberFormat(getDoubleValue(mPaymentType.amount ?? 0))}')
+                          Expanded(
+                              flex: 2,
+                              child: Container(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  '${mPaymentType.totalCount ?? 0}',
+                                ),
+                              )),
+                          SizedBox(
+                            width: 7.sp,
+                          ),
+                          Expanded(
+                              flex: 2,
+                              child: Container(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  '${mPaymentType.refundCount ?? 0}',
+                                ),
+                              )),
+                          SizedBox(
+                            width: 7.sp,
+                          ),
+                          Expanded(
+                              flex: 2,
+                              child: Container(
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                      '${controller.mShiftDetailsController.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''}  ${getNumberFormat(getDoubleValue(mPaymentType.netAmount ?? 0))}'))),
+                          SizedBox(
+                            width: 7.sp,
+                          ),
+                          Expanded(
+                              flex: 2,
+                              child: Container(
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                      '${controller.mShiftDetailsController.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''}  ${getNumberFormat(getDoubleValue(mPaymentType.netAmount ?? 0))}'))),
+                          SizedBox(
+                            width: 7.sp,
+                          ),
+                          Expanded(
+                              flex: 2,
+                              child: Container(
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                      '${controller.mShiftDetailsController.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''}  ${getNumberFormat(getDoubleValue(mPaymentType.netAmount ?? 0))}')))
                         ],
                       ),
                     );
