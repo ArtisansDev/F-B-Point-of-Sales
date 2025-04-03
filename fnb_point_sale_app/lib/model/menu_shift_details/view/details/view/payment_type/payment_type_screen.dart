@@ -169,7 +169,7 @@ class PaymentTypeScreen extends StatelessWidget {
                               child: Container(
                                   alignment: Alignment.centerRight,
                                   child: Text(
-                                      '${controller.mShiftDetailsController.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''}  ${getNumberFormat(getDoubleValue(mPaymentType.netAmount ?? 0))}'))),
+                                      '${controller.mShiftDetailsController.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''}  ${getNumberFormat(getDoubleValue(mPaymentType.totalPaidAmount ?? 0))}'))),
                           SizedBox(
                             width: 7.sp,
                           ),
@@ -178,7 +178,7 @@ class PaymentTypeScreen extends StatelessWidget {
                               child: Container(
                                   alignment: Alignment.centerRight,
                                   child: Text(
-                                      '${controller.mShiftDetailsController.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''}  ${getNumberFormat(getDoubleValue(mPaymentType.netAmount ?? 0))}'))),
+                                      '${controller.mShiftDetailsController.mDashboardScreenController.mCurrencyData.currencySymbol ?? ''}  ${getNumberFormat(getDoubleValue(mPaymentType.totalRefundAmount ?? 0))}'))),
                           SizedBox(
                             width: 7.sp,
                           ),

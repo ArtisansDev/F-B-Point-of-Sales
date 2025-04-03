@@ -22,14 +22,14 @@ import '../types/place_order_print.dart';
 import '../types/sale_aftre_payment_print.dart';
 import '../types/sale_payment_kot_print.dart';
 import '../types/sale_payment_print.dart';
+import '../types/sale_refund_payment_print.dart';
 import '../types/shift_details_print.dart';
 import '../types/shift_details_print_opening_balance.dart';
 import '../types/test_printing.dart';
 
 class MyPrinterServiceImpl with MyPrinterService {
   @override
-  Future<bool> salePlaceOrder(
-      OrderDetailList mOrderDetailList,
+  Future<bool> salePlaceOrder(OrderDetailList mOrderDetailList,
       OrderPlace mOrderPlace,
       List<CartItem> cartItemKot,
       PrinterSettingsData? mPrinterSettingsData) async {
@@ -47,17 +47,24 @@ class MyPrinterServiceImpl with MyPrinterService {
 
   ///payment
   @override
-  Future<bool> saleAfterPayment(
-      OrderDetailList mOrderDetailList,
+  Future<bool> saleAfterPayment(OrderDetailList mOrderDetailList,
       OrderHistoryData mOrderPlace,
       PrinterSettingsData? mPrinterSettingsData) async {
-    return await printAftrePayment(mOrderDetailList, mOrderPlace,mPrinterSettingsData);
+    return await printAftrePayment(
+        mOrderDetailList, mOrderPlace, mPrinterSettingsData);
   }
 
   ///payment
   @override
-  Future<bool> salePayment(OrderHistoryData mOrderDetailList,PrinterSettingsData? mPrinterSettingsData) async {
-    return await printSalePayment(mOrderDetailList,mPrinterSettingsData);
+  Future<bool> salePayment(OrderHistoryData mOrderDetailList,
+      PrinterSettingsData? mPrinterSettingsData) async {
+    return await printSalePayment(mOrderDetailList, mPrinterSettingsData);
+  }
+
+  @override
+  Future<bool> saleRefundPayment(OrderHistoryData mOrderDetailList,
+      PrinterSettingsData? mPrinterSettingsData) async {
+    return await printSalePaymentRefund(mOrderDetailList, mPrinterSettingsData);
   }
 
   @override
@@ -69,8 +76,7 @@ class MyPrinterServiceImpl with MyPrinterService {
   }
 
   @override
-  Future<bool> shiftDetails(
-      String amount,
+  Future<bool> shiftDetails(String amount,
       ClosingBalanceRequest mClosingBalanceRequest,
       List<CashModel> mCashModelList,
       ConfigurationResponse mConfigurationResponse,
@@ -80,8 +86,7 @@ class MyPrinterServiceImpl with MyPrinterService {
   }
 
   @override
-  Future<bool> shiftDetailsOpeningBalance(
-      String amount,
+  Future<bool> shiftDetailsOpeningBalance(String amount,
       ClosingBalanceRequest mClosingBalanceRequest,
       List<CashModel> mCashModelList,
       ConfigurationResponse mConfigurationResponse,

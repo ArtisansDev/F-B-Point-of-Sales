@@ -1,3 +1,5 @@
+import 'package:fnb_point_sale_base/data/mode/order_history/refund_details_response.dart';
+
 /// error : false
 /// statusCode : 200
 /// statusMessage : "Data Retrieved Successfully"
@@ -218,6 +220,7 @@ class OrderHistoryData {
     String? payAmountCash,
     String? dueAmountCash,
     String? returnAmountCash,
+    List<RefundDetails>? refundDetails
   }) {
     _sequentialOrderID = sequentialOrderID;
     _orderIDP = orderIDP;
@@ -272,6 +275,7 @@ class OrderHistoryData {
     _payAmountCash = payAmountCash;
     _dueAmountCash = dueAmountCash;
     _returnAmountCash = returnAmountCash;
+    _refundDetails = refundDetails;
   }
 
   OrderHistoryData.fromJson(dynamic json) {
@@ -338,6 +342,12 @@ class OrderHistoryData {
     _payAmountCash = (json['PayAmountCash']??0.00).toString();
     _dueAmountCash = (json['DueAmountCash']??0.00).toString();
     _returnAmountCash = (json['ReturnAmountCash']??0.00).toString();
+    if (json['RefundDetails'] != null) {
+      _refundDetails = [];
+      json['RefundDetails'].forEach((v) {
+        _refundDetails?.add(RefundDetails.fromJson(v));
+      });
+    }
   }
 
   String? _sequentialOrderID;
@@ -393,6 +403,8 @@ class OrderHistoryData {
   String? _payAmountCash;
   String? _dueAmountCash;
   String? _returnAmountCash;
+  List<RefundDetails>? _refundDetails;
+
 
   String? get sequentialOrderID => _sequentialOrderID;
   
@@ -500,6 +512,8 @@ class OrderHistoryData {
 
   String? get returnAmountCash => _returnAmountCash;
 
+  List<RefundDetails>? get refundDetails => _refundDetails;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['SequentialOrderID'] = _sequentialOrderID;
@@ -559,6 +573,9 @@ class OrderHistoryData {
     map['PayAmountCash'] = _payAmountCash;
     map['DueAmountCash'] = _dueAmountCash;
     map['ReturnAmountCash'] = _returnAmountCash;
+    if (_refundDetails != null) {
+      map['RefundDetails'] = _refundDetails?.map((v) => v.toJson()).toList();
+    }
     return map;
   }
 }

@@ -32,6 +32,9 @@ mixin MyPrinterService {
   Future<bool> salePayment(OrderHistoryData mOrderDetailList,
       PrinterSettingsData? mPrinterSettingsData);
 
+  Future<bool> saleRefundPayment(OrderHistoryData mOrderDetailList,
+      PrinterSettingsData? mPrinterSettingsData);
+
   ///
   Future<bool> salePaymentKot(OrderHistoryData mOrderDetailList,
       PrinterSettingsData? mPrinterSettingsDataKitchen,

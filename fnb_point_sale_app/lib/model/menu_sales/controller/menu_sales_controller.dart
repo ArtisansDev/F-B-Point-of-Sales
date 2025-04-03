@@ -74,7 +74,7 @@ class MenuSalesController extends GetxController {
 
   RxString selectPaymentStatus = 'Payment Status'.obs;
   RxList<String> paymentStatusList =
-      <String>[sAll.tr, 'Success', 'Pending', 'Cancel'].obs;
+      <String>[sAll.tr, 'Success', 'Pending', 'Refund', 'Cancel'].obs;
 
   Rx<TextEditingController> sSelectDateRangeController =
       TextEditingController().obs;
@@ -618,17 +618,17 @@ class MenuSalesController extends GetxController {
   }
 
   void onPrintRefund(int index) async {
-    // OrderHistoryData mOrderData = mOrderHistoryData[index];
-    // final myPrinterService = locator.get<MyPrinterService>();
-    // for (int i = 0;
-    //     i <
-    //         (mDashboardScreenController
-    //                 .mPrinterSettingsDataCustomer.printCopies ??
-    //             0);
-    //     i++) {
-    //   await myPrinterService.salePayment(
-    //       mOrderData, mDashboardScreenController.mPrinterSettingsDataCustomer);
-    // }
+    OrderHistoryData mOrderData = mOrderHistoryData[index];
+    final myPrinterService = locator.get<MyPrinterService>();
+    for (int i = 0;
+        i <
+            (mDashboardScreenController
+                    .mPrinterSettingsDataCustomer.printCopies ??
+                0);
+        i++) {
+      await myPrinterService.saleRefundPayment(
+          mOrderData, mDashboardScreenController.mPrinterSettingsDataCustomer);
+    }
   }
 
   void onPrintKot(int index) async {
@@ -709,7 +709,8 @@ class MenuSalesController extends GetxController {
             }
           }
           if (isManager) {
-            callOrderHistory();
+            refundOrderHistory(index,
+                search: mSelectOrderHistoryData.trackingOrderID ?? '');
           }
         }
       }
@@ -721,9 +722,9 @@ class MenuSalesController extends GetxController {
     debugPrint(
         "isPaymentTypeChanged ${mSelectOrderHistoryData.paymentGatewayName}");
     if ((mSelectOrderHistoryData.counterBalanceHistoryIDF ?? '')
-        .trim()
-        .toString()
-        .toUpperCase() ==
+            .trim()
+            .toString()
+            .toUpperCase() ==
         sCounterBalanceHistoryIDF.value.toString().trim().toUpperCase()) {
       await AppAlert.showViewWithoutBlur(
           Get.context!, const BranchManagerScreen());
@@ -731,7 +732,7 @@ class MenuSalesController extends GetxController {
       ManagerCredentialsResponse? managerCredentialsResponse;
       if (Get.isRegistered<BranchManagerController>()) {
         BranchManagerController mBranchManagerController =
-        Get.find<BranchManagerController>();
+            Get.find<BranchManagerController>();
         isManager = mBranchManagerController.isSuccess.value;
         managerCredentialsResponse =
             mBranchManagerController.mManagerCredentialsResponse.value;
@@ -742,19 +743,91 @@ class MenuSalesController extends GetxController {
         await AppAlert.showViewWithoutBlur(
             Get.context!,
             RefundPaymentTypeScreen(
-                mManagerCredentialsResponse: managerCredentialsResponse ??
-                    ManagerCredentialsResponse(),
+                mManagerCredentialsResponse:
+                    managerCredentialsResponse ?? ManagerCredentialsResponse(),
                 mSelectOrderHistoryData: mSelectOrderHistoryData));
         if (Get.isRegistered<RefundPaymentTypeController>()) {
           RefundPaymentTypeController mRefundPaymentTypeController =
-          Get.find<RefundPaymentTypeController>();
+              Get.find<RefundPaymentTypeController>();
           isManager = mRefundPaymentTypeController.isSuccess.value;
           Get.delete<PaymentTypeController>();
         }
       }
       if (isManager) {
-        callOrderHistory();
+        refundOrderHistory(index,
+            search: mSelectOrderHistoryData.trackingOrderID ?? '');
       }
+    }
+  }
+
+  ///refund and cancel order
+  refundOrderHistory(
+    int index, {
+    String trackingOrderID = "",
+    String search = "",
+  }) async {
+    try {
+      ///api product call
+      final orderPlaceApi = locator.get<OrderPlaceApi>();
+      sCounterBalanceHistoryIDF.value = await SharedPrefs().getHistoryID();
+      await NetworkUtils()
+          .checkInternetConnection()
+          .then((isInternetAvailable) async {
+        if (isInternetAvailable) {
+          var configurationLocalApi = locator.get<ConfigurationLocalApi>();
+          ConfigurationResponse mConfigurationResponse =
+              await configurationLocalApi.getConfigurationResponse() ??
+                  ConfigurationResponse();
+          OrderHistoryRequest mOrderHistoryRequest = OrderHistoryRequest(
+              rowsPerPage: 20,
+              counterIDF:
+                  (mConfigurationResponse.configurationData?.counterData ?? [])
+                          .isEmpty
+                      ? ""
+                      : (mConfigurationResponse
+                                  .configurationData?.counterData ??
+                              [])
+                          .first
+                          .counterIDP,
+              pageNumber: 1,
+              searchValue: search,
+              orderSource: "0",
+              paymentStatus: null,
+              fromDate: null,
+              toDate: null,
+              orderType: 0,
+              trackingOrderID: trackingOrderID);
+          WebResponseSuccess mWebResponseSuccess =
+              await orderPlaceApi.postOrderHistory(mOrderHistoryRequest);
+          if (mWebResponseSuccess.statusCode == WebConstants.statusCode200) {
+            OrderHistoryResponse mOrderHistoryResponse =
+                mWebResponseSuccess.data;
+            if ((mOrderHistoryResponse.mOrderHistoryResponseData?.data ?? [])
+                .isNotEmpty) {
+              mOrderHistoryData[index] =
+                  (mOrderHistoryResponse.mOrderHistoryResponseData?.data ?? [])
+                      .first;
+              mOrderHistoryData.refresh();
+              if( (mOrderHistoryResponse.mOrderHistoryResponseData?.data ?? [])
+                  .first.paymentStatus == 'S'){
+                onPrint(index);
+              }else  if( (mOrderHistoryResponse.mOrderHistoryResponseData?.data ?? [])
+                  .first.paymentStatus == 'R'){
+                onPrintRefund(index);
+              }
+            }
+          } else {
+            AppAlert.showSnackBar(
+                Get.context!, mWebResponseSuccess.statusMessage ?? '');
+          }
+        } else {
+          AppAlert.showSnackBar(
+              Get.context!, MessageConstants.noInternetConnection);
+        }
+      });
+    } catch (e) {
+      AppAlert.showSnackBar(
+          Get.context!, 'downloadTableList failed with exception $e');
     }
   }
 }

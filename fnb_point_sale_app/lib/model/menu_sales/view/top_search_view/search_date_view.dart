@@ -178,8 +178,7 @@ class SearchDateView extends StatelessWidget {
                               controller.callOrderHistory();
                             },
                             child: Container(
-                                margin:
-                                    EdgeInsets.only( right: 6.5.sp),
+                                margin: EdgeInsets.only(right: 6.5.sp),
                                 padding: EdgeInsets.all(7.sp),
                                 decoration: BoxDecoration(
                                   color: ColorConstants.cAppButtonColour,
@@ -235,7 +234,8 @@ class SearchDateView extends StatelessWidget {
                 flex: 4,
                 child: Obx(() => Container(
                     height: 22.sp,
-                    margin:EdgeInsets.only(top: 11.sp, right: 8.sp, bottom: 8.sp),
+                    margin:
+                        EdgeInsets.only(top: 11.sp, right: 8.sp, bottom: 8.sp),
                     decoration: BoxDecoration(
                       color: ColorConstants.white,
                       borderRadius: BorderRadius.all(
@@ -265,14 +265,13 @@ class SearchDateView extends StatelessWidget {
 
                 controller.search.refresh();
 
-
                 controller.pageNumber.value = 1;
                 controller.sLoading.value = 'Loading...';
                 controller.callOrderHistory();
               },
               child: Container(
                   margin:
-                  EdgeInsets.only(top: 11.sp, right: 10.sp, bottom: 8.sp),
+                      EdgeInsets.only(top: 11.sp, right: 10.sp, bottom: 8.sp),
                   padding: EdgeInsets.all(10.sp),
                   decoration: BoxDecoration(
                     color: ColorConstants.cAppButtonColour,
@@ -461,6 +460,8 @@ class SearchDateView extends StatelessWidget {
             controller.paymentStatus.value = 'S';
           } else if (controller.selectPaymentStatus.value == 'Pending') {
             controller.paymentStatus.value = 'P';
+          } else if (controller.selectPaymentStatus.value == 'Refund') {
+            controller.paymentStatus.value = 'R';
           } else if (controller.selectPaymentStatus.value == 'Cancel') {
             controller.paymentStatus.value = 'C';
           }
