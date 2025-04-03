@@ -664,53 +664,57 @@ class MenuSalesController extends GetxController {
 
     debugPrint(
         "isPaymentTypeChanged ${mSelectOrderHistoryData.paymentGatewayName}");
-    if (mSelectOrderHistoryData.paymentGatewayName
-        .toString()
-        .trim()
-        .isNotEmpty) {
-      debugPrint(
-          "isPaymentTypeChanged ${mSelectOrderHistoryData.isPaymentTypeChanged}");
-      if (!(mSelectOrderHistoryData.isPaymentTypeChanged ?? false)) {
+    if(mSelectOrderHistoryData.paymentStatus != 'R') {
+      if (mSelectOrderHistoryData.paymentGatewayName
+          .toString()
+          .trim()
+          .isNotEmpty) {
         debugPrint(
-            "counterBalanceHistoryIDF ${mSelectOrderHistoryData.counterBalanceHistoryIDF}");
+            "isPaymentTypeChanged ${mSelectOrderHistoryData
+                .isPaymentTypeChanged}");
+        if (!(mSelectOrderHistoryData.isPaymentTypeChanged ?? false)) {
+          debugPrint(
+              "counterBalanceHistoryIDF ${mSelectOrderHistoryData
+                  .counterBalanceHistoryIDF}");
 
-        debugPrint(
-            "sCounterBalanceHistoryIDF ${sCounterBalanceHistoryIDF.value}");
-        if ((mSelectOrderHistoryData.counterBalanceHistoryIDF ?? '')
-                .trim()
-                .toString()
-                .toUpperCase() ==
-            sCounterBalanceHistoryIDF.value.toString().trim().toUpperCase()) {
-          await AppAlert.showViewWithoutBlur(
-              Get.context!, const BranchManagerScreen());
-          bool isManager = false;
-          ManagerCredentialsResponse? managerCredentialsResponse;
-          if (Get.isRegistered<BranchManagerController>()) {
-            BranchManagerController mBranchManagerController =
-                Get.find<BranchManagerController>();
-            isManager = mBranchManagerController.isSuccess.value;
-            managerCredentialsResponse =
-                mBranchManagerController.mManagerCredentialsResponse.value;
-            Get.delete<BranchManagerController>();
-          }
-          if (isManager) {
-            isManager = false;
+          debugPrint(
+              "sCounterBalanceHistoryIDF ${sCounterBalanceHistoryIDF.value}");
+          if ((mSelectOrderHistoryData.counterBalanceHistoryIDF ?? '')
+              .trim()
+              .toString()
+              .toUpperCase() ==
+              sCounterBalanceHistoryIDF.value.toString().trim().toUpperCase()) {
             await AppAlert.showViewWithoutBlur(
-                Get.context!,
-                PaymentTypeScreen(
-                    mManagerCredentialsResponse: managerCredentialsResponse ??
-                        ManagerCredentialsResponse(),
-                    mSelectOrderHistoryData: mSelectOrderHistoryData));
-            if (Get.isRegistered<PaymentTypeController>()) {
-              PaymentTypeController mPaymentTypeController =
-                  Get.find<PaymentTypeController>();
-              isManager = mPaymentTypeController.isSuccess.value;
-              Get.delete<PaymentTypeController>();
+                Get.context!, const BranchManagerScreen());
+            bool isManager = false;
+            ManagerCredentialsResponse? managerCredentialsResponse;
+            if (Get.isRegistered<BranchManagerController>()) {
+              BranchManagerController mBranchManagerController =
+              Get.find<BranchManagerController>();
+              isManager = mBranchManagerController.isSuccess.value;
+              managerCredentialsResponse =
+                  mBranchManagerController.mManagerCredentialsResponse.value;
+              Get.delete<BranchManagerController>();
             }
-          }
-          if (isManager) {
-            refundOrderHistory(index,
-                search: mSelectOrderHistoryData.trackingOrderID ?? '');
+            if (isManager) {
+              isManager = false;
+              await AppAlert.showViewWithoutBlur(
+                  Get.context!,
+                  PaymentTypeScreen(
+                      mManagerCredentialsResponse: managerCredentialsResponse ??
+                          ManagerCredentialsResponse(),
+                      mSelectOrderHistoryData: mSelectOrderHistoryData));
+              if (Get.isRegistered<PaymentTypeController>()) {
+                PaymentTypeController mPaymentTypeController =
+                Get.find<PaymentTypeController>();
+                isManager = mPaymentTypeController.isSuccess.value;
+                Get.delete<PaymentTypeController>();
+              }
+            }
+            if (isManager) {
+              refundOrderHistory(index,
+                  search: mSelectOrderHistoryData.trackingOrderID ?? '');
+            }
           }
         }
       }

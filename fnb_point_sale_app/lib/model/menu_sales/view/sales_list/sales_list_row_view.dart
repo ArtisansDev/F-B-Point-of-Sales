@@ -120,6 +120,7 @@ class SalesListRowView extends StatelessWidget {
               flex: 4,
               child: GestureDetector(
                 onTap: () {
+
                   controller.clickPaymentType(index);
                 },
                 child: Align(
@@ -139,6 +140,7 @@ class SalesListRowView extends StatelessWidget {
                             (mOrderHistoryData.paymentGatewayName ?? "")
                                 .isEmpty ||
                             (mOrderHistoryData.isPaymentTypeChanged ?? false)
+                    ||(mOrderHistoryData.paymentStatus == 'R')
                         ? getTextRegular(
                             colors: ColorConstants.appTextSalesHader,
                             size: 11.sp)
