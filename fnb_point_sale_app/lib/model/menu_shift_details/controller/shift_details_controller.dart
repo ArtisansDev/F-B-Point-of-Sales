@@ -268,12 +268,13 @@ class ShiftDetailsController extends GetxController {
                 : (mConfigurationResponse.configurationData?.branchData ?? [])
                     .first
                     .branchIDP,
-            counterID: (mConfigurationResponse.configurationData?.counterData ?? [])
-                    .isEmpty
-                ? ""
-                : (mConfigurationResponse.configurationData?.counterData ?? [])
-                    .first
-                    .counterIDP,
+            counterID:
+                (mConfigurationResponse.configurationData?.counterData ?? [])
+                        .isEmpty
+                    ? ""
+                    : (mConfigurationResponse.configurationData?.counterData ?? [])
+                        .first
+                        .counterIDP,
             userID: sUserId,
             historyIDP: sHistoryID,
             newClosingBalance: amount,
@@ -287,8 +288,8 @@ class ShiftDetailsController extends GetxController {
                     .toString(),
             isMismatchBalance: getDoubleValue(getDoubleValue(
                         mShiftDetailsResponse.value.data?.cashPayment ?? 0) -
-                    getDoubleValue(totalCashCollected.value))
-                .toStringAsFixed(2));
+                    getDoubleValue(totalCashCollected.value)) !=
+                0);
 
         ///print
         // await onPrintShiftClose(amount, mClosingBalanceRequest,mCashModelList);
@@ -317,7 +318,9 @@ class ShiftDetailsController extends GetxController {
 
   void sPrintOpeningBalance() async {
     // await onPrintShiftClose("0.0", ClosingBalanceRequest(),mCashModelList);
-    await onPrintShiftClose((mShiftDetailsResponse.value.data?.openingBalance??0.0).toString(), ClosingBalanceRequest(), []);
+    await onPrintShiftClose(
+        (mShiftDetailsResponse.value.data?.openingBalance ?? 0.0).toString(),
+        ClosingBalanceRequest(), []);
   }
 
   onPrintShiftClose(String amount, ClosingBalanceRequest mClosingBalanceRequest,
@@ -331,7 +334,9 @@ class ShiftDetailsController extends GetxController {
         mShiftDetailsResponse.value);
   }
 
-  onPrintShiftDetails(String amount, ClosingBalanceRequest mClosingBalanceRequest,
+  onPrintShiftDetails(
+      String amount,
+      ClosingBalanceRequest mClosingBalanceRequest,
       List<CashModel> mCashModelList) async {
     final myPrinterService = locator.get<MyPrinterService>();
     await myPrinterService.shiftDetails(

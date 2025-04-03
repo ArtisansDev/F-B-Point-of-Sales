@@ -22,7 +22,7 @@ class ClosingBalanceRequest {
     String? currency,
     String? remark,
     String? originalBalance,
-    String? isMismatchBalance,}){
+    bool? isMismatchBalance,}){
     _branchID = branchID;
     _counterID = counterID;
     _userID = userID;
@@ -59,7 +59,7 @@ class ClosingBalanceRequest {
   String? _currency;
   String? _remark;
   String? _originalBalance;
-  String? _isMismatchBalance;
+  bool? _isMismatchBalance;
 
   String? get branchID => _branchID;
   String? get counterID => _counterID;
@@ -71,7 +71,7 @@ class ClosingBalanceRequest {
   String? get currency => _currency;
   String? get remark => _remark;
   String? get originalBalance => _originalBalance;
-  String? get isMismatchBalance => _isMismatchBalance;
+  bool? get isMismatchBalance => _isMismatchBalance;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
