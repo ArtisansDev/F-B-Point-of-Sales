@@ -22,13 +22,18 @@ import 'keypad_screen.dart';
 class CashViewScreen extends GetView<CashViewController> {
   final Function onPayment;
   final OrderPlace mOrderPlace;
+  bool? isRefund = false;
 
-  const CashViewScreen(
-      {super.key, required this.onPayment, required this.mOrderPlace});
+  CashViewScreen(
+      {super.key,
+      required this.onPayment,
+      required this.mOrderPlace,
+      this.isRefund});
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => CashViewController(onPayment, mOrderPlace));
+    Get.lazyPut(
+        () => CashViewController(onPayment, mOrderPlace, isRefund ?? false));
     return FocusDetector(
       onVisibilityGained: () {
         controller.postShiftDetailsApiCall();

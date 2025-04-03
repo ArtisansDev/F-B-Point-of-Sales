@@ -111,6 +111,7 @@ class RefundPaymentTypeController extends GetxController {
           await AppAlert.showViewWithoutBlur(
               Get.context!,
               CashViewScreen(
+                isRefund:true,
                 mOrderPlace: orderPlace,
                 onPayment: (String sValue) {
                   mGetAllPaymentType.value.setRequestData(sValue);

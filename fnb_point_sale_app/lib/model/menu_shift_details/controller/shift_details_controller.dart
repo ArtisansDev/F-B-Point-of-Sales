@@ -299,7 +299,7 @@ class ShiftDetailsController extends GetxController {
               Get.context!, mWebResponseSuccess.statusMessage ?? '');
 
           ///print
-          await onPrintShiftClose(
+          await onPrintShiftDetails(
               amount, mClosingBalanceRequest, mCashModelList);
 
           ///open counter
@@ -324,6 +324,17 @@ class ShiftDetailsController extends GetxController {
       List<CashModel> mCashModelList) async {
     final myPrinterService = locator.get<MyPrinterService>();
     await myPrinterService.shiftDetailsOpeningBalance(
+        amount,
+        mClosingBalanceRequest,
+        mCashModelList,
+        mConfigurationResponse.value,
+        mShiftDetailsResponse.value);
+  }
+
+  onPrintShiftDetails(String amount, ClosingBalanceRequest mClosingBalanceRequest,
+      List<CashModel> mCashModelList) async {
+    final myPrinterService = locator.get<MyPrinterService>();
+    await myPrinterService.shiftDetails(
         amount,
         mClosingBalanceRequest,
         mCashModelList,

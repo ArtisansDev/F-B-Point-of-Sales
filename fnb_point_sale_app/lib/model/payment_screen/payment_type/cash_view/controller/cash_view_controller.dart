@@ -33,9 +33,11 @@ class CashViewController extends GetxController {
   Rx<double> mDueAmount = 0.0.obs;
   Rx<double> mReturnAmount = 0.0.obs;
   Rx<bool> isSuccess = false.obs;
+  Rx<bool> isRefund = false.obs;
   RegExp patternDecimalNumberWeight = RegExp(r'^\d+(\.\d{0,2})?$');
 
-  CashViewController(Function onPayment, OrderPlace orderPlace) {
+  CashViewController(Function onPayment, OrderPlace orderPlace, bool bRefund) {
+    isRefund.value = bRefund;
     onPaymentClick.value = onPayment;
     mOrderPlace.value = orderPlace;
     mAmount.value = getDoubleValue(roundToNearestPossible(
@@ -47,10 +49,33 @@ class CashViewController extends GetxController {
   void onDone() {
     if (mDueAmount.value > 0) {
       AppAlert.showSnackBar(Get.context!, 'Please enter the proper amount');
-
+      return;
+    } else if (isRefund.value) {
+      double dAmount = 0.00;
+      if (amountController.value.text.isNotEmpty) {
+        dAmount = getDoubleValue(amountController.value.text);
+      }
+      if (cashPaymentAmount.value < dAmount) {
+        AppAlert.showSnackBar(
+            Get.context!, "You don't have enough cash in your counter.");
+        return;
+      }else {
+        isSuccess.value = true;
+        Get.back();
+        CashPaymentType mCashPaymentType = CashPaymentType(
+            cash: Cash(
+                dueAmount: mDueAmount.value.toStringAsFixed(2),
+                payAmount: getDoubleValue(amountController.value.text)
+                    .toStringAsFixed(2),
+                returnAmount: mReturnAmount.value.toStringAsFixed(2)));
+        String value = jsonEncode(mCashPaymentType);
+        // "{\"Cash\": {\"Pay_Amount\": \"${getDoubleValue(amountController.value.text).toStringAsFixed(2)}\",\"Due_Amount\": \"${mDueAmount.value.toStringAsFixed(2)}\",\"Return_Amount\": \"${mReturnAmount.value.toStringAsFixed(2)}\"}}";
+        onPaymentClick.value!(value);
+      }
     } else if (cashPaymentAmount.value < mReturnAmount.value) {
       AppAlert.showSnackBar(
           Get.context!, "You don't have enough cash in your counter.");
+      return;
     } else {
       isSuccess.value = true;
       Get.back();
@@ -111,7 +136,7 @@ class CashViewController extends GetxController {
     if (patternDecimalNumberWeight.hasMatch(value)) {
       amountController.value.text = value;
       onTextChangeAmount();
-    } else if(value.isEmpty) {
+    } else if (value.isEmpty) {
       amountController.value.text = value;
       onTextChangeAmount();
     }
@@ -120,7 +145,7 @@ class CashViewController extends GetxController {
   void onKeyboardTap(String s) {
     String value = amountController.value.text;
     value = value + s;
-    print("value $value");
+
     if (patternDecimalNumberWeight.hasMatch(value)) {
       amountController.value.text = value;
       onTextChangeAmount();

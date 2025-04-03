@@ -113,7 +113,7 @@ Future<bool> printShiftClose(
   String formattedNumberCash = getNumberFormat(getDoubleValue(amount));
 
   widgets.add(pw.Row(children: [
-    pw.Expanded(child: pw.Text('$index. Cash', style: getNormalTextStyle())),
+    pw.Expanded(child: pw.Text('$index. Drawer Cash', style: getNormalTextStyle())),
     pw.Expanded(
         child: pw.Align(
             alignment: pw.Alignment.centerRight,

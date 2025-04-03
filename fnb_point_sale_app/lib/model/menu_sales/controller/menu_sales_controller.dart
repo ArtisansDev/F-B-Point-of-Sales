@@ -750,7 +750,7 @@ class MenuSalesController extends GetxController {
           RefundPaymentTypeController mRefundPaymentTypeController =
               Get.find<RefundPaymentTypeController>();
           isManager = mRefundPaymentTypeController.isSuccess.value;
-          Get.delete<PaymentTypeController>();
+          Get.delete<RefundPaymentTypeController>();
         }
       }
       if (isManager) {
