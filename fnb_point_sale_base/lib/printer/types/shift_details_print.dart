@@ -1,6 +1,7 @@
 import 'package:fnb_point_sale_base/printer/printer_helper.dart';
 import 'package:fnb_point_sale_base/utils/num_utils.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../data/mode/cash_model/cash_model.dart';
 import '../../data/mode/configuration/configuration_response.dart';
@@ -93,18 +94,64 @@ Future<bool> printShiftClose(
   double grandTotalAmount = 0.0;
   for (PaymentTypeData mPaymentType
       in mShiftDetailsResponse.data?.paymentType ?? []) {
-    String formatted =
-        getNumberFormat(getDoubleValue(mPaymentType.netAmount ?? 0.0));
+
+    String totalAmount =
+    getNumberFormat(getDoubleValue(mPaymentType.totalPaidAmount ?? 0.0));
+
+    String refundAmount =
+        getNumberFormat(getDoubleValue(mPaymentType.totalRefundAmount ?? 0.0));
+
+    String netAmount =
+    getNumberFormat(getDoubleValue(mPaymentType.netAmount ?? 0.0));
 
     widgets.add(pw.Row(children: [
       pw.Expanded(
           child: pw.Text('$index. ${mPaymentType.name}',
               style: getNormalTextStyle())),
+      // pw.Expanded(
+      //     child: pw.Align(
+      //         alignment: pw.Alignment.centerRight,
+      //         child: pw.Text('${mCurrencyData.currencySymbol ?? ''} $formatted',
+      //             style: getNormalTextStyle())))
+    ]));
+
+    ///Total Amount
+    widgets.add(pw.Row(children: [
+      pw.SizedBox(width: 10.sp),
+      pw.Expanded(
+          child: pw.Text('Total Amount',
+              style: getNormalTextStyle())),
       pw.Expanded(
           child: pw.Align(
               alignment: pw.Alignment.centerRight,
-              child: pw.Text('${mCurrencyData.currencySymbol ?? ''} $formatted',
+              child: pw.Text('${mCurrencyData.currencySymbol ?? ''} $totalAmount',
                   style: getNormalTextStyle())))
+    ]));
+
+    ///Refund Amount
+    widgets.add(pw.Row(children: [
+      pw.SizedBox(width: 10.sp),
+      pw.Expanded(
+          child: pw.Text('Refund Amount',
+              style: getNormalTextStyle())),
+      pw.Expanded(
+          child: pw.Align(
+              alignment: pw.Alignment.centerRight,
+              child: pw.Text('-${mCurrencyData.currencySymbol ?? ''} $refundAmount',
+                  style: getNormalTextStyle())))
+    ]));
+
+    ///Net Amount
+    widgets.add(pw.Row(children: [
+      pw.SizedBox(width: 10.sp),
+      pw.Expanded(
+          child: pw.Text('Net Amount',
+              style: getNormalTextStyle())),
+      pw.Expanded(
+          child: pw.Align(
+              alignment: pw.Alignment.centerRight,
+              child: pw.Text('${mCurrencyData.currencySymbol ?? ''} $netAmount',
+                  style: getBoldTextStyle())))
     ]));
     grandTotalAmount = grandTotalAmount + (mPaymentType.netAmount ?? 0);
     widgets.add(pw.Container(height: 5));

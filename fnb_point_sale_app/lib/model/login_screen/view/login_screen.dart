@@ -82,25 +82,20 @@ class LoginScreen extends GetView<LoginScreenController> {
                               width: 30.w,
                               alignment: Alignment.center,
                               child: Text(
-                                'Effortless Ordering,',
-                                style: getTextRegular(size: 17.sp),
-                              ),
-                            ),
-                            Container(
-                              width: 30.w,
-                              margin:
-                                  EdgeInsets.only(top: 10.sp, bottom: 10.sp),
-                              alignment: Alignment.center,
-                              child: Text(
-                                'Elevated Dining.',
+                                controller.mRestaurantData.value
+                                    .tagLineHeader ??
+                                    '',
                                 style: getText600(size: 17.sp),
                               ),
                             ),
+                            SizedBox(height: 10.sp,),
                             Container(
                               width: 30.w,
                               alignment: Alignment.center,
                               child: Text(
-                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+                                controller.mRestaurantData.value
+                                    .tagLine ??
+                                    '',
                                 textAlign: TextAlign.center,
                                 style: getTextRegular(size: 14.5.sp),
                               ),

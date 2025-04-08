@@ -84,28 +84,24 @@ class OpenCounterScreen extends GetView<OpenCounterController> {
                                 width: 30.w,
                                 alignment: Alignment.center,
                                 child: Text(
-                                  'Open counter',
-                                  style: getTextRegular(size: 17.sp),
+                                  controller.mRestaurantData.value
+                                      .tagLineHeader ??
+                                      '',
+                                  style: getText600(size: 17.sp),
                                 ),
                               ),
-                              // Container(
-                              //   width: 30.w,
-                              //   margin: EdgeInsets.only(top: 10.sp,bottom: 10.sp),
-                              //   alignment: Alignment.center,
-                              //   child: Text(
-                              //     'Elevated Dining.',
-                              //     style: getText600(size: 17.sp),
-                              //   ),
-                              // ),
-                              // Container(
-                              //   width: 30.w,
-                              //   alignment: Alignment.center,
-                              //   child: Text(
-                              //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-                              //     textAlign: TextAlign.center,
-                              //     style: getTextRegular(size: 14.5.sp),
-                              //   ),
-                              // ),
+                              SizedBox(height: 10.sp,),
+                              Container(
+                                width: 30.w,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  controller.mRestaurantData.value
+                                      .tagLine ??
+                                      '',
+                                  textAlign: TextAlign.center,
+                                  style: getTextRegular(size: 14.5.sp),
+                                ),
+                              ),
                             ],
                           ))),
                   Expanded(

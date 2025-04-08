@@ -33,7 +33,7 @@ openCounter() async {
   await SharedPrefs().setHistoryID('');
   var mPlaceOrderSaleLocalApi = locator.get<PlaceOrderSaleLocalApi>();
   mPlaceOrderSaleLocalApi.clearBox();
-  Get.delete<DashboardScreenController>();
+  deleteAll();
   Get.offNamed(
     RouteConstants.rOpenCounterScreen,
   );

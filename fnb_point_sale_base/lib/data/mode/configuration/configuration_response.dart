@@ -412,6 +412,7 @@ class LoggedInUserDetails {
 /// ContactNumber : "9988776655"
 /// OrderIDPrefixCode : "APP"
 /// TagLine : "Demo"
+/// TagLineHeader : "Demo"
 /// TermsAndConditions : "<ul><li><i>test1</i></li><li><i>test2</i><ul><li><i>test3</i></li><li><i>test4</i></li><li><i>test5</i></li><li><i>test6</i></li><li><i>test7</i></li><li><i>test9</i></li><li><i>test10</i></li></ul></li></ul>"
 
 class RestaurantData {
@@ -425,6 +426,7 @@ class RestaurantData {
     String? contactNumber,
     String? orderIDPrefixCode,
     String? tagLine,
+    String? tagLineHeader,
     String? termsAndConditions,
   }) {
     _restaurantIDP = restaurantIDP;
@@ -437,6 +439,7 @@ class RestaurantData {
     _termsAndConditions = termsAndConditions;
     _orderIDPrefixCode = orderIDPrefixCode;
     _tagLine = tagLine;
+    _tagLineHeader = tagLineHeader;
   }
 
   RestaurantData.fromJson(dynamic json) {
@@ -450,6 +453,7 @@ class RestaurantData {
     _termsAndConditions = json['TermsAndConditions'];
     _orderIDPrefixCode = json['OrderIDPrefixCode'];
     _tagLine = json['TagLine'];
+    _tagLineHeader = json['TagLineHeader'];
   }
 
   String? _restaurantIDP;
@@ -462,6 +466,7 @@ class RestaurantData {
   String? _termsAndConditions;
   String? _orderIDPrefixCode;
   String? _tagLine;
+  String? _tagLineHeader;
 
   String? get restaurantIDP => _restaurantIDP;
 
@@ -483,6 +488,8 @@ class RestaurantData {
 
   String? get tagLine => _tagLine;
 
+  String? get tagLineHeader => _tagLineHeader;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['RestaurantIDP'] = _restaurantIDP;
@@ -495,6 +502,7 @@ class RestaurantData {
     map['TermsAndConditions'] = _termsAndConditions;
     map['OrderIDPrefixCode'] = _orderIDPrefixCode;
     map['TagLine'] = _tagLine;
+    map['TagLineHeader'] = _tagLineHeader;
     return map;
   }
 }
